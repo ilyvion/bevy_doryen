@@ -1,7 +1,9 @@
-use bevy_app::{stage, App};
-use bevy_doryen::{Doryen, DoryenPlugin, DoryenRenderSystemExtensions, DoryenSettings};
-use bevy_ecs::{Bundle, IntoSystem, Resources, World};
-use doryen_rs::{AppOptions, TextAlign};
+use bevy_app::App;
+use bevy_doryen::doryen::{AppOptions, TextAlign};
+use bevy_doryen::{
+    DoryenInput, DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings,
+};
+use bevy_ecs::{Bundle, Commands, Entity, IntoSystem, Query, Res, ResMut};
 
 const CONSOLE_WIDTH: u32 = 80;
 const CONSOLE_HEIGHT: u32 = 45;
@@ -30,6 +32,11 @@ struct MouseBundle {
     position: Position<f32>,
 }
 
+struct Entities {
+    player: Entity,
+    mouse: Entity,
+}
+
 fn main() {
     App::build()
         .add_resource(DoryenSettings {
@@ -48,44 +55,48 @@ fn main() {
                 resizable: true,
                 intercept_close_request: false,
             }),
+            ..Default::default()
         })
         .add_plugin(DoryenPlugin)
         .add_startup_system(init.system())
-        .add_system_to_stage(stage::PRE_UPDATE, input.system())
+        .add_system(input.system())
         .add_doryen_render_system(render.system())
         .run()
 }
 
-fn init(world: &mut World, res: &mut Resources) {
-    let mut doryen = res.get_thread_local_mut::<Doryen>().unwrap();
+fn init(mut root_console: ResMut<DoryenRootConsole>, commands: &mut Commands) {
+    root_console.register_color("white", (255, 255, 255, 255));
+    root_console.register_color("red", (255, 92, 92, 255));
+    root_console.register_color("blue", (192, 192, 255, 255));
 
-    let con = doryen.con_mut();
-    con.register_color("white", (255, 255, 255, 255));
-    con.register_color("red", (255, 92, 92, 255));
-    con.register_color("blue", (192, 192, 255, 255));
-
-    world.spawn(PlayerBundle {
+    commands.spawn(PlayerBundle {
         player: Player,
         position: Position {
             x: (CONSOLE_WIDTH / 2) as i32,
             y: (CONSOLE_HEIGHT / 2) as i32,
         },
     });
+    let player = commands.current_entity().unwrap();
 
-    world.spawn(MouseBundle {
+    commands.spawn(MouseBundle {
         mouse: Mouse,
         position: Position { x: 0., y: 0. },
     });
+    let mouse = commands.current_entity().unwrap();
+
+    commands.insert_resource(Entities { player, mouse });
 }
 
-fn input(world: &mut World, res: &mut Resources) {
-    let mut doryen = res.get_thread_local_mut::<Doryen>().unwrap();
-    let (mut player_position, _) = world
-        .query_mut::<(&mut Position<i32>, &Player)>()
-        .next()
+fn input(
+    input: Res<DoryenInput>,
+    entities: Res<Entities>,
+    mut player_query: Query<(&mut Position<i32>, &Player)>,
+    mut mouse_query: Query<(&mut Position<f32>, &Mouse)>,
+) {
+    let mut player_position = player_query
+        .get_component_mut::<Position<i32>>(entities.player)
         .unwrap();
 
-    let input = doryen.input_mut();
     if input.key("ArrowLeft") {
         player_position.x = (player_position.x - 1).max(1);
     } else if input.key("ArrowRight") {
@@ -97,9 +108,8 @@ fn input(world: &mut World, res: &mut Resources) {
         player_position.y = (player_position.y + 1).min(CONSOLE_HEIGHT as i32 - 2);
     }
 
-    let (mut mouse_position, _) = world
-        .query_mut::<(&mut Position<f32>, &Mouse)>()
-        .next()
+    let mut mouse_position = mouse_query
+        .get_component_mut::<Position<f32>>(entities.mouse)
         .unwrap();
 
     let new_mouse_position = input.mouse_pos();
@@ -107,12 +117,13 @@ fn input(world: &mut World, res: &mut Resources) {
     mouse_position.y = new_mouse_position.1;
 }
 
-fn render(world: &mut World, res: &mut Resources) {
-    let mut doryen = res.get_thread_local_mut::<Doryen>().unwrap();
-
-    let con = doryen.con_mut();
-
-    con.rectangle(
+fn render(
+    entities: Res<Entities>,
+    mut root_console: ResMut<DoryenRootConsole>,
+    player_query: Query<(&Position<i32>, &Player)>,
+    mouse_query: Query<(&Position<f32>, &Mouse)>,
+) {
+    root_console.rectangle(
         0,
         0,
         CONSOLE_WIDTH,
@@ -121,7 +132,7 @@ fn render(world: &mut World, res: &mut Resources) {
         Some((0, 0, 0, 255)),
         Some('.' as u16),
     );
-    con.area(
+    root_console.area(
         10,
         10,
         5,
@@ -131,11 +142,13 @@ fn render(world: &mut World, res: &mut Resources) {
         Some('&' as u16),
     );
 
-    let (player_position, _) = world.query::<(&Position<i32>, &Player)>().next().unwrap();
+    let player_position = player_query
+        .get_component::<Position<i32>>(entities.player)
+        .unwrap();
 
-    con.ascii(player_position.x, player_position.y, '@' as u16);
-    con.fore(player_position.x, player_position.y, (255, 255, 255, 255));
-    con.print_color(
+    root_console.ascii(player_position.x, player_position.y, '@' as u16);
+    root_console.fore(player_position.x, player_position.y, (255, 255, 255, 255));
+    root_console.print_color(
         (CONSOLE_WIDTH / 2) as i32,
         (CONSOLE_HEIGHT - 1) as i32,
         "#[red]arrows#[white] : move",
@@ -143,9 +156,11 @@ fn render(world: &mut World, res: &mut Resources) {
         None,
     );
 
-    let (mouse_position, _) = world.query::<(&Position<f32>, &Mouse)>().next().unwrap();
+    let mouse_position = mouse_query
+        .get_component::<Position<f32>>(entities.mouse)
+        .unwrap();
 
-    con.print_color(
+    root_console.print_color(
         (CONSOLE_WIDTH / 2) as i32,
         (CONSOLE_HEIGHT - 3) as i32,
         &format!(
@@ -155,14 +170,14 @@ fn render(world: &mut World, res: &mut Resources) {
         TextAlign::Center,
         None,
     );
-    con.print_color(
+    root_console.print_color(
         5,
         5,
         "#[blue]This blue text contains a #[red]red#[] word",
         TextAlign::Left,
         None,
     );
-    con.back(
+    root_console.back(
         mouse_position.x as i32,
         mouse_position.y as i32,
         (255, 255, 255, 255),
