@@ -1,0 +1,19 @@
+[package]
+name = "bevy_doryen"
+version = "0.1.0"
+authors = ["Alexander Krivács Schrøder <alexschrod@gmail.com>"]
+description = "A Bevy plugin that integrates the Doryen roguelike library with Bevy"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# bevy
+bevy_app = "0.4.0"
+bevy_ecs = "0.4.0"
+# doryen
+doryen-rs = "1.2.3"
+
+[dev-dependencies]
+bevy_app = "0.4.0"
+bevy_ecs = "0.4.0"
