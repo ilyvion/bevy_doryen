@@ -61,7 +61,7 @@ fn main() {
         .add_startup_system(init.system())
         .add_system(input.system())
         .add_doryen_render_system(render.system())
-        .run()
+        .run();
 }
 
 fn init(mut root_console: ResMut<DoryenRootConsole>, commands: &mut Commands) {
