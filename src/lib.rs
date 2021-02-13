@@ -1,14 +1,18 @@
 mod input;
+mod render_system;
 mod root_console;
 
+/// Re-export of the Doryen library types
 pub mod doryen {
     pub use doryen_rs::*;
 }
 
 pub use input::{DoryenInput, Keys};
+pub use render_system::DoryenRenderSystemExtensions;
 pub use root_console::DoryenRootConsole;
 
 use crate::doryen::{AppOptions, Console};
+use crate::render_system::DoryenRenderSystems;
 use bevy_app::{App as BevyApp, AppBuilder, AppExit, EventReader, Events, Plugin};
 use bevy_ecs::{Schedule, System, SystemStage};
 use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
@@ -34,66 +38,13 @@ impl Default for DoryenSettings {
     }
 }
 
-pub mod stage {
+/// Constants for the Doryen plugin render stages
+pub mod render_stage {
     pub const FIRST: &str = "first";
     pub const PRE_RENDER: &str = "pre_render";
     pub const RENDER: &str = "render";
     pub const POST_RENDER: &str = "post_render";
     pub const LAST: &str = "last";
-}
-
-struct DoryenRenderSystems(Schedule);
-impl Default for DoryenRenderSystems {
-    fn default() -> Self {
-        let mut doryen_render_systems = Self(Default::default());
-
-        let schedule = &mut doryen_render_systems.0;
-        schedule
-            .add_stage(stage::FIRST, SystemStage::serial())
-            .add_stage(stage::PRE_RENDER, SystemStage::serial())
-            .add_stage(stage::RENDER, SystemStage::serial())
-            .add_stage(stage::POST_RENDER, SystemStage::serial())
-            .add_stage(stage::LAST, SystemStage::serial());
-
-        doryen_render_systems
-    }
-}
-
-pub trait DoryenRenderSystemExtensions {
-    fn add_doryen_render_system<S: System<In = (), Out = ()>>(&mut self, system: S) -> &mut Self;
-    fn add_doryen_render_system_to_stage<S: System<In = (), Out = ()>>(
-        &mut self,
-        stage_name: &'static str,
-        system: S,
-    ) -> &mut Self;
-}
-
-impl DoryenRenderSystemExtensions for AppBuilder {
-    fn add_doryen_render_system<S: System<In = (), Out = ()>>(&mut self, system: S) -> &mut Self {
-        let mut doryen_render_systems =
-            self.app.resources.get_mut::<DoryenRenderSystems>().unwrap();
-        doryen_render_systems
-            .0
-            .add_system_to_stage(stage::RENDER, system);
-        drop(doryen_render_systems);
-
-        self
-    }
-
-    fn add_doryen_render_system_to_stage<S: System<In = (), Out = ()>>(
-        &mut self,
-        stage_name: &'static str,
-        system: S,
-    ) -> &mut Self {
-        let mut doryen_render_systems =
-            self.app.resources.get_mut::<DoryenRenderSystems>().unwrap();
-        doryen_render_systems
-            .0
-            .add_system_to_stage(stage_name, system);
-        drop(doryen_render_systems);
-
-        self
-    }
 }
 
 impl Plugin for DoryenPlugin {
@@ -113,6 +64,7 @@ struct DoryenPluginEngine {
 }
 
 impl DoryenPluginEngine {
+    #[inline]
     fn take_root_console_ownership(&mut self, api: &mut dyn DoryenApi) {
         use std::mem::swap;
 
@@ -128,6 +80,7 @@ impl DoryenPluginEngine {
         doryen_root_console.0 = self.swap_console.take();
     }
 
+    #[inline]
     fn restore_root_console_ownership(&mut self, api: &mut dyn DoryenApi) {
         use std::mem::swap;
 
@@ -143,6 +96,27 @@ impl DoryenPluginEngine {
         swap(api.con(), &mut self.swap_console.as_mut().unwrap());
     }
 
+    #[inline]
+    fn take_doryen_render_schedule(&mut self) -> Schedule {
+        let mut doryen_render_systems = self
+            .bevy_app
+            .resources
+            .get_mut::<DoryenRenderSystems>()
+            .unwrap();
+        doryen_render_systems.0.take().unwrap()
+    }
+
+    #[inline]
+    fn restore_doryen_render_schedule(&mut self, doryen_render_schedule: Schedule) {
+        let mut doryen_render_systems = self
+            .bevy_app
+            .resources
+            .get_mut::<DoryenRenderSystems>()
+            .unwrap();
+        doryen_render_systems.0.replace(doryen_render_schedule);
+    }
+
+    #[inline]
     fn handle_input(&mut self, api: &mut dyn DoryenApi) {
         let mut doryen_input = self.bevy_app.resources.get_mut::<DoryenInput>().unwrap();
         let input = api.input();
@@ -174,26 +148,16 @@ impl Engine for DoryenPluginEngine {
     fn render(&mut self, api: &mut dyn DoryenApi) {
         self.take_root_console_ownership(api);
 
-        // SAFETY: Doing this is okay because
-        // 1) This `doryen_render_systems` reference won't outlive `Resources`
-        // 2) No systems running in `doryen_render_systems` can get a hold of a
-        //    reference to `doryen_render_systems`.
-        let doryen_render_systems = unsafe {
-            &mut *(&mut *self
-                .bevy_app
-                .resources
-                .get_mut::<DoryenRenderSystems>()
-                .unwrap() as *mut DoryenRenderSystems)
-        };
-        doryen_render_systems
-            .0
+        let mut doryen_render_schedule = self.take_doryen_render_schedule();
+        doryen_render_schedule
             .initialize_and_run(&mut self.bevy_app.world, &mut self.bevy_app.resources);
+        self.restore_doryen_render_schedule(doryen_render_schedule);
 
         self.restore_root_console_ownership(api);
     }
 }
 
-pub fn doryen_runner(mut app: BevyApp) {
+fn doryen_runner(mut app: BevyApp) {
     let mut settings = app.resources.get_or_insert_with(DoryenSettings::default);
     let mut doryen_app = DoryenApp::new(settings.app_options.take().unwrap_or_default());
     let mouse_button_listeners = settings.mouse_button_listeners.clone();

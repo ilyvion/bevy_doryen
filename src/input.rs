@@ -1,4 +1,4 @@
-use doryen_rs::InputApi;
+use crate::doryen::InputApi;
 use std::collections::{HashMap, HashSet};
 use std::iter::Filter;
 

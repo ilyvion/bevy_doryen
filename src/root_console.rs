@@ -1,4 +1,4 @@
-use doryen_rs::Console;
+use crate::doryen::Console;
 use std::ops::{Deref, DerefMut};
 
 #[derive(Default)]
