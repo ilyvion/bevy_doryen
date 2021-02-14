@@ -34,7 +34,7 @@ fn main() {
     App::build()
         .add_resource(DoryenSettings {
             app_options: Some(AppOptions {
-                window_title: "alpha test".to_owned(),
+                window_title: String::from("alpha test"),
                 ..Default::default()
             }),
             ..Default::default()
