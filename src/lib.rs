@@ -58,6 +58,8 @@ impl Plugin for DoryenPlugin {
     fn build(&self, app: &mut AppBuilder) {
         app.init_resource::<DoryenRootConsole>()
             .init_resource::<DoryenInput>()
+            .init_resource::<DoryenFpsInfo>()
+            .init_resource::<Events<DoryenSetFontPath>>()
             .init_resource::<DoryenRenderSystems>()
             .set_runner(doryen_runner);
     }
@@ -66,6 +68,7 @@ impl Plugin for DoryenPlugin {
 struct DoryenPluginEngine {
     bevy_app: BevyApp,
     app_exit_event_reader: EventReader<AppExit>,
+    set_font_path_event_reader: EventReader<DoryenSetFontPath>,
     swap_console: Option<Console>,
     mouse_button_listeners: Vec<MouseButton>,
 }
@@ -133,11 +136,29 @@ impl DoryenPluginEngine {
 
 impl Engine for DoryenPluginEngine {
     fn update(&mut self, api: &mut dyn DoryenApi) -> Option<UpdateEvent> {
+        let mut doryen_fps_info = self.bevy_app.resources.get_mut::<DoryenFpsInfo>().unwrap();
+        doryen_fps_info.fps = api.fps();
+        doryen_fps_info.average_fps = api.average_fps();
+        drop(doryen_fps_info);
+
         self.handle_input(api);
 
         self.take_root_console_ownership(api);
         self.bevy_app.update();
         self.restore_root_console_ownership(api);
+
+        // Process the latest SetFontPath event
+        let doryen_set_font_path_events = self
+            .bevy_app
+            .resources
+            .get_mut::<Events<DoryenSetFontPath>>()
+            .unwrap();
+        if let Some(doryen_set_font_path) = self
+            .set_font_path_event_reader
+            .latest(&doryen_set_font_path_events)
+        {
+            api.set_font_path(&doryen_set_font_path.0);
+        }
 
         if let Some(app_exit_events) = self.bevy_app.resources.get_mut::<Events<AppExit>>() {
             if self
@@ -173,9 +194,18 @@ fn doryen_runner(mut app: BevyApp) {
     doryen_app.set_engine(Box::new(DoryenPluginEngine {
         bevy_app: app,
         app_exit_event_reader: Default::default(),
+        set_font_path_event_reader: Default::default(),
         swap_console: Some(Console::new(1, 1)),
         mouse_button_listeners,
     }));
 
     doryen_app.run();
 }
+
+#[derive(Default)]
+pub struct DoryenFpsInfo {
+    pub fps: u32,
+    pub average_fps: u32,
+}
+
+pub struct DoryenSetFontPath(pub String);
