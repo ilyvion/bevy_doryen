@@ -19,8 +19,13 @@ impl Default for DoryenRenderSystems {
     }
 }
 
+/// Adds methods to the [`AppBuilder`] for adding systems to the Doryen
+/// [`render`](crate::doryen::Engine::render) schedule.
 pub trait DoryenRenderSystemExtensions {
+    /// Adds a system to the [`RENDER`](crate::render_stage::RENDER) stage of the
+    /// render schedule.
     fn add_doryen_render_system<S: System<In = (), Out = ()>>(&mut self, system: S) -> &mut Self;
+    /// Adds a system to the given stage of the render schedule.
     fn add_doryen_render_system_to_stage<S: System<In = (), Out = ()>>(
         &mut self,
         stage_name: &'static str,

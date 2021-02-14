@@ -2,38 +2,45 @@ mod input;
 mod render_system;
 mod root_console;
 
-/// Re-export of the Doryen library types
+/// Re-export of the Doryen library types.
 pub mod doryen {
     pub use doryen_rs::*;
 }
 
-pub use input::{DoryenInput, Keys};
+pub use input::{DoryenInput, Keys, MouseButton};
 pub use render_system::DoryenRenderSystemExtensions;
 pub use root_console::DoryenRootConsole;
 
 use crate::doryen::{AppOptions, Console};
 use crate::render_system::DoryenRenderSystems;
 use bevy_app::{App as BevyApp, AppBuilder, AppExit, EventReader, Events, Plugin};
-use bevy_ecs::{Schedule, System, SystemStage};
+use bevy_ecs::Schedule;
 use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
 
+/// The Bevy Doryen plugin.
 #[derive(Default)]
 pub struct DoryenPlugin;
 
 /// DoryenPlugin settings
 pub struct DoryenSettings {
-    /// The [`AppOptions`] passed to the [`DoryenApp`].
+    /// The [`AppOptions`] passed to the [`DoryenApp`]. If [`None`] is provided,
+    /// then [`AppOptions::default()`] will be used.
     pub app_options: Option<AppOptions>,
-    /// Which mouse buttons to request input data for from Doryen.
-    /// Defaults to 0 (left), 1 (middle) and 2 (right)
-    pub mouse_button_listeners: Vec<usize>,
+    /// Which mouse buttons to request input data for from Doryen during the
+    /// input handling.
+    /// Defaults to left, middle and right mouse buttons.
+    pub mouse_button_listeners: Vec<MouseButton>,
 }
 
 impl Default for DoryenSettings {
     fn default() -> Self {
         Self {
             app_options: Default::default(),
-            mouse_button_listeners: vec![0, 1, 2],
+            mouse_button_listeners: vec![
+                MouseButton::Left,
+                MouseButton::Middle,
+                MouseButton::Right,
+            ],
         }
     }
 }
@@ -60,7 +67,7 @@ struct DoryenPluginEngine {
     bevy_app: BevyApp,
     app_exit_event_reader: EventReader<AppExit>,
     swap_console: Option<Console>,
-    mouse_button_listeners: Vec<usize>,
+    mouse_button_listeners: Vec<MouseButton>,
 }
 
 impl DoryenPluginEngine {

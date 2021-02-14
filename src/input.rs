@@ -2,6 +2,9 @@ use crate::doryen::InputApi;
 use std::collections::{HashMap, HashSet};
 use std::iter::Filter;
 
+/// Provides access to the input events handled by the Doryen engine. See the
+/// documentation for the [`InputApi`] type for details on what values should
+/// be used with the various `key` methods.
 #[derive(Default)]
 pub struct DoryenInput {
     keys_down: HashMap<String, bool>,
@@ -46,7 +49,7 @@ impl DoryenInput {
 
     pub(crate) fn handle_input(
         &mut self,
-        mouse_button_listeners: &[usize],
+        mouse_button_listeners: &[MouseButton],
         input: &mut dyn InputApi,
     ) {
         self.clear();
@@ -76,15 +79,16 @@ impl DoryenInput {
                 self.keys_down.insert(String::from(k), false);
             }
         }
-        for &m in mouse_button_listeners {
-            if input.mouse_button_pressed(m) {
-                self.mouse_buttons_pressed.insert(m);
-                let down = self.mouse_buttons_down.entry(m).or_default();
+        for &mouse_button in mouse_button_listeners {
+            let mouse_button_num = mouse_button.to_usize();
+            if input.mouse_button_pressed(mouse_button_num) {
+                self.mouse_buttons_pressed.insert(mouse_button_num);
+                let down = self.mouse_buttons_down.entry(mouse_button_num).or_default();
                 *down = true;
             }
-            if input.mouse_button_released(m) {
-                self.mouse_buttons_released.insert(m);
-                let down = self.mouse_buttons_down.entry(m).or_default();
+            if input.mouse_button_released(mouse_button_num) {
+                self.mouse_buttons_released.insert(mouse_button_num);
+                let down = self.mouse_buttons_down.entry(mouse_button_num).or_default();
                 *down = false;
             }
         }
@@ -93,51 +97,98 @@ impl DoryenInput {
         self.close_requested = input.close_requested();
     }
 
-    pub fn key(&self, scan_code: &str) -> bool {
-        matches!(self.keys_down.get(scan_code), Some(&true))
+    /// Returns the current status of the given key (true if currently pressed).
+    pub fn key(&self, key: &str) -> bool {
+        matches!(self.keys_down.get(key), Some(&true))
     }
 
-    pub fn key_pressed(&self, scan_code: &str) -> bool {
-        matches!(self.keys_pressed.get(scan_code), Some(&true))
+    /// Returns true if the given key was pressed since the last update.
+    pub fn key_pressed(&self, key: &str) -> bool {
+        matches!(self.keys_pressed.get(key), Some(&true))
     }
 
+    /// Returns an iterator over all the keys that were pressed since the last
+    /// update in no particular order.
     pub fn keys_pressed(&self) -> Keys {
         Keys {
             inner: self.keys_pressed.iter().filter(|&(_, &v)| v),
         }
     }
 
-    pub fn key_released(&self, scan_code: &str) -> bool {
-        matches!(self.keys_released.get(scan_code), Some(&true))
+    /// Returns true if the given key was released since the last update.
+    pub fn key_released(&self, key: &str) -> bool {
+        matches!(self.keys_released.get(key), Some(&true))
     }
 
+    /// Returns an iterator over all the keys that were released since the last
+    /// update in no particular order.
     pub fn keys_released(&self) -> Keys {
         Keys {
             inner: self.keys_released.iter().filter(|&(_, &v)| v),
         }
     }
 
+    /// Characters typed since last update.
     pub fn text(&self) -> &str {
         &self.text
     }
 
-    pub fn mouse_button(&self, num: usize) -> bool {
-        matches!(self.mouse_buttons_down.get(&num), Some(&true))
+    /// Returns the current status of the given mouse button (true if
+    /// currently pressed).
+    pub fn mouse_button(&self, mouse_button: MouseButton) -> bool {
+        matches!(
+            self.mouse_buttons_down.get(&mouse_button.to_usize()),
+            Some(&true)
+        )
     }
 
-    pub fn mouse_button_pressed(&self, num: usize) -> bool {
-        self.mouse_buttons_pressed.contains(&num)
+    /// Returns true if the given mouse button was pressed since the last
+    /// update.
+    pub fn mouse_button_pressed(&self, mouse_button: MouseButton) -> bool {
+        self.mouse_buttons_pressed
+            .contains(&mouse_button.to_usize())
     }
 
-    pub fn mouse_button_released(&self, num: usize) -> bool {
-        self.mouse_buttons_released.contains(&num)
+    /// Returns true if the given mouse button was released since the last
+    /// update.
+    pub fn mouse_button_released(&self, mouse_button: MouseButton) -> bool {
+        self.mouse_buttons_released
+            .contains(&mouse_button.to_usize())
     }
 
+    /// Returns the current mouse position in console cells coordinates.
+    /// The decimal part of the value indicates sub-cell location.
     pub fn mouse_pos(&self) -> (f32, f32) {
         self.mouse_position
     }
 
+    /// Whether the window close button has been activated.
     pub fn close_requested(&self) -> bool {
         self.close_requested
+    }
+}
+
+/// Represents buttons on a mouse.
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum MouseButton {
+    /// Represents the left button on a mouse.
+    Left,
+    /// Represents the middle button on a mouse.
+    Middle,
+    /// Represents the right button on a mouse.
+    Right,
+    /// Represents any given button on a mouse.
+    Any(usize),
+}
+
+impl MouseButton {
+    #[inline]
+    fn to_usize(&self) -> usize {
+        match self {
+            MouseButton::Left => 0,
+            MouseButton::Middle => 1,
+            MouseButton::Right => 2,
+            MouseButton::Any(which) => *which,
+        }
     }
 }
