@@ -69,20 +69,24 @@ fn init(mut root_console: ResMut<DoryenRootConsole>, commands: &mut Commands) {
     root_console.register_color("red", (255, 92, 92, 255));
     root_console.register_color("blue", (192, 192, 255, 255));
 
-    commands.spawn(PlayerBundle {
-        player: Player,
-        position: Position {
-            x: (CONSOLE_WIDTH / 2) as i32,
-            y: (CONSOLE_HEIGHT / 2) as i32,
-        },
-    });
-    let player = commands.current_entity().unwrap();
+    let player = commands
+        .spawn(PlayerBundle {
+            player: Player,
+            position: Position {
+                x: (CONSOLE_WIDTH / 2) as i32,
+                y: (CONSOLE_HEIGHT / 2) as i32,
+            },
+        })
+        .current_entity()
+        .unwrap();
 
-    commands.spawn(MouseBundle {
-        mouse: Mouse,
-        position: Position { x: 0., y: 0. },
-    });
-    let mouse = commands.current_entity().unwrap();
+    let mouse = commands
+        .spawn(MouseBundle {
+            mouse: Mouse,
+            position: Position { x: 0., y: 0. },
+        })
+        .current_entity()
+        .unwrap();
 
     commands.insert_resource(Entities { player, mouse });
 }

@@ -47,13 +47,15 @@ fn main() {
 }
 
 fn init(commands: &mut Commands) {
-    commands.spawn(CircleBundle {
-        circle: Circle,
-        position: Position { x: 0., y: 0. },
-        radius: Radius(10.),
-        angle: Angle(0.),
-    });
-    let circle = commands.current_entity().unwrap();
+    let circle = commands
+        .spawn(CircleBundle {
+            circle: Circle,
+            position: Position { x: 0., y: 0. },
+            radius: Radius(10.),
+            angle: Angle(0.),
+        })
+        .current_entity()
+        .unwrap();
     commands.insert_resource(Entities { circle });
 }
 

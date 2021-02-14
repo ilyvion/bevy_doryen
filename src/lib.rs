@@ -59,7 +59,8 @@ impl Plugin for DoryenPlugin {
         app.init_resource::<DoryenRootConsole>()
             .init_resource::<DoryenInput>()
             .init_resource::<DoryenFpsInfo>()
-            .init_resource::<Events<DoryenSetFontPath>>()
+            .add_event::<DoryenSetFontPath>()
+            .add_event::<Resized>()
             .init_resource::<DoryenRenderSystems>()
             .set_runner(doryen_runner);
     }
@@ -183,6 +184,17 @@ impl Engine for DoryenPluginEngine {
 
         self.restore_root_console_ownership(api);
     }
+
+    fn resize(&mut self, api: &mut dyn DoryenApi) {
+        let (width, height) = api.get_screen_size();
+
+        let mut resized_events = self
+            .bevy_app
+            .resources
+            .get_mut::<Events<Resized>>()
+            .unwrap();
+        resized_events.send(Resized { width, height });
+    }
 }
 
 fn doryen_runner(mut app: BevyApp) {
@@ -209,3 +221,9 @@ pub struct DoryenFpsInfo {
 }
 
 pub struct DoryenSetFontPath(pub String);
+
+#[derive(Debug, Clone)]
+pub struct Resized {
+    pub width: u32,
+    pub height: u32,
+}

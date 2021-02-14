@@ -1,7 +1,7 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, Image};
 use bevy_doryen::{DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings};
-use bevy_ecs::{IntoSystem, Res, ResMut};
+use bevy_ecs::{IntoSystem, ResMut};
 
 struct SkullImage {
     skull: Image,
@@ -23,7 +23,7 @@ fn main() {
     App::build()
         .add_resource(DoryenSettings {
             app_options: Some(AppOptions {
-                window_title: String::from("doryen-rs image demo"),
+                window_title: String::from("bevy_doryen image demo"),
                 ..Default::default()
             }),
             ..Default::default()

@@ -106,10 +106,10 @@ fn init(commands: &mut Commands) {
 fn update_position_and_speed(
     root_console: Res<DoryenRootConsole>,
     step: Res<Step>,
-    mut console_query: Query<(&mut Position, &mut Speed, &Console)>,
+    mut position_speed_query: Query<(&mut Position, &mut Speed)>,
 ) {
     if step.0 == 0 {
-        for (mut position, mut speed, console) in console_query.iter_mut() {
+        for (mut position, mut speed) in position_speed_query.iter_mut() {
             let size = (
                 root_console.get_width() as i32,
                 root_console.get_height() as i32,

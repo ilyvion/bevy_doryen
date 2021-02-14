@@ -45,7 +45,7 @@ fn main() {
                 console_height: CONSOLE_HEIGHT,
                 screen_width: CONSOLE_WIDTH * 24,
                 screen_height: CONSOLE_HEIGHT * 24,
-                window_title: String::from("doryen-rs font test"),
+                window_title: String::from("bevy_doryen font test"),
                 ..Default::default()
             }),
             ..Default::default()
