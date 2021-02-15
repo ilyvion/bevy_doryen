@@ -1,8 +1,7 @@
 use bevy_app::{App, Events};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{
-    DoryenInput, DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSetFontPath,
-    DoryenSettings,
+    DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole, SetFontPath,
 };
 use bevy_ecs::{IntoSystem, Res, ResMut};
 
@@ -39,7 +38,7 @@ struct Font {
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 console_width: CONSOLE_WIDTH,
                 console_height: CONSOLE_HEIGHT,
@@ -59,8 +58,8 @@ fn main() {
 
 fn update(
     mut font: ResMut<Font>,
-    input: Res<DoryenInput>,
-    mut set_font_path: ResMut<Events<DoryenSetFontPath>>,
+    input: Res<Input>,
+    mut set_font_path: ResMut<Events<SetFontPath>>,
 ) {
     let mut font_path = None;
     if input.key_released("PageDown") {
@@ -73,11 +72,11 @@ fn update(
 
     if let Some(font_path) = font_path {
         font.current_font_name = font_path;
-        set_font_path.send(DoryenSetFontPath(String::from(font_path)));
+        set_font_path.send(SetFontPath(String::from(font_path)));
     }
 }
 
-fn render(mut root_console: ResMut<DoryenRootConsole>, font: Res<Font>) {
+fn render(mut root_console: ResMut<RootConsole>, font: Res<Font>) {
     root_console.rectangle(
         0,
         0,

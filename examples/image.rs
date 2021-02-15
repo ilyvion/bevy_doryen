@@ -1,6 +1,6 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, Image};
-use bevy_doryen::{DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
 use bevy_ecs::{IntoSystem, ResMut};
 
 struct SkullImage {
@@ -21,7 +21,7 @@ impl Default for SkullImage {
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("bevy_doryen image demo"),
                 ..Default::default()
@@ -40,7 +40,7 @@ fn update(mut skull: ResMut<SkullImage>) {
     skull.scale_time += 0.01;
 }
 
-fn render(mut root_console: ResMut<DoryenRootConsole>, mut skull: ResMut<SkullImage>) {
+fn render(mut root_console: ResMut<RootConsole>, mut skull: ResMut<SkullImage>) {
     let root_console = &mut **root_console;
     let skull = &mut *skull;
     let scale = skull.scale_time.cos();

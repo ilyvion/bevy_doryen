@@ -1,6 +1,6 @@
 use bevy_app::App;
 use bevy_doryen::doryen::AppOptions;
-use bevy_doryen::{DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
 use bevy_ecs::{Bundle, Commands, Entity, IntoSystem, Query, Res, ResMut};
 
 #[derive(Default)]
@@ -32,7 +32,7 @@ struct Entities {
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("alpha test"),
                 ..Default::default()
@@ -60,7 +60,7 @@ fn init(commands: &mut Commands) {
 }
 
 fn update_circle(
-    root_console: Res<DoryenRootConsole>,
+    root_console: Res<RootConsole>,
     entities: Res<Entities>,
     mut circle_query: Query<(&mut Position, &mut Radius, &mut Angle, &Circle)>,
 ) {
@@ -77,7 +77,7 @@ fn update_circle(
 
 fn render(
     entities: Res<Entities>,
-    mut root_console: ResMut<DoryenRootConsole>,
+    mut root_console: ResMut<RootConsole>,
     circle_query: Query<(&Position, &Radius, &Angle, &Circle)>,
 ) {
     // fill the console with transparent black. The more opaque it is, the faster the previous frames will fade to black.

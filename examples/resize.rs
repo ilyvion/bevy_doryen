@@ -1,8 +1,8 @@
 use bevy_app::{App, EventReader, Events};
 use bevy_doryen::doryen::{AppOptions, TextAlign, DEFAULT_CONSOLE_HEIGHT, DEFAULT_CONSOLE_WIDTH};
 use bevy_doryen::{
-    DoryenInput, DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings,
-    ResizeMode, Resized,
+    DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, ResizeMode, Resized,
+    RootConsole,
 };
 use bevy_ecs::{IntoSystem, Local, Res, ResMut};
 
@@ -14,7 +14,7 @@ struct ResizeData {
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("resizable console"),
                 vsync: false,
@@ -35,11 +35,11 @@ fn main() {
         .run();
 }
 
-fn update_mouse_position(mut resize_data: ResMut<ResizeData>, input: Res<DoryenInput>) {
+fn update_mouse_position(mut resize_data: ResMut<ResizeData>, input: Res<Input>) {
     resize_data.mouse_pos = input.mouse_pos();
 }
 
-fn resize_callback(root_console: &mut DoryenRootConsole, resized: Resized) {
+fn resize_callback(root_console: &mut RootConsole, resized: Resized) {
     root_console.resize(resized.new_width / 8, resized.new_height / 8)
 }
 
@@ -54,7 +54,7 @@ fn resize_events(
     }
 }
 
-fn render(mut root_console: ResMut<DoryenRootConsole>, resize_data: Res<ResizeData>) {
+fn render(mut root_console: ResMut<RootConsole>, resize_data: Res<ResizeData>) {
     root_console.rectangle(
         0,
         0,

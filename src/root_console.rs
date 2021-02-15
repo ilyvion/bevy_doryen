@@ -3,9 +3,9 @@ use std::ops::{Deref, DerefMut};
 
 /// Provides access to the root console of the Doryen engine.
 #[derive(Default)]
-pub struct DoryenRootConsole(pub(crate) Option<Console>);
+pub struct RootConsole(pub(crate) Option<Console>);
 
-impl Deref for DoryenRootConsole {
+impl Deref for RootConsole {
     type Target = Console;
 
     #[inline]
@@ -16,7 +16,7 @@ impl Deref for DoryenRootConsole {
     }
 }
 
-impl DerefMut for DoryenRootConsole {
+impl DerefMut for RootConsole {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
         self.0

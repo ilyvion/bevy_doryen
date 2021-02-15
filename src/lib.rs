@@ -7,9 +7,9 @@ pub mod doryen {
     pub use doryen_rs::*;
 }
 
-pub use input::{DoryenInput, Keys, MouseButton};
-pub use render_system::DoryenRenderSystemExtensions;
-pub use root_console::DoryenRootConsole;
+pub use input::{Input, Keys, MouseButton};
+pub use render_system::RenderSystemExtensions;
+pub use root_console::RootConsole;
 
 use crate::doryen::{AppOptions, Console};
 use crate::render_system::DoryenRenderSystems;
@@ -22,7 +22,7 @@ use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
 pub struct DoryenPlugin;
 
 /// DoryenPlugin settings.
-pub struct DoryenSettings {
+pub struct DoryenPluginSettings {
     /// The [`AppOptions`] passed to the [`DoryenApp`].
     pub app_options: AppOptions,
     /// Which mouse buttons to request input data for from Doryen during the
@@ -33,7 +33,7 @@ pub struct DoryenSettings {
     pub resize_mode: ResizeMode,
 }
 
-impl Default for DoryenSettings {
+impl Default for DoryenPluginSettings {
     fn default() -> Self {
         Self {
             app_options: Default::default(),
@@ -58,10 +58,10 @@ pub mod render_stage {
 
 impl Plugin for DoryenPlugin {
     fn build(&self, app: &mut AppBuilder) {
-        app.init_resource::<DoryenRootConsole>()
-            .init_resource::<DoryenInput>()
-            .init_resource::<DoryenFpsInfo>()
-            .add_event::<DoryenSetFontPath>()
+        app.init_resource::<RootConsole>()
+            .init_resource::<Input>()
+            .init_resource::<FpsInfo>()
+            .add_event::<SetFontPath>()
             .add_event::<Resized>()
             .init_resource::<DoryenRenderSystems>()
             .set_runner(doryen_runner);
@@ -71,7 +71,7 @@ impl Plugin for DoryenPlugin {
 struct DoryenPluginEngine {
     bevy_app: BevyApp,
     app_exit_event_reader: EventReader<AppExit>,
-    set_font_path_event_reader: EventReader<DoryenSetFontPath>,
+    set_font_path_event_reader: EventReader<SetFontPath>,
     swap_console: Option<Console>,
     mouse_button_listeners: Vec<MouseButton>,
     previous_screen_size: (u32, u32),
@@ -88,11 +88,7 @@ impl DoryenPluginEngine {
         swap(api.con(), &mut self.swap_console.as_mut().unwrap());
 
         // Insert it into the DoryenRootConsole resource
-        let mut doryen_root_console = self
-            .bevy_app
-            .resources
-            .get_mut::<DoryenRootConsole>()
-            .unwrap();
+        let mut doryen_root_console = self.bevy_app.resources.get_mut::<RootConsole>().unwrap();
         doryen_root_console.0 = self.swap_console.take();
     }
 
@@ -101,11 +97,7 @@ impl DoryenPluginEngine {
         use std::mem::swap;
 
         // Take the root console out of the DoryenRootConsole resource
-        let mut doryen_root_console = self
-            .bevy_app
-            .resources
-            .get_mut::<DoryenRootConsole>()
-            .unwrap();
+        let mut doryen_root_console = self.bevy_app.resources.get_mut::<RootConsole>().unwrap();
         self.swap_console = doryen_root_console.0.take();
 
         // Hand ownership of the Doryen root console back to Doryen
@@ -134,7 +126,7 @@ impl DoryenPluginEngine {
 
     #[inline]
     fn handle_input(&mut self, api: &mut dyn DoryenApi) {
-        let mut doryen_input = self.bevy_app.resources.get_mut::<DoryenInput>().unwrap();
+        let mut doryen_input = self.bevy_app.resources.get_mut::<Input>().unwrap();
         let input = api.input();
         doryen_input.handle_input(&self.mouse_button_listeners, input);
     }
@@ -142,7 +134,7 @@ impl DoryenPluginEngine {
 
 impl Engine for DoryenPluginEngine {
     fn update(&mut self, api: &mut dyn DoryenApi) -> Option<UpdateEvent> {
-        let mut doryen_fps_info = self.bevy_app.resources.get_mut::<DoryenFpsInfo>().unwrap();
+        let mut doryen_fps_info = self.bevy_app.resources.get_mut::<FpsInfo>().unwrap();
         doryen_fps_info.fps = api.fps();
         doryen_fps_info.average_fps = api.average_fps();
         drop(doryen_fps_info);
@@ -157,7 +149,7 @@ impl Engine for DoryenPluginEngine {
         let doryen_set_font_path_events = self
             .bevy_app
             .resources
-            .get_mut::<Events<DoryenSetFontPath>>()
+            .get_mut::<Events<SetFontPath>>()
             .unwrap();
         if let Some(doryen_set_font_path) = self
             .set_font_path_event_reader
@@ -233,8 +225,10 @@ impl Engine for DoryenPluginEngine {
 }
 
 fn doryen_runner(mut app: BevyApp) {
-    let mut resource_settings = app.resources.get_or_insert_with(DoryenSettings::default);
-    let DoryenSettings {
+    let mut resource_settings = app
+        .resources
+        .get_or_insert_with(DoryenPluginSettings::default);
+    let DoryenPluginSettings {
         app_options,
         mouse_button_listeners,
         resize_mode,
@@ -266,12 +260,12 @@ fn doryen_runner(mut app: BevyApp) {
 }
 
 #[derive(Default)]
-pub struct DoryenFpsInfo {
+pub struct FpsInfo {
     pub fps: u32,
     pub average_fps: u32,
 }
 
-pub struct DoryenSetFontPath(pub String);
+pub struct SetFontPath(pub String);
 
 #[derive(Debug, Clone, Copy)]
 pub struct Resized {
@@ -296,5 +290,5 @@ pub enum ResizeMode {
     /// [`Resized`] event is useful for reacting to resizing within Bevy
     /// systems for other reasons, but will arrive at a point that is too late
     /// to do the root console resizing correctly.
-    Callback(fn(&mut DoryenRootConsole, Resized)),
+    Callback(fn(&mut RootConsole, Resized)),
 }

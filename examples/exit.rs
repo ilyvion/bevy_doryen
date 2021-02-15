@@ -1,8 +1,6 @@
 use bevy_app::{App, AppExit, Events};
 use bevy_doryen::doryen::{AppOptions, Color, TextAlign};
-use bevy_doryen::{
-    DoryenInput, DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings,
-};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
 use bevy_ecs::{IntoSystem, Res, ResMut};
 
 const WHITE: Color = (255, 255, 255, 255);
@@ -12,7 +10,7 @@ struct CloseRequested(bool);
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 intercept_close_request: true,
                 ..Default::default()
@@ -27,7 +25,7 @@ fn main() {
 }
 
 fn process_input(
-    input: Res<DoryenInput>,
+    input: Res<Input>,
     mut close_requested: ResMut<CloseRequested>,
     mut app_exit: ResMut<Events<AppExit>>,
 ) {
@@ -42,7 +40,7 @@ fn process_input(
     }
 }
 
-fn render(mut root_console: ResMut<DoryenRootConsole>, close_requested: Res<CloseRequested>) {
+fn render(mut root_console: ResMut<RootConsole>, close_requested: Res<CloseRequested>) {
     root_console.clear(None, None, Some(' ' as u16));
     if close_requested.0 {
         root_console.print(

@@ -6,7 +6,7 @@ use std::iter::Filter;
 /// documentation for the [`InputApi`] type for details on what values should
 /// be used with the various `key` methods.
 #[derive(Default)]
-pub struct DoryenInput {
+pub struct Input {
     keys_down: HashMap<String, bool>,
     keys_pressed: HashMap<String, bool>,
     keys_released: HashMap<String, bool>,
@@ -34,7 +34,7 @@ impl<'a> Iterator for Keys<'a> {
     }
 }
 
-impl DoryenInput {
+impl Input {
     fn clear(&mut self) {
         for (_, v) in self.keys_pressed.iter_mut() {
             *v = false;

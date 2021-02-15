@@ -1,6 +1,6 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, Color, Console as DoryenConsole, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
 use bevy_ecs::{Bundle, Commands, IntoSystem, Query, Res, ResMut};
 
 struct Console(DoryenConsole);
@@ -41,7 +41,7 @@ struct Step(usize);
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("blitting demo"),
                 ..Default::default()
@@ -104,7 +104,7 @@ fn init(commands: &mut Commands) {
 }
 
 fn update_position_and_speed(
-    root_console: Res<DoryenRootConsole>,
+    root_console: Res<RootConsole>,
     step: Res<Step>,
     mut position_speed_query: Query<(&mut Position, &mut Speed)>,
 ) {
@@ -137,7 +137,7 @@ fn update_step(mut step: ResMut<Step>) {
 }
 
 fn render(
-    mut root_console: ResMut<DoryenRootConsole>,
+    mut root_console: ResMut<RootConsole>,
     console_query: Query<(&Position, &Alpha, &KeyColor, &Console)>,
 ) {
     let root_console = &mut **root_console;

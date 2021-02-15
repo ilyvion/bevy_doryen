@@ -1,8 +1,6 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{
-    DoryenInput, DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings,
-};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
 use bevy_ecs::{Bundle, Commands, Entity, IntoSystem, Query, Res, ResMut};
 
 const CONSOLE_WIDTH: u32 = 80;
@@ -39,7 +37,7 @@ struct Entities {
 
 fn main() {
     App::build()
-        .add_resource(DoryenSettings {
+        .add_resource(DoryenPluginSettings {
             // here are all the available options.
             // better practice is to use default values (see other examples)
             app_options: AppOptions {
@@ -64,7 +62,7 @@ fn main() {
         .run();
 }
 
-fn init(mut root_console: ResMut<DoryenRootConsole>, commands: &mut Commands) {
+fn init(mut root_console: ResMut<RootConsole>, commands: &mut Commands) {
     root_console.register_color("white", (255, 255, 255, 255));
     root_console.register_color("red", (255, 92, 92, 255));
     root_console.register_color("blue", (192, 192, 255, 255));
@@ -92,7 +90,7 @@ fn init(mut root_console: ResMut<DoryenRootConsole>, commands: &mut Commands) {
 }
 
 fn input(
-    input: Res<DoryenInput>,
+    input: Res<Input>,
     entities: Res<Entities>,
     mut player_query: Query<(&mut Position<i32>, &Player)>,
     mut mouse_query: Query<(&mut Position<f32>, &Mouse)>,
@@ -123,7 +121,7 @@ fn input(
 
 fn render(
     entities: Res<Entities>,
-    mut root_console: ResMut<DoryenRootConsole>,
+    mut root_console: ResMut<RootConsole>,
     player_query: Query<(&Position<i32>, &Player)>,
     mouse_query: Query<(&Position<f32>, &Mouse)>,
 ) {
