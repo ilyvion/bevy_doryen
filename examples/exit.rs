@@ -13,10 +13,10 @@ struct CloseRequested(bool);
 fn main() {
     App::build()
         .add_resource(DoryenSettings {
-            app_options: Some(AppOptions {
+            app_options: AppOptions {
                 intercept_close_request: true,
                 ..Default::default()
-            }),
+            },
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)

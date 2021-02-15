@@ -33,10 +33,10 @@ struct Entities {
 fn main() {
     App::build()
         .add_resource(DoryenSettings {
-            app_options: Some(AppOptions {
+            app_options: AppOptions {
                 window_title: String::from("alpha test"),
                 ..Default::default()
-            }),
+            },
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)

@@ -1,10 +1,10 @@
-use bevy_app::{App, EventReader, Events};
+use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{
     DoryenFpsInfo, DoryenPlugin, DoryenRenderSystemExtensions, DoryenRootConsole, DoryenSettings,
-    Resized,
+    ResizeMode,
 };
-use bevy_ecs::{IntoSystem, Local, Res, ResMut};
+use bevy_ecs::{IntoSystem, Res, ResMut};
 
 struct PerfTest {
     seed: u64,
@@ -23,30 +23,18 @@ impl PerfTest {
 fn main() {
     App::build()
         .add_resource(DoryenSettings {
-            app_options: Some(AppOptions {
+            app_options: AppOptions {
                 window_title: String::from("bevy_doryen performance test"),
                 vsync: false,
                 ..Default::default()
-            }),
+            },
+            resize_mode: ResizeMode::Automatic,
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)
         .add_resource(PerfTest::new())
-        .add_system(resize.system())
         .add_doryen_render_system(render.system())
         .run();
-}
-
-fn resize(
-    mut root_console: ResMut<DoryenRootConsole>,
-    events: Res<Events<Resized>>,
-    mut event_reader: Local<EventReader<Resized>>,
-) {
-    if let Some(resized) = event_reader.latest(&events) {
-        let new_width = resized.width / 8;
-        let new_height = resized.height / 8;
-        root_console.resize(new_width, new_height);
-    }
 }
 
 fn render(

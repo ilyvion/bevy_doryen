@@ -42,7 +42,7 @@ fn main() {
         .add_resource(DoryenSettings {
             // here are all the available options.
             // better practice is to use default values (see other examples)
-            app_options: Some(AppOptions {
+            app_options: AppOptions {
                 console_width: CONSOLE_WIDTH,
                 console_height: CONSOLE_HEIGHT,
                 screen_width: CONSOLE_WIDTH * 8,
@@ -54,7 +54,7 @@ fn main() {
                 show_cursor: true,
                 resizable: true,
                 intercept_close_request: false,
-            }),
+            },
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)

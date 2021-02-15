@@ -21,15 +21,16 @@ use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
 #[derive(Default)]
 pub struct DoryenPlugin;
 
-/// DoryenPlugin settings
+/// DoryenPlugin settings.
 pub struct DoryenSettings {
-    /// The [`AppOptions`] passed to the [`DoryenApp`]. If [`None`] is provided,
-    /// then [`AppOptions::default()`] will be used.
-    pub app_options: Option<AppOptions>,
+    /// The [`AppOptions`] passed to the [`DoryenApp`].
+    pub app_options: AppOptions,
     /// Which mouse buttons to request input data for from Doryen during the
     /// input handling.
     /// Defaults to left, middle and right mouse buttons.
     pub mouse_button_listeners: Vec<MouseButton>,
+    /// What to do when the Doryen window is resized.
+    pub resize_mode: ResizeMode,
 }
 
 impl Default for DoryenSettings {
@@ -41,6 +42,7 @@ impl Default for DoryenSettings {
                 MouseButton::Middle,
                 MouseButton::Right,
             ],
+            resize_mode: ResizeMode::Nothing,
         }
     }
 }
@@ -72,6 +74,9 @@ struct DoryenPluginEngine {
     set_font_path_event_reader: EventReader<DoryenSetFontPath>,
     swap_console: Option<Console>,
     mouse_button_listeners: Vec<MouseButton>,
+    previous_screen_size: (u32, u32),
+    previous_console_size: (u32, u32),
+    resize_mode: ResizeMode,
 }
 
 impl DoryenPluginEngine {
@@ -186,22 +191,65 @@ impl Engine for DoryenPluginEngine {
     }
 
     fn resize(&mut self, api: &mut dyn DoryenApi) {
-        let (width, height) = api.get_screen_size();
+        let (previous_width, previous_height) = self.previous_screen_size;
+        let (new_width, new_height) = api.get_screen_size();
 
         let mut resized_events = self
             .bevy_app
             .resources
             .get_mut::<Events<Resized>>()
             .unwrap();
-        resized_events.send(Resized { width, height });
+        let resized = Resized {
+            previous_width,
+            previous_height,
+            new_width,
+            new_height,
+        };
+        resized_events.send(resized);
+        drop(resized_events);
+
+        match self.resize_mode {
+            ResizeMode::Nothing => (),
+            ResizeMode::Automatic => {
+                let (previous_console_width, previous_console_height) = self.previous_console_size;
+
+                let w_ratio = previous_width / previous_console_width;
+                let h_ratio = previous_height / previous_console_height;
+
+                let new_console_width = new_width / w_ratio;
+                let new_console_height = new_height / h_ratio;
+                api.con().resize(new_console_width, new_console_height);
+            }
+            ResizeMode::Callback(callback) => {
+                self.take_root_console_ownership(api);
+                callback(&mut *self.bevy_app.resources.get_mut().unwrap(), resized);
+                self.restore_root_console_ownership(api);
+            }
+        }
+
+        self.previous_screen_size = (new_width, new_height);
+        self.previous_console_size = api.con().get_size();
     }
 }
 
 fn doryen_runner(mut app: BevyApp) {
-    let mut settings = app.resources.get_or_insert_with(DoryenSettings::default);
-    let mut doryen_app = DoryenApp::new(settings.app_options.take().unwrap_or_default());
-    let mouse_button_listeners = settings.mouse_button_listeners.clone();
-    drop(settings);
+    let mut resource_settings = app.resources.get_or_insert_with(DoryenSettings::default);
+    let DoryenSettings {
+        app_options,
+        mouse_button_listeners,
+        resize_mode,
+    } = std::mem::take(&mut *resource_settings);
+    drop(resource_settings);
+
+    let AppOptions {
+        screen_height,
+        screen_width,
+        console_height,
+        console_width,
+        ..
+    } = app_options;
+
+    let mut doryen_app = DoryenApp::new(app_options);
 
     doryen_app.set_engine(Box::new(DoryenPluginEngine {
         bevy_app: app,
@@ -209,6 +257,9 @@ fn doryen_runner(mut app: BevyApp) {
         set_font_path_event_reader: Default::default(),
         swap_console: Some(Console::new(1, 1)),
         mouse_button_listeners,
+        previous_screen_size: (screen_width, screen_height),
+        previous_console_size: (console_width, console_height),
+        resize_mode,
     }));
 
     doryen_app.run();
@@ -222,8 +273,28 @@ pub struct DoryenFpsInfo {
 
 pub struct DoryenSetFontPath(pub String);
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Resized {
-    pub width: u32,
-    pub height: u32,
+    pub previous_width: u32,
+    pub previous_height: u32,
+    pub new_width: u32,
+    pub new_height: u32,
+}
+
+/// How the [`DoryenPlugin`] reacts to the resize event from Doryen.
+pub enum ResizeMode {
+    /// Do nothing when the window is resized. This is the default behavior.
+    Nothing,
+    /// Set the console size to match the window size automatically. This
+    /// retains the ratio defined between the console size and the screen size
+    /// as given in the [`AppOptions`] at the start of the program.
+    Automatic,
+    /// Call the given function when the resize event is triggered. Because
+    /// Doryen is sensitive to when the root console is resized, the safest
+    /// place to make a call to do so and always have the correct behavior is
+    /// during this resize callback which comes directly from Doryen itself. The
+    /// [`Resized`] event is useful for reacting to resizing within Bevy
+    /// systems for other reasons, but will arrive at a point that is too late
+    /// to do the root console resizing correctly.
+    Callback(fn(&mut DoryenRootConsole, Resized)),
 }

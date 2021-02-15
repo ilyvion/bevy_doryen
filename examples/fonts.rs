@@ -40,14 +40,14 @@ struct Font {
 fn main() {
     App::build()
         .add_resource(DoryenSettings {
-            app_options: Some(AppOptions {
+            app_options: AppOptions {
                 console_width: CONSOLE_WIDTH,
                 console_height: CONSOLE_HEIGHT,
                 screen_width: CONSOLE_WIDTH * 24,
                 screen_height: CONSOLE_HEIGHT * 24,
                 window_title: String::from("bevy_doryen font test"),
                 ..Default::default()
-            }),
+            },
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)
