@@ -9,9 +9,21 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 [![GitHub](https://github.com/alexschrod/bevy_doryen/actions/workflows/rust.yml/badge.svg)](https://github.com/alexschrod/bevy_doryen)
 
 ## Usage
+
+### Targeting Bevy 0.4
 ```toml
 [dependencies]
+bevy_app = "0.4"
+bevy_ecs = "0.4"
 bevy_doryen = "0.1"
+```
+
+### Targeting Bevy main
+```toml
+[dependencies]
+bevy_app = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
+bevy_ecs = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
+bevy_doryen = { git = "https://github.com/alexschrod/bevy_doryen" }
 ```
 
 ```rust
@@ -47,7 +59,7 @@ App::build()
     // The `RenderSystemExtensions` trait lets you add systems that should
     // be run during Doryen's render phase.
     .add_doryen_render_system(render.system())
-.run();
+    .run();
 ```
 
 See the examples for more usage instructions.
