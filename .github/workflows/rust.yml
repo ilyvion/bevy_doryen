@@ -6,14 +6,13 @@ on:
   pull_request:
     branches: [ master ]
 
-env:
-  RUSTFLAGS: -Dwarnings
-
 jobs:
 
   check:
     name: Check
     runs-on: ubuntu-latest
+    env:
+      RUSTFLAGS: -Dwarnings
     steps:
       - uses: actions/checkout@v2
         with:
@@ -112,7 +111,7 @@ jobs:
       - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           override: true
 
       - name: Run cargo-tarpaulin
