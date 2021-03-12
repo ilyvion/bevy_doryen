@@ -6,6 +6,7 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 [![Crates.io](https://img.shields.io/crates/l/bevy_doryen)](https://crates.io/crates/bevy_doryen)
 [![Crates.io](https://img.shields.io/crates/d/bevy_doryen)](https://crates.io/crates/bevy_doryen)
 [![Docs.io](https://docs.rs/bevy_doryen/badge.svg)](https://docs.rs/bevy_doryen)
+[![GitHub](https://github.com/alexschrod/bevy_doryen/actions/workflows/rust.yml/badge.svg)](https://github.com/alexschrod/bevy_doryen)
 
 ## Usage
 ```toml
