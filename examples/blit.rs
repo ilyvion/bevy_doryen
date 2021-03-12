@@ -129,7 +129,10 @@ fn update_position_and_speed(
 
 fn update_alpha(mut console_query: Query<(&mut Alpha, &Console)>) {
     for (mut alpha, _) in console_query.iter_mut() {
-        alpha.value = (alpha.value + alpha.step) % 1.0;
+        if alpha.value <= 0.0 || alpha.value >= 1.0 {
+            alpha.step = -alpha.step;
+        }
+        alpha.value += alpha.step;
     }
 }
 
