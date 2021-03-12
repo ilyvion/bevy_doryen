@@ -1,4 +1,4 @@
-use bevy_app::{App, Events};
+use bevy_app::{App, EventWriter};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{
     DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole, SetFontPath,
@@ -56,11 +56,7 @@ fn main() {
         .run();
 }
 
-fn update(
-    mut font: ResMut<Font>,
-    input: Res<Input>,
-    mut set_font_path: ResMut<Events<SetFontPath>>,
-) {
+fn update(mut font: ResMut<Font>, input: Res<Input>, mut set_font_path: EventWriter<SetFontPath>) {
     let mut font_path = None;
     if input.key_released("PageDown") {
         font.current_font = (font.current_font + 1) % FONTS.len();

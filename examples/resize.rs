@@ -1,10 +1,10 @@
-use bevy_app::{App, EventReader, Events};
+use bevy_app::{App, EventReader};
 use bevy_doryen::doryen::{AppOptions, TextAlign, DEFAULT_CONSOLE_HEIGHT, DEFAULT_CONSOLE_WIDTH};
 use bevy_doryen::{
     DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, ResizeMode, Resized,
     RootConsole,
 };
-use bevy_ecs::system::{IntoSystem, Local, Res, ResMut};
+use bevy_ecs::system::{IntoSystem, Res, ResMut};
 
 struct ResizeData {
     width: u32,

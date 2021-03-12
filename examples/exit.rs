@@ -1,4 +1,4 @@
-use bevy_app::{App, AppExit, Events};
+use bevy_app::{App, AppExit, EventWriter};
 use bevy_doryen::doryen::{AppOptions, Color, TextAlign};
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
 use bevy_ecs::system::{IntoSystem, Res, ResMut};
@@ -27,7 +27,7 @@ fn main() {
 fn process_input(
     input: Res<Input>,
     mut close_requested: ResMut<CloseRequested>,
-    mut app_exit: ResMut<Events<AppExit>>,
+    mut app_exit: EventWriter<AppExit>,
 ) {
     if close_requested.0 {
         if input.key("KeyY") {
