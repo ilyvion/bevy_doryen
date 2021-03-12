@@ -5,6 +5,21 @@ use std::ops::{Deref, DerefMut};
 #[derive(Default)]
 pub struct RootConsole(pub(crate) Option<Console>);
 
+impl std::fmt::Debug for RootConsole {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("RootConsole")
+            .field(
+                "0",
+                if self.0.is_some() {
+                    &"<present>"
+                } else {
+                    &"<absent>"
+                },
+            )
+            .finish()
+    }
+}
+
 impl Deref for RootConsole {
     type Target = Console;
 

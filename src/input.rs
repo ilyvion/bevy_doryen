@@ -5,7 +5,7 @@ use std::iter::Filter;
 /// Provides access to the input events handled by the Doryen engine. See the
 /// documentation for the [`InputApi`] type for details on what values should
 /// be used with the various `key` methods.
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Input {
     keys_down: HashMap<String, bool>,
     keys_pressed: HashMap<String, bool>,
@@ -22,6 +22,7 @@ type KeyMapFilter<'a> =
     Filter<std::collections::hash_map::Iter<'a, String, bool>, fn(&(&'a String, &'a bool)) -> bool>;
 
 /// An iterator visiting all keys in arbitrary order.
+#[derive(Debug)]
 pub struct Keys<'a> {
     inner: KeyMapFilter<'a>,
 }
@@ -36,10 +37,10 @@ impl<'a> Iterator for Keys<'a> {
 
 impl Input {
     fn clear(&mut self) {
-        for (_, v) in self.keys_pressed.iter_mut() {
+        for v in self.keys_pressed.values_mut() {
             *v = false;
         }
-        for (_, v) in self.keys_released.iter_mut() {
+        for v in self.keys_released.values_mut() {
             *v = false;
         }
         self.mouse_buttons_pressed.clear();
@@ -109,7 +110,7 @@ impl Input {
 
     /// Returns an iterator over all the keys that were pressed since the last
     /// update in no particular order.
-    pub fn keys_pressed(&self) -> Keys {
+    pub fn keys_pressed(&self) -> Keys<'_> {
         Keys {
             inner: self.keys_pressed.iter().filter(|&(_, &v)| v),
         }
@@ -122,7 +123,7 @@ impl Input {
 
     /// Returns an iterator over all the keys that were released since the last
     /// update in no particular order.
-    pub fn keys_released(&self) -> Keys {
+    pub fn keys_released(&self) -> Keys<'_> {
         Keys {
             inner: self.keys_released.iter().filter(|&(_, &v)| v),
         }
@@ -185,10 +186,10 @@ impl MouseButton {
     #[inline]
     fn to_usize(&self) -> usize {
         match self {
-            MouseButton::Left => 0,
-            MouseButton::Middle => 1,
-            MouseButton::Right => 2,
-            MouseButton::Any(which) => *which,
+            Self::Left => 0,
+            Self::Middle => 1,
+            Self::Right => 2,
+            Self::Any(which) => *which,
         }
     }
 }

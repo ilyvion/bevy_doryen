@@ -72,7 +72,7 @@ fn update(
 
     if let Some(font_path) = font_path {
         font.current_font_name = font_path;
-        set_font_path.send(SetFontPath(String::from(font_path)));
+        set_font_path.send(SetFontPath(String::from(font_path).into()));
     }
 }
 

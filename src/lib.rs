@@ -1,3 +1,121 @@
+//! bevy_doryen is a Bevy plugin that lets you use [Bevy] with the [Doryen]
+//! roguelike library.
+//!
+//! Usage:
+//! ```no_run
+//! # use bevy_app::App;
+//! # use bevy_doryen::{
+//! #     DoryenPluginSettings,
+//! #     DoryenPlugin,
+//! #     RenderSystemExtensions,
+//! #     ResizeMode,
+//! #     MouseButton
+//! # };
+//! # use bevy_doryen::doryen::AppOptions;
+//! # use bevy_ecs::IntoSystem;
+//! App::build()
+//!     // Add a `DoryenPluginSettings` resource to configure the plugin.
+//!     .add_resource(DoryenPluginSettings {
+//!         // `app_options` lets you configure Doryen just as if you were
+//!         // using Doryen without Bevy. The default is `AppOptions::default()`.
+//!         app_options: AppOptions {
+//!             show_cursor: true,
+//!             resizable: true,
+//!             ..AppOptions::default()
+//!         },
+//!         // Lets you configure which mouse buttons to listen for. The default
+//!         // is left, middle and right click.
+//!         mouse_button_listeners: vec![
+//!             MouseButton::Left,
+//!             MouseButton::Middle,
+//!             MouseButton::Right,
+//!         ],
+//!         // Lets you configure how the application should behave when resized.
+//!         // The default is `ResizeMode::Nothing`. See `ResizeMode`'s
+//!         // documentation for more information.
+//!         resize_mode: ResizeMode::Nothing
+//!     })
+//!     // Add the `DoryenPlugin` to Bevy.
+//!     .add_plugin(DoryenPlugin)
+//!     // Add your Bevy systems like usual. Excluding startup systems, which
+//!     // only run once, these systems are run during Doryen's update phase;
+//!     // i.e. 60 times per second.
+//!     .add_startup_system(init.system())
+//!     .add_system(input.system())
+//!     // The `RenderSystemExtensions` trait lets you add systems that should
+//!     // be run during Doryen's render phase.
+//!     .add_doryen_render_system(render.system())
+//! .run();
+//!
+//! # fn init() { }
+//! # fn input() { }
+//! # fn render() { }
+//! ```
+//!
+//! [Bevy]: https://bevyengine.org/
+//! [Doryen]: https://github.com/jice-nospam/doryen-rs
+
+// <editor-fold desc="Coding conventions" defaultstate="collapsed">
+// Coding conventions
+//
+// Forbid (just no)
+#![forbid(unsafe_code)]
+// Deny (don't do this)
+#![deny(anonymous_parameters)]
+#![deny(elided_lifetimes_in_paths)]
+#![deny(ellipsis_inclusive_range_patterns)]
+#![deny(nonstandard_style)]
+#![deny(rust_2018_idioms)]
+#![deny(trivial_numeric_casts)]
+#![deny(broken_intra_doc_links)]
+//#![deny(unused)]
+//
+// Warn (try not to do this)
+#![warn(missing_copy_implementations)]
+#![warn(missing_debug_implementations)]
+#![warn(missing_docs)]
+#![warn(variant_size_differences)]
+//
+// Clippy conventions
+//
+// Deny (don't do this)
+#![deny(clippy::cast_lossless)]
+#![deny(clippy::default_trait_access)]
+#![deny(clippy::empty_enum)]
+#![deny(clippy::enum_glob_use)]
+#![deny(clippy::expl_impl_clone_on_copy)]
+#![deny(clippy::explicit_into_iter_loop)]
+#![deny(clippy::explicit_iter_loop)]
+#![deny(clippy::filter_map)]
+#![deny(clippy::filter_map_next)]
+#![deny(clippy::find_map)]
+#![deny(clippy::if_not_else)]
+#![deny(clippy::invalid_upcast_comparisons)]
+#![deny(clippy::items_after_statements)]
+#![deny(clippy::large_digit_groups)]
+#![deny(clippy::map_flatten)]
+#![deny(clippy::match_same_arms)]
+#![deny(clippy::mut_mut)]
+#![deny(clippy::needless_continue)]
+#![deny(clippy::needless_pass_by_value)]
+#![deny(clippy::map_unwrap_or)]
+#![deny(clippy::redundant_closure_for_method_calls)]
+#![deny(clippy::single_match_else)]
+#![deny(clippy::string_add_assign)]
+#![deny(clippy::type_repetition_in_bounds)]
+#![deny(clippy::unseparated_literal_suffix)]
+#![deny(clippy::unused_self)]
+#![deny(clippy::use_self)] // Sometimes gives false positives; feel free to disable.
+#![deny(clippy::used_underscore_binding)]
+//
+// Warn (try not to do this)
+//#![warn(clippy::must_use_candidate)]
+#![warn(clippy::pub_enum_variant_names)]
+#![warn(clippy::shadow_unrelated)]
+#![warn(clippy::similar_names)]
+#![warn(clippy::too_many_lines)]
+// </editor-fold>
+
 mod input;
 mod render_system;
 mod root_console;
@@ -16,9 +134,10 @@ use crate::render_system::DoryenRenderSystems;
 use bevy_app::{App as BevyApp, AppBuilder, AppExit, EventReader, Events, Plugin};
 use bevy_ecs::Schedule;
 use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
+use std::borrow::Cow;
 
 /// The Bevy Doryen plugin.
-#[derive(Default)]
+#[derive(Default, Clone, Copy, Debug)]
 pub struct DoryenPlugin;
 
 /// DoryenPlugin settings.
@@ -33,10 +152,20 @@ pub struct DoryenPluginSettings {
     pub resize_mode: ResizeMode,
 }
 
+impl std::fmt::Debug for DoryenPluginSettings {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("DoryenPluginSettings")
+            .field("app_options", &"<Not Debug>")
+            .field("mouse_button_listeners", &self.mouse_button_listeners)
+            .field("resize_mode", &self.resize_mode)
+            .finish()
+    }
+}
+
 impl Default for DoryenPluginSettings {
     fn default() -> Self {
         Self {
-            app_options: Default::default(),
+            app_options: AppOptions::default(),
             mouse_button_listeners: vec![
                 MouseButton::Left,
                 MouseButton::Middle,
@@ -47,12 +176,17 @@ impl Default for DoryenPluginSettings {
     }
 }
 
-/// Constants for the Doryen plugin render stages
+/// Constants for the Doryen plugin render stages.
 pub mod render_stage {
+    /// This stage runs before all the other stages.
     pub const FIRST: &str = "first";
+    /// This stage runs right before the render stage.
     pub const PRE_RENDER: &str = "pre_render";
+    /// This stage is where rendering should be done.
     pub const RENDER: &str = "render";
+    /// This stage runs right after the render stage.
     pub const POST_RENDER: &str = "post_render";
+    /// This stage runs after all the other stages.
     pub const LAST: &str = "last";
 }
 
@@ -155,7 +289,7 @@ impl Engine for DoryenPluginEngine {
             .set_font_path_event_reader
             .latest(&doryen_set_font_path_events)
         {
-            api.set_font_path(&doryen_set_font_path.0);
+            api.set_font_path(doryen_set_font_path.0.as_ref());
         }
 
         if let Some(app_exit_events) = self.bevy_app.resources.get_mut::<Events<AppExit>>() {
@@ -247,8 +381,8 @@ fn doryen_runner(mut app: BevyApp) {
 
     doryen_app.set_engine(Box::new(DoryenPluginEngine {
         bevy_app: app,
-        app_exit_event_reader: Default::default(),
-        set_font_path_event_reader: Default::default(),
+        app_exit_event_reader: EventReader::default(),
+        set_font_path_event_reader: EventReader::default(),
         swap_console: Some(Console::new(1, 1)),
         mouse_button_listeners,
         previous_screen_size: (screen_width, screen_height),
@@ -259,23 +393,39 @@ fn doryen_runner(mut app: BevyApp) {
     doryen_app.run();
 }
 
-#[derive(Default)]
+/// This resource contains the values given by [`fps`](DoryenApi::fps) and
+/// [`average_fps`](DoryenApi::average_fps) on the current update tick.
+#[derive(Default, Debug, Clone, Copy)]
 pub struct FpsInfo {
+    /// The value given by [`fps`](DoryenApi::fps) on the current update tick.
     pub fps: u32,
+    /// The value given by [`average_fps`](DoryenApi::average_fps) on the
+    /// current update tick.
     pub average_fps: u32,
 }
 
-pub struct SetFontPath(pub String);
+/// When you want to change Doryen's font path, emit an event of this type.
+/// bevy_doryen will call [`set_font_path`](DoryenApi::set_font_path) with the
+/// provided value.
+#[derive(Debug, Clone)]
+pub struct SetFontPath(pub Cow<'static, str>);
 
+/// Resized event object. Whenever Doryen's [`resize`](Engine::resize) method is
+/// called, an event of this type is emitted.
 #[derive(Debug, Clone, Copy)]
 pub struct Resized {
+    /// The previous width of the Doryen game window.
     pub previous_width: u32,
+    /// The previous height of the Doryen game window.
     pub previous_height: u32,
+    /// The new width of the Doryen game window.
     pub new_width: u32,
+    /// The new height of the Doryen game window.
     pub new_height: u32,
 }
 
 /// How the [`DoryenPlugin`] reacts to the resize event from Doryen.
+#[derive(Clone, Copy)]
 pub enum ResizeMode {
     /// Do nothing when the window is resized. This is the default behavior.
     Nothing,
@@ -291,4 +441,14 @@ pub enum ResizeMode {
     /// systems for other reasons, but will arrive at a point that is too late
     /// to do the root console resizing correctly.
     Callback(fn(&mut RootConsole, Resized)),
+}
+
+impl std::fmt::Debug for ResizeMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Nothing => f.write_str("Nothing"),
+            Self::Automatic => f.write_str("Automatic"),
+            Self::Callback(_) => f.write_str("Callback"),
+        }
+    }
 }

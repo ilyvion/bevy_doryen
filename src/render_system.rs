@@ -5,7 +5,7 @@ use bevy_ecs::{Schedule, System, SystemStage};
 pub(crate) struct DoryenRenderSystems(pub(crate) Option<Schedule>);
 impl Default for DoryenRenderSystems {
     fn default() -> Self {
-        let mut doryen_render_systems = Self(Some(Default::default()));
+        let mut doryen_render_systems = Self(Some(Schedule::default()));
 
         let schedule = doryen_render_systems.0.as_mut().unwrap();
         schedule

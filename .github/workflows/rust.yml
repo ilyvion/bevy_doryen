@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Rust (stable)
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+          args: --all-features
+
+  test:
+    name: Test
+    runs-on: ${{ matrix.config.os }}
+    needs: check
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { os: "ubuntu-latest", toolchain: "stable" }
+          - { os: "ubuntu-latest", toolchain: "beta" }
+          - { os: "ubuntu-latest", toolchain: "nightly" }
+          - { os: "windows-2016", toolchain: "stable" }
+          - { os: "macOS-latest", toolchain: "stable" }
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install ${{ matrix.config.toolchain }} toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.config.toolchain }}
+          override: true
+          components: rustfmt
+
+      - name: Cargo build
+        uses: actions-rs/cargo@v1
+        continue-on-error: ${{ matrix.config.toolchain == 'nightly' }}
+        with:
+          command: build
+          args: --all-features
+
+      - name: Cargo test
+        uses: actions-rs/cargo@v1
+        continue-on-error: ${{ matrix.config.toolchain == 'nightly' }}
+        with:
+          command: test
+          args: --all-features -- --nocapture
+
+  style:
+    name: Check Style
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: clippy, rustfmt
+
+      - name: Run cargo fmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
+
+      - name: Run cargo clippy
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
+
+  tarpaulin:
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Run cargo-tarpaulin
+        uses: actions-rs/tarpaulin@v0.1
+        with:
+          args: "--run-types Doctests --run-types Tests"
+
+      - uses: codecov/codecov-action@v1
+        with:
+          file: ${{ steps.coverage.outputs.report }}
+          name: ${{ matrix.os }}
