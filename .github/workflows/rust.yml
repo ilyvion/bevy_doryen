@@ -43,7 +43,7 @@ jobs:
           - { os: "ubuntu-latest", toolchain: "beta" }
           - { os: "ubuntu-latest", toolchain: "nightly" }
           - { os: "windows-2016", toolchain: "stable" }
-          - { os: "macOS-latest", toolchain: "stable" }
+          # - { os: "macOS-latest", toolchain: "stable" }
     steps:
       - uses: actions/checkout@v2
         with:
