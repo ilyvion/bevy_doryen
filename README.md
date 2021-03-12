@@ -16,8 +16,8 @@ bevy_doryen = "0.1"
 
 ```rust
 App::build()
-    // Add a `DoryenPluginSettings` resource to configure the plugin.
-    .add_resource(DoryenPluginSettings {
+    // Insert a `DoryenPluginSettings` resource to configure the plugin.
+    .insert_resource(DoryenPluginSettings {
         // `app_options` lets you configure Doryen just as if you were
         // using Doryen without Bevy. The default is `AppOptions::default()`.
         app_options: AppOptions {

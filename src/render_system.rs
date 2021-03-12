@@ -1,6 +1,7 @@
 use crate::render_stage;
 use bevy_app::AppBuilder;
-use bevy_ecs::{Schedule, System, SystemStage};
+use bevy_ecs::schedule::{Schedule, SystemStage};
+use bevy_ecs::system::System;
 
 pub(crate) struct DoryenRenderSystems(pub(crate) Option<Schedule>);
 impl Default for DoryenRenderSystems {
@@ -9,11 +10,27 @@ impl Default for DoryenRenderSystems {
 
         let schedule = doryen_render_systems.0.as_mut().unwrap();
         schedule
-            .add_stage(render_stage::FIRST, SystemStage::serial())
-            .add_stage(render_stage::PRE_RENDER, SystemStage::serial())
-            .add_stage(render_stage::RENDER, SystemStage::serial())
-            .add_stage(render_stage::POST_RENDER, SystemStage::serial())
-            .add_stage(render_stage::LAST, SystemStage::serial());
+            .add_stage(render_stage::FIRST, SystemStage::single_threaded())
+            .add_stage_after(
+                render_stage::FIRST,
+                render_stage::PRE_RENDER,
+                SystemStage::single_threaded(),
+            )
+            .add_stage_after(
+                render_stage::PRE_RENDER,
+                render_stage::RENDER,
+                SystemStage::single_threaded(),
+            )
+            .add_stage_after(
+                render_stage::RENDER,
+                render_stage::POST_RENDER,
+                SystemStage::single_threaded(),
+            )
+            .add_stage_after(
+                render_stage::POST_RENDER,
+                render_stage::LAST,
+                SystemStage::single_threaded(),
+            );
 
         doryen_render_systems
     }
@@ -35,8 +52,11 @@ pub trait RenderSystemExtensions {
 
 impl RenderSystemExtensions for AppBuilder {
     fn add_doryen_render_system<S: System<In = (), Out = ()>>(&mut self, system: S) -> &mut Self {
-        let mut doryen_render_systems =
-            self.app.resources.get_mut::<DoryenRenderSystems>().unwrap();
+        let mut doryen_render_systems = self
+            .app
+            .world
+            .get_resource_mut::<DoryenRenderSystems>()
+            .unwrap();
         doryen_render_systems
             .0
             .as_mut()
@@ -52,8 +72,11 @@ impl RenderSystemExtensions for AppBuilder {
         stage_name: &'static str,
         system: S,
     ) -> &mut Self {
-        let mut doryen_render_systems =
-            self.app.resources.get_mut::<DoryenRenderSystems>().unwrap();
+        let mut doryen_render_systems = self
+            .app
+            .world
+            .get_resource_mut::<DoryenRenderSystems>()
+            .unwrap();
         doryen_render_systems
             .0
             .as_mut()

@@ -3,7 +3,7 @@ use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{
     DoryenPlugin, DoryenPluginSettings, FpsInfo, RenderSystemExtensions, ResizeMode, RootConsole,
 };
-use bevy_ecs::{IntoSystem, Res, ResMut};
+use bevy_ecs::system::{IntoSystem, Res, ResMut};
 
 struct PerfTest {
     seed: u64,
@@ -21,7 +21,7 @@ impl PerfTest {
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("bevy_doryen performance test"),
                 vsync: false,
@@ -31,7 +31,7 @@ fn main() {
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)
-        .add_resource(PerfTest::new())
+        .insert_resource(PerfTest::new())
         .add_doryen_render_system(render.system())
         .run();
 }

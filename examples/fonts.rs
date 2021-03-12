@@ -3,7 +3,7 @@ use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{
     DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole, SetFontPath,
 };
-use bevy_ecs::{IntoSystem, Res, ResMut};
+use bevy_ecs::system::{IntoSystem, Res, ResMut};
 
 const CONSOLE_WIDTH: u32 = 40;
 const CONSOLE_HEIGHT: u32 = 25;
@@ -38,7 +38,7 @@ struct Font {
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 console_width: CONSOLE_WIDTH,
                 console_height: CONSOLE_HEIGHT,

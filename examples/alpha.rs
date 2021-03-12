@@ -1,7 +1,9 @@
 use bevy_app::App;
 use bevy_doryen::doryen::AppOptions;
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
-use bevy_ecs::{Bundle, Commands, Entity, IntoSystem, Query, Res, ResMut};
+use bevy_ecs::bundle::Bundle;
+use bevy_ecs::entity::Entity;
+use bevy_ecs::system::{Commands, IntoSystem, Query, Res, ResMut};
 
 #[derive(Default)]
 struct Circle;
@@ -32,7 +34,7 @@ struct Entities {
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("alpha test"),
                 ..Default::default()
@@ -46,7 +48,7 @@ fn main() {
         .run();
 }
 
-fn init(commands: &mut Commands) {
+fn init(mut commands: Commands) {
     let circle = commands
         .spawn(CircleBundle {
             circle: Circle,

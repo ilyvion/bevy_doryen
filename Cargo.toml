@@ -12,8 +12,8 @@ readme = "README.md"
 
 [dependencies]
 # bevy
-bevy_app = "0.4.0"
-bevy_ecs = "0.4.0"
+bevy_app = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
+bevy_ecs = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
 # doryen
 doryen-rs = "1.2.3"
 

@@ -1,14 +1,14 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
-use bevy_ecs::{IntoSystem, ResMut};
+use bevy_ecs::system::{IntoSystem, ResMut};
 
 const CONSOLE_WIDTH: u32 = 40;
 const CONSOLE_HEIGHT: u32 = 25;
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 console_width: CONSOLE_WIDTH,
                 console_height: CONSOLE_HEIGHT,

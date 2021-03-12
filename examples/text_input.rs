@@ -1,7 +1,7 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, Color, TextAlign};
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
-use bevy_ecs::{IntoSystem, Res, ResMut};
+use bevy_ecs::system::{IntoSystem, Res, ResMut};
 use unicode_segmentation::UnicodeSegmentation;
 
 const WHITE: Color = (255, 255, 255, 255);
@@ -22,7 +22,7 @@ impl Default for TextInput {
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("bevy_doryen subcell resolution demo"),
                 ..Default::default()

@@ -4,7 +4,7 @@ use bevy_doryen::{
     DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, ResizeMode, Resized,
     RootConsole,
 };
-use bevy_ecs::{IntoSystem, Local, Res, ResMut};
+use bevy_ecs::system::{IntoSystem, Local, Res, ResMut};
 
 struct ResizeData {
     width: u32,
@@ -14,7 +14,7 @@ struct ResizeData {
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("resizable console"),
                 vsync: false,
@@ -24,7 +24,7 @@ fn main() {
             ..Default::default()
         })
         .add_plugin(DoryenPlugin)
-        .add_resource(ResizeData {
+        .insert_resource(ResizeData {
             width: DEFAULT_CONSOLE_WIDTH,
             height: DEFAULT_CONSOLE_HEIGHT,
             mouse_pos: (0.0, 0.0),
@@ -45,10 +45,10 @@ fn resize_callback(root_console: &mut RootConsole, resized: Resized) {
 
 fn resize_events(
     mut resize_data: ResMut<ResizeData>,
-    events: Res<Events<Resized>>,
-    mut event_reader: Local<EventReader<Resized>>,
+    //events: Res<Events<Resized>>,
+    mut event_reader: EventReader<Resized>,
 ) {
-    if let Some(resized) = event_reader.latest(&events) {
+    if let Some(resized) = event_reader.iter().last() {
         resize_data.width = resized.new_width / 8;
         resize_data.height = resized.new_height / 8;
     }

@@ -1,7 +1,9 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
-use bevy_ecs::{Bundle, Commands, Entity, IntoSystem, Query, Res, ResMut};
+use bevy_ecs::bundle::Bundle;
+use bevy_ecs::entity::Entity;
+use bevy_ecs::system::{Commands, IntoSystem, Query, Res, ResMut};
 
 const CONSOLE_WIDTH: u32 = 80;
 const CONSOLE_HEIGHT: u32 = 45;
@@ -37,7 +39,7 @@ struct Entities {
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             // here are all the available options.
             // better practice is to use default values (see other examples)
             app_options: AppOptions {
@@ -62,7 +64,7 @@ fn main() {
         .run();
 }
 
-fn init(mut root_console: ResMut<RootConsole>, commands: &mut Commands) {
+fn init(mut root_console: ResMut<RootConsole>, mut commands: Commands) {
     root_console.register_color("white", (255, 255, 255, 255));
     root_console.register_color("red", (255, 92, 92, 255));
     root_console.register_color("blue", (192, 192, 255, 255));

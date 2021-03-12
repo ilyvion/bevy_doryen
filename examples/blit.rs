@@ -1,7 +1,8 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, Color, Console as DoryenConsole, TextAlign};
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
-use bevy_ecs::{Bundle, Commands, IntoSystem, Query, Res, ResMut};
+use bevy_ecs::bundle::Bundle;
+use bevy_ecs::system::{Commands, IntoSystem, Query, Res, ResMut};
 
 struct Console(DoryenConsole);
 
@@ -41,7 +42,7 @@ struct Step(usize);
 
 fn main() {
     App::build()
-        .add_resource(DoryenPluginSettings {
+        .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("blitting demo"),
                 ..Default::default()
@@ -58,7 +59,7 @@ fn main() {
         .run();
 }
 
-fn init(commands: &mut Commands) {
+fn init(mut commands: Commands) {
     let mut c1 = DoryenConsole::new(20, 20);
     let mut c2 = DoryenConsole::new(20, 20);
     for y in 0..20 {
