@@ -50,14 +50,13 @@ fn main() {
 
 fn init(mut commands: Commands) {
     let circle = commands
-        .spawn(CircleBundle {
+        .spawn_bundle(CircleBundle {
             circle: Circle,
             position: Position { x: 0., y: 0. },
             radius: Radius(10.),
             angle: Angle(0.),
         })
-        .current_entity()
-        .unwrap();
+        .id();
     commands.insert_resource(Entities { circle });
 }
 

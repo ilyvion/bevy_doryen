@@ -1,6 +1,6 @@
 [package]
 name = "bevy_doryen"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Alexander Krivács Schrøder <alexschrod@gmail.com>"]
 description = "A Bevy plugin that integrates the Doryen roguelike library with Bevy"
 edition = "2018"
@@ -12,8 +12,8 @@ readme = "README.md"
 
 [dependencies]
 # bevy
-bevy_app = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
-bevy_ecs = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
+bevy_app = { version = "0.5" }
+bevy_ecs = { version = "0.5" }
 # doryen
 doryen-rs = "1.2.3"
 

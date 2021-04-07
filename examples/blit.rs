@@ -79,7 +79,7 @@ fn init(mut commands: Commands) {
     c1.print(10, 10, "Hello", TextAlign::Center, None, None);
     c2.print(10, 10, "Circle", TextAlign::Center, None, None);
 
-    commands.spawn(ConsoleBundle {
+    commands.spawn_bundle(ConsoleBundle {
         console: Console(c1),
         position: Position { x: 5, y: 5 },
         speed: Speed { x: 1, y: 1 },
@@ -91,7 +91,7 @@ fn init(mut commands: Commands) {
         key_color: KeyColor(None),
     });
 
-    commands.spawn(ConsoleBundle {
+    commands.spawn_bundle(ConsoleBundle {
         console: Console(c2),
         position: Position { x: 15, y: 20 },
         speed: Speed { x: -1, y: 1 },

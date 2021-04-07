@@ -70,23 +70,21 @@ fn init(mut root_console: ResMut<RootConsole>, mut commands: Commands) {
     root_console.register_color("blue", (192, 192, 255, 255));
 
     let player = commands
-        .spawn(PlayerBundle {
+        .spawn_bundle(PlayerBundle {
             player: Player,
             position: Position {
                 x: (CONSOLE_WIDTH / 2) as i32,
                 y: (CONSOLE_HEIGHT / 2) as i32,
             },
         })
-        .current_entity()
-        .unwrap();
+        .id();
 
     let mouse = commands
-        .spawn(MouseBundle {
+        .spawn_bundle(MouseBundle {
             mouse: Mouse,
             position: Position { x: 0., y: 0. },
         })
-        .current_entity()
-        .unwrap();
+        .id();
 
     commands.insert_resource(Entities { player, mouse });
 }

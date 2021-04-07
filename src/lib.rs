@@ -88,7 +88,7 @@
 #![deny(clippy::explicit_iter_loop)]
 #![deny(clippy::filter_map)]
 #![deny(clippy::filter_map_next)]
-#![deny(clippy::find_map)]
+#![deny(clippy::manual_find_map)]
 #![deny(clippy::if_not_else)]
 #![deny(clippy::invalid_upcast_comparisons)]
 #![deny(clippy::items_after_statements)]

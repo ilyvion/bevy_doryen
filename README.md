@@ -10,20 +10,12 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 
 ## Usage
 
-### Targeting Bevy 0.4
+### Targeting Bevy 0.5
 ```toml
 [dependencies]
-bevy_app = "0.4"
-bevy_ecs = "0.4"
-bevy_doryen = "0.1"
-```
-
-### Targeting Bevy main
-```toml
-[dependencies]
-bevy_app = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
-bevy_ecs = { git = "https://github.com/bevyengine/bevy", rev = "8a9f475edb51ea45c976c000113ca55bac751f96" }
-bevy_doryen = { git = "https://github.com/alexschrod/bevy_doryen" }
+bevy_app = "0.5"
+bevy_ecs = "0.5"
+bevy_doryen = "0.2"
 ```
 
 ```rust
@@ -62,7 +54,8 @@ App::build()
     .run();
 ```
 
-See the examples for more usage instructions.
+See the [examples](https://github.com/alexschrod/bevy_doryen/tree/master/examples)
+for more usage scenarios.
 
 ## License
 
