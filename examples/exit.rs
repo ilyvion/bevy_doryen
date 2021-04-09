@@ -1,15 +1,16 @@
-use bevy_app::{App, AppExit, EventWriter};
+use bevy_app::{App, AppExit, Update};
 use bevy_doryen::doryen::{AppOptions, Color, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
-use bevy_ecs::system::{IntoSystem, Res, ResMut};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
+use bevy_ecs::prelude::EventWriter;
+use bevy_ecs::system::{Res, ResMut, Resource};
 
 const WHITE: Color = (255, 255, 255, 255);
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 struct CloseRequested(bool);
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 intercept_close_request: true,
@@ -17,10 +18,10 @@ fn main() {
             },
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
+        .add_plugins(DoryenPlugin)
         .init_resource::<CloseRequested>()
-        .add_system(process_input.system())
-        .add_doryen_render_system(render.system())
+        .add_systems(Update, process_input)
+        .add_systems(Render, render)
         .run();
 }
 

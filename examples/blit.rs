@@ -1,31 +1,33 @@
-use bevy_app::App;
+use bevy_app::{App, Startup, Update};
 use bevy_doryen::doryen::{AppOptions, Color, Console as DoryenConsole, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
 use bevy_ecs::bundle::Bundle;
-use bevy_ecs::system::{Commands, IntoSystem, Query, Res, ResMut};
+use bevy_ecs::prelude::Component;
+use bevy_ecs::system::{Commands, Query, Res, ResMut, Resource};
 
+#[derive(Component)]
 struct Console(DoryenConsole);
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct Position {
     x: i32,
     y: i32,
 }
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct Speed {
     x: i32,
     y: i32,
 }
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct Alpha {
     value: f32,
     step: f32,
     inverted: bool,
 }
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct KeyColor(Option<Color>);
 
 #[derive(Bundle)]
@@ -37,11 +39,11 @@ struct ConsoleBundle {
     key_color: KeyColor,
 }
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, Default, PartialEq, Resource)]
 struct Step(usize);
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("blitting demo"),
@@ -49,13 +51,14 @@ fn main() {
             },
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
+        .add_plugins(DoryenPlugin)
         .init_resource::<Step>()
-        .add_startup_system(init.system())
-        .add_system(update_position_and_speed.system())
-        .add_system(update_alpha.system())
-        .add_system(update_step.system())
-        .add_doryen_render_system(render.system())
+        .add_systems(Startup, init)
+        .add_systems(
+            Update,
+            (update_position_and_speed, update_alpha, update_step),
+        )
+        .add_systems(Render, render)
         .run();
 }
 
@@ -79,7 +82,7 @@ fn init(mut commands: Commands) {
     c1.print(10, 10, "Hello", TextAlign::Center, None, None);
     c2.print(10, 10, "Circle", TextAlign::Center, None, None);
 
-    commands.spawn_bundle(ConsoleBundle {
+    commands.spawn(ConsoleBundle {
         console: Console(c1),
         position: Position { x: 5, y: 5 },
         speed: Speed { x: 1, y: 1 },
@@ -91,7 +94,7 @@ fn init(mut commands: Commands) {
         key_color: KeyColor(None),
     });
 
-    commands.spawn_bundle(ConsoleBundle {
+    commands.spawn(ConsoleBundle {
         console: Console(c2),
         position: Position { x: 15, y: 20 },
         speed: Speed { x: -1, y: 1 },

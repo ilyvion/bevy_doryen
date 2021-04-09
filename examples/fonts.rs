@@ -1,9 +1,8 @@
-use bevy_app::{App, EventWriter};
+use bevy_app::{App, Update};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{
-    DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole, SetFontPath,
-};
-use bevy_ecs::system::{IntoSystem, Res, ResMut};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole, SetFontPath};
+use bevy_ecs::prelude::EventWriter;
+use bevy_ecs::system::{Res, ResMut, Resource};
 
 const CONSOLE_WIDTH: u32 = 40;
 const CONSOLE_HEIGHT: u32 = 25;
@@ -30,14 +29,23 @@ const FONTS: [&str; 19] = [
     "Yayo_tunur_13x13.png",
 ];
 
-#[derive(Default)]
+#[derive(Resource)]
 struct Font {
     current_font: usize,
     current_font_name: &'static str,
 }
 
+impl Default for Font {
+    fn default() -> Self {
+        Self {
+            current_font: Default::default(),
+            current_font_name: FONTS[0],
+        }
+    }
+}
+
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 console_width: CONSOLE_WIDTH,
@@ -49,10 +57,10 @@ fn main() {
             },
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
+        .add_plugins(DoryenPlugin)
         .init_resource::<Font>()
-        .add_system(update.system())
-        .add_doryen_render_system(render.system())
+        .add_systems(Update, update)
+        .add_systems(Render, render)
         .run();
 }
 
@@ -113,7 +121,7 @@ fn render(mut root_console: ResMut<RootConsole>, font: Res<Font>) {
     root_console.print(
         (CONSOLE_WIDTH / 2) as i32,
         (CONSOLE_HEIGHT / 2) as i32,
-        &font.current_font_name,
+        font.current_font_name,
         TextAlign::Center,
         Some((255, 255, 255, 255)),
         None,

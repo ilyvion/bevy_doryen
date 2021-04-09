@@ -1,10 +1,9 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{
-    DoryenPlugin, DoryenPluginSettings, FpsInfo, RenderSystemExtensions, ResizeMode, RootConsole,
-};
-use bevy_ecs::system::{IntoSystem, Res, ResMut};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, FpsInfo, Render, ResizeMode, RootConsole};
+use bevy_ecs::system::{Res, ResMut, Resource};
 
+#[derive(Resource)]
 struct PerfTest {
     seed: u64,
 }
@@ -20,7 +19,7 @@ impl PerfTest {
 }
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("bevy_doryen performance test"),
@@ -30,9 +29,9 @@ fn main() {
             resize_mode: ResizeMode::Automatic,
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
+        .add_plugins(DoryenPlugin)
         .insert_resource(PerfTest::new())
-        .add_doryen_render_system(render.system())
+        .add_systems(Render, render)
         .run();
 }
 

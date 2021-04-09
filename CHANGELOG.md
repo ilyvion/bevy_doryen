@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update to Bevy 0.11, which means:
+- Move away from custom "render system" and instead use custom Bevy schedules to facilitate update vs render systems. I.e. most previous uses of `add_doryen_render_system(foo.system())` should be replaced with `add_systems(Render, foo)`. See the documentation for `MainRender` for more details.
+- Cleaned up code from a few new lints
+
 ## [0.2.0] - 2021-04-07
 
 ### Added

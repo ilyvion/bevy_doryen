@@ -3,17 +3,17 @@
 //!
 //! Usage:
 //! ```no_run
-//! # use bevy_app::App;
+//! # use bevy_app::{App, Update, Startup};
 //! # use bevy_doryen::{
 //! #     DoryenPluginSettings,
 //! #     DoryenPlugin,
-//! #     RenderSystemExtensions,
+//! #     Render,
 //! #     ResizeMode,
 //! #     MouseButton
 //! # };
 //! # use bevy_doryen::doryen::AppOptions;
 //! # use bevy_ecs::system::IntoSystem;
-//! App::build()
+//! App::new()
 //!     // Insert a `DoryenPluginSettings` resource to configure the plugin.
 //!     .insert_resource(DoryenPluginSettings {
 //!         // `app_options` lets you configure Doryen just as if you were
@@ -36,16 +36,16 @@
 //!         resize_mode: ResizeMode::Nothing
 //!     })
 //!     // Add the `DoryenPlugin` to Bevy.
-//!     .add_plugin(DoryenPlugin)
+//!     .add_plugins(DoryenPlugin)
 //!     // Add your Bevy systems like usual. Excluding startup systems, which
 //!     // only run once, these systems are run during Doryen's update phase;
 //!     // i.e. 60 times per second.
-//!     .add_startup_system(init.system())
-//!     .add_system(input.system())
-//!     // The `RenderSystemExtensions` trait lets you add systems that should
+//!     .add_systems(Startup, init)
+//!     .add_systems(Update, input)
+//!     // The `Render` schedules lets you add systems that should
 //!     // be run during Doryen's render phase.
-//!     .add_doryen_render_system(render.system())
-//! .run();
+//!     .add_systems(Render, render)
+//!     .run();
 //!
 //! # fn init() { }
 //! # fn input() { }
@@ -55,8 +55,8 @@
 //! [Bevy]: https://bevyengine.org/
 //! [Doryen]: https://github.com/jice-nospam/doryen-rs
 
+// region: Coding conventions
 // <editor-fold desc="Coding conventions" defaultstate="collapsed">
-// Coding conventions
 //
 // Forbid (just no)
 #![forbid(unsafe_code)]
@@ -67,7 +67,7 @@
 #![deny(nonstandard_style)]
 #![deny(rust_2018_idioms)]
 #![deny(trivial_numeric_casts)]
-#![deny(broken_intra_doc_links)]
+#![deny(rustdoc::broken_intra_doc_links)]
 //#![deny(unused)]
 //
 // Warn (try not to do this)
@@ -86,7 +86,7 @@
 #![deny(clippy::expl_impl_clone_on_copy)]
 #![deny(clippy::explicit_into_iter_loop)]
 #![deny(clippy::explicit_iter_loop)]
-#![deny(clippy::filter_map)]
+#![deny(clippy::manual_filter_map)]
 #![deny(clippy::filter_map_next)]
 #![deny(clippy::manual_find_map)]
 #![deny(clippy::if_not_else)]
@@ -110,14 +110,15 @@
 //
 // Warn (try not to do this)
 //#![warn(clippy::must_use_candidate)]
-#![warn(clippy::pub_enum_variant_names)]
+//#![warn(clippy::pub_enum_variant_names)]
 #![warn(clippy::shadow_unrelated)]
 #![warn(clippy::similar_names)]
 #![warn(clippy::too_many_lines)]
 // </editor-fold>
+// endregion
 
 mod input;
-mod render_system;
+mod render_schedule;
 mod root_console;
 
 /// Re-export of the Doryen library types.
@@ -125,22 +126,26 @@ pub mod doryen {
     pub use doryen_rs::*;
 }
 
-pub use input::{Input, Keys, MouseButton};
-pub use render_system::RenderSystemExtensions;
-pub use root_console::RootConsole;
-
-use crate::doryen::{AppOptions, Console};
-use crate::render_system::DoryenRenderSystems;
-use bevy_app::{App as BevyApp, AppBuilder, AppExit, Events, ManualEventReader, Plugin};
-use bevy_ecs::schedule::{Schedule, Stage};
+use bevy_app::{App as BevyApp, AppExit, Plugin};
+use bevy_ecs::event::ManualEventReader;
+use bevy_ecs::prelude::{Event, Events};
+use bevy_ecs::system::Resource;
 use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
 use std::borrow::Cow;
+
+use crate::doryen::{AppOptions, Console};
+use crate::render_schedule::{MainRender, RenderSchedulePlugin};
+
+pub use input::{Input, Keys, MouseButton};
+pub use render_schedule::*;
+pub use root_console::RootConsole;
 
 /// The Bevy Doryen plugin.
 #[derive(Default, Clone, Copy, Debug)]
 pub struct DoryenPlugin;
 
 /// DoryenPlugin settings.
+#[derive(Resource)]
 pub struct DoryenPluginSettings {
     /// The [`AppOptions`] passed to the [`DoryenApp`].
     pub app_options: AppOptions,
@@ -176,28 +181,14 @@ impl Default for DoryenPluginSettings {
     }
 }
 
-/// Constants for the Doryen plugin render stages.
-pub mod render_stage {
-    /// This stage runs before all the other stages.
-    pub const FIRST: &str = "first";
-    /// This stage runs right before the render stage.
-    pub const PRE_RENDER: &str = "pre_render";
-    /// This stage is where rendering should be done.
-    pub const RENDER: &str = "render";
-    /// This stage runs right after the render stage.
-    pub const POST_RENDER: &str = "post_render";
-    /// This stage runs after all the other stages.
-    pub const LAST: &str = "last";
-}
-
 impl Plugin for DoryenPlugin {
-    fn build(&self, app: &mut AppBuilder) {
+    fn build(&self, app: &mut BevyApp) {
         app.init_resource::<RootConsole>()
             .init_resource::<Input>()
             .init_resource::<FpsInfo>()
             .add_event::<SetFontPath>()
             .add_event::<Resized>()
-            .init_resource::<DoryenRenderSystems>()
+            .add_plugins(RenderSchedulePlugin)
             .set_runner(doryen_runner);
     }
 }
@@ -219,14 +210,10 @@ impl DoryenPluginEngine {
         use std::mem::swap;
 
         // Take ownership of the Doryen root console
-        swap(api.con(), &mut self.swap_console.as_mut().unwrap());
+        swap(api.con(), self.swap_console.as_mut().unwrap());
 
         // Insert it into the DoryenRootConsole resource
-        let mut doryen_root_console = self
-            .bevy_app
-            .world
-            .get_resource_mut::<RootConsole>()
-            .unwrap();
+        let mut doryen_root_console = self.bevy_app.world.resource_mut::<RootConsole>();
         doryen_root_console.0 = self.swap_console.take();
     }
 
@@ -243,27 +230,7 @@ impl DoryenPluginEngine {
         self.swap_console = doryen_root_console.0.take();
 
         // Hand ownership of the Doryen root console back to Doryen
-        swap(api.con(), &mut self.swap_console.as_mut().unwrap());
-    }
-
-    #[inline]
-    fn take_doryen_render_schedule(&mut self) -> Schedule {
-        let mut doryen_render_systems = self
-            .bevy_app
-            .world
-            .get_resource_mut::<DoryenRenderSystems>()
-            .unwrap();
-        doryen_render_systems.0.take().unwrap()
-    }
-
-    #[inline]
-    fn restore_doryen_render_schedule(&mut self, doryen_render_schedule: Schedule) {
-        let mut doryen_render_systems = self
-            .bevy_app
-            .world
-            .get_resource_mut::<DoryenRenderSystems>()
-            .unwrap();
-        doryen_render_systems.0.replace(doryen_render_schedule);
+        swap(api.con(), self.swap_console.as_mut().unwrap());
     }
 
     #[inline]
@@ -276,10 +243,9 @@ impl DoryenPluginEngine {
 
 impl Engine for DoryenPluginEngine {
     fn update(&mut self, api: &mut dyn DoryenApi) -> Option<UpdateEvent> {
-        let mut doryen_fps_info = self.bevy_app.world.get_resource_mut::<FpsInfo>().unwrap();
+        let mut doryen_fps_info = self.bevy_app.world.resource_mut::<FpsInfo>();
         doryen_fps_info.fps = api.fps();
         doryen_fps_info.average_fps = api.average_fps();
-        drop(doryen_fps_info);
 
         self.handle_input(api);
 
@@ -288,11 +254,7 @@ impl Engine for DoryenPluginEngine {
         self.restore_root_console_ownership(api);
 
         // Process the latest SetFontPath event
-        let doryen_set_font_path_events = self
-            .bevy_app
-            .world
-            .get_resource_mut::<Events<SetFontPath>>()
-            .unwrap();
+        let doryen_set_font_path_events = self.bevy_app.world.resource_mut::<Events<SetFontPath>>();
         if let Some(doryen_set_font_path) = self
             .set_font_path_event_reader
             .iter(&doryen_set_font_path_events)
@@ -317,11 +279,7 @@ impl Engine for DoryenPluginEngine {
 
     fn render(&mut self, api: &mut dyn DoryenApi) {
         self.take_root_console_ownership(api);
-
-        let mut doryen_render_schedule = self.take_doryen_render_schedule();
-        doryen_render_schedule.run(&mut self.bevy_app.world);
-        self.restore_doryen_render_schedule(doryen_render_schedule);
-
+        self.bevy_app.world.run_schedule(MainRender);
         self.restore_root_console_ownership(api);
     }
 
@@ -341,7 +299,7 @@ impl Engine for DoryenPluginEngine {
             new_height,
         };
         resized_events.send(resized);
-        drop(resized_events);
+        //drop(resized_events);
 
         match self.resize_mode {
             ResizeMode::Nothing => (),
@@ -358,7 +316,7 @@ impl Engine for DoryenPluginEngine {
             ResizeMode::Callback(callback) => {
                 self.take_root_console_ownership(api);
                 callback(
-                    &mut *self.bevy_app.world.get_resource_mut().unwrap(),
+                    &mut self.bevy_app.world.get_resource_mut().unwrap(),
                     resized,
                 );
                 self.restore_root_console_ownership(api);
@@ -379,7 +337,7 @@ fn doryen_runner(mut app: BevyApp) {
         mouse_button_listeners,
         resize_mode,
     } = std::mem::take(&mut *resource_settings);
-    drop(resource_settings);
+    //drop(resource_settings);
 
     let AppOptions {
         screen_height,
@@ -407,7 +365,7 @@ fn doryen_runner(mut app: BevyApp) {
 
 /// This resource contains the values given by [`fps`](DoryenApi::fps) and
 /// [`average_fps`](DoryenApi::average_fps) on the current update tick.
-#[derive(Default, Debug, Clone, Copy)]
+#[derive(Debug, Default, Clone, Copy, Resource)]
 pub struct FpsInfo {
     /// The value given by [`fps`](DoryenApi::fps) on the current update tick.
     pub fps: u32,
@@ -419,12 +377,12 @@ pub struct FpsInfo {
 /// When you want to change Doryen's font path, emit an event of this type.
 /// bevy_doryen will call [`set_font_path`](DoryenApi::set_font_path) with the
 /// provided value.
-#[derive(Debug, Clone)]
+#[derive(Clone, Debug, Event)]
 pub struct SetFontPath(pub Cow<'static, str>);
 
 /// Resized event object. Whenever Doryen's [`resize`](Engine::resize) method is
 /// called, an event of this type is emitted.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Event)]
 pub struct Resized {
     /// The previous width of the Doryen game window.
     pub previous_width: u32,

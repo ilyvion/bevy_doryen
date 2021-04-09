@@ -1,23 +1,24 @@
-use bevy_app::App;
+use bevy_app::{App, Startup, Update};
 use bevy_doryen::doryen::AppOptions;
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
 use bevy_ecs::bundle::Bundle;
 use bevy_ecs::entity::Entity;
-use bevy_ecs::system::{Commands, IntoSystem, Query, Res, ResMut};
+use bevy_ecs::prelude::Component;
+use bevy_ecs::system::{Commands, Query, Res, ResMut, Resource};
 
-#[derive(Default)]
+#[derive(Component, Default)]
 struct Circle;
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Clone, Component, Copy, Default, PartialEq)]
 struct Position {
     x: f32,
     y: f32,
 }
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct Radius(f32);
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct Angle(f32);
 
 #[derive(Bundle)]
@@ -28,12 +29,13 @@ struct CircleBundle {
     angle: Angle,
 }
 
+#[derive(Resource)]
 struct Entities {
     circle: Entity,
 }
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("alpha test"),
@@ -41,16 +43,16 @@ fn main() {
             },
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
-        .add_startup_system(init.system())
-        .add_system(update_circle.system())
-        .add_doryen_render_system(render.system())
+        .add_plugins(DoryenPlugin)
+        .add_systems(Startup, init)
+        .add_systems(Update, update_circle)
+        .add_systems(Render, render)
         .run();
 }
 
 fn init(mut commands: Commands) {
     let circle = commands
-        .spawn_bundle(CircleBundle {
+        .spawn(CircleBundle {
             circle: Circle,
             position: Position { x: 0., y: 0. },
             radius: Radius(10.),

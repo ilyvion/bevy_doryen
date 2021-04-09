@@ -1,8 +1,9 @@
-use bevy_app::App;
+use bevy_app::{App, Update};
 use bevy_doryen::doryen::{AppOptions, Image};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, RenderSystemExtensions, RootConsole};
-use bevy_ecs::system::{IntoSystem, ResMut};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
+use bevy_ecs::system::{ResMut, Resource};
 
+#[derive(Resource)]
 struct SkullImage {
     skull: Image,
     angle: f32,
@@ -20,7 +21,7 @@ impl Default for SkullImage {
 }
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
                 window_title: String::from("bevy_doryen image demo"),
@@ -28,10 +29,10 @@ fn main() {
             },
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
+        .add_plugins(DoryenPlugin)
         .init_resource::<SkullImage>()
-        .add_system(update.system())
-        .add_doryen_render_system(render.system())
+        .add_systems(Update, update)
+        .add_systems(Render, render)
         .run();
 }
 

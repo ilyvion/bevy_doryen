@@ -1,11 +1,14 @@
-use crate::doryen::InputApi;
 use std::collections::{HashMap, HashSet};
 use std::iter::Filter;
+
+use bevy_ecs::system::Resource;
+
+use crate::doryen::InputApi;
 
 /// Provides access to the input events handled by the Doryen engine. See the
 /// documentation for the [`InputApi`] type for details on what values should
 /// be used with the various `key` methods.
-#[derive(Default, Debug)]
+#[derive(Debug, Default, Resource)]
 pub struct Input {
     keys_down: HashMap<String, bool>,
     keys_pressed: HashMap<String, bool>,
@@ -184,12 +187,12 @@ pub enum MouseButton {
 
 impl MouseButton {
     #[inline]
-    fn to_usize(&self) -> usize {
+    fn to_usize(self) -> usize {
         match self {
             Self::Left => 0,
             Self::Middle => 1,
             Self::Right => 2,
-            Self::Any(which) => *which,
+            Self::Any(which) => which,
         }
     }
 }

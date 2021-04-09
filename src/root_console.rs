@@ -1,8 +1,11 @@
-use crate::doryen::Console;
+use bevy_ecs::system::Resource;
+
 use std::ops::{Deref, DerefMut};
 
+use crate::doryen::Console;
+
 /// Provides access to the root console of the Doryen engine.
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct RootConsole(pub(crate) Option<Console>);
 
 impl std::fmt::Debug for RootConsole {

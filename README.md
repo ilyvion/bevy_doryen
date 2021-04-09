@@ -3,23 +3,22 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 [Doryen](https://github.com/jice-nospam/doryen-rs) roguelike library with Bevy.
 
 [![Crates.io](https://img.shields.io/crates/v/bevy_doryen)](https://crates.io/crates/bevy_doryen)
-[![Crates.io](https://img.shields.io/crates/l/bevy_doryen)](https://crates.io/crates/bevy_doryen)
-[![Crates.io](https://img.shields.io/crates/d/bevy_doryen)](https://crates.io/crates/bevy_doryen)
 [![Docs.io](https://docs.rs/bevy_doryen/badge.svg)](https://docs.rs/bevy_doryen)
 [![GitHub](https://github.com/alexschrod/bevy_doryen/actions/workflows/rust.yml/badge.svg)](https://github.com/alexschrod/bevy_doryen)
+[![Bevy tracking](https://img.shields.io/badge/Bevy%20tracking-released%20version-lightblue)](https://github.com/bevyengine/bevy/blob/main/docs/plugins_guidelines.md#main-branch-tracking)
 
 ## Usage
 
-### Targeting Bevy 0.5
+### Targeting Bevy 0.11
 ```toml
 [dependencies]
-bevy_app = "0.5"
-bevy_ecs = "0.5"
-bevy_doryen = "0.2"
+bevy_app = "0.11"
+bevy_ecs = "0.11"
+bevy_doryen = "0.3"
 ```
 
 ```rust
-App::build()
+App::new()
     // Insert a `DoryenPluginSettings` resource to configure the plugin.
     .insert_resource(DoryenPluginSettings {
         // `app_options` lets you configure Doryen just as if you were
@@ -42,15 +41,15 @@ App::build()
         resize_mode: ResizeMode::Nothing
     })
     // Add the `DoryenPlugin` to Bevy.
-    .add_plugin(DoryenPlugin)
+    .add_plugins(DoryenPlugin)
     // Add your Bevy systems like usual. Excluding startup systems, which
     // only run once, these systems are run during Doryen's update phase;
     // i.e. 60 times per second.
-    .add_startup_system(init.system())
-    .add_system(input.system())
-    // The `RenderSystemExtensions` trait lets you add systems that should
+    .add_systems(Startup, init)
+    .add_systems(Update, input)
+    // The `Render` schedules lets you add systems that should
     // be run during Doryen's render phase.
-    .add_doryen_render_system(render.system())
+    .add_systems(Render, render)
     .run();
 ```
 

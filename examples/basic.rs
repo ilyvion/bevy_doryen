@@ -1,20 +1,21 @@
-use bevy_app::App;
+use bevy_app::{App, Startup, Update};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, RenderSystemExtensions, RootConsole};
+use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
 use bevy_ecs::bundle::Bundle;
 use bevy_ecs::entity::Entity;
-use bevy_ecs::system::{Commands, IntoSystem, Query, Res, ResMut};
+use bevy_ecs::prelude::Component;
+use bevy_ecs::system::{Commands, Query, Res, ResMut, Resource};
 
 const CONSOLE_WIDTH: u32 = 80;
 const CONSOLE_HEIGHT: u32 = 45;
 
-#[derive(Default, Copy, Clone, PartialEq)]
+#[derive(Copy, Component, Clone, Default, PartialEq)]
 struct Position<C> {
     x: C,
     y: C,
 }
 
-#[derive(Default)]
+#[derive(Component, Default)]
 struct Player;
 
 #[derive(Bundle)]
@@ -23,7 +24,7 @@ struct PlayerBundle {
     position: Position<i32>,
 }
 
-#[derive(Default)]
+#[derive(Component, Default)]
 struct Mouse;
 
 #[derive(Bundle)]
@@ -32,13 +33,14 @@ struct MouseBundle {
     position: Position<f32>,
 }
 
+#[derive(Resource)]
 struct Entities {
     player: Entity,
     mouse: Entity,
 }
 
 fn main() {
-    App::build()
+    App::new()
         .insert_resource(DoryenPluginSettings {
             // here are all the available options.
             // better practice is to use default values (see other examples)
@@ -54,13 +56,14 @@ fn main() {
                 show_cursor: true,
                 resizable: true,
                 intercept_close_request: false,
+                max_fps: 0,
             },
             ..Default::default()
         })
-        .add_plugin(DoryenPlugin)
-        .add_startup_system(init.system())
-        .add_system(input.system())
-        .add_doryen_render_system(render.system())
+        .add_plugins(DoryenPlugin)
+        .add_systems(Startup, init)
+        .add_systems(Update, input)
+        .add_systems(Render, render)
         .run();
 }
 
@@ -70,7 +73,7 @@ fn init(mut root_console: ResMut<RootConsole>, mut commands: Commands) {
     root_console.register_color("blue", (192, 192, 255, 255));
 
     let player = commands
-        .spawn_bundle(PlayerBundle {
+        .spawn(PlayerBundle {
             player: Player,
             position: Position {
                 x: (CONSOLE_WIDTH / 2) as i32,
@@ -80,7 +83,7 @@ fn init(mut root_console: ResMut<RootConsole>, mut commands: Commands) {
         .id();
 
     let mouse = commands
-        .spawn_bundle(MouseBundle {
+        .spawn(MouseBundle {
             mouse: Mouse,
             position: Position { x: 0., y: 0. },
         })
