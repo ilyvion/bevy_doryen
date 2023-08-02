@@ -1,3 +1,45 @@
-## 0.1.0
+# Changelog
 
-First implementation of the plugin. Compatible with Bevy 0.4.0.
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [0.2.0] - 2021-04-07
+
+### Added
+
+- Instructions for targeting various versions
+
+### Changed
+
+- Update to Bevy 0.5
+- Use `EventReader`/`EventWriter` instead of `ResMut<Events<T>>`
+- Improved `blit` example
+
+## [0.1.1] - 2021-03-12
+
+### Added
+
+- Build badge to README
+- Repository URL and README to Cargo.toml
+
+### Changed
+
+- Switch to nightly toolchain for tarpaulin
+
+### Removed
+
+- Mac OS build from CI (build is broken on Mac)
+
+## [0.1.0] - 2021-03-12
+
+### Added
+- First implementation of the plugin. Compatible with Bevy 0.4.0.
+
+[Unreleased]: https://github.com/alexschrod/bevy_doryen/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/alexschrod/bevy_doryen/compare/v0.1.1...v0.2.0
+[0.1.1]: https://github.com/alexschrod/bevy_doryen/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/alexschrod/bevy_doryen/releases/tag/v0.1.0
