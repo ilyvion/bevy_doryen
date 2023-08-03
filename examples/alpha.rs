@@ -34,7 +34,7 @@ struct Entities {
     circle: Entity,
 }
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {

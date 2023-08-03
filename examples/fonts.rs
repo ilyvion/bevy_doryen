@@ -44,7 +44,7 @@ impl Default for Font {
     }
 }
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {

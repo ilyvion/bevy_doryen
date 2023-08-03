@@ -9,7 +9,7 @@ const WHITE: Color = (255, 255, 255, 255);
 #[derive(Default, Resource)]
 struct CloseRequested(bool);
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
@@ -56,7 +56,7 @@ fn render(mut root_console: ResMut<RootConsole>, close_requested: Res<CloseReque
         root_console.print(
             5,
             5,
-            "Press ESC to exit",
+            "Press ESC to exit (on web, this does nothing)",
             TextAlign::Left,
             Some(WHITE),
             None,

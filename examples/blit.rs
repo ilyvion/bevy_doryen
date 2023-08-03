@@ -42,7 +42,7 @@ struct ConsoleBundle {
 #[derive(Copy, Clone, Default, PartialEq, Resource)]
 struct Step(usize);
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {

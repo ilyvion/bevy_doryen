@@ -13,7 +13,7 @@ struct ResizeData {
     mouse_pos: (f32, f32),
 }
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {

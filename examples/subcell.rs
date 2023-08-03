@@ -1,9 +1,9 @@
-use bevy_app::App;
+use bevy_app::{App, Startup};
 use bevy_doryen::doryen::{AppOptions, Image, TextAlign};
 use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
-use bevy_ecs::system::{ResMut, Resource};
+use bevy_ecs::system::{NonSendMut, ResMut};
+use bevy_ecs::world::World;
 
-#[derive(Resource)]
 struct SkullImage {
     skull: Image,
 }
@@ -16,7 +16,7 @@ impl Default for SkullImage {
     }
 }
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
@@ -26,12 +26,19 @@ fn main() {
             ..Default::default()
         })
         .add_plugins(DoryenPlugin)
-        .init_resource::<SkullImage>()
+        .add_systems(Startup, init)
         .add_systems(Render, render)
         .run();
 }
 
-fn render(mut root_console: ResMut<RootConsole>, mut skull: ResMut<SkullImage>) {
+// Because `Image` is non-`Send` when compiling for WASM, we'll just
+// use a "non-send" resource always for the sake of simplicity in this
+// example.
+fn init(world: &mut World) {
+    world.insert_non_send_resource(SkullImage::default());
+}
+
+fn render(mut root_console: ResMut<RootConsole>, mut skull: NonSendMut<SkullImage>) {
     root_console.clear(None, Some((0, 0, 0, 255)), None);
     skull
         .skull

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added constructor function to `SetFontPath`
 - Added new event, `Capture`, to support the new Doryen feature
+- `example_runner` workspace package for running examples on the web using `trunk`
 
 ### Changed
 

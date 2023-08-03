@@ -6,7 +6,7 @@ use bevy_ecs::system::ResMut;
 const CONSOLE_WIDTH: u32 = 40;
 const CONSOLE_HEIGHT: u32 = 25;
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {

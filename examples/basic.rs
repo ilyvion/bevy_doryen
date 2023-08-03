@@ -42,7 +42,7 @@ struct Entities {
 #[derive(Default, Resource)]
 struct ScreenshotIndex(usize);
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             // here are all the available options.

@@ -18,7 +18,7 @@ impl PerfTest {
     }
 }
 
-fn main() {
+pub fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
             app_options: AppOptions {
