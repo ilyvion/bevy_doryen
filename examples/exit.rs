@@ -1,6 +1,6 @@
 use bevy_app::{App, AppExit, Update};
 use bevy_doryen::doryen::{AppOptions, Color, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
+use bevy_doryen::prelude::*;
 use bevy_ecs::prelude::EventWriter;
 use bevy_ecs::system::{Res, ResMut, Resource};
 

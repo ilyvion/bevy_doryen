@@ -1,6 +1,7 @@
 use bevy_app::{App, Startup, Update};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{Capture, DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
+use bevy_doryen::prelude::*;
+use bevy_doryen::Capture;
 use bevy_ecs::bundle::Bundle;
 use bevy_ecs::entity::Entity;
 use bevy_ecs::prelude::{Component, EventWriter};

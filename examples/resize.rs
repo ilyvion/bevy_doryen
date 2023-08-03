@@ -1,8 +1,7 @@
 use bevy_app::{App, Update};
 use bevy_doryen::doryen::{AppOptions, TextAlign, DEFAULT_CONSOLE_HEIGHT, DEFAULT_CONSOLE_WIDTH};
-use bevy_doryen::{
-    DoryenPlugin, DoryenPluginSettings, Input, Render, ResizeMode, Resized, RootConsole,
-};
+use bevy_doryen::prelude::*;
+use bevy_doryen::{ResizeMode, Resized};
 use bevy_ecs::prelude::EventReader;
 use bevy_ecs::system::{Res, ResMut, Resource};
 

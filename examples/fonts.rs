@@ -1,6 +1,7 @@
 use bevy_app::{App, Update};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole, SetFontPath};
+use bevy_doryen::prelude::*;
+use bevy_doryen::SetFontPath;
 use bevy_ecs::prelude::EventWriter;
 use bevy_ecs::system::{Res, ResMut, Resource};
 

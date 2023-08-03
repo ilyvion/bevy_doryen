@@ -1,6 +1,7 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, FpsInfo, Render, ResizeMode, RootConsole};
+use bevy_doryen::prelude::*;
+use bevy_doryen::{FpsInfo, ResizeMode};
 use bevy_ecs::system::{Res, ResMut, Resource};
 
 #[derive(Resource)]

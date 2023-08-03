@@ -1,6 +1,6 @@
 use bevy_app::App;
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
+use bevy_doryen::prelude::*;
 use bevy_ecs::system::ResMut;
 
 const CONSOLE_WIDTH: u32 = 40;

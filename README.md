@@ -1,4 +1,5 @@
 # bevy_doryen
+
 A [Bevy](https://bevyengine.org/) plugin that integrates the
 [Doryen](https://github.com/jice-nospam/doryen-rs) roguelike library with Bevy.
 
@@ -12,6 +13,7 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 ## Usage
 
 ### Targeting Bevy 0.11
+
 ```toml
 [dependencies]
 bevy_app = "0.11"
@@ -20,6 +22,8 @@ bevy_doryen = "0.3"
 ```
 
 ```rust
+use bevy_doryen::prelude::*;
+
 App::new()
     // Insert a `DoryenPluginSettings` resource to configure the plugin.
     .insert_resource(DoryenPluginSettings {
@@ -72,8 +76,8 @@ I intend to track the latest release version of Bevy. PRs supporting this are we
 
 All code in this repository is dual-licensed under either:
 
-* Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-* MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+-   Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+-   MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option. This means you can select the license you prefer.
 

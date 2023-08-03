@@ -1,6 +1,6 @@
 use bevy_app::{App, Startup, Update};
 use bevy_doryen::doryen::AppOptions;
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
+use bevy_doryen::prelude::*;
 use bevy_ecs::bundle::Bundle;
 use bevy_ecs::entity::Entity;
 use bevy_ecs::prelude::Component;

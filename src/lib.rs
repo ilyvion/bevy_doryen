@@ -4,13 +4,8 @@
 //! Usage:
 //! ```no_run
 //! # use bevy_app::{App, Update, Startup};
-//! # use bevy_doryen::{
-//! #     DoryenPluginSettings,
-//! #     DoryenPlugin,
-//! #     Render,
-//! #     ResizeMode,
-//! #     MouseButton
-//! # };
+//! # use bevy_doryen::prelude::*;
+//! # use bevy_doryen::{ResizeMode, MouseButton};
 //! # use bevy_doryen::doryen::AppOptions;
 //! # use bevy_ecs::system::IntoSystem;
 //! App::new()
@@ -130,7 +125,7 @@ use bevy_app::{App as BevyApp, AppExit, Plugin};
 use bevy_ecs::event::ManualEventReader;
 use bevy_ecs::prelude::{Event, Events};
 use bevy_ecs::system::Resource;
-use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
+use doryen::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
 use std::borrow::Cow;
 
 use crate::doryen::{AppOptions, Console};
@@ -138,6 +133,11 @@ use crate::doryen::{AppOptions, Console};
 pub use input::{Input, Keys, MouseButton};
 pub use render_schedule::*;
 pub use root_console::RootConsole;
+
+/// Common imports
+pub mod prelude {
+    pub use crate::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
+}
 
 /// The Bevy Doryen plugin.
 #[derive(Default, Clone, Copy, Debug)]

@@ -1,6 +1,7 @@
 use bevy_app::{App, Startup};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, FpsInfo, Render, RootConsole};
+use bevy_doryen::prelude::*;
+use bevy_doryen::FpsInfo;
 use bevy_ecs::system::{Res, ResMut};
 
 /*

@@ -1,6 +1,6 @@
 use bevy_app::{App, Startup};
 use bevy_doryen::doryen::{AppOptions, Image, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Render, RootConsole};
+use bevy_doryen::prelude::*;
 use bevy_ecs::system::{NonSendMut, ResMut};
 use bevy_ecs::world::World;
 
