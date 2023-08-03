@@ -7,6 +7,7 @@ license = "Apache-2.0 OR MIT"
 repository = "https://github.com/alexschrod/bevy_doryen"
 readme = "README.md"
 keywords = ["game", "engine", "gamedev", "graphics", "bevy"]
+exclude = ["/www/", "/demo_thumbnails/", "/example_runner/", "/.github/"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
