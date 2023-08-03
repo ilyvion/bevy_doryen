@@ -29,3 +29,11 @@ opt-level = 3
 
 [workspace]
 members = ["example_runner"]
+
+[[example]]
+name = "unicode"
+doc-scrape-examples = false
+
+[[example]]
+name = "basic"
+doc-scrape-examples = true
