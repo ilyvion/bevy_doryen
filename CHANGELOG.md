@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added constructor function to `SetFontPath`
+- Added new event, `Capture`, to support the new Doryen feature
+
 ### Changed
 
-- Update to Bevy 0.11, which means:
+- Update to Bevy 0.11.0
+- Update to Doryen 1.3.0
 - Move away from custom "render system" and instead use custom Bevy schedules to facilitate update vs render systems. I.e. most previous uses of `add_doryen_render_system(foo.system())` should be replaced with `add_systems(Render, foo)`. See the documentation for `MainRender` for more details.
 - Cleaned up code from a few new lints
+- Process `AppExit` events before others; no point doing anything else if we're about to quit
+- Have the `swap_console` (internal implementation detail) ask for a 0,0 console instead of a 1,1 console, which avoids any associated allocations.
+- Minor adjustment of documentation for `SetFontPath`
 
 ## [0.2.0] - 2021-04-07
 

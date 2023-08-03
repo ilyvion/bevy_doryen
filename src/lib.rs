@@ -188,6 +188,7 @@ impl Plugin for DoryenPlugin {
             .init_resource::<FpsInfo>()
             .add_event::<SetFontPath>()
             .add_event::<Resized>()
+            .add_event::<Capture>()
             .add_plugins(RenderSchedulePlugin)
             .set_runner(doryen_runner);
     }
@@ -197,6 +198,7 @@ struct DoryenPluginEngine {
     bevy_app: BevyApp,
     app_exit_event_reader: ManualEventReader<AppExit>,
     set_font_path_event_reader: ManualEventReader<SetFontPath>,
+    capture_event_reader: ManualEventReader<Capture>,
     swap_console: Option<Console>,
     mouse_button_listeners: Vec<MouseButton>,
     previous_screen_size: (u32, u32),
@@ -253,6 +255,18 @@ impl Engine for DoryenPluginEngine {
         self.bevy_app.update();
         self.restore_root_console_ownership(api);
 
+        // Process the latest AppExit event
+        if let Some(app_exit_events) = self.bevy_app.world.get_resource_mut::<Events<AppExit>>() {
+            if self
+                .app_exit_event_reader
+                .iter(&app_exit_events)
+                .last()
+                .is_some()
+            {
+                return Some(UpdateEvent::Exit);
+            }
+        }
+
         // Process the latest SetFontPath event
         let doryen_set_font_path_events = self.bevy_app.world.resource_mut::<Events<SetFontPath>>();
         if let Some(doryen_set_font_path) = self
@@ -263,15 +277,14 @@ impl Engine for DoryenPluginEngine {
             api.set_font_path(doryen_set_font_path.0.as_ref());
         }
 
-        if let Some(app_exit_events) = self.bevy_app.world.get_resource_mut::<Events<AppExit>>() {
-            if self
-                .app_exit_event_reader
-                .iter(&app_exit_events)
-                .last()
-                .is_some()
-            {
-                return Some(UpdateEvent::Exit);
-            }
+        // Process the latest Capture event
+        let doryen_capture_events = self.bevy_app.world.resource_mut::<Events<Capture>>();
+        if let Some(doryen_capture) = self
+            .capture_event_reader
+            .iter(&doryen_capture_events)
+            .last()
+        {
+            return Some(UpdateEvent::Capture(doryen_capture.0.to_string()));
         }
 
         None
@@ -337,7 +350,6 @@ fn doryen_runner(mut app: BevyApp) {
         mouse_button_listeners,
         resize_mode,
     } = std::mem::take(&mut *resource_settings);
-    //drop(resource_settings);
 
     let AppOptions {
         screen_height,
@@ -353,7 +365,8 @@ fn doryen_runner(mut app: BevyApp) {
         bevy_app: app,
         app_exit_event_reader: ManualEventReader::default(),
         set_font_path_event_reader: ManualEventReader::default(),
-        swap_console: Some(Console::new(1, 1)),
+        capture_event_reader: ManualEventReader::default(),
+        swap_console: Some(Console::new(0, 0)),
         mouse_button_listeners,
         previous_screen_size: (screen_width, screen_height),
         previous_console_size: (console_width, console_height),
@@ -376,9 +389,15 @@ pub struct FpsInfo {
 
 /// When you want to change Doryen's font path, emit an event of this type.
 /// bevy_doryen will call [`set_font_path`](DoryenApi::set_font_path) with the
-/// provided value.
+/// provided value. See its documentation for more details.
 #[derive(Clone, Debug, Event)]
 pub struct SetFontPath(pub Cow<'static, str>);
+impl SetFontPath {
+    /// Constructs a new [`SetFontPath`]
+    pub fn new(path: impl Into<Cow<'static, str>>) -> Self {
+        Self(path.into())
+    }
+}
 
 /// Resized event object. Whenever Doryen's [`resize`](Engine::resize) method is
 /// called, an event of this type is emitted.
@@ -392,6 +411,18 @@ pub struct Resized {
     pub new_width: u32,
     /// The new height of the Doryen game window.
     pub new_height: u32,
+}
+
+/// Emitting this event causes bevy_doryen to return [`UpdateEvent::Capture`]
+/// from its Doryen `update` function, which saves a screenshot. See its
+/// documentation for more details.
+#[derive(Debug, Clone, Event)]
+pub struct Capture(pub Cow<'static, str>);
+impl Capture {
+    /// Constructs a new [`Capture`]
+    pub fn new(path: impl Into<Cow<'static, str>>) -> Self {
+        Self(path.into())
+    }
 }
 
 /// How the [`DoryenPlugin`] reacts to the resize event from Doryen.
