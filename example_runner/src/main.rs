@@ -13,6 +13,8 @@ mod examples {
     pub mod fonts;
     #[path = "../../../examples/image.rs"]
     pub mod image;
+    #[path = "../../../examples/lowfps.rs"]
+    pub mod lowfps;
     #[path = "../../../examples/perf.rs"]
     pub mod perf;
     #[path = "../../../examples/resize.rs"]
@@ -74,6 +76,7 @@ fn main() {
         "exit" => examples::exit::main(),
         "fonts" => examples::fonts::main(),
         "image" => examples::image::main(),
+        "lowfps" => examples::lowfps::main(),
         "perf" => examples::perf::main(),
         "resize" => examples::resize::main(),
         "subcell" => examples::subcell::main(),

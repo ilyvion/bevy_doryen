@@ -42,4 +42,10 @@
     <a href="https://alexschrod.github.io/bevy_doryen/examples/?example=text_input">Text input demo<br/>
         <img src="https://raw.githubusercontent.com/alexschrod/bevy_doryen/master/demo_thumbnails/text_input.png"/>
     </a>
+</td></tr><tr><td>
+    <a href="https://alexschrod.github.io/bevy_doryen/examples/?example=lowfps">Low FPS demo<br/>
+        <img src="https://raw.githubusercontent.com/alexschrod/bevy_doryen/master/demo_thumbnails/lowfps.png"/>
+    </a>
+</td><td>
+    
 </td></tr></table>
