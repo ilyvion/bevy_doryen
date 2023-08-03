@@ -56,7 +56,7 @@ App::new()
 ```
 
 See the [examples](https://github.com/alexschrod/bevy_doryen/tree/master/examples)
-for more usage scenarios.
+for more usage scenarios, as well as live demos.
 
 ## License
 
