@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+## [0.3.0]
+
+### Added ✨
 
 - Added constructor function to `SetFontPath`
 - Added new event, `Capture`, to support the new Doryen feature
 - `example_runner` workspace package for running examples on the web using `trunk`
 
-### Changed
+### Changed 🔧
 
 - Update to Rust 2021 edition
 - Update to Bevy 0.11.0
@@ -27,11 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0] - 2021-04-07
 
-### Added
+### Added ✨
 
 - Instructions for targeting various versions
 
-### Changed
+### Changed 🔧
 
 - Update to Bevy 0.5
 - Use `EventReader`/`EventWriter` instead of `ResMut<Events<T>>`
@@ -39,12 +41,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1] - 2021-03-12
 
-### Added
+### Added ✨
 
 - Build badge to README
 - Repository URL and README to Cargo.toml
 
-### Changed
+### Changed 🔧
 
 - Switch to nightly toolchain for tarpaulin
 
@@ -54,10 +56,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.0] - 2021-03-12
 
-### Added
+### Added ✨
 - First implementation of the plugin. Compatible with Bevy 0.4.0.
 
-[Unreleased]: https://github.com/alexschrod/bevy_doryen/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/alexschrod/bevy_doryen/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/alexschrod/bevy_doryen/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/alexschrod/bevy_doryen/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/alexschrod/bevy_doryen/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/alexschrod/bevy_doryen/releases/tag/v0.1.0
