@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update to Rust 2021 edition
 - Update to Bevy 0.11.0
 - Update to Doryen 1.3.0
 - Move away from custom "render system" and instead use custom Bevy schedules to facilitate update vs render systems. I.e. most previous uses of `add_doryen_render_system(foo.system())` should be replaced with `add_systems(Render, foo)`. See the documentation for `MainRender` for more details.
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Process `AppExit` events before others; no point doing anything else if we're about to quit
 - Have the `swap_console` (internal implementation detail) ask for a 0,0 console instead of a 1,1 console, which avoids any associated allocations.
 - Minor adjustment of documentation for `SetFontPath`
+- Update `basic` example to match latest Doryen code
 
 ## [0.2.0] - 2021-04-07
 

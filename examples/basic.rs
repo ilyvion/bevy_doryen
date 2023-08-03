@@ -1,9 +1,9 @@
 use bevy_app::{App, Startup, Update};
 use bevy_doryen::doryen::{AppOptions, TextAlign};
-use bevy_doryen::{DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
+use bevy_doryen::{Capture, DoryenPlugin, DoryenPluginSettings, Input, Render, RootConsole};
 use bevy_ecs::bundle::Bundle;
 use bevy_ecs::entity::Entity;
-use bevy_ecs::prelude::Component;
+use bevy_ecs::prelude::{Component, EventWriter};
 use bevy_ecs::system::{Commands, Query, Res, ResMut, Resource};
 
 const CONSOLE_WIDTH: u32 = 80;
@@ -39,6 +39,9 @@ struct Entities {
     mouse: Entity,
 }
 
+#[derive(Default, Resource)]
+struct ScreenshotIndex(usize);
+
 fn main() {
     App::new()
         .insert_resource(DoryenPluginSettings {
@@ -61,6 +64,7 @@ fn main() {
             ..Default::default()
         })
         .add_plugins(DoryenPlugin)
+        .init_resource::<ScreenshotIndex>()
         .add_systems(Startup, init)
         .add_systems(Update, input)
         .add_systems(Render, render)
@@ -97,6 +101,8 @@ fn input(
     entities: Res<Entities>,
     mut player_query: Query<(&mut Position<i32>, &Player)>,
     mut mouse_query: Query<(&mut Position<f32>, &Mouse)>,
+    mut screenshot_index: ResMut<ScreenshotIndex>,
+    mut capture_events: EventWriter<Capture>,
 ) {
     let mut player_position = player_query
         .get_component_mut::<Position<i32>>(entities.player)
@@ -120,6 +126,14 @@ fn input(
     let new_mouse_position = input.mouse_pos();
     mouse_position.x = new_mouse_position.0;
     mouse_position.y = new_mouse_position.1;
+
+    if input.key("ControlLeft") && input.key_pressed("KeyS") {
+        screenshot_index.0 += 1;
+        capture_events.send(Capture::new(format!(
+            "screenshot_{:03}.png",
+            screenshot_index.0
+        )));
+    }
 }
 
 fn render(
@@ -156,7 +170,7 @@ fn render(
     root_console.print_color(
         (CONSOLE_WIDTH / 2) as i32,
         (CONSOLE_HEIGHT - 1) as i32,
-        "#[red]arrows#[white] : move",
+        "#[red]arrows#[white] : move - #[red]CTRL-S#[white] : save screenshot",
         TextAlign::Center,
         None,
     );
