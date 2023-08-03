@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added ✨
+
+- Add Bevy version support table to README
+### Changed 🔧
+
+- Remove `--verbose` from `cargo publish` in Publish & Release workflow.
+
 ## [0.3.0]
 
 ### Added ✨

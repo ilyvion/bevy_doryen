@@ -58,14 +58,24 @@ App::new()
 See the [examples](https://github.com/alexschrod/bevy_doryen/tree/master/examples)
 for more usage scenarios, as well as live demos.
 
+## Bevy Version Support
+
+I intend to track the latest release version of Bevy. PRs supporting this are welcome!
+
+| bevy | bevy_doryen |
+| ---- | ----------- |
+| 0.11 | 0.3         |
+| 0.5  | 0.2         |
+| 0.4  | 0.1         |
+
 ## License
 
-Licensed under either of
+All code in this repository is dual-licensed under either:
 
-* Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+* Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
 * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
-at your option.
+at your option. This means you can select the license you prefer.
 
 ### Contribution
 
