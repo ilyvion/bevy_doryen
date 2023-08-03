@@ -47,7 +47,7 @@ pub struct Last;
 /// their order.
 #[derive(Debug, Resource)]
 pub struct MainRenderScheduleOrder {
-    /// The labels to run for the [`Main`] schedule (in the order they will be run).
+    /// The labels to run for the [`MainRender`] schedule (in the order they will be run).
     pub labels: Vec<Box<dyn ScheduleLabel>>,
 }
 

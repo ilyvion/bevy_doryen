@@ -134,7 +134,6 @@ use doryen_rs::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
 use std::borrow::Cow;
 
 use crate::doryen::{AppOptions, Console};
-use crate::render_schedule::{MainRender, RenderSchedulePlugin};
 
 pub use input::{Input, Keys, MouseButton};
 pub use render_schedule::*;
