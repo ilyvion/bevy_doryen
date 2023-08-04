@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Add `lowfps` example
 -   Add a prelude
 -   Add `demo` example
+-   Add "Go fullscreen" button to example page
 
 ### Changed 🔧
 

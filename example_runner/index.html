@@ -42,5 +42,63 @@
             }
         </style>
     </head>
-    <body></body>
+    <body>
+        <script>
+            async function goFullScreen() {
+                const canvas = document.getElementById("canvas");
+                await canvas.requestFullscreen();
+            }
+
+            let initialWidth, initialHeight;
+
+            function onFullscreenChange() {
+                const canvas = document.getElementById("canvas");
+                if (document.fullscreenElement) {
+                    // Entered fullscreen mode
+                    // Resize canvas to screen
+                    canvas.width = canvas.clientWidth;
+                    canvas.height = canvas.clientHeight;
+                    //canvas.style.width = `${canvas.clientWidth}px`;
+                    //canvas.style.height = `${canvas.clientHeight}px`;
+                } else {
+                    // Left fullscreen mode
+                    // Restore canvas size
+                    canvas.width = initialWidth;
+                    canvas.height = initialHeight;
+                    //canvas.style.width = `${initialWidth}px`;
+                    //canvas.style.height = `${initialHeight}px`;
+                }
+            }
+
+            function onLoad() {
+                const canvas = document.getElementById("canvas");
+                if (!canvas) {
+                    setTimeout(onLoad, 100);
+                    return;
+                }
+
+                canvas.insertAdjacentHTML(
+                    "afterend",
+                    `<p>
+                        <button id="goFullScreen">Go Fullscreen</button>
+                    </p>
+                    <p>
+                        Mouse events don't work right in full screen mode,
+                        so examples involving the mouse will be misbehaving
+                        when in full screen mode. I believe this to be a bug in
+                        Doryen itself.
+                    </p>`
+                );
+
+                document
+                    .getElementById("goFullScreen")
+                    .addEventListener("click", goFullScreen);
+
+                initialWidth = canvas.clientWidth;
+                initialHeight = canvas.clientHeight;
+                canvas.addEventListener("fullscreenchange", onFullscreenChange);
+            }
+            setTimeout(onLoad, 100);
+        </script>
+    </body>
 </html>
