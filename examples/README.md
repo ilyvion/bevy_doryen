@@ -2,10 +2,10 @@
 
 <table>
   <tr><td style="text-align: center;">
-    TBD: Visual demo
-    <!-- <a href="https://alexschrod.github.io/bevy_doryen/examples/?example=demo">Visual demo<br/>
+    Visual demo
+    <a href="https://alexschrod.github.io/bevy_doryen/examples/?example=demo">Visual demo<br/>
         <img src="https://raw.githubusercontent.com/alexschrod/bevy_doryen/master/demo_thumbnails/demo.png"/>
-    </a> -->
+    </a>
 </td><td>
     <a href="https://alexschrod.github.io/bevy_doryen/examples/?example=basic">Basic real-time walking @<br/>
         <img src="https://raw.githubusercontent.com/alexschrod/bevy_doryen/master/demo_thumbnails/basic.png"/>

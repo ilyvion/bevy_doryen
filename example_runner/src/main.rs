@@ -7,6 +7,8 @@ mod examples {
     pub mod basic;
     #[path = "../../../examples/blit.rs"]
     pub mod blit;
+    #[path = "../../../examples/demo/main.rs"]
+    pub mod demo;
     #[path = "../../../examples/exit.rs"]
     pub mod exit;
     #[path = "../../../examples/fonts.rs"]
@@ -73,6 +75,7 @@ fn main() {
         "alpha" => examples::alpha::main(),
         "basic" => examples::basic::main(),
         "blit" => examples::blit::main(),
+        "demo" => examples::demo::main(),
         "exit" => examples::exit::main(),
         "fonts" => examples::fonts::main(),
         "image" => examples::image::main(),
