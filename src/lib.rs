@@ -112,6 +112,7 @@
 // </editor-fold>
 // endregion
 
+mod debug_app_options;
 mod input;
 mod render_schedule;
 mod root_console;
@@ -121,18 +122,19 @@ pub mod doryen {
     pub use doryen_rs::*;
 }
 
+use std::borrow::Cow;
+
 use bevy_app::{App as BevyApp, AppExit, Plugin};
 use bevy_ecs::event::ManualEventReader;
 use bevy_ecs::prelude::{Event, Events};
 use bevy_ecs::system::Resource;
 use doryen::{App as DoryenApp, DoryenApi, Engine, UpdateEvent};
-use std::borrow::Cow;
 
 use crate::doryen::{AppOptions, Console};
 
-pub use input::{Input, Keys, MouseButton};
+pub use input::*;
 pub use render_schedule::*;
-pub use root_console::RootConsole;
+pub use root_console::*;
 
 /// Common imports
 pub mod prelude {
@@ -159,7 +161,10 @@ pub struct DoryenPluginSettings {
 impl std::fmt::Debug for DoryenPluginSettings {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("DoryenPluginSettings")
-            .field("app_options", &"<Not Debug>")
+            .field(
+                "app_options",
+                &debug_app_options::DebugAppOptions(&self.app_options),
+            )
             .field("mouse_button_listeners", &self.mouse_button_listeners)
             .field("resize_mode", &self.resize_mode)
             .finish()
