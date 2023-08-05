@@ -10,7 +10,7 @@ var sourcesIndex = JSON.parse('{\
 "async_task":["",[],["header.rs","lib.rs","raw.rs","runnable.rs","state.rs","task.rs","utils.rs"]],\
 "bevy_app":["",[],["app.rs","lib.rs","main_schedule.rs","plugin.rs","plugin_group.rs","schedule_runner.rs"]],\
 "bevy_derive":["",[],["app_plugin.rs","bevy_main.rs","derefs.rs","enum_variant_meta.rs","lib.rs"]],\
-"bevy_doryen":["",[],["input.rs","lib.rs","render_schedule.rs","root_console.rs"]],\
+"bevy_doryen":["",[],["debug_app_options.rs","input.rs","lib.rs","render_schedule.rs","root_console.rs"]],\
 "bevy_ecs":["",[["entity",[],["map_entities.rs","mod.rs"]],["query",[],["access.rs","fetch.rs","filter.rs","iter.rs","mod.rs","par_iter.rs","state.rs"]],["reflect",[],["component.rs","map_entities.rs","mod.rs","resource.rs"]],["schedule",[["executor",[],["mod.rs","multi_threaded.rs","simple.rs","single_threaded.rs"]]],["condition.rs","config.rs","graph_utils.rs","mod.rs","schedule.rs","set.rs","state.rs"]],["storage",[],["blob_vec.rs","mod.rs","resource.rs","sparse_set.rs","table.rs"]],["system",[["commands",[],["command_queue.rs","mod.rs","parallel_scope.rs"]]],["combinator.rs","exclusive_function_system.rs","exclusive_system_param.rs","function_system.rs","mod.rs","query.rs","system.rs","system_param.rs"]],["world",[],["entity_ref.rs","error.rs","identifier.rs","mod.rs","spawn_batch.rs","unsafe_world_cell.rs","world_cell.rs"]]],["archetype.rs","bundle.rs","change_detection.rs","component.rs","event.rs","lib.rs","removal_detection.rs"]],\
 "bevy_ecs_macros":["",[],["component.rs","fetch.rs","lib.rs","set.rs","states.rs"]],\
 "bevy_macro_utils":["",[],["attrs.rs","lib.rs","shape.rs","symbol.rs"]],\
