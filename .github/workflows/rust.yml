@@ -122,10 +122,18 @@ jobs:
               run: |
                   cd example_runner
                   trunk build --release --public-url /bevy_doryen/examples/
+                  ls -lh dist/*.wasm
                   cd ..
+
+            - name: Optimize examples WASM
+              uses: NiklasEi/wasm-opt-action@v2
+              with:
+                  file: example_runner/dist/*.wasm
+                  options: "--strip-debug -Oz"
 
             - name: Finalize examples
               run: |
+                  ls -lh example_runner/dist/*.wasm
                   mv example_runner/dist deploy/examples
 
             - name: Deploy

@@ -22,3 +22,7 @@ rand = "0.8"
 serde = { version = "1", features = ["derive"] }
 serde_qs = "0.12"
 unicode-segmentation = "1.10"
+
+[profile.release]
+opt-level = "z"
+lto = "thin"
