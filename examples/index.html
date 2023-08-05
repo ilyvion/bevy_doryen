@@ -32,8 +32,66 @@
             }
         </style>
     
-<link rel="preload" href="/bevy_doryen/examples/example_runner-ea95b6ae9cb8074f_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-<link rel="modulepreload" href="/bevy_doryen/examples/example_runner-ea95b6ae9cb8074f.js"></head>
+<link rel="preload" href="/bevy_doryen/examples/example_runner-269163f5818087d9_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+<link rel="modulepreload" href="/bevy_doryen/examples/example_runner-269163f5818087d9.js"></head>
     <body>
+        <script>
+            async function goFullScreen() {
+                const canvas = document.getElementById("canvas");
+                await canvas.requestFullscreen();
+            }
 
-<script type="module">import init from '/bevy_doryen/examples/example_runner-ea95b6ae9cb8074f.js';init('/bevy_doryen/examples/example_runner-ea95b6ae9cb8074f_bg.wasm');</script></body></html>
+            let initialWidth, initialHeight;
+
+            function onFullscreenChange() {
+                const canvas = document.getElementById("canvas");
+                if (document.fullscreenElement) {
+                    // Entered fullscreen mode
+                    // Resize canvas to screen
+                    canvas.width = canvas.clientWidth;
+                    canvas.height = canvas.clientHeight;
+                    //canvas.style.width = `${canvas.clientWidth}px`;
+                    //canvas.style.height = `${canvas.clientHeight}px`;
+                } else {
+                    // Left fullscreen mode
+                    // Restore canvas size
+                    canvas.width = initialWidth;
+                    canvas.height = initialHeight;
+                    //canvas.style.width = `${initialWidth}px`;
+                    //canvas.style.height = `${initialHeight}px`;
+                }
+            }
+
+            function onLoad() {
+                const canvas = document.getElementById("canvas");
+                if (!canvas) {
+                    setTimeout(onLoad, 100);
+                    return;
+                }
+
+                canvas.insertAdjacentHTML(
+                    "afterend",
+                    `<p>
+                        <button id="goFullScreen">Go Fullscreen</button>
+                    </p>
+                    <p>
+                        Mouse events don't work right in full screen mode,
+                        so examples involving the mouse will be misbehaving
+                        when in full screen mode. I believe this to be a bug in
+                        Doryen itself.
+                    </p>`
+                );
+
+                document
+                    .getElementById("goFullScreen")
+                    .addEventListener("click", goFullScreen);
+
+                initialWidth = canvas.clientWidth;
+                initialHeight = canvas.clientHeight;
+                canvas.addEventListener("fullscreenchange", onFullscreenChange);
+            }
+            setTimeout(onLoad, 100);
+        </script>
+    
+
+<script type="module">import init from '/bevy_doryen/examples/example_runner-269163f5818087d9.js';init('/bevy_doryen/examples/example_runner-269163f5818087d9_bg.wasm');</script></body></html>
