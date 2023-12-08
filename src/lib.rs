@@ -263,7 +263,7 @@ impl Engine for DoryenPluginEngine {
         if let Some(app_exit_events) = self.bevy_app.world.get_resource_mut::<Events<AppExit>>() {
             if self
                 .app_exit_event_reader
-                .iter(&app_exit_events)
+                .read(&app_exit_events)
                 .last()
                 .is_some()
             {
@@ -275,7 +275,7 @@ impl Engine for DoryenPluginEngine {
         let doryen_set_font_path_events = self.bevy_app.world.resource_mut::<Events<SetFontPath>>();
         if let Some(doryen_set_font_path) = self
             .set_font_path_event_reader
-            .iter(&doryen_set_font_path_events)
+            .read(&doryen_set_font_path_events)
             .last()
         {
             api.set_font_path(doryen_set_font_path.0.as_ref());
@@ -285,7 +285,7 @@ impl Engine for DoryenPluginEngine {
         let doryen_capture_events = self.bevy_app.world.resource_mut::<Events<Capture>>();
         if let Some(doryen_capture) = self
             .capture_event_reader
-            .iter(&doryen_capture_events)
+            .read(&doryen_capture_events)
             .last()
         {
             return Some(UpdateEvent::Capture(doryen_capture.0.to_string()));

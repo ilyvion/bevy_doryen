@@ -43,7 +43,7 @@ fn resize_callback(root_console: &mut RootConsole, resized: Resized) {
 }
 
 fn resize_events(mut resize_data: ResMut<ResizeData>, mut event_reader: EventReader<Resized>) {
-    if let Some(resized) = event_reader.iter().last() {
+    if let Some(resized) = event_reader.read().last() {
         resize_data.width = resized.new_width / 8;
         resize_data.height = resized.new_height / 8;
     }

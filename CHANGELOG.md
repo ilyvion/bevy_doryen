@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Remove `--verbose` from `cargo publish` in Publish & Release workflow
 -   Add custom `Debug` implementation for `doryen_rs::AppOptions`
+-   Update to Bevy 0.12.1
 
 ## [0.3.0]
 

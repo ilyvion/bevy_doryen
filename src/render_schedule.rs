@@ -1,5 +1,5 @@
 use bevy_app::{App, Plugin};
-use bevy_ecs::schedule::{ExecutorKind, Schedule, ScheduleLabel};
+use bevy_ecs::schedule::{ExecutorKind, InternedScheduleLabel, Schedule, ScheduleLabel};
 use bevy_ecs::system::Resource;
 use bevy_ecs::world::{Mut, World};
 
@@ -48,18 +48,18 @@ pub struct Last;
 #[derive(Debug, Resource)]
 pub struct MainRenderScheduleOrder {
     /// The labels to run for the [`MainRender`] schedule (in the order they will be run).
-    pub labels: Vec<Box<dyn ScheduleLabel>>,
+    pub labels: Vec<InternedScheduleLabel>,
 }
 
 impl Default for MainRenderScheduleOrder {
     fn default() -> Self {
         Self {
             labels: vec![
-                Box::new(First),
-                Box::new(PreRender),
-                Box::new(Render),
-                Box::new(PostRender),
-                Box::new(Last),
+                First.intern(),
+                PreRender.intern(),
+                Render.intern(),
+                PostRender.intern(),
+                Last.intern(),
             ],
         }
     }
@@ -70,8 +70,8 @@ impl MainRender {
     pub fn run_main_render(world: &mut World) {
         #[allow(clippy::shadow_unrelated)]
         world.resource_scope(|world, order: Mut<'_, MainRenderScheduleOrder>| {
-            for label in &order.labels {
-                let _ = world.try_run_schedule(&**label);
+            for &label in &order.labels {
+                let _ = world.try_run_schedule(label);
             }
         });
     }
@@ -84,10 +84,10 @@ pub struct RenderSchedulePlugin;
 impl Plugin for RenderSchedulePlugin {
     fn build(&self, app: &mut App) {
         // simple "facilitator" schedules benefit from simpler single threaded scheduling
-        let mut render_schedule = Schedule::new();
+        let mut render_schedule = Schedule::new(MainRender);
         render_schedule.set_executor_kind(ExecutorKind::SingleThreaded);
 
-        app.add_schedule(MainRender, render_schedule)
+        app.add_schedule(render_schedule)
             .init_resource::<MainRenderScheduleOrder>()
             .add_systems(MainRender, MainRender::run_main_render);
     }
