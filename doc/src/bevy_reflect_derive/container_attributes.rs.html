@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect_derive-0.11.0/src/container_attributes.rs`."><title>container_attributes.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-f3501f0f5ae15dfb.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_reflect_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.71.1 (eb26296b5 2023-08-03)" data-search-js="search-4926e5fc22a5646a.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-11255107d0a65077.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f0540c1d82cde29b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../bevy_reflect_derive/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect_derive-0.12.1/src/container_attributes.rs`."><title>container_attributes.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_reflect_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../bevy_reflect_derive/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -392,6 +392,67 @@
 <a href="#392" id="392">392</a>
 <a href="#393" id="393">393</a>
 <a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Contains code related to container attributes for reflected types.
 //!
 //! A container attribute is an attribute which applies to an entire struct or enum
@@ -399,15 +460,15 @@
 //! the derive helper attribute for `Reflect`, which looks like:
 //! `#[reflect(PartialEq, Default, ...)]` and `#[reflect_value(PartialEq, Default, ...)]`.
 
-</span><span class="kw">use </span><span class="kw">crate</span>::fq_std::{FQAny, FQOption};
-<span class="kw">use </span><span class="kw">crate</span>::utility;
+</span><span class="kw">use </span><span class="kw">crate</span>::utility;
+<span class="kw">use </span>bevy_macro_utils::fq_std::{FQAny, FQOption};
 <span class="kw">use </span>proc_macro2::{Ident, Span};
 <span class="kw">use </span>quote::quote_spanned;
 <span class="kw">use </span>syn::parse::{Parse, ParseStream};
 <span class="kw">use </span>syn::punctuated::Punctuated;
 <span class="kw">use </span>syn::spanned::Spanned;
 <span class="kw">use </span>syn::token::Comma;
-<span class="kw">use </span>syn::{LitBool, Meta, Path};
+<span class="kw">use </span>syn::{Expr, LitBool, Meta, Path};
 
 <span class="comment">// The &quot;special&quot; trait idents that are used internally for reflection.
 // Received via attributes like `#[reflect(PartialEq, Hash, ...)]`
@@ -421,6 +482,9 @@
 
 <span class="comment">// Attributes for `FromReflect` implementation
 </span><span class="kw">const </span>FROM_REFLECT_ATTR: <span class="kw-2">&amp;</span>str = <span class="string">&quot;from_reflect&quot;</span>;
+
+<span class="comment">// Attributes for `TypePath` implementation
+</span><span class="kw">const </span>TYPE_PATH_ATTR: <span class="kw-2">&amp;</span>str = <span class="string">&quot;type_path&quot;</span>;
 
 <span class="comment">// The error message to show when a trait/type is specified multiple times
 </span><span class="kw">const </span>CONFLICTING_TYPE_DATA_MESSAGE: <span class="kw-2">&amp;</span>str = <span class="string">&quot;conflicting type data registration&quot;</span>;
@@ -481,7 +545,48 @@
                 <span class="kw">if </span>existing.value() != new.value() {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(syn::Error::new(
                         new.span(),
-                        <span class="macro">format!</span>(<span class="string">&quot;`from_reflect` already set to {}&quot;</span>, existing.value()),
+                        <span class="macro">format!</span>(<span class="string">&quot;`{FROM_REFLECT_ATTR}` already set to {}&quot;</span>, existing.value()),
+                    ));
+                }
+            } <span class="kw">else </span>{
+                <span class="self">self</span>.auto_derive = <span class="prelude-val">Some</span>(new);
+            }
+        }
+
+        <span class="prelude-val">Ok</span>(())
+    }
+}
+
+<span class="doccomment">/// A collection of attributes used for deriving `TypePath` via the `Reflect` derive.
+///
+/// Note that this differs from the attributes used by the `TypePath` derive itself,
+/// which look like `[type_path = &quot;my_crate::foo&quot;]`.
+/// The attributes used by reflection take the form `#[reflect(type_path = false)]`.
+///
+/// These attributes should only be used for `TypePath` configuration specific to
+/// deriving `Reflect`.
+</span><span class="attr">#[derive(Clone, Default)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>TypePathAttrs {
+    auto_derive: <span class="prelude-ty">Option</span>&lt;LitBool&gt;,
+}
+
+<span class="kw">impl </span>TypePathAttrs {
+    <span class="doccomment">/// Returns true if `TypePath` should be automatically derived as part of the `Reflect` derive.
+    </span><span class="kw">pub fn </span>should_auto_derive(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.auto_derive
+            .as_ref()
+            .map(|lit| lit.value())
+            .unwrap_or(<span class="bool-val">true</span>)
+    }
+
+    <span class="doccomment">/// Merges this [`TypePathAttrs`] with another.
+    </span><span class="kw">pub fn </span>merge(<span class="kw-2">&amp;mut </span><span class="self">self</span>, other: TypePathAttrs) -&gt; <span class="prelude-ty">Result</span>&lt;(), syn::Error&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(new) = other.auto_derive {
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(existing) = <span class="kw-2">&amp;</span><span class="self">self</span>.auto_derive {
+                <span class="kw">if </span>existing.value() != new.value() {
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(syn::Error::new(
+                        new.span(),
+                        <span class="macro">format!</span>(<span class="string">&quot;`{TYPE_PATH_ATTR}` already set to {}&quot;</span>, existing.value()),
                     ));
                 }
             } <span class="kw">else </span>{
@@ -559,7 +664,8 @@
     debug: TraitImpl,
     hash: TraitImpl,
     partial_eq: TraitImpl,
-    from_reflect: FromReflectAttrs,
+    from_reflect_attrs: FromReflectAttrs,
+    type_path_attrs: TypePathAttrs,
     idents: Vec&lt;Ident&gt;,
 }
 
@@ -638,25 +744,18 @@
                 }
                 Meta::NameValue(pair) =&gt; {
                     <span class="kw">if </span>pair.path.is_ident(FROM_REFLECT_ATTR) {
-                        traits.from_reflect.auto_derive = <span class="kw">match </span><span class="kw-2">&amp;</span>pair.value {
-                            syn::Expr::Lit(syn::ExprLit {
-                                lit: syn::Lit::Bool(lit),
-                                ..
-                            }) =&gt; {
-                                <span class="comment">// Overrride `lit` if this is a `FromReflect` derive.
+                        traits.from_reflect_attrs.auto_derive =
+                            <span class="prelude-val">Some</span>(extract_bool(<span class="kw-2">&amp;</span>pair.value, |lit| {
+                                <span class="comment">// Override `lit` if this is a `FromReflect` derive.
                                 // This typically means a user is opting out of the default implementation
                                 // from the `Reflect` derive and using the `FromReflect` derive directly instead.
                                 </span>is_from_reflect_derive
                                     .then(|| LitBool::new(<span class="bool-val">true</span>, Span::call_site()))
-                                    .or_else(|| <span class="prelude-val">Some</span>(lit.clone()))
-                            }
-                            <span class="kw">_ </span>=&gt; {
-                                <span class="kw">return </span><span class="prelude-val">Err</span>(syn::Error::new(
-                                    pair.value.span(),
-                                    <span class="string">&quot;Expected a boolean value&quot;</span>,
-                                ))
-                            }
-                        };
+                                    .unwrap_or_else(|| lit.clone())
+                            })<span class="question-mark">?</span>);
+                    } <span class="kw">else if </span>pair.path.is_ident(TYPE_PATH_ATTR) {
+                        traits.type_path_attrs.auto_derive =
+                            <span class="prelude-val">Some</span>(extract_bool(<span class="kw-2">&amp;</span>pair.value, Clone::clone)<span class="question-mark">?</span>);
                     } <span class="kw">else </span>{
                         <span class="kw">return </span><span class="prelude-val">Err</span>(syn::Error::new(pair.path.span(), <span class="string">&quot;Unknown attribute&quot;</span>));
                     }
@@ -678,10 +777,15 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.idents
     }
 
-    <span class="doccomment">/// The `FromReflect` attributes on this type.
+    <span class="doccomment">/// The `FromReflect` configuration found within `#[reflect(...)]` attributes on this type.
     </span><span class="attr">#[allow(clippy::wrong_self_convention)]
-    </span><span class="kw">pub fn </span>from_reflect(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>FromReflectAttrs {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.from_reflect
+    </span><span class="kw">pub fn </span>from_reflect_attrs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>FromReflectAttrs {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.from_reflect_attrs
+    }
+
+    <span class="doccomment">/// The `TypePath` configuration found within `#[reflect(...)]` attributes on this type.
+    </span><span class="kw">pub fn </span>type_path_attrs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>TypePathAttrs {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.type_path_attrs
     }
 
     <span class="doccomment">/// Returns the implementation of `Reflect::reflect_hash` as a `TokenStream`.
@@ -760,7 +864,8 @@
         <span class="self">self</span>.debug.merge(other.debug)<span class="question-mark">?</span>;
         <span class="self">self</span>.hash.merge(other.hash)<span class="question-mark">?</span>;
         <span class="self">self</span>.partial_eq.merge(other.partial_eq)<span class="question-mark">?</span>;
-        <span class="self">self</span>.from_reflect.merge(other.from_reflect)<span class="question-mark">?</span>;
+        <span class="self">self</span>.from_reflect_attrs.merge(other.from_reflect_attrs)<span class="question-mark">?</span>;
+        <span class="self">self</span>.type_path_attrs.merge(other.type_path_attrs)<span class="question-mark">?</span>;
         <span class="kw">for </span>ident <span class="kw">in </span>other.idents {
             add_unique_ident(<span class="kw-2">&amp;mut </span><span class="self">self</span>.idents, ident)<span class="question-mark">?</span>;
         }
@@ -785,5 +890,22 @@
 
     idents.push(ident);
     <span class="prelude-val">Ok</span>(())
+}
+
+<span class="doccomment">/// Extract a boolean value from an expression.
+///
+/// The mapper exists so that the caller can conditionally choose to use the given
+/// value or supply their own.
+</span><span class="kw">fn </span>extract_bool(
+    value: <span class="kw-2">&amp;</span>Expr,
+    <span class="kw-2">mut </span>mapper: <span class="kw">impl </span>FnMut(<span class="kw-2">&amp;</span>LitBool) -&gt; LitBool,
+) -&gt; <span class="prelude-ty">Result</span>&lt;LitBool, syn::Error&gt; {
+    <span class="kw">match </span>value {
+        syn::Expr::Lit(syn::ExprLit {
+            lit: syn::Lit::Bool(lit),
+            ..
+        }) =&gt; <span class="prelude-val">Ok</span>(mapper(lit)),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(syn::Error::new(value.span(), <span class="string">&quot;Expected a boolean value&quot;</span>)),
+    }
 }
 </code></pre></div></section></main></body></html>

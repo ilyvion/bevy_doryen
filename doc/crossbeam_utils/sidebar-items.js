@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["atomic"],"struct":["Backoff","CachePadded"]};
+window.SIDEBAR_ITEMS = {"mod":["atomic","sync","thread"],"struct":["Backoff","CachePadded"]};
