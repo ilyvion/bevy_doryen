@@ -1,8 +1,7 @@
 # Live demos of the examples
 
 <table>
-  <tr><td style="text-align: center;">
-    Visual demo
+  <tr><td>
     <a href="https://ilyvion.github.io/bevy_doryen/examples/?example=demo">Visual demo<br/>
         <img src="https://raw.githubusercontent.com/ilyvion/bevy_doryen/master/demo_thumbnails/demo.png"/>
     </a>
