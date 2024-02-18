@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wayland-protocols-0.29.5/src/unstable.rs`."><title>unstable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wayland_protocols" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../wayland_protocols/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wayland-protocols-0.29.5/src/unstable.rs`."><title>unstable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wayland_protocols" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -398,7 +399,7 @@
 //! Backward incompatible changes are done by bumping the version
 //! number in the protocol and interface names and resetting the
 //! interface version. Once the protocol is to be declared stable,
-//! the &#39;z&#39; prefix and the version number in the protocol and
+//! the 'z' prefix and the version number in the protocol and
 //! interface names are removed and the interface version number is
 //! reset.
 
@@ -408,7 +409,7 @@
     <span class="doccomment">//! Fullscreen shell protocol
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;fullscreen-shell&quot;</span>,
+        <span class="string">"fullscreen-shell"</span>,
         [v1],
         [(wl_surface, wl_surface_interface), (wl_output, wl_output_interface)],
         []
@@ -418,14 +419,14 @@
 <span class="kw">pub mod </span>idle_inhibit {
     <span class="doccomment">//! Screensaver inhibition protocol
 
-    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">&quot;idle-inhibit&quot;</span>, [v1], [(wl_surface, wl_surface_interface)], []);
+    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">"idle-inhibit"</span>, [v1], [(wl_surface, wl_surface_interface)], []);
 }
 
 <span class="kw">pub mod </span>input_method {
     <span class="doccomment">//! Input method protocol
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;input-method&quot;</span>,
+        <span class="string">"input-method"</span>,
         [v1],
         [
             (wl_surface, wl_surface_interface),
@@ -440,7 +441,7 @@
     <span class="doccomment">//! Input timestamps protocol
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;input-timestamps&quot;</span>,
+        <span class="string">"input-timestamps"</span>,
         [v1],
         [
             (wl_keyboard, wl_keyboard_interface),
@@ -459,7 +460,7 @@
     //! key events from that seat get forwarded to a surface.
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;keyboard-shortcuts-inhibit&quot;</span>,
+        <span class="string">"keyboard-shortcuts-inhibit"</span>,
         [v1],
         [(wl_seat, wl_seat_interface), (wl_surface, wl_surface_interface)],
         []
@@ -469,14 +470,14 @@
 <span class="kw">pub mod </span>linux_dmabuf {
     <span class="doccomment">//! Linux DMA-BUF protocol
 
-    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">&quot;linux-dmabuf&quot;</span>, [v1], [(wl_buffer, wl_buffer_interface)], []);
+    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">"linux-dmabuf"</span>, [v1], [(wl_buffer, wl_buffer_interface)], []);
 }
 
 <span class="kw">pub mod </span>linux_explicit_synchronization {
     <span class="doccomment">//! Linux explicit synchronization protocol
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;linux-explicit-synchronization&quot;</span>,
+        <span class="string">"linux-explicit-synchronization"</span>,
         [v1],
         [(wl_surface, wl_surface_interface)],
         []
@@ -491,13 +492,13 @@
     //! motions to a given region, or locking it to its current position.
     //!
     //! In order to constrain the pointer, a client must first bind the global
-    //! interface &quot;wp_pointer_constraints&quot; which, if a compositor supports pointer
+    //! interface "wp_pointer_constraints" which, if a compositor supports pointer
     //! constraints, is exposed by the registry. Using the bound global object, the
     //! client uses the request that corresponds to the type of constraint it wants
     //! to make. See wp_pointer_constraints for more details.
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;pointer-constraints&quot;</span>,
+        <span class="string">"pointer-constraints"</span>,
         [v1],
         [
             (wl_surface, wl_surface_interface),
@@ -512,7 +513,7 @@
     <span class="doccomment">//! Pointer gestures protocol
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;pointer-gestures&quot;</span>,
+        <span class="string">"pointer-gestures"</span>,
         [v1],
         [(wl_surface, wl_surface_interface), (wl_pointer, wl_pointer_interface)],
         []
@@ -522,7 +523,7 @@
 <span class="kw">pub mod </span>primary_selection {
     <span class="doccomment">//! Primary selection protocol
 
-    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">&quot;primary-selection&quot;</span>, [v1], [(wl_seat, wl_seat_interface)], []);
+    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">"primary-selection"</span>, [v1], [(wl_seat, wl_seat_interface)], []);
 }
 
 <span class="kw">pub mod </span>relative_pointer {
@@ -533,16 +534,16 @@
     //! monitor edge or other pointer barriers).
     //!
     //! To start receiving relative pointer events, a client must first bind the
-    //! global interface &quot;wp_relative_pointer_manager&quot; which, if a compositor
+    //! global interface "wp_relative_pointer_manager" which, if a compositor
     //! supports relative pointer motion events, is exposed by the registry. After
     //! having created the relative pointer manager proxy object, the client uses
     //! it to create the actual relative pointer object using the
-    //! &quot;get_relative_pointer&quot; request given a wl_pointer. The relative pointer
+    //! "get_relative_pointer" request given a wl_pointer. The relative pointer
     //! motion events will then, when applicable, be transmitted via the proxy of
     //! the newly created relative pointer object. See the documentation of the
     //! relative pointer interface for more details.
 
-    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">&quot;relative-pointer&quot;</span>, [v1], [(wl_pointer, wl_pointer_interface)], []);
+    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">"relative-pointer"</span>, [v1], [(wl_pointer, wl_pointer_interface)], []);
 }
 
 <span class="kw">pub mod </span>tablet {
@@ -560,7 +561,7 @@
     //! this indirection, we can avoid merging wp_tablet into the actual Wayland
     //! protocol, a long-term benefit.
     //!
-    //! The wp_tablet_seat sends a &quot;tablet added&quot; event for each tablet
+    //! The wp_tablet_seat sends a "tablet added" event for each tablet
     //! connected. That event is followed by descriptive events about the
     //! hardware; currently that includes events for name, vid/pid and
     //! a wp_tablet.path event that describes a local path. This path can be
@@ -571,7 +572,7 @@
     //! may now finalize any initialization for that tablet.
     //!
     //! Events from tablets require a tool in proximity. Tools are also managed
-    //! by the tablet seat; a &quot;tool added&quot; event is sent whenever a tool is new
+    //! by the tablet seat; a "tool added" event is sent whenever a tool is new
     //! to the compositor. That event is followed by a number of descriptive
     //! events about the hardware; currently that includes capabilities,
     //! hardware id and serial number, and tool type. Similar to the tablet
@@ -582,11 +583,11 @@
     //! tool gets into proximity of the tablet, a proximity_in event is sent on
     //! the wp_tablet_tool interface, listing the tablet and the surface. That
     //! event is followed by a motion event with the coordinates. After that,
-    //! it&#39;s the usual motion, axis, button, etc. events. The protocol&#39;s
+    //! it's the usual motion, axis, button, etc. events. The protocol's
     //! serialisation means events are grouped by wp_tablet_tool.frame events.
     //!
-    //! Two special events (that don&#39;t exist in X) are down and up. They signal
-    //! &quot;tip touching the surface&quot;. For tablets without real proximity
+    //! Two special events (that don't exist in X) are down and up. They signal
+    //! "tip touching the surface". For tablets without real proximity
     //! detection, the sequence is: proximity_in, motion, down, frame.
     //!
     //! When the tool leaves proximity, a proximity_out event is sent. If any
@@ -600,8 +601,8 @@
     //! means that the proximity-out is delayed until all buttons are released.
     //!
     //! Moving a tool physically from one tablet to the other has no real effect
-    //! on the protocol, since we already have the tool object from the &quot;tool
-    //! added&quot; event. All the information is already there and the proximity
+    //! on the protocol, since we already have the tool object from the "tool
+    //! added" event. All the information is already there and the proximity
     //! events on both tablets are all a client needs to reconstruct what
     //! happened.
     //!
@@ -626,7 +627,7 @@
     //! tool was used on are removed.
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;tablet&quot;</span>,
+        <span class="string">"tablet"</span>,
         [v1, v2],
         [(wl_seat, wl_seat_interface), (wl_surface, wl_surface_interface)],
         []
@@ -637,7 +638,7 @@
     <span class="doccomment">//! Text input protocol
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;text-input&quot;</span>,
+        <span class="string">"text-input"</span>,
         [v1, v3],
         [(wl_seat, wl_seat_interface), (wl_surface, wl_surface_interface)],
         []
@@ -650,7 +651,7 @@
 
     //! A window decoration is a set of window controls as deemed appropriate by
     //! the party managing them, such as user interface components used to move,
-    //! resize and change a window&#39;s state.
+    //! resize and change a window's state.
 
     //! A client can use this protocol to request being decorated by a supporting
     //! compositor.
@@ -660,7 +661,7 @@
     //! see fit.
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;xdg-decoration&quot;</span>,
+        <span class="string">"xdg-decoration"</span>,
         [v1],
         [],
         [(xdg_shell, xdg_toplevel, xdg_toplevel_interface)]
@@ -688,10 +689,10 @@
     //! sandboxed client without file system access needs the user to select a file
     //! on the file system, given sandbox environment support, it can export its
     //! surface, passing the exported surface handle to an unsandboxed process that
-    //! can show a file browser dialog and stack it above the sandboxed client&#39;s
+    //! can show a file browser dialog and stack it above the sandboxed client's
     //! surface.
 
-    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">&quot;xdg-foreign&quot;</span>, [v1, v2], [(wl_surface, wl_surface_interface)], []);
+    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">"xdg-foreign"</span>, [v1, v2], [(wl_surface, wl_surface_interface)], []);
 }
 
 <span class="kw">pub mod </span>xdg_output {
@@ -714,7 +715,7 @@
     //! concepts (such as output location within the global compositor space,
     //! the connector name and types, etc.) out of the core wl_output protocol.
 
-    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">&quot;xdg-output&quot;</span>, [v1], [(wl_output, wl_output_interface)], []);
+    </span><span class="macro">wayland_protocol_versioned!</span>(<span class="string">"xdg-output"</span>, [v1], [(wl_output, wl_output_interface)], []);
 }
 
 <span class="kw">pub mod </span>xdg_shell {
@@ -726,7 +727,7 @@
     //! clients/server not yet implementing the new protocol.
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;xdg-shell&quot;</span>,
+        <span class="string">"xdg-shell"</span>,
         [v5, v6],
         [
             (wl_surface, wl_surface_interface),
@@ -745,7 +746,7 @@
     //! all keyboard events to be forwarded to a surface even when the
     //! surface does not have keyboard focus.
     //!
-    //! In the X11 protocol, a client may request an &quot;active grab&quot; on the
+    //! In the X11 protocol, a client may request an "active grab" on the
     //! keyboard. On success, all key events are reported only to the
     //! grabbing X11 client. For details, see XGrabKeyboard(3).
     //!
@@ -768,7 +769,7 @@
     //! specific protocol to Xwayland alone.
 
     </span><span class="macro">wayland_protocol_versioned!</span>(
-        <span class="string">&quot;xwayland-keyboard-grab&quot;</span>,
+        <span class="string">"xwayland-keyboard-grab"</span>,
         [v1],
         [(wl_seat, wl_seat_interface), (wl_surface, wl_surface_interface)],
         []

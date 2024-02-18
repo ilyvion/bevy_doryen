@@ -1,4 +1,0 @@
-(function() {var implementors = {
-"bevy_asset":[["impl <a class=\"trait\" href=\"bevy_reflect/struct_trait/trait.Struct.html\" title=\"trait bevy_reflect::struct_trait::Struct\">Struct</a> for <a class=\"struct\" href=\"bevy_asset/struct.AssetIndex.html\" title=\"struct bevy_asset::AssetIndex\">AssetIndex</a><span class=\"where fmt-newline\">where\n    <a class=\"primitive\" href=\"https://doc.rust-lang.org/1.74.1/std/primitive.u32.html\">u32</a>: <a class=\"trait\" href=\"bevy_reflect/from_reflect/trait.FromReflect.html\" title=\"trait bevy_reflect::from_reflect::FromReflect\">FromReflect</a> + <a class=\"trait\" href=\"bevy_reflect/type_path/trait.TypePath.html\" title=\"trait bevy_reflect::type_path::TypePath\">TypePath</a>,</span>"]],
-"bevy_reflect":[]
-};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

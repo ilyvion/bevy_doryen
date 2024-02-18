@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glutin-0.29.1/src/api/glx/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="glutin" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../glutin/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glutin-0.29.1/src/api/glx/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="glutin" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -774,13 +775,13 @@
 <a href="#774" id="774">774</a>
 <a href="#775" id="775">775</a>
 </pre></div><pre class="rust"><code><span class="attr">#![cfg(any(
-    target_os = <span class="string">&quot;linux&quot;</span>,
-    target_os = <span class="string">&quot;dragonfly&quot;</span>,
-    target_os = <span class="string">&quot;freebsd&quot;</span>,
-    target_os = <span class="string">&quot;netbsd&quot;</span>,
-    target_os = <span class="string">&quot;openbsd&quot;</span>,
+    target_os = <span class="string">"linux"</span>,
+    target_os = <span class="string">"dragonfly"</span>,
+    target_os = <span class="string">"freebsd"</span>,
+    target_os = <span class="string">"netbsd"</span>,
+    target_os = <span class="string">"openbsd"</span>,
 ))]
-#![cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+#![cfg(feature = <span class="string">"x11"</span>)]
 
 </span><span class="kw">mod </span>make_current_guard;
 
@@ -805,7 +806,7 @@
 <span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>Glx(SymWrapper&lt;ffi::glx::Glx&gt;);
 
-<span class="doccomment">/// Because `*const raw::c_void` doesn&#39;t implement `Sync`.
+<span class="doccomment">/// Because `*const raw::c_void` doesn't implement `Sync`.
 </span><span class="kw">unsafe impl </span>Sync <span class="kw">for </span>Glx {}
 
 <span class="kw">impl </span>SymTrait <span class="kw">for </span>ffi::glx::Glx {
@@ -820,7 +821,7 @@
 
 <span class="kw">impl </span>Glx {
     <span class="kw">pub fn </span>new() -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, ()&gt; {
-        <span class="kw">let </span>paths = <span class="macro">vec!</span>[<span class="string">&quot;libGL.so.1&quot;</span>, <span class="string">&quot;libGL.so&quot;</span>];
+        <span class="kw">let </span>paths = <span class="macro">vec!</span>[<span class="string">"libGL.so.1"</span>, <span class="string">"libGL.so"</span>];
 
         SymWrapper::new(paths).map(Glx)
     }
@@ -853,20 +854,20 @@
 <span class="kw">impl </span>Context {
     <span class="comment">// transparent is [`None`] if window is raw.
     </span><span class="attr">#[allow(clippy::new_ret_no_self)]
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">&#39;a</span>&gt;(
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'a</span>&gt;(
         xconn: Arc&lt;XConnection&gt;,
         pf_reqs: <span class="kw-2">&amp;</span>PixelFormatRequirements,
-        opengl: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Context&gt;,
+        opengl: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Context&gt;,
         screen_id: raw::c_int,
         surface_type: SurfaceType,
         transparent: <span class="prelude-ty">Option</span>&lt;bool&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;ContextPrototype&lt;<span class="lifetime">&#39;a</span>&gt;, CreationError&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;ContextPrototype&lt;<span class="lifetime">'a</span>&gt;, CreationError&gt; {
         <span class="kw">let </span>glx = GLX.as_ref().unwrap();
-        <span class="comment">// This is completely ridiculous, but VirtualBox&#39;s OpenGL driver needs
+        <span class="comment">// This is completely ridiculous, but VirtualBox's OpenGL driver needs
         // some call handled by *it* (i.e. not Mesa) to occur before
-        // anything else can happen. That is because VirtualBox&#39;s OpenGL
+        // anything else can happen. That is because VirtualBox's OpenGL
         // driver is going to apply binary patches to Mesa in the DLL
-        // constructor and until it&#39;s loaded it won&#39;t have a chance to do that.
+        // constructor and until it's loaded it won't have a chance to do that.
         //
         // The easiest way to do this is to just call `glXQueryVersion()` before
         // doing anything else. See: https://www.virtualbox.org/ticket/8293
@@ -896,7 +897,7 @@
     <span class="kw">unsafe fn </span>check_make_current(<span class="kw-2">&amp;</span><span class="self">self</span>, ret: <span class="prelude-ty">Option</span>&lt;i32&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), ContextError&gt; {
         <span class="kw">if </span>ret == <span class="prelude-val">Some</span>(<span class="number">0</span>) {
             <span class="kw">let </span>err = <span class="self">self</span>.xconn.check_errors();
-            <span class="prelude-val">Err</span>(ContextError::OsError(<span class="macro">format!</span>(<span class="string">&quot;`glXMakeCurrent` failed: {:?}&quot;</span>, err)))
+            <span class="prelude-val">Err</span>(ContextError::OsError(<span class="macro">format!</span>(<span class="string">"`glXMakeCurrent` failed: {:?}"</span>, err)))
         } <span class="kw">else </span>{
             <span class="prelude-val">Ok</span>(())
         }
@@ -951,7 +952,7 @@
             glx.SwapBuffers(<span class="self">self</span>.xconn.display <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, <span class="self">self</span>.drawable);
         }
         <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = <span class="self">self</span>.xconn.check_errors() {
-            <span class="prelude-val">Err</span>(ContextError::OsError(<span class="macro">format!</span>(<span class="string">&quot;`glXSwapBuffers` failed: {:?}&quot;</span>, err)))
+            <span class="prelude-val">Err</span>(ContextError::OsError(<span class="macro">format!</span>(<span class="string">"`glXSwapBuffers` failed: {:?}"</span>, err)))
         } <span class="kw">else </span>{
             <span class="prelude-val">Ok</span>(())
         }
@@ -993,9 +994,9 @@
                 .map_err(ContextError::OsError)
                 .unwrap();
 
-            <span class="kw">let </span>gl_finish_fn = <span class="self">self</span>.get_proc_address(<span class="string">&quot;glFinish&quot;</span>);
+            <span class="kw">let </span>gl_finish_fn = <span class="self">self</span>.get_proc_address(<span class="string">"glFinish"</span>);
             <span class="macro">assert!</span>(!gl_finish_fn.is_null());
-            <span class="kw">let </span>gl_finish_fn = std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">extern </span><span class="string">&quot;system&quot; </span><span class="kw">fn</span>()&gt;(gl_finish_fn);
+            <span class="kw">let </span>gl_finish_fn = std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">extern </span><span class="string">"system" </span><span class="kw">fn</span>()&gt;(gl_finish_fn);
             gl_finish_fn();
 
             <span class="kw">if </span>guard.old_context() == <span class="prelude-val">Some</span>(<span class="self">self</span>.context) {
@@ -1009,16 +1010,16 @@
 }
 
 <span class="attr">#[derive(Debug)]
-</span><span class="kw">pub struct </span>ContextPrototype&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>ContextPrototype&lt;<span class="lifetime">'a</span>&gt; {
     extensions: String,
     xconn: Arc&lt;XConnection&gt;,
-    opengl: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Context&gt;,
+    opengl: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Context&gt;,
     fb_config: ffi::glx::types::GLXFBConfig,
     visual_infos: ffi::XVisualInfo,
     pixel_format: PixelFormat,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ContextPrototype&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ContextPrototype&lt;<span class="lifetime">'a</span>&gt; {
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>get_visual_infos(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>ffi::XVisualInfo {
         <span class="kw-2">&amp;</span><span class="self">self</span>.visual_infos
@@ -1053,7 +1054,7 @@
                     (<span class="number">3</span>, <span class="number">1</span>),
                 ];
                 <span class="comment">// Try all OpenGL versions in descending order because some
-                // non-compliant drivers don&#39;t return
+                // non-compliant drivers don't return
                 // the latest supported version but the one requested
                 </span>opengl_versions
                     .iter()
@@ -1105,7 +1106,7 @@
                 <span class="self">self</span>.fb_config,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.visual_infos,
             )<span class="question-mark">?</span>,
-            GlRequest::Specific(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Only OpenGL is supported&quot;</span>),
+            GlRequest::Specific(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">"Only OpenGL is supported"</span>),
             GlRequest::GlThenGles { opengl_version: (major, minor), .. } =&gt; create_context(
                 <span class="kw-2">&amp;</span>extra_functions,
                 <span class="kw-2">&amp;</span><span class="self">self</span>.extensions,
@@ -1159,7 +1160,7 @@
         <span class="kw">let </span>_guard =
             MakeCurrentGuard::new(<span class="kw-2">&amp;</span><span class="self">self</span>.xconn, window, context).map_err(CreationError::OsError)<span class="question-mark">?</span>;
 
-        <span class="kw">if </span>check_ext(<span class="kw-2">&amp;</span><span class="self">self</span>.extensions, <span class="string">&quot;GLX_EXT_swap_control&quot;</span>)
+        <span class="kw">if </span>check_ext(<span class="kw-2">&amp;</span><span class="self">self</span>.extensions, <span class="string">"GLX_EXT_swap_control"</span>)
             &amp;&amp; extra_functions.SwapIntervalEXT.is_loaded()
         {
             <span class="comment">// this should be the most common extension
@@ -1179,17 +1180,17 @@
 
             <span class="kw">if </span>swap != swap_mode <span class="kw">as </span>u32 {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::OsError(<span class="macro">format!</span>(
-                    <span class="string">&quot;Couldn&#39;t setup vsync: expected interval `{}` but got `{}`&quot;</span>,
+                    <span class="string">"Couldn't setup vsync: expected interval `{}` but got `{}`"</span>,
                     swap_mode, swap
                 )));
             }
-        } <span class="kw">else if </span>check_ext(<span class="kw-2">&amp;</span><span class="self">self</span>.extensions, <span class="string">&quot;GLX_MESA_swap_control&quot;</span>)
+        } <span class="kw">else if </span>check_ext(<span class="kw-2">&amp;</span><span class="self">self</span>.extensions, <span class="string">"GLX_MESA_swap_control"</span>)
             &amp;&amp; extra_functions.SwapIntervalMESA.is_loaded()
         {
             <span class="kw">unsafe </span>{
                 extra_functions.SwapIntervalMESA(swap_mode <span class="kw">as </span>u32);
             }
-        } <span class="kw">else if </span>check_ext(<span class="kw-2">&amp;</span><span class="self">self</span>.extensions, <span class="string">&quot;GLX_SGI_swap_control&quot;</span>)
+        } <span class="kw">else if </span>check_ext(<span class="kw-2">&amp;</span><span class="self">self</span>.extensions, <span class="string">"GLX_SGI_swap_control"</span>)
             &amp;&amp; extra_functions.SwapIntervalSGI.is_loaded()
         {
             <span class="kw">unsafe </span>{
@@ -1197,7 +1198,7 @@
             }
         } <span class="kw">else if </span><span class="self">self</span>.opengl.vsync {
             <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::OsError(
-                <span class="string">&quot;Couldn&#39;t find any available vsync extension&quot;</span>.to_string(),
+                <span class="string">"Couldn't find any available vsync extension"</span>.to_string(),
             ));
         }
 
@@ -1210,7 +1211,7 @@
     }
 }
 
-<span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>x_error_callback(_dpy: <span class="kw-2">*mut </span>ffi::Display, _err: <span class="kw-2">*mut </span>ffi::XErrorEvent) -&gt; i32 {
+<span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>x_error_callback(_dpy: <span class="kw-2">*mut </span>ffi::Display, _err: <span class="kw-2">*mut </span>ffi::XErrorEvent) -&gt; i32 {
     <span class="number">0
 </span>}
 
@@ -1230,7 +1231,7 @@
     <span class="kw">let </span>glx = GLX.as_ref().unwrap();
     <span class="kw">unsafe </span>{
         <span class="kw">let </span>old_callback = (xlib.XSetErrorHandler)(<span class="prelude-val">Some</span>(x_error_callback));
-        <span class="kw">let </span>context = <span class="kw">if </span>check_ext(extensions, <span class="string">&quot;GLX_ARB_create_context&quot;</span>) {
+        <span class="kw">let </span>context = <span class="kw">if </span>check_ext(extensions, <span class="string">"GLX_ARB_create_context"</span>) {
             <span class="kw">let </span><span class="kw-2">mut </span>attributes = Vec::with_capacity(<span class="number">9</span>);
 
             attributes.push(ffi::glx_extra::CONTEXT_MAJOR_VERSION_ARB <span class="kw">as </span>raw::c_int);
@@ -1254,7 +1255,7 @@
                 <span class="kw">let </span><span class="kw-2">mut </span>flags = <span class="number">0</span>;
 
                 <span class="comment">// robustness
-                </span><span class="kw">if </span>check_ext(extensions, <span class="string">&quot;GLX_ARB_create_context_robustness&quot;</span>) {
+                </span><span class="kw">if </span>check_ext(extensions, <span class="string">"GLX_ARB_create_context_robustness"</span>) {
                     <span class="kw">match </span>robustness {
                         Robustness::RobustNoResetNotification
                         | Robustness::TryRobustNoResetNotification =&gt; {
@@ -1317,7 +1318,7 @@
 
         <span class="kw">if </span>context.is_null() {
             <span class="comment">// TODO: check for errors and return `OpenGlVersionNotSupported`
-            </span><span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::OsError(<span class="string">&quot;GL context creation failed&quot;</span>.to_string()));
+            </span><span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::OsError(<span class="string">"GL context creation failed"</span>.to_string()));
         }
 
         <span class="prelude-val">Ok</span>(context)
@@ -1363,11 +1364,11 @@
         </span>};
         out.push(surface_type <span class="kw">as </span>raw::c_int);
 
-        <span class="comment">// TODO: Use RGB/RGB_FLOAT_BIT_ARB if they don&#39;t want alpha bits,
-        // fallback to it if they don&#39;t care
+        <span class="comment">// TODO: Use RGB/RGB_FLOAT_BIT_ARB if they don't want alpha bits,
+        // fallback to it if they don't care
         </span>out.push(ffi::glx::RENDER_TYPE <span class="kw">as </span>raw::c_int);
         <span class="kw">if </span>pf_reqs.float_color_buffer {
-            <span class="kw">if </span>check_ext(extensions, <span class="string">&quot;GLX_ARB_fbconfig_float&quot;</span>) {
+            <span class="kw">if </span>check_ext(extensions, <span class="string">"GLX_ARB_fbconfig_float"</span>) {
                 out.push(ffi::glx_extra::RGBA_FLOAT_BIT_ARB <span class="kw">as </span>raw::c_int);
             } <span class="kw">else </span>{
                 <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NoAvailablePixelFormat);
@@ -1405,7 +1406,7 @@
         out.push(<span class="kw">if </span>double_buffer { <span class="number">1 </span>} <span class="kw">else </span>{ <span class="number">0 </span>});
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(multisampling) = pf_reqs.multisampling {
-            <span class="kw">if </span>check_ext(extensions, <span class="string">&quot;GLX_ARB_multisample&quot;</span>) {
+            <span class="kw">if </span>check_ext(extensions, <span class="string">"GLX_ARB_multisample"</span>) {
                 out.push(ffi::glx_extra::SAMPLE_BUFFERS_ARB <span class="kw">as </span>raw::c_int);
                 out.push(<span class="kw">if </span>multisampling == <span class="number">0 </span>{ <span class="number">0 </span>} <span class="kw">else </span>{ <span class="number">1 </span>});
                 out.push(ffi::glx_extra::SAMPLES_ARB <span class="kw">as </span>raw::c_int);
@@ -1419,10 +1420,10 @@
         out.push(<span class="kw">if </span>pf_reqs.stereoscopy { <span class="number">1 </span>} <span class="kw">else </span>{ <span class="number">0 </span>});
 
         <span class="kw">if </span>pf_reqs.srgb {
-            <span class="kw">if </span>check_ext(extensions, <span class="string">&quot;GLX_ARB_framebuffer_sRGB&quot;</span>) {
+            <span class="kw">if </span>check_ext(extensions, <span class="string">"GLX_ARB_framebuffer_sRGB"</span>) {
                 out.push(ffi::glx_extra::FRAMEBUFFER_SRGB_CAPABLE_ARB <span class="kw">as </span>raw::c_int);
                 out.push(<span class="number">1</span>);
-            } <span class="kw">else if </span>check_ext(extensions, <span class="string">&quot;GLX_EXT_framebuffer_sRGB&quot;</span>) {
+            } <span class="kw">else if </span>check_ext(extensions, <span class="string">"GLX_EXT_framebuffer_sRGB"</span>) {
                 out.push(ffi::glx_extra::FRAMEBUFFER_SRGB_CAPABLE_EXT <span class="kw">as </span>raw::c_int);
                 out.push(<span class="number">1</span>);
             } <span class="kw">else </span>{
@@ -1433,7 +1434,7 @@
         <span class="kw">match </span>pf_reqs.release_behavior {
             ReleaseBehavior::Flush =&gt; (),
             ReleaseBehavior::None =&gt; {
-                <span class="kw">if </span>check_ext(extensions, <span class="string">&quot;GLX_ARB_context_flush_control&quot;</span>) {
+                <span class="kw">if </span>check_ext(extensions, <span class="string">"GLX_ARB_context_flush_control"</span>) {
                     out.push(ffi::glx_extra::CONTEXT_RELEASE_BEHAVIOR_ARB <span class="kw">as </span>raw::c_int);
                     out.push(ffi::glx_extra::CONTEXT_RELEASE_BEHAVIOR_NONE_ARB <span class="kw">as </span>raw::c_int);
                 }
@@ -1529,7 +1530,7 @@
 
 <span class="doccomment">/// Checks if `ext` is available.
 </span><span class="kw">fn </span>check_ext(extensions: <span class="kw-2">&amp;</span>str, ext: <span class="kw-2">&amp;</span>str) -&gt; bool {
-    extensions.split(<span class="string">&#39; &#39;</span>).any(|s| s == ext)
+    extensions.split(<span class="string">' '</span>).any(|s| s == ext)
 }
 
 <span class="kw">fn </span>load_extensions(
@@ -1541,7 +1542,7 @@
         <span class="kw">let </span>extensions = glx.QueryExtensionsString(xconn.display <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>, screen_id);
         <span class="kw">if </span>extensions.is_null() {
             <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::OsError(
-                <span class="string">&quot;`glXQueryExtensionsString` found no glX extensions&quot;</span>.to_string(),
+                <span class="string">"`glXQueryExtensionsString` found no glX extensions"</span>.to_string(),
             ));
         }
         <span class="kw">let </span>extensions = CStr::from_ptr(extensions).to_bytes().to_vec();

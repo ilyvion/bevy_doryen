@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/x11/ime/context.rs`."><title>context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../../../" data-static-root-path="../../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../../src-files.js"></script><script defer src="../../../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../../../winit/index.html"><img class="rust-logo" src="../../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/x11/ime/context.rs`."><title>context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../../../" data-static-root-path="../../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../../src-files.js"></script><script defer src="../../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -397,7 +398,7 @@
 }
 
 <span class="doccomment">/// The callback used by XIM preedit functions.
-</span><span class="kw">type </span>XIMProcNonnull = <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>(ffi::XIM, ffi::XPointer, ffi::XPointer);
+</span><span class="kw">type </span>XIMProcNonnull = <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>(ffi::XIM, ffi::XPointer, ffi::XPointer);
 
 <span class="doccomment">/// Wrapper for creating XIM callbacks.
 </span><span class="attr">#[inline]
@@ -409,7 +410,7 @@
 }
 
 <span class="doccomment">/// The server started preedit.
-</span><span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>preedit_start_callback(
+</span><span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>preedit_start_callback(
     _xim: ffi::XIM,
     client_data: ffi::XPointer,
     _call_data: ffi::XPointer,
@@ -421,12 +422,12 @@
     client_data
         .event_sender
         .send((client_data.window, ImeEvent::Start))
-        .expect(<span class="string">&quot;failed to send preedit start event&quot;</span>);
+        .expect(<span class="string">"failed to send preedit start event"</span>);
     -<span class="number">1
 </span>}
 
 <span class="doccomment">/// Done callback is used when the preedit should be hidden.
-</span><span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>preedit_done_callback(
+</span><span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>preedit_done_callback(
     _xim: ffi::XIM,
     client_data: ffi::XPointer,
     _call_data: ffi::XPointer,
@@ -440,7 +441,7 @@
     client_data
         .event_sender
         .send((client_data.window, ImeEvent::End))
-        .expect(<span class="string">&quot;failed to send preedit end event&quot;</span>);
+        .expect(<span class="string">"failed to send preedit end event"</span>);
 }
 
 <span class="kw">fn </span>calc_byte_position(text: <span class="kw-2">&amp;</span>[char], pos: usize) -&gt; usize {
@@ -450,7 +451,7 @@
 }
 
 <span class="doccomment">/// Preedit text information to be drawn inline by the client.
-</span><span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>preedit_draw_callback(
+</span><span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>preedit_draw_callback(
     _xim: ffi::XIM,
     client_data: ffi::XPointer,
     call_data: ffi::XPointer,
@@ -463,7 +464,7 @@
         call_data.chg_first <span class="kw">as </span>usize..(call_data.chg_first + call_data.chg_length) <span class="kw">as </span>usize;
     <span class="kw">if </span>chg_range.start &gt; client_data.text.len() || chg_range.end &gt; client_data.text.len() {
         <span class="macro">warn!</span>(
-            <span class="string">&quot;invalid chg range: buffer length={}, but chg_first={} chg_lengthg={}&quot;</span>,
+            <span class="string">"invalid chg range: buffer length={}, but chg_first={} chg_lengthg={}"</span>,
             client_data.text.len(),
             call_data.chg_first,
             call_data.chg_length
@@ -488,7 +489,7 @@
 
         <span class="kw">let </span>new_text = <span class="kw">unsafe </span>{ CStr::from_ptr(new_text) };
 
-        String::from(new_text.to_str().expect(<span class="string">&quot;Invalid UTF-8 String from IME&quot;</span>))
+        String::from(new_text.to_str().expect(<span class="string">"Invalid UTF-8 String from IME"</span>))
             .chars()
             .collect()
     };
@@ -504,11 +505,11 @@
             client_data.window,
             ImeEvent::Update(client_data.text.iter().collect(), cursor_byte_pos),
         ))
-        .expect(<span class="string">&quot;failed to send preedit update event&quot;</span>);
+        .expect(<span class="string">"failed to send preedit update event"</span>);
 }
 
 <span class="doccomment">/// Handling of cursor movements in preedit text.
-</span><span class="kw">extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>preedit_caret_callback(
+</span><span class="kw">extern </span><span class="string">"C" </span><span class="kw">fn </span>preedit_caret_callback(
     _xim: ffi::XIM,
     client_data: ffi::XPointer,
     call_data: ffi::XPointer,
@@ -526,7 +527,7 @@
                 client_data.window,
                 ImeEvent::Update(client_data.text.iter().collect(), cursor_byte_pos),
             ))
-            .expect(<span class="string">&quot;failed to send preedit update event&quot;</span>);
+            .expect(<span class="string">"failed to send preedit update event"</span>);
     }
 }
 
@@ -563,15 +564,15 @@
     cursor_pos: usize,
 }
 
-<span class="comment">// XXX: this struct doesn&#39;t destroy its XIC resource when dropped.
-// This is intentional, as it doesn&#39;t have enough information to know whether or not the context
+<span class="comment">// XXX: this struct doesn't destroy its XIC resource when dropped.
+// This is intentional, as it doesn't have enough information to know whether or not the context
 // still exists on the server. Since `ImeInner` has that awareness, destruction must be handled
 // through `ImeInner`.
 </span><span class="kw">pub struct </span>ImeContext {
     <span class="kw">pub</span>(<span class="kw">crate</span>) ic: ffi::XIC,
     <span class="kw">pub</span>(<span class="kw">crate</span>) ic_spot: ffi::XPoint,
     <span class="kw">pub</span>(<span class="kw">crate</span>) style: Style,
-    <span class="comment">// Since the data is passed shared between X11 XIM callbacks, but couldn&#39;t be direclty free from
+    <span class="comment">// Since the data is passed shared between X11 XIM callbacks, but couldn't be direclty free from
     // there we keep the pointer to automatically deallocate it.
     </span>_client_data: Box&lt;ImeContextClientData&gt;,
 }
@@ -616,7 +617,7 @@
             _client_data: Box::from_raw(client_data),
         };
 
-        <span class="comment">// Set the spot location, if it&#39;s present.
+        <span class="comment">// Set the spot location, if it's present.
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(ic_spot) = ic_spot {
             context.set_spot(xconn, ic_spot.x, ic_spot.y)
         }
@@ -665,7 +666,7 @@
                 ptr::null_mut::&lt;()&gt;(),
             ),
         )
-        .expect(<span class="string">&quot;XVaCreateNestedList returned NULL&quot;</span>);
+        .expect(<span class="string">"XVaCreateNestedList returned NULL"</span>);
 
         <span class="kw">let </span>ic = (xconn.xlib.XCreateIC)(
             im,
@@ -717,9 +718,9 @@
         !<span class="macro">matches!</span>(<span class="self">self</span>.style, Style::None(<span class="kw">_</span>))
     }
 
-    <span class="comment">// Set the spot for preedit text. Setting spot isn&#39;t working with libX11 when preedit callbacks
-    // are being used. Certain IMEs do show selection window, but it&#39;s placed in bottom left of the
-    // window and couldn&#39;t be changed.
+    <span class="comment">// Set the spot for preedit text. Setting spot isn't working with libX11 when preedit callbacks
+    // are being used. Certain IMEs do show selection window, but it's placed in bottom left of the
+    // window and couldn't be changed.
     //
     // For me see: https://bugs.freedesktop.org/show_bug.cgi?id=1580.
     </span><span class="kw">pub fn </span>set_spot(<span class="kw-2">&amp;mut </span><span class="self">self</span>, xconn: <span class="kw-2">&amp;</span>Arc&lt;XConnection&gt;, x: c_short, y: c_short) {
@@ -739,7 +740,7 @@
                     ptr::null_mut::&lt;()&gt;(),
                 ),
             )
-            .expect(<span class="string">&quot;XVaCreateNestedList returned NULL&quot;</span>);
+            .expect(<span class="string">"XVaCreateNestedList returned NULL"</span>);
 
             (xconn.xlib.XSetICValues)(
                 <span class="self">self</span>.ic,

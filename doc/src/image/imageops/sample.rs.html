@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/image-0.23.14/./src/imageops/sample.rs`."><title>sample.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="image" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../image/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/image-0.23.14/./src/imageops/sample.rs`."><title>sample.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="image" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -948,25 +949,25 @@
 /// that has been scaled down to 300x225 px:
 ///
 /// &lt;!-- NOTE: To test new test images locally, replace the GitHub path with `../../../docs/` --&gt;
-/// &lt;div style=&quot;display: flex; flex-wrap: wrap; align-items: flex-start;&quot;&gt;
-///   &lt;div style=&quot;margin: 0 8px 8px 0;&quot;&gt;
-///     &lt;img src=&quot;https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-near.png&quot; title=&quot;Nearest&quot;&gt;&lt;br&gt;
+/// &lt;div style="display: flex; flex-wrap: wrap; align-items: flex-start;"&gt;
+///   &lt;div style="margin: 0 8px 8px 0;"&gt;
+///     &lt;img src="https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-near.png" title="Nearest"&gt;&lt;br&gt;
 ///     Nearest Neighbor
 ///   &lt;/div&gt;
-///   &lt;div style=&quot;margin: 0 8px 8px 0;&quot;&gt;
-///     &lt;img src=&quot;https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-tri.png&quot; title=&quot;Triangle&quot;&gt;&lt;br&gt;
+///   &lt;div style="margin: 0 8px 8px 0;"&gt;
+///     &lt;img src="https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-tri.png" title="Triangle"&gt;&lt;br&gt;
 ///     Linear: Triangle
 ///   &lt;/div&gt;
-///   &lt;div style=&quot;margin: 0 8px 8px 0;&quot;&gt;
-///     &lt;img src=&quot;https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-cmr.png&quot; title=&quot;CatmullRom&quot;&gt;&lt;br&gt;
+///   &lt;div style="margin: 0 8px 8px 0;"&gt;
+///     &lt;img src="https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-cmr.png" title="CatmullRom"&gt;&lt;br&gt;
 ///     Cubic: Catmull-Rom
 ///   &lt;/div&gt;
-///   &lt;div style=&quot;margin: 0 8px 8px 0;&quot;&gt;
-///     &lt;img src=&quot;https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-gauss.png&quot; title=&quot;Gaussian&quot;&gt;&lt;br&gt;
+///   &lt;div style="margin: 0 8px 8px 0;"&gt;
+///     &lt;img src="https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-gauss.png" title="Gaussian"&gt;&lt;br&gt;
 ///     Gaussian
 ///   &lt;/div&gt;
-///   &lt;div style=&quot;margin: 0 8px 8px 0;&quot;&gt;
-///     &lt;img src=&quot;https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-lcz2.png&quot; title=&quot;Lanczos3&quot;&gt;&lt;br&gt;
+///   &lt;div style="margin: 0 8px 8px 0;"&gt;
+///     &lt;img src="https://raw.githubusercontent.com/image-rs/image/master/examples/scaledown/scaledown-test-lcz2.png" title="Lanczos3"&gt;&lt;br&gt;
 ///     Lanczos with window 3
 ///   &lt;/div&gt;
 /// &lt;/div&gt;
@@ -976,7 +977,7 @@
 /// Time required to create each of the examples above, tested on an Intel
 /// i7-4770 CPU with Rust 1.37 in release mode:
 ///
-/// &lt;table style=&quot;width: auto;&quot;&gt;
+/// &lt;table style="width: auto;"&gt;
 ///   &lt;tr&gt;
 ///     &lt;th&gt;Nearest&lt;/th&gt;
 ///     &lt;td&gt;31 ms&lt;/td&gt;
@@ -1017,9 +1018,9 @@
 }
 
 <span class="doccomment">/// A Representation of a separable filter.
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Filter&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="doccomment">/// The filter&#39;s filter function.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) kernel: Box&lt;<span class="kw">dyn </span>Fn(f32) -&gt; f32 + <span class="lifetime">&#39;a</span>&gt;,
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Filter&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="doccomment">/// The filter's filter function.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) kernel: Box&lt;<span class="kw">dyn </span>Fn(f32) -&gt; f32 + <span class="lifetime">'a</span>&gt;,
 
     <span class="doccomment">/// The window on which this filter operates.
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) support: f32,
@@ -1130,8 +1131,8 @@
 ) -&gt; ImageBuffer&lt;P, Vec&lt;S&gt;&gt;
 <span class="kw">where
     </span>I: GenericImageView&lt;Pixel = P&gt;,
-    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">&#39;static</span>,
-    S: Primitive + <span class="lifetime">&#39;static</span>,
+    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">'static</span>,
+    S: Primitive + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>(width, height) = image.dimensions();
     <span class="kw">let </span><span class="kw-2">mut </span>out = ImageBuffer::new(new_width, height);
@@ -1221,8 +1222,8 @@
 ) -&gt; ImageBuffer&lt;P, Vec&lt;S&gt;&gt;
 <span class="kw">where
     </span>I: GenericImageView&lt;Pixel = P&gt;,
-    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">&#39;static</span>,
-    S: Primitive + <span class="lifetime">&#39;static</span>,
+    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">'static</span>,
+    S: Primitive + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>(width, height) = image.dimensions();
     <span class="kw">let </span><span class="kw-2">mut </span>out = ImageBuffer::new(width, new_height);
@@ -1329,8 +1330,8 @@
 </span><span class="kw">pub fn </span>thumbnail&lt;I, P, S&gt;(image: <span class="kw-2">&amp;</span>I, new_width: u32, new_height: u32) -&gt; ImageBuffer&lt;P, Vec&lt;S&gt;&gt;
 <span class="kw">where
     </span>I: GenericImageView&lt;Pixel = P&gt;,
-    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">&#39;static</span>,
-    S: Primitive + Enlargeable + <span class="lifetime">&#39;static</span>,
+    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">'static</span>,
+    S: Primitive + Enlargeable + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>(width, height) = image.dimensions();
     <span class="kw">let </span><span class="kw-2">mut </span>out = ImageBuffer::new(new_width, new_height);
@@ -1374,7 +1375,7 @@
                 // In the first column we have left == 0 and right &gt; ceil(y_scale) &gt; 0 so this
                 // assertion can never trigger.
                 </span><span class="macro">debug_assert!</span>(left &gt; <span class="number">0 </span>&amp;&amp; right &gt; <span class="number">0</span>,
-                    <span class="string">&quot;First output column must have corresponding pixels&quot;</span>);
+                    <span class="string">"First output column must have corresponding pixels"</span>);
 
                 <span class="kw">let </span>fraction_horizontal = (leftf.fract() + rightf.fract())/<span class="number">2.</span>;
                 thumbnail_sample_fraction_horizontal(image, right - <span class="number">1</span>, fraction_horizontal, bottom, top)
@@ -1382,7 +1383,7 @@
                 // In the first line we have bottom == 0 and top &gt; ceil(x_scale) &gt; 0 so this
                 // assertion can never trigger.
                 </span><span class="macro">debug_assert!</span>(bottom &gt; <span class="number">0 </span>&amp;&amp; top &gt; <span class="number">0</span>,
-                    <span class="string">&quot;First output row must have corresponding pixels&quot;</span>);
+                    <span class="string">"First output row must have corresponding pixels"</span>);
 
                 <span class="kw">let </span>fraction_vertical = (topf.fract() + bottomf.fract())/<span class="number">2.</span>;
                 thumbnail_sample_fraction_vertical(image, left, right, top - <span class="number">1</span>, fraction_vertical)
@@ -1468,7 +1469,7 @@
         &lt;S <span class="kw">as </span>NumCast&gt;::from(
             fact_left * leftv.to_f32().unwrap() +
             fact_right * rightv.to_f32().unwrap()
-        ).expect(<span class="string">&quot;Average sample value should fit into sample type&quot;</span>);
+        ).expect(<span class="string">"Average sample value should fit into sample type"</span>);
 
     (
         mix_left_and_right(sum_left.<span class="number">0</span>, sum_right.<span class="number">0</span>),
@@ -1511,7 +1512,7 @@
         &lt;S <span class="kw">as </span>NumCast&gt;::from(
             fact_bot * botv.to_f32().unwrap() +
             fact_top * topv.to_f32().unwrap()
-        ).expect(<span class="string">&quot;Average sample value should fit into sample type&quot;</span>);
+        ).expect(<span class="string">"Average sample value should fit into sample type"</span>);
 
     (
         mix_bot_and_top(sum_bot.<span class="number">0</span>, sum_top.<span class="number">0</span>),
@@ -1553,7 +1554,7 @@
             fact_tr * tr.to_f32().unwrap() +
             fact_bl * bl.to_f32().unwrap() +
             fact_tl * tl.to_f32().unwrap()
-        ).expect(<span class="string">&quot;Average sample value should fit into sample type&quot;</span>);
+        ).expect(<span class="string">"Average sample value should fit into sample type"</span>);
 
     (
         mix(k_br.<span class="number">0</span>, k_tr.<span class="number">0</span>, k_bl.<span class="number">0</span>, k_tl.<span class="number">0</span>),
@@ -1568,10 +1569,10 @@
 </span><span class="kw">pub fn </span>filter3x3&lt;I, P, S&gt;(image: <span class="kw-2">&amp;</span>I, kernel: <span class="kw-2">&amp;</span>[f32]) -&gt; ImageBuffer&lt;P, Vec&lt;S&gt;&gt;
 <span class="kw">where
     </span>I: GenericImageView&lt;Pixel = P&gt;,
-    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">&#39;static</span>,
-    S: Primitive + <span class="lifetime">&#39;static</span>,
+    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">'static</span>,
+    S: Primitive + <span class="lifetime">'static</span>,
 {
-    <span class="comment">// The kernel&#39;s input positions relative to the current pixel.
+    <span class="comment">// The kernel's input positions relative to the current pixel.
     </span><span class="kw">let </span>taps: <span class="kw-2">&amp;</span>[(isize, isize)] = <span class="kw-2">&amp;</span>[
         (-<span class="number">1</span>, -<span class="number">1</span>),
         (<span class="number">0</span>, -<span class="number">1</span>),
@@ -1652,8 +1653,8 @@
     filter: FilterType,
 ) -&gt; ImageBuffer&lt;I::Pixel, Vec&lt;&lt;I::Pixel <span class="kw">as </span>Pixel&gt;::Subpixel&gt;&gt;
 <span class="kw">where
-    </span>I::Pixel: <span class="lifetime">&#39;static</span>,
-    &lt;I::Pixel <span class="kw">as </span>Pixel&gt;::Subpixel: <span class="lifetime">&#39;static</span>,
+    </span>I::Pixel: <span class="lifetime">'static</span>,
+    &lt;I::Pixel <span class="kw">as </span>Pixel&gt;::Subpixel: <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>method = <span class="kw">match </span>filter {
         FilterType::Nearest =&gt; Filter {
@@ -1689,7 +1690,7 @@
     sigma: f32,
 ) -&gt; ImageBuffer&lt;I::Pixel, Vec&lt;&lt;I::Pixel <span class="kw">as </span>Pixel&gt;::Subpixel&gt;&gt;
 <span class="kw">where
-    </span>I::Pixel: <span class="lifetime">&#39;static</span>,
+    </span>I::Pixel: <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>sigma = <span class="kw">if </span>sigma &lt;= <span class="number">0.0 </span>{ <span class="number">1.0 </span>} <span class="kw">else </span>{ sigma };
 
@@ -1714,8 +1715,8 @@
 </span><span class="kw">pub fn </span>unsharpen&lt;I, P, S&gt;(image: <span class="kw-2">&amp;</span>I, sigma: f32, threshold: i32) -&gt; ImageBuffer&lt;P, Vec&lt;S&gt;&gt;
 <span class="kw">where
     </span>I: GenericImageView&lt;Pixel = P&gt;,
-    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">&#39;static</span>,
-    S: Primitive + <span class="lifetime">&#39;static</span>,
+    P: Pixel&lt;Subpixel = S&gt; + <span class="lifetime">'static</span>,
+    S: Primitive + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span><span class="kw-2">mut </span>tmp = blur(image, sigma);
 
@@ -1754,14 +1755,14 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use super</span>::{resize, FilterType};
     <span class="kw">use crate</span>::{ImageBuffer, RgbImage};
-    <span class="attr">#[cfg(feature = <span class="string">&quot;benchmarks&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"benchmarks"</span>)]
     </span><span class="kw">use </span>test;
 
     <span class="attr">#[bench]
-    #[cfg(all(feature = <span class="string">&quot;benchmarks&quot;</span>, feature = <span class="string">&quot;png&quot;</span>))]
+    #[cfg(all(feature = <span class="string">"benchmarks"</span>, feature = <span class="string">"png"</span>))]
     </span><span class="kw">fn </span>bench_resize(b: <span class="kw-2">&amp;mut </span>test::Bencher) {
         <span class="kw">use </span>std::path::Path;
-        <span class="kw">let </span>img = <span class="kw">crate</span>::open(<span class="kw-2">&amp;</span>Path::new(<span class="string">&quot;./examples/fractal.png&quot;</span>)).unwrap();
+        <span class="kw">let </span>img = <span class="kw">crate</span>::open(<span class="kw-2">&amp;</span>Path::new(<span class="string">"./examples/fractal.png"</span>)).unwrap();
         b.iter(|| {
             test::black_box(resize(<span class="kw-2">&amp;</span>img, <span class="number">200</span>, <span class="number">200</span>, FilterType::Nearest));
         });
@@ -1775,9 +1776,9 @@
     }
 
     <span class="attr">#[bench]
-    #[cfg(all(feature = <span class="string">&quot;benchmarks&quot;</span>, feature = <span class="string">&quot;tiff&quot;</span>))]
+    #[cfg(all(feature = <span class="string">"benchmarks"</span>, feature = <span class="string">"tiff"</span>))]
     </span><span class="kw">fn </span>bench_thumbnail(b: <span class="kw-2">&amp;mut </span>test::Bencher) {
-        <span class="kw">let </span>path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/tests/images/tiff/testsuite/mandrill.tiff&quot;</span>);
+        <span class="kw">let </span>path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/tests/images/tiff/testsuite/mandrill.tiff"</span>);
         <span class="kw">let </span>image = <span class="kw">crate</span>::open(path).unwrap();
         b.iter(|| {
             test::black_box(image.thumbnail(<span class="number">256</span>, <span class="number">256</span>));
@@ -1786,9 +1787,9 @@
     }
 
     <span class="attr">#[bench]
-    #[cfg(all(feature = <span class="string">&quot;benchmarks&quot;</span>, feature = <span class="string">&quot;tiff&quot;</span>))]
+    #[cfg(all(feature = <span class="string">"benchmarks"</span>, feature = <span class="string">"tiff"</span>))]
     </span><span class="kw">fn </span>bench_thumbnail_upsize(b: <span class="kw-2">&amp;mut </span>test::Bencher) {
-        <span class="kw">let </span>path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/tests/images/tiff/testsuite/mandrill.tiff&quot;</span>);
+        <span class="kw">let </span>path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/tests/images/tiff/testsuite/mandrill.tiff"</span>);
         <span class="kw">let </span>image = <span class="kw">crate</span>::open(path).unwrap().thumbnail(<span class="number">256</span>, <span class="number">256</span>);
         b.iter(|| {
             test::black_box(image.thumbnail(<span class="number">512</span>, <span class="number">512</span>));
@@ -1797,9 +1798,9 @@
     }
 
     <span class="attr">#[bench]
-    #[cfg(all(feature = <span class="string">&quot;benchmarks&quot;</span>, feature = <span class="string">&quot;tiff&quot;</span>))]
+    #[cfg(all(feature = <span class="string">"benchmarks"</span>, feature = <span class="string">"tiff"</span>))]
     </span><span class="kw">fn </span>bench_thumbnail_upsize_irregular(b: <span class="kw-2">&amp;mut </span>test::Bencher) {
-        <span class="kw">let </span>path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>), <span class="string">&quot;/tests/images/tiff/testsuite/mandrill.tiff&quot;</span>);
+        <span class="kw">let </span>path = <span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>), <span class="string">"/tests/images/tiff/testsuite/mandrill.tiff"</span>);
         <span class="kw">let </span>image = <span class="kw">crate</span>::open(path).unwrap().thumbnail(<span class="number">193</span>, <span class="number">193</span>);
         b.iter(|| {
             test::black_box(image.thumbnail(<span class="number">256</span>, <span class="number">256</span>));
@@ -1808,7 +1809,7 @@
     }
 
     <span class="attr">#[test]
-    #[cfg(feature = <span class="string">&quot;png&quot;</span>)]
+    #[cfg(feature = <span class="string">"png"</span>)]
     </span><span class="kw">fn </span>resize_transparent_image() {
         <span class="kw">use </span><span class="kw">super</span>::FilterType::{CatmullRom, Gaussian, Lanczos3, Nearest, Triangle};
         <span class="kw">use </span><span class="kw">crate</span>::imageops::crop_imm;
@@ -1821,14 +1822,14 @@
                 <span class="kw">let </span>alpha = pixel.<span class="number">0</span>[<span class="number">3</span>];
                 <span class="macro">assert!</span>(
                     alpha != <span class="number">254 </span>&amp;&amp; alpha != <span class="number">253</span>,
-                    <span class="macro">format!</span>(<span class="string">&quot;alpha value: {}, {:?}&quot;</span>, alpha, filter)
+                    <span class="macro">format!</span>(<span class="string">"alpha value: {}, {:?}"</span>, alpha, filter)
                 );
             }
         }
 
         <span class="kw">let </span>path = <span class="macro">concat!</span>(
-            <span class="macro">env!</span>(<span class="string">&quot;CARGO_MANIFEST_DIR&quot;</span>),
-            <span class="string">&quot;/tests/images/png/transparency/tp1n3p08.png&quot;
+            <span class="macro">env!</span>(<span class="string">"CARGO_MANIFEST_DIR"</span>),
+            <span class="string">"/tests/images/png/transparency/tp1n3p08.png"
         </span>);
         <span class="kw">let </span>img = <span class="kw">crate</span>::open(path).unwrap();
         <span class="kw">let </span>rgba8 = img.as_rgba8().unwrap();

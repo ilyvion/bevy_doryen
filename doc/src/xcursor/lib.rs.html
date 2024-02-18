@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcursor-0.3.4/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="xcursor" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../xcursor/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/xcursor-0.3.5/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="xcursor" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -301,7 +302,7 @@
 <span class="kw">impl </span>CursorTheme {
     <span class="doccomment">/// Search for a theme with the given name in the given search paths,
     /// and returns an XCursorTheme which represents it. If no inheritance
-    /// can be determined, then the themes inherits from the &quot;default&quot; theme.
+    /// can be determined, then the themes inherits from the "default" theme.
     </span><span class="kw">pub fn </span>load(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>search_paths = theme_search_paths();
 
@@ -314,7 +315,7 @@
     }
 
     <span class="doccomment">/// Try to load an icon from the theme.
-    /// If the icon is not found within this theme&#39;s
+    /// If the icon is not found within this theme's
     /// directories, then the function looks at the
     /// theme from which this theme is inherited.
     </span><span class="kw">pub fn </span>load_icon(<span class="kw-2">&amp;</span><span class="self">self</span>, icon_name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;PathBuf&gt; {
@@ -340,16 +341,16 @@
         <span class="kw">let </span><span class="kw-2">mut </span>data = Vec::new();
 
         <span class="comment">// Find directories where this theme is presented.
-        </span><span class="kw">for </span><span class="kw-2">mut </span>path <span class="kw">in </span>search_paths.to_owned() {
+        </span><span class="kw">for </span><span class="kw-2">mut </span>path <span class="kw">in </span>search_paths.iter().cloned() {
             path.push(name);
             <span class="kw">if </span>path.is_dir() {
                 <span class="kw">let </span>data_dir = path.clone();
 
-                path.push(<span class="string">&quot;index.theme&quot;</span>);
+                path.push(<span class="string">"index.theme"</span>);
                 <span class="kw">let </span>inherits = <span class="kw">if let </span><span class="prelude-val">Some</span>(inherits) = theme_inherits(<span class="kw-2">&amp;</span>path) {
                     <span class="prelude-val">Some</span>(inherits)
-                } <span class="kw">else if </span>name != <span class="string">&quot;default&quot; </span>{
-                    <span class="prelude-val">Some</span>(String::from(<span class="string">&quot;default&quot;</span>))
+                } <span class="kw">else if </span>name != <span class="string">"default" </span>{
+                    <span class="prelude-val">Some</span>(String::from(<span class="string">"default"</span>))
                 } <span class="kw">else </span>{
                     <span class="prelude-val">None
                 </span>};
@@ -373,14 +374,14 @@
     ) -&gt; <span class="prelude-ty">Option</span>&lt;PathBuf&gt; {
         <span class="kw">for </span>data <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.data {
             <span class="kw">let </span><span class="kw-2">mut </span>icon_path = data.<span class="number">0</span>.clone();
-            icon_path.push(<span class="string">&quot;cursors&quot;</span>);
+            icon_path.push(<span class="string">"cursors"</span>);
             icon_path.push(icon_name);
             <span class="kw">if </span>icon_path.is_file() {
                 <span class="kw">return </span><span class="prelude-val">Some</span>(icon_path);
             }
         }
 
-        <span class="comment">// We&#39;ve processed all based theme files. Traverse inherited themes, marking this theme
+        <span class="comment">// We've processed all based theme files. Traverse inherited themes, marking this theme
         // as already visited to avoid infinite recursion.
         </span>walked_themes.insert(<span class="self">self</span>.name.clone());
 
@@ -391,7 +392,7 @@
                 <span class="prelude-val">None </span>=&gt; <span class="kw">continue</span>,
             };
 
-            <span class="comment">// We&#39;ve walked this theme, avoid rebuilding.
+            <span class="comment">// We've walked this theme, avoid rebuilding.
             </span><span class="kw">if </span>walked_themes.contains(inherits) {
                 <span class="kw">continue</span>;
             }
@@ -415,28 +416,28 @@
     <span class="comment">// Handle the `XCURSOR_PATH` env variable, which takes over default search paths for cursor
     // theme. Some systems rely are using non standard directory layout and primary using this
     // env variable to perform cursor loading from a right places.
-    </span><span class="kw">let </span>xcursor_path = <span class="kw">match </span>env::var(<span class="string">&quot;XCURSOR_PATH&quot;</span>) {
-        <span class="prelude-val">Ok</span>(xcursor_path) =&gt; xcursor_path.split(<span class="string">&#39;:&#39;</span>).map(PathBuf::from).collect(),
+    </span><span class="kw">let </span>xcursor_path = <span class="kw">match </span>env::var(<span class="string">"XCURSOR_PATH"</span>) {
+        <span class="prelude-val">Ok</span>(xcursor_path) =&gt; xcursor_path.split(<span class="string">':'</span>).map(PathBuf::from).collect(),
         <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
             <span class="comment">// Get icons locations from XDG data directories.
             </span><span class="kw">let </span>get_icon_dirs = |xdg_path: String| -&gt; Vec&lt;PathBuf&gt; {
                 xdg_path
-                    .split(<span class="string">&#39;:&#39;</span>)
+                    .split(<span class="string">':'</span>)
                     .map(|entry| {
                         <span class="kw">let </span><span class="kw-2">mut </span>entry = PathBuf::from(entry);
-                        entry.push(<span class="string">&quot;icons&quot;</span>);
+                        entry.push(<span class="string">"icons"</span>);
                         entry
                     })
                     .collect()
             };
 
             <span class="kw">let </span><span class="kw-2">mut </span>xdg_data_home = get_icon_dirs(
-                env::var(<span class="string">&quot;XDG_DATA_HOME&quot;</span>).unwrap_or_else(|<span class="kw">_</span>| String::from(<span class="string">&quot;~/.local/share&quot;</span>)),
+                env::var(<span class="string">"XDG_DATA_HOME"</span>).unwrap_or_else(|<span class="kw">_</span>| String::from(<span class="string">"~/.local/share"</span>)),
             );
 
             <span class="kw">let </span><span class="kw-2">mut </span>xdg_data_dirs = get_icon_dirs(
-                env::var(<span class="string">&quot;XDG_DATA_DIRS&quot;</span>)
-                    .unwrap_or_else(|<span class="kw">_</span>| String::from(<span class="string">&quot;/usr/local/share:/usr/share&quot;</span>)),
+                env::var(<span class="string">"XDG_DATA_DIRS"</span>)
+                    .unwrap_or_else(|<span class="kw">_</span>| String::from(<span class="string">"/usr/local/share:/usr/share"</span>)),
             );
 
             <span class="kw">let </span><span class="kw-2">mut </span>xcursor_path =
@@ -444,17 +445,17 @@
 
             <span class="comment">// The order is following other XCursor loading libs, like libwayland-cursor.
             </span>xcursor_path.append(<span class="kw-2">&amp;mut </span>xdg_data_home);
-            xcursor_path.push(PathBuf::from(<span class="string">&quot;~/.icons&quot;</span>));
+            xcursor_path.push(PathBuf::from(<span class="string">"~/.icons"</span>));
             xcursor_path.append(<span class="kw-2">&amp;mut </span>xdg_data_dirs);
-            xcursor_path.push(PathBuf::from(<span class="string">&quot;/usr/share/pixmaps&quot;</span>));
-            xcursor_path.push(PathBuf::from(<span class="string">&quot;~/.cursors&quot;</span>));
-            xcursor_path.push(PathBuf::from(<span class="string">&quot;/usr/share/cursors/xorg-x11&quot;</span>));
+            xcursor_path.push(PathBuf::from(<span class="string">"/usr/share/pixmaps"</span>));
+            xcursor_path.push(PathBuf::from(<span class="string">"~/.cursors"</span>));
+            xcursor_path.push(PathBuf::from(<span class="string">"/usr/share/cursors/xorg-x11"</span>));
 
             xcursor_path
         }
     };
 
-    <span class="kw">let </span>homedir = env::var(<span class="string">&quot;HOME&quot;</span>);
+    <span class="kw">let </span>homedir = env::var(<span class="string">"HOME"</span>);
 
     xcursor_path
         .into_iter()
@@ -463,7 +464,7 @@
             </span><span class="kw">let </span><span class="kw-2">mut </span>expaned_dir = PathBuf::new();
 
             <span class="kw">for </span>component <span class="kw">in </span>dir.iter() {
-                <span class="kw">if </span>component == <span class="string">&quot;~&quot; </span>{
+                <span class="kw">if </span>component == <span class="string">"~" </span>{
                     <span class="kw">let </span>homedir = <span class="kw">match </span>homedir.as_ref() {
                         <span class="prelude-val">Ok</span>(homedir) =&gt; homedir.clone(),
                         <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return </span><span class="prelude-val">None</span>,
@@ -492,10 +493,10 @@
 
 <span class="doccomment">/// Parse the content of the `index.theme` and return the `Inherits` value.
 </span><span class="kw">fn </span>parse_theme(content: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
-    <span class="kw">const </span>PATTERN: <span class="kw-2">&amp;</span>str = <span class="string">&quot;Inherits&quot;</span>;
+    <span class="kw">const </span>PATTERN: <span class="kw-2">&amp;</span>str = <span class="string">"Inherits"</span>;
 
     <span class="kw">let </span>is_xcursor_space_or_separator =
-        |<span class="kw-2">&amp;</span>ch: <span class="kw-2">&amp;</span>char| -&gt; bool { ch.is_whitespace() || ch == <span class="string">&#39;;&#39; </span>|| ch == <span class="string">&#39;,&#39; </span>};
+        |<span class="kw-2">&amp;</span>ch: <span class="kw-2">&amp;</span>char| -&gt; bool { ch.is_whitespace() || ch == <span class="string">';' </span>|| ch == <span class="string">',' </span>};
 
     <span class="kw">for </span>line <span class="kw">in </span>content.lines() {
         <span class="comment">// Line should start with `Inherits`, otherwise go to the next line.
@@ -506,8 +507,8 @@
         <span class="comment">// Skip the `Inherits` part and trim the leading white spaces.
         </span><span class="kw">let </span><span class="kw-2">mut </span>chars = line.get(PATTERN.len()..).unwrap().trim_start().chars();
 
-        <span class="comment">// If the next character after leading white spaces isn&#39;t `=` go the next line.
-        </span><span class="kw">if </span><span class="prelude-val">Some</span>(<span class="string">&#39;=&#39;</span>) != chars.next() {
+        <span class="comment">// If the next character after leading white spaces isn't `=` go the next line.
+        </span><span class="kw">if </span><span class="prelude-val">Some</span>(<span class="string">'='</span>) != chars.next() {
             <span class="kw">continue</span>;
         }
 
@@ -531,33 +532,33 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>parse_inherits() {
-        <span class="kw">let </span>theme_name = String::from(<span class="string">&quot;XCURSOR_RS&quot;</span>);
+        <span class="kw">let </span>theme_name = String::from(<span class="string">"XCURSOR_RS"</span>);
 
-        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">&quot;Inherits={}&quot;</span>, theme_name.clone());
+        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">"Inherits={}"</span>, theme_name.clone());
 
         <span class="macro">assert_eq!</span>(parse_theme(<span class="kw-2">&amp;</span>theme), <span class="prelude-val">Some</span>(theme_name.clone()));
 
-        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">&quot; Inherits={}&quot;</span>, theme_name.clone());
+        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">" Inherits={}"</span>, theme_name.clone());
 
         <span class="macro">assert_eq!</span>(parse_theme(<span class="kw-2">&amp;</span>theme), <span class="prelude-val">None</span>);
 
         <span class="kw">let </span>theme = <span class="macro">format!</span>(
-            <span class="string">&quot;[THEME name]\nInherits   = ,;\t\t{};;;;Tail\n\n&quot;</span>,
+            <span class="string">"[THEME name]\nInherits   = ,;\t\t{};;;;Tail\n\n"</span>,
             theme_name.clone()
         );
 
         <span class="macro">assert_eq!</span>(parse_theme(<span class="kw-2">&amp;</span>theme), <span class="prelude-val">Some</span>(theme_name.clone()));
 
-        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">&quot;Inherits;=;{}&quot;</span>, theme_name.clone());
+        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">"Inherits;=;{}"</span>, theme_name.clone());
 
         <span class="macro">assert_eq!</span>(parse_theme(<span class="kw-2">&amp;</span>theme), <span class="prelude-val">None</span>);
 
-        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">&quot;Inherits = {}\n\nInherits=OtherTheme&quot;</span>, theme_name.clone());
+        <span class="kw">let </span>theme = <span class="macro">format!</span>(<span class="string">"Inherits = {}\n\nInherits=OtherTheme"</span>, theme_name.clone());
 
         <span class="macro">assert_eq!</span>(parse_theme(<span class="kw-2">&amp;</span>theme), <span class="prelude-val">Some</span>(theme_name.clone()));
 
         <span class="kw">let </span>theme = <span class="macro">format!</span>(
-            <span class="string">&quot;Inherits = ;;\nSome\tgarbage\nInherits={}&quot;</span>,
+            <span class="string">"Inherits = ;;\nSome\tgarbage\nInherits={}"</span>,
             theme_name.clone()
         );
 

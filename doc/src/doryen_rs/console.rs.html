@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/doryen-rs-1.3.0/src/console.rs`."><title>console.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="doryen_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../doryen_rs/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/doryen-rs-1.3.0/src/console.rs`."><title>console.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="doryen_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -635,7 +636,7 @@
         <span class="kw">for _ in </span><span class="number">0</span>..(pot_width * pot_height) <span class="kw">as </span>usize {
             back.push((<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>));
             fore.push((<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>));
-            ascii.push(<span class="string">&#39; &#39; </span><span class="kw">as </span>u32);
+            ascii.push(<span class="string">' ' </span><span class="kw">as </span>u32);
         }
         <span class="self">Self </span>{
             width,
@@ -669,7 +670,7 @@
         <span class="kw">for _ in </span><span class="number">0</span>..(pot_width * pot_height) <span class="kw">as </span>usize {
             <span class="self">self</span>.back.push((<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>));
             <span class="self">self</span>.fore.push((<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>));
-            <span class="self">self</span>.ascii.push(<span class="string">&#39; &#39; </span><span class="kw">as </span>u32);
+            <span class="self">self</span>.ascii.push(<span class="string">' ' </span><span class="kw">as </span>u32);
         }
     }
     <span class="doccomment">/// associate a name with a color for this console.
@@ -678,8 +679,8 @@
     /// ```
     /// use doryen_rs::{Console, TextAlign};
     /// let mut con=Console::new(80,25);
-    /// con.register_color(&quot;pink&quot;, (255, 0, 255, 255));
-    /// con.print_color(5, 5, &quot;This text contains a #[pink]pink#[] word&quot;, TextAlign::Left, None);
+    /// con.register_color("pink", (255, 0, 255, 255));
+    /// con.print_color(5, 5, "This text contains a #[pink]pink#[] word", TextAlign::Left, None);
     /// ```
     </span><span class="kw">pub fn </span>register_color(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str, value: Color) {
         <span class="self">self</span>.colors.insert(name.to_owned(), value);
@@ -765,10 +766,10 @@
     <span class="kw">fn </span>check_coords(<span class="kw-2">&amp;</span><span class="self">self</span>, x: i32, y: i32) -&gt; bool {
         (x <span class="kw">as </span>u32) &lt; <span class="self">self</span>.width &amp;&amp; (y <span class="kw">as </span>u32) &lt; <span class="self">self</span>.height
     }
-    <span class="doccomment">/// set the character at a specific position (doesn&#39;t change the color).
+    <span class="doccomment">/// set the character at a specific position (doesn't change the color).
     ///
-    /// Since the glyph associated with an ascii code depends on the font you&#39;re using,
-    /// doryen-rs can&#39;t provide constants for specific characters except for a few ones used internally.
+    /// Since the glyph associated with an ascii code depends on the font you're using,
+    /// doryen-rs can't provide constants for specific characters except for a few ones used internally.
     ///
     /// More information about this [here](https://github.com/jice-nospam/doryen-rs/issues/7).
     ///
@@ -820,9 +821,9 @@
     /// ```
     /// use doryen_rs::{Console, TextAlign};
     /// let mut con=Console::new(80,25);
-    /// con.register_color(&quot;pink&quot;, (255, 0, 255, 255));
-    /// con.register_color(&quot;blue&quot;, (0, 0, 255, 255));
-    /// con.print_color(5, 5, &quot;#[blue]This blue text contains a #[pink]pink#[] word&quot;, TextAlign::Left, None);
+    /// con.register_color("pink", (255, 0, 255, 255));
+    /// con.register_color("blue", (0, 0, 255, 255));
+    /// con.print_color(5, 5, "#[blue]This blue text contains a #[pink]pink#[] word", TextAlign::Left, None);
     /// ```
     </span><span class="kw">pub fn </span>print_color(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
@@ -834,7 +835,7 @@
     ) {
         <span class="kw">let </span><span class="kw-2">mut </span>cury = y;
         <span class="self">self</span>.color_stack.clear();
-        <span class="kw">for </span>line <span class="kw">in </span>text.to_owned().split(<span class="string">&#39;\n&#39;</span>) {
+        <span class="kw">for </span>line <span class="kw">in </span>text.to_owned().split(<span class="string">'\n'</span>) {
             <span class="self">self</span>.print_line_color(x, cury, line, align, back);
             cury += <span class="number">1</span>;
         }
@@ -844,20 +845,20 @@
     /// Example :
     /// ```
     /// use doryen_rs::Console;
-    /// let len = Console::text_color_len(&quot;#[red]red text with a #[blue]blue#[] word&quot;);
-    /// assert_eq!(len, 25); // actual string : &quot;red text with a blue word&quot;
-    /// let len = Console::text_color_len(&quot;#[red]a\nb&quot;);
-    /// assert_eq!(len, 3); // actual string : &quot;a\nb&quot;
-    /// let len = Console::text_color_len(&quot;normal string&quot;);
+    /// let len = Console::text_color_len("#[red]red text with a #[blue]blue#[] word");
+    /// assert_eq!(len, 25); // actual string : "red text with a blue word"
+    /// let len = Console::text_color_len("#[red]a\nb");
+    /// assert_eq!(len, 3); // actual string : "a\nb"
+    /// let len = Console::text_color_len("normal string");
     /// assert_eq!(len, 13);
     /// ```
     </span><span class="kw">pub fn </span>text_color_len(text: <span class="kw-2">&amp;</span>str) -&gt; usize {
         <span class="kw">let </span><span class="kw-2">mut </span>text_len = <span class="number">0</span>;
-        <span class="kw">for </span>color_span <span class="kw">in </span>text.to_owned().split(<span class="string">&quot;#[&quot;</span>) {
+        <span class="kw">for </span>color_span <span class="kw">in </span>text.to_owned().split(<span class="string">"#["</span>) {
             <span class="kw">if </span>color_span.is_empty() {
                 <span class="kw">continue</span>;
             }
-            <span class="kw">let </span><span class="kw-2">mut </span>col_text = color_span.split(<span class="string">&#39;]&#39;</span>);
+            <span class="kw">let </span><span class="kw-2">mut </span>col_text = color_span.split(<span class="string">']'</span>);
             <span class="kw">let </span>col_name = col_text.next().unwrap();
             <span class="kw">if let </span><span class="prelude-val">Some</span>(text_span) = col_text.next() {
                 text_len += text_span.chars().count();
@@ -872,11 +873,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>spans: Vec&lt;(Color, String)&gt; = Vec::new();
         <span class="kw-2">*</span>text_len = <span class="number">0</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>fore = <span class="kw-2">*</span><span class="self">self</span>.color_stack.last().unwrap_or(<span class="kw-2">&amp;</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>));
-        <span class="kw">for </span>color_span <span class="kw">in </span>text.to_owned().split(<span class="string">&quot;#[&quot;</span>) {
+        <span class="kw">for </span>color_span <span class="kw">in </span>text.to_owned().split(<span class="string">"#["</span>) {
             <span class="kw">if </span>color_span.is_empty() {
                 <span class="kw">continue</span>;
             }
-            <span class="kw">let </span><span class="kw-2">mut </span>col_text = color_span.splitn(<span class="number">2</span>, <span class="string">&#39;]&#39;</span>);
+            <span class="kw">let </span><span class="kw-2">mut </span>col_text = color_span.splitn(<span class="number">2</span>, <span class="string">']'</span>);
             <span class="kw">let </span>col_name = col_text.next().unwrap();
             <span class="kw">if let </span><span class="prelude-val">Some</span>(text_span) = col_text.next() {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(color) = <span class="self">self</span>.colors.get(col_name) {
@@ -916,8 +917,8 @@
             ix += span.chars().count() <span class="kw">as </span>i32;
         }
     }
-    <span class="doccomment">/// write a string. If the string reaches the border of the console, it&#39;s truncated.
-    /// If the string contains carriage return `&quot;\n&quot;`, multiple lines are printed.
+    <span class="doccomment">/// write a string. If the string reaches the border of the console, it's truncated.
+    /// If the string contains carriage return `"\n"`, multiple lines are printed.
     </span><span class="kw">pub fn </span>print(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         x: i32,
@@ -928,7 +929,7 @@
         back: <span class="prelude-ty">Option</span>&lt;Color&gt;,
     ) {
         <span class="kw">let </span><span class="kw-2">mut </span>cury = y;
-        <span class="kw">for </span>line <span class="kw">in </span>text.to_owned().split(<span class="string">&#39;\n&#39;</span>) {
+        <span class="kw">for </span>line <span class="kw">in </span>text.to_owned().split(<span class="string">'\n'</span>) {
             <span class="self">self</span>.print_line(x, cury, line, align, fore, back);
             cury += <span class="number">1</span>;
         }
@@ -1126,10 +1127,10 @@
                         <span class="kw">let </span>dst_char = destination.ascii[dest_idx];
                         <span class="kw">let </span>dst_back = destination.back[dest_idx];
                         <span class="kw">if </span>fore_alpha &lt; <span class="number">1.0 </span>{
-                            <span class="kw">if </span>src_char == <span class="string">&#39; &#39; </span><span class="kw">as </span>u32 {
+                            <span class="kw">if </span>src_char == <span class="string">' ' </span><span class="kw">as </span>u32 {
                                 destination.fore[dest_idx] =
                                     color_blend(dst_fore, src_back, back_alpha);
-                            } <span class="kw">else if </span>dst_char == <span class="string">&#39; &#39; </span><span class="kw">as </span>u32 {
+                            } <span class="kw">else if </span>dst_char == <span class="string">' ' </span><span class="kw">as </span>u32 {
                                 destination.ascii[dest_idx] = src_char;
                                 destination.fore[dest_idx] =
                                     color_blend(dst_back, src_fore, fore_alpha);

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/environment.rs`."><title>environment.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../smithay_client_toolkit/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/environment.rs`."><title>environment.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -402,12 +403,12 @@
 //!
 //! ## Global handlers
 //!
-//! Wayland globals are split in two kinds, that we will call here &quot;single&quot; globals and &quot;multi&quot; globals.
+//! Wayland globals are split in two kinds, that we will call here "single" globals and "multi" globals.
 //!
-//! - &quot;single&quot; globals represent a capability of the server. They are generally signaled in the registry
+//! - "single" globals represent a capability of the server. They are generally signaled in the registry
 //!   from the start and never removed. They are signaled a single time. Examples of these globals are
 //!   `wl_compositor`, `wl_shm` or `xdg_wm_base`.
-//! - &quot;multi&quot; globals represent a resource that the server gives you access to. These globals can be
+//! - "multi" globals represent a resource that the server gives you access to. These globals can be
 //!   created or removed during the run of the program, and may exist as more than one instance, each
 //!   representing a different physical resource. Examples of such globals are `wl_output` or `wl_seat`.
 //!
@@ -417,7 +418,7 @@
 //! from the registry, and assigning them to filters to receive their events as necessary.
 //!
 //! This module provides a generic implementation of the [`GlobalHandler&lt;I&gt;`](trait.GlobalHandler.html) trait
-//! as [`SimpleGlobal&lt;I&gt;`](struct.SimpleGlobal.html). It can manage &quot;single&quot; globals that do not generate
+//! as [`SimpleGlobal&lt;I&gt;`](struct.SimpleGlobal.html). It can manage "single" globals that do not generate
 //! events, and thus require no filter.
 //!
 //! ## the  `environment!` macro
@@ -440,7 +441,7 @@
  * Traits definitions
  */
 
-</span><span class="doccomment">/// Required trait for implementing a handler for &quot;single&quot; globals
+</span><span class="doccomment">/// Required trait for implementing a handler for "single" globals
 </span><span class="kw">pub trait </span>GlobalHandler&lt;I: Interface&gt; {
     <span class="doccomment">/// This global was created and signaled in the registry with given id and version
     </span><span class="kw">fn </span>created(
@@ -454,7 +455,7 @@
     </span><span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Attached&lt;I&gt;&gt;;
 }
 
-<span class="doccomment">/// Required trait for implementing a handler for &quot;multi&quot; globals
+<span class="doccomment">/// Required trait for implementing a handler for "multi" globals
 </span><span class="kw">pub trait </span>MultiGlobalHandler&lt;I: Interface&gt; {
     <span class="doccomment">/// A new instance of this global was created with given id and version
     </span><span class="kw">fn </span>created(
@@ -491,7 +492,7 @@
     inner: Rc&lt;RefCell&lt;E&gt;&gt;,
 }
 
-<span class="kw">impl</span>&lt;E: InnerEnv + <span class="lifetime">&#39;static</span>&gt; Environment&lt;E&gt; {
+<span class="kw">impl</span>&lt;E: InnerEnv + <span class="lifetime">'static</span>&gt; Environment&lt;E&gt; {
     <span class="doccomment">/// Create new `Environment`
     ///
     /// This requires access to a `wl_display` attached to the `event_queue`.
@@ -516,13 +517,13 @@
         <span class="comment">// Fully initialize the environment.
         </span>queue.sync_roundtrip(<span class="kw-2">&amp;mut </span>(), |event, <span class="kw">_</span>, <span class="kw">_</span>| {
             <span class="macro">panic!</span>(
-                <span class="string">&quot;Encountered unhandled event during initial roundtrip ({}::{})&quot;</span>,
+                <span class="string">"Encountered unhandled event during initial roundtrip ({}::{})"</span>,
                 event.interface, event.name
             );
         })<span class="question-mark">?</span>;
         queue.sync_roundtrip(<span class="kw-2">&amp;mut </span>(), |event, <span class="kw">_</span>, <span class="kw">_</span>| {
             <span class="macro">panic!</span>(
-                <span class="string">&quot;Encountered unhandled event during initial roundtrip ({}::{})&quot;</span>,
+                <span class="string">"Encountered unhandled event during initial roundtrip ({}::{})"</span>,
                 event.interface, event.name
             );
         })<span class="question-mark">?</span>;
@@ -561,9 +562,9 @@
 }
 
 <span class="kw">impl</span>&lt;E&gt; Environment&lt;E&gt; {
-    <span class="doccomment">/// Access a &quot;single&quot; global
+    <span class="doccomment">/// Access a "single" global
     ///
-    /// This method allows you to access any &quot;single&quot; global that has previously
+    /// This method allows you to access any "single" global that has previously
     /// been declared in the `environment!` macro. It is forwarded to the `get()`
     /// method of the appropriate `GlobalHandler`.
     ///
@@ -575,7 +576,7 @@
         <span class="self">self</span>.inner.borrow().get()
     }
 
-    <span class="doccomment">/// Access a &quot;single&quot; global or panic
+    <span class="doccomment">/// Access a "single" global or panic
     ///
     /// This method is similar to `get_global`, but will panic with a detailed error
     /// message if the requested global was not advertized by the server.
@@ -585,14 +586,14 @@
     {
         <span class="kw">match </span><span class="self">self</span>.inner.borrow().get() {
             <span class="prelude-val">Some</span>(g) =&gt; g,
-            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;[SCTK] A missing global was required: {}&quot;</span>, I::NAME),
+            <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"[SCTK] A missing global was required: {}"</span>, I::NAME),
         }
     }
 
-    <span class="doccomment">/// Access all instances of a &quot;multi&quot; global
+    <span class="doccomment">/// Access all instances of a "multi" global
     ///
     /// This will return a `Vec` containing all currently existing instances of the
-    /// requested &quot;multi&quot; global that has been previously declared in the `environment!`
+    /// requested "multi" global that has been previously declared in the `environment!`
     /// macro. It is forwarded to the `get_all()` method of the appropriate
     /// `MultiGlobalHandler`.
     </span><span class="kw">pub fn </span>get_all_globals&lt;I: Interface&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;Attached&lt;I&gt;&gt;
@@ -625,10 +626,10 @@
 <span class="kw">where
     </span>E: fmt::Debug,
 {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;Environment&quot;</span>)
-            .field(<span class="string">&quot;manager&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.manager)
-            .field(<span class="string">&quot;inner&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.inner)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"Environment"</span>)
+            .field(<span class="string">"manager"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.manager)
+            .field(<span class="string">"inner"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.inner)
             .finish()
     }
 }
@@ -651,7 +652,7 @@
  * Simple handlers
  */
 
-</span><span class="doccomment">/// A minimalist global handler for &quot;single&quot; globals
+</span><span class="doccomment">/// A minimalist global handler for "single" globals
 ///
 /// This handler will simply register the global as soon as the registry signals
 /// it, and do nothing more.

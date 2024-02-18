@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/x11/util/geometry.rs`."><title>geometry.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../../../" data-static-root-path="../../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../../src-files.js"></script><script defer src="../../../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../../../winit/index.html"><img class="rust-logo" src="../../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/x11/util/geometry.rs`."><title>geometry.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../../../" data-static-root-path="../../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../../src-files.js"></script><script defer src="../../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -445,9 +446,9 @@
     <span class="kw">pub </span>root: ffi::Window,
     <span class="comment">// If you want positions relative to the root window, use translate_coords.
     // Note that the overwhelming majority of window managers are reparenting WMs, thus the window
-    // ID we get from window creation is for a nested window used as the window&#39;s client area. If
-    // you call get_geometry with that window ID, then you&#39;ll get the position of that client area
-    // window relative to the parent it&#39;s nested in (the frame), which isn&#39;t helpful if you want
+    // ID we get from window creation is for a nested window used as the window's client area. If
+    // you call get_geometry with that window ID, then you'll get the position of that client area
+    // window relative to the parent it's nested in (the frame), which isn't helpful if you want
     // to know the frame position.
     </span><span class="kw">pub </span>x_rel_parent: c_int,
     <span class="kw">pub </span>y_rel_parent: c_int,
@@ -582,14 +583,14 @@
     }
 
     <span class="kw">fn </span>get_frame_extents(<span class="kw-2">&amp;</span><span class="self">self</span>, window: ffi::Window) -&gt; <span class="prelude-ty">Option</span>&lt;FrameExtents&gt; {
-        <span class="kw">let </span>extents_atom = <span class="kw">unsafe </span>{ <span class="self">self</span>.get_atom_unchecked(<span class="string">b&quot;_NET_FRAME_EXTENTS\0&quot;</span>) };
+        <span class="kw">let </span>extents_atom = <span class="kw">unsafe </span>{ <span class="self">self</span>.get_atom_unchecked(<span class="string">b"_NET_FRAME_EXTENTS\0"</span>) };
 
         <span class="kw">if </span>!hint_is_supported(extents_atom) {
             <span class="kw">return </span><span class="prelude-val">None</span>;
         }
 
-        <span class="comment">// Of the WMs tested, xmonad, i3, dwm, IceWM (1.3.x and earlier), and blackbox don&#39;t
-        // support this. As this is part of EWMH (Extended Window Manager Hints), it&#39;s likely to
+        <span class="comment">// Of the WMs tested, xmonad, i3, dwm, IceWM (1.3.x and earlier), and blackbox don't
+        // support this. As this is part of EWMH (Extended Window Manager Hints), it's likely to
         // be unsupported by many smaller WMs.
         </span><span class="kw">let </span>extents: <span class="prelude-ty">Option</span>&lt;Vec&lt;c_ulong&gt;&gt; = <span class="self">self
             </span>.get_property(window, extents_atom, ffi::XA_CARDINAL)
@@ -610,7 +611,7 @@
     }
 
     <span class="kw">pub fn </span>is_top_level(<span class="kw-2">&amp;</span><span class="self">self</span>, window: ffi::Window, root: ffi::Window) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
-        <span class="kw">let </span>client_list_atom = <span class="kw">unsafe </span>{ <span class="self">self</span>.get_atom_unchecked(<span class="string">b&quot;_NET_CLIENT_LIST\0&quot;</span>) };
+        <span class="kw">let </span>client_list_atom = <span class="kw">unsafe </span>{ <span class="self">self</span>.get_atom_unchecked(<span class="string">b"_NET_CLIENT_LIST\0"</span>) };
 
         <span class="kw">if </span>!hint_is_supported(client_list_atom) {
             <span class="kw">return </span><span class="prelude-val">None</span>;
@@ -630,7 +631,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>children: <span class="kw-2">*mut </span>ffi::Window = ptr::null_mut();
             <span class="kw">let </span><span class="kw-2">mut </span>nchildren = <span class="number">0</span>;
 
-            <span class="comment">// What&#39;s filled into `parent` if `window` is the root window?
+            <span class="comment">// What's filled into `parent` if `window` is the root window?
             </span><span class="kw">let </span>_status = (<span class="self">self</span>.xlib.XQueryTree)(
                 <span class="self">self</span>.display,
                 window,
@@ -640,7 +641,7 @@
                 <span class="kw-2">&amp;mut </span>nchildren,
             );
 
-            <span class="comment">// The list of children isn&#39;t used
+            <span class="comment">// The list of children isn't used
             </span><span class="kw">if </span>!children.is_null() {
                 (<span class="self">self</span>.xlib.XFree)(children <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
             }
@@ -675,19 +676,19 @@
 
         <span class="comment">// Position relative to root window.
         // With rare exceptions, this is the position of a nested window. Cases where the window
-        // isn&#39;t nested are outlined in the comments throghout this function, but in addition to
-        // that, fullscreen windows often aren&#39;t nested.
+        // isn't nested are outlined in the comments throghout this function, but in addition to
+        // that, fullscreen windows often aren't nested.
         </span><span class="kw">let </span>(inner_y_rel_root, child) = {
             <span class="kw">let </span>coords = <span class="self">self
                 </span>.translate_coords(window, root)
-                .expect(<span class="string">&quot;Failed to translate window coordinates&quot;</span>);
+                .expect(<span class="string">"Failed to translate window coordinates"</span>);
             (coords.y_rel_root, coords.child)
         };
 
         <span class="kw">let </span>(width, height, border) = {
             <span class="kw">let </span>inner_geometry = <span class="self">self
                 </span>.get_geometry(window)
-                .expect(<span class="string">&quot;Failed to get inner window geometry&quot;</span>);
+                .expect(<span class="string">"Failed to get inner window geometry"</span>);
             (
                 inner_geometry.width,
                 inner_geometry.height,
@@ -695,7 +696,7 @@
             )
         };
 
-        <span class="comment">// The first condition is only false for un-nested windows, but isn&#39;t always false for
+        <span class="comment">// The first condition is only false for un-nested windows, but isn't always false for
         // un-nested windows. Mutter/Muffin/Budgie and Marco present a mysterious discrepancy:
         // when y is on the range [0, 2] and if the window has been unfocused since being
         // undecorated (or was undecorated upon construction), the first condition is true,
@@ -705,15 +706,15 @@
         <span class="comment">// Hopefully the WM supports EWMH, allowing us to get exact info on the window frames.
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>frame_extents) = <span class="self">self</span>.get_frame_extents(window) {
             <span class="comment">// Mutter/Muffin/Budgie and Marco preserve their decorated frame extents when
-            // decorations are disabled, but since the window becomes un-nested, it&#39;s easy to
+            // decorations are disabled, but since the window becomes un-nested, it's easy to
             // catch.
             </span><span class="kw">if </span>!nested {
                 frame_extents = FrameExtents::new(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
             }
 
-            <span class="comment">// The difference between the nested window&#39;s position and the outermost window&#39;s
+            <span class="comment">// The difference between the nested window's position and the outermost window's
             // position is equivalent to the frame size. In most scenarios, this is equivalent to
-            // manually climbing the hierarchy as is done in the case below. Here&#39;s a list of
+            // manually climbing the hierarchy as is done in the case below. Here's a list of
             // known discrepancies:
             // * Mutter/Muffin/Budgie gives decorated windows a margin of 9px (only 7px on top) in
             //   addition to a 1px semi-transparent border. The margin can be easily observed by
@@ -722,11 +723,11 @@
             //   via hierarchy-climbing results in this margin being included in both the
             //   position and outer size, so a window positioned at (0, 0) would be reported as
             //   having a position (-10, -8).
-            // * Compiz has a drop shadow margin just like Mutter/Muffin/Budgie, though it&#39;s 10px
-            //   on all sides, and there&#39;s no additional border.
+            // * Compiz has a drop shadow margin just like Mutter/Muffin/Budgie, though it's 10px
+            //   on all sides, and there's no additional border.
             // * Enlightenment otherwise gets a y position equivalent to inner_y_rel_root.
-            //   Without decorations, there&#39;s no difference. This is presumably related to
-            //   Enlightenment&#39;s fairly unique concept of window position; it interprets
+            //   Without decorations, there's no difference. This is presumably related to
+            //   Enlightenment's fairly unique concept of window position; it interprets
             //   positions given to XMoveWindow as a client area position rather than a position
             //   of the overall window.
 
@@ -735,16 +736,16 @@
                 heuristic_path: Supported,
             }
         } <span class="kw">else if </span>nested {
-            <span class="comment">// If the position value we have is for a nested window used as the client area, we&#39;ll
-            // just climb up the hierarchy and get the geometry of the outermost window we&#39;re
+            <span class="comment">// If the position value we have is for a nested window used as the client area, we'll
+            // just climb up the hierarchy and get the geometry of the outermost window we're
             // nested in.
             </span><span class="kw">let </span>outer_window = <span class="self">self
                 </span>.climb_hierarchy(window, root)
-                .expect(<span class="string">&quot;Failed to climb window hierarchy&quot;</span>);
+                .expect(<span class="string">"Failed to climb window hierarchy"</span>);
             <span class="kw">let </span>(outer_y, outer_width, outer_height) = {
                 <span class="kw">let </span>outer_geometry = <span class="self">self
                     </span>.get_geometry(outer_window)
-                    .expect(<span class="string">&quot;Failed to get outer window geometry&quot;</span>);
+                    .expect(<span class="string">"Failed to get outer window geometry"</span>);
                 (
                     outer_geometry.y_rel_parent,
                     outer_geometry.width,
@@ -753,7 +754,7 @@
             };
 
             <span class="comment">// Since we have the geometry of the outermost window and the geometry of the client
-            // area, we can figure out what&#39;s in between.
+            // area, we can figure out what's in between.
             </span><span class="kw">let </span>diff_x = outer_width.saturating_sub(width);
             <span class="kw">let </span>diff_y = outer_height.saturating_sub(height);
             <span class="kw">let </span>offset_y = inner_y_rel_root.saturating_sub(outer_y) <span class="kw">as </span>c_uint;

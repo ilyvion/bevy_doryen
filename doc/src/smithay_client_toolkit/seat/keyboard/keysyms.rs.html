@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/seat/keyboard/keysyms.rs`."><title>keysyms.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../smithay_client_toolkit/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/seat/keyboard/keysyms.rs`."><title>keysyms.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -3021,7 +3022,7 @@ documentation.
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
 OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR
@@ -3058,7 +3059,7 @@ SOFTWARE.
 ******************************************************************/
 
 /*
- * The &quot;X11 Window System Protocol&quot; standard defines in Appendix A the
+ * The "X11 Window System Protocol" standard defines in Appendix A the
  * keysym codes. These 29-bit integer values identify characters or
  * functions associated with each key (e.g., via the visible
  * engraving) of a keyboard layout. This file assigns mnemonic macro
@@ -3080,7 +3081,7 @@ SOFTWARE.
  *
  * For any future extension of the keysyms with characters already
  * found in ISO 10646 / Unicode, the following algorithm shall be
- * used. The new keysym code position will simply be the character&#39;s
+ * used. The new keysym code position will simply be the character's
  * Unicode number plus :u32 = 0x01000000;. The keysym values in the range
  * :u32 = 0x01000100; to :u32 = 0x0110ffff; are reserved to represent Unicode
  * characters in the range U+0100 to U+10FFFF.
@@ -3104,8 +3105,8 @@ SOFTWARE.
  * Before adding new keysyms, please do consider the following: In
  * addition to the keysym names defined in this file, the
  * XStringToKeysym() and XKeysymToString() functions will also handle
- * any keysym string of the form &quot;U0020&quot; to &quot;U007E&quot; and &quot;U00A0&quot; to
- * &quot;U10FFFF&quot; for all possible Unicode characters. In other words,
+ * any keysym string of the form "U0020" to "U007E" and "U00A0" to
+ * "U10FFFF" for all possible Unicode characters. In other words,
  * every possible Unicode character has already a keysym string
  * defined algorithmically, even if it is not listed here. Therefore,
  * defining an additional keysym macro is only necessary where a
@@ -3256,7 +3257,7 @@ SOFTWARE.
  * Auxiliary functions; note the duplicate definitions for left and right
  * function keys;  Sun keyboards and a few other manufacturers have such
  * function key groups on the left and/or right sides of the keyboard.
- * We&#39;ve not found a keyboard with more than 35 function keys total.
+ * We've not found a keyboard with more than 35 function keys total.
  */
 
 </span><span class="kw">pub const </span>XKB_KEY_F1                            :u32 = <span class="number">0xffbe</span>;
@@ -3340,7 +3341,7 @@ SOFTWARE.
 
 /*
  * Keyboard (XKB) Extension function and modifier keys
- * (from Appendix C of &quot;The X Keyboard Extension: Protocol Specification&quot;)
+ * (from Appendix C of "The X Keyboard Extension: Protocol Specification")
  * Byte 3 = :u32 = 0xfe;
  */
 
@@ -5456,7 +5457,7 @@ SOFTWARE.
  * The XFree86 keysym range is :u32 = 0x10080001; - :u32 = 0x1008FFFF;.
  *
  * X.Org will not be adding to the XF86 set of keysyms, though they have
- * been adopted and are considered a &quot;standard&quot; part of X keysym definitions.
+ * been adopted and are considered a "standard" part of X keysym definitions.
  * XFree86 never properly commented these keysyms, so we have done our
  * best to explain the semantic meaning of these keys.
  *
@@ -5483,7 +5484,7 @@ SOFTWARE.
 </span><span class="kw">pub const </span>XKB_KEY_XF86MonBrightnessCycle :u32 = <span class="number">0x1008FF07</span>;  <span class="comment">/* Monitor/panel brightness */
 
 /*
- * Keys found on some &quot;Internet&quot; keyboards.
+ * Keys found on some "Internet" keyboards.
  */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Standby		:u32 = <span class="number">0x1008FF10</span>;   <span class="comment">/* System into standby mode   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioLowerVolume	:u32 = <span class="number">0x1008FF11</span>;   <span class="comment">/* Volume control down        */
@@ -5493,13 +5494,13 @@ SOFTWARE.
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioStop	:u32 = <span class="number">0x1008FF15</span>;   <span class="comment">/* Stop playing audio         */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioPrev	:u32 = <span class="number">0x1008FF16</span>;   <span class="comment">/* Previous track             */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioNext	:u32 = <span class="number">0x1008FF17</span>;   <span class="comment">/* Next track                 */
-</span><span class="kw">pub const </span>XKB_KEY_XF86HomePage		:u32 = <span class="number">0x1008FF18</span>;   <span class="comment">/* Display user&#39;s home page   */
-</span><span class="kw">pub const </span>XKB_KEY_XF86Mail		:u32 = <span class="number">0x1008FF19</span>;   <span class="comment">/* Invoke user&#39;s mail program */
+</span><span class="kw">pub const </span>XKB_KEY_XF86HomePage		:u32 = <span class="number">0x1008FF18</span>;   <span class="comment">/* Display user's home page   */
+</span><span class="kw">pub const </span>XKB_KEY_XF86Mail		:u32 = <span class="number">0x1008FF19</span>;   <span class="comment">/* Invoke user's mail program */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Start		:u32 = <span class="number">0x1008FF1A</span>;   <span class="comment">/* Start application          */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Search		:u32 = <span class="number">0x1008FF1B</span>;   <span class="comment">/* Search                     */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioRecord	:u32 = <span class="number">0x1008FF1C</span>;   <span class="comment">/* Record audio application   */
 
-/* These are sometimes found on PDA&#39;s (e.g. Palm, PocketPC or elsewhere)   */
+/* These are sometimes found on PDA's (e.g. Palm, PocketPC or elsewhere)   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Calculator	:u32 = <span class="number">0x1008FF1D</span>;   <span class="comment">/* Invoke calculator program  */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Memo		:u32 = <span class="number">0x1008FF1E</span>;   <span class="comment">/* Invoke Memo taking program */
 </span><span class="kw">pub const </span>XKB_KEY_XF86ToDoList		:u32 = <span class="number">0x1008FF1F</span>;   <span class="comment">/* Invoke To Do List program  */
@@ -5510,7 +5511,7 @@ SOFTWARE.
 </span><span class="kw">pub const </span>XKB_KEY_XF86RockerDown	:u32 = <span class="number">0x1008FF24</span>;   <span class="comment">/* and down                   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86RockerEnter	:u32 = <span class="number">0x1008FF25</span>;   <span class="comment">/* and let you press them     */
 
-/* Some more &quot;Internet&quot; keyboard symbols */
+/* Some more "Internet" keyboard symbols */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Back		:u32 = <span class="number">0x1008FF26</span>;   <span class="comment">/* Like back on a browser     */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Forward		:u32 = <span class="number">0x1008FF27</span>;   <span class="comment">/* Like forward on a browser  */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Stop		:u32 = <span class="number">0x1008FF28</span>;   <span class="comment">/* Stop current operation     */
@@ -5524,18 +5525,18 @@ SOFTWARE.
 </span><span class="kw">pub const </span>XKB_KEY_XF86Favorites	:u32 = <span class="number">0x1008FF30</span>;   <span class="comment">/* Show favorite locations    */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioPause	:u32 = <span class="number">0x1008FF31</span>;   <span class="comment">/* Pause audio playing        */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AudioMedia	:u32 = <span class="number">0x1008FF32</span>;   <span class="comment">/* Launch media collection app */
-</span><span class="kw">pub const </span>XKB_KEY_XF86MyComputer	:u32 = <span class="number">0x1008FF33</span>;   <span class="comment">/* Display &quot;My Computer&quot; window */
+</span><span class="kw">pub const </span>XKB_KEY_XF86MyComputer	:u32 = <span class="number">0x1008FF33</span>;   <span class="comment">/* Display "My Computer" window */
 </span><span class="kw">pub const </span>XKB_KEY_XF86VendorHome	:u32 = <span class="number">0x1008FF34</span>;   <span class="comment">/* Display vendor home web site */
 </span><span class="kw">pub const </span>XKB_KEY_XF86LightBulb	:u32 = <span class="number">0x1008FF35</span>;   <span class="comment">/* Light bulb keys exist       */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Shop		:u32 = <span class="number">0x1008FF36</span>;   <span class="comment">/* Display shopping web site   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86History		:u32 = <span class="number">0x1008FF37</span>;   <span class="comment">/* Show history of web surfing */
 </span><span class="kw">pub const </span>XKB_KEY_XF86OpenURL		:u32 = <span class="number">0x1008FF38</span>;   <span class="comment">/* Open selected URL           */
 </span><span class="kw">pub const </span>XKB_KEY_XF86AddFavorite	:u32 = <span class="number">0x1008FF39</span>;   <span class="comment">/* Add URL to favorites list   */
-</span><span class="kw">pub const </span>XKB_KEY_XF86HotLinks		:u32 = <span class="number">0x1008FF3A</span>;   <span class="comment">/* Show &quot;hot&quot; links            */
+</span><span class="kw">pub const </span>XKB_KEY_XF86HotLinks		:u32 = <span class="number">0x1008FF3A</span>;   <span class="comment">/* Show "hot" links            */
 </span><span class="kw">pub const </span>XKB_KEY_XF86BrightnessAdjust	:u32 = <span class="number">0x1008FF3B</span>;   <span class="comment">/* Invoke brightness adj. UI   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Finance		:u32 = <span class="number">0x1008FF3C</span>;   <span class="comment">/* Display financial site      */
-</span><span class="kw">pub const </span>XKB_KEY_XF86Community	:u32 = <span class="number">0x1008FF3D</span>;   <span class="comment">/* Display user&#39;s community    */
-</span><span class="kw">pub const </span>XKB_KEY_XF86AudioRewind	:u32 = <span class="number">0x1008FF3E</span>;   <span class="comment">/* &quot;rewind&quot; audio track        */
+</span><span class="kw">pub const </span>XKB_KEY_XF86Community	:u32 = <span class="number">0x1008FF3D</span>;   <span class="comment">/* Display user's community    */
+</span><span class="kw">pub const </span>XKB_KEY_XF86AudioRewind	:u32 = <span class="number">0x1008FF3E</span>;   <span class="comment">/* "rewind" audio track        */
 </span><span class="kw">pub const </span>XKB_KEY_XF86BackForward	:u32 = <span class="number">0x1008FF3F</span>;   <span class="comment">/* ??? */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Launch0		:u32 = <span class="number">0x1008FF40</span>;   <span class="comment">/* Launch Application          */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Launch1		:u32 = <span class="number">0x1008FF41</span>;   <span class="comment">/* Launch Application          */
@@ -5570,7 +5571,7 @@ SOFTWARE.
 </span><span class="kw">pub const </span>XKB_KEY_XF86Explorer		:u32 = <span class="number">0x1008FF5D</span>;   <span class="comment">/* Launch file explorer        */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Game		:u32 = <span class="number">0x1008FF5E</span>;   <span class="comment">/* Launch game                 */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Go		:u32 = <span class="number">0x1008FF5F</span>;   <span class="comment">/* Go to URL                   */
-</span><span class="kw">pub const </span>XKB_KEY_XF86iTouch		:u32 = <span class="number">0x1008FF60</span>;   <span class="comment">/* Logitech iTouch- don&#39;t use  */
+</span><span class="kw">pub const </span>XKB_KEY_XF86iTouch		:u32 = <span class="number">0x1008FF60</span>;   <span class="comment">/* Logitech iTouch- don't use  */
 </span><span class="kw">pub const </span>XKB_KEY_XF86LogOff		:u32 = <span class="number">0x1008FF61</span>;   <span class="comment">/* Log off system              */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Market		:u32 = <span class="number">0x1008FF62</span>;   <span class="comment">/* ??                          */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Meeting		:u32 = <span class="number">0x1008FF63</span>;   <span class="comment">/* enter meeting in calendar   */
@@ -5584,12 +5585,12 @@ SOFTWARE.
 </span><span class="kw">pub const </span>XKB_KEY_XF86Option		:u32 = <span class="number">0x1008FF6C</span>;   <span class="comment">/* ?? */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Paste		:u32 = <span class="number">0x1008FF6D</span>;   <span class="comment">/* Paste                       */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Phone		:u32 = <span class="number">0x1008FF6E</span>;   <span class="comment">/* Launch phone; dial number   */
-</span><span class="kw">pub const </span>XKB_KEY_XF86Q		:u32 = <span class="number">0x1008FF70</span>;   <span class="comment">/* Compaq&#39;s Q - don&#39;t use      */
+</span><span class="kw">pub const </span>XKB_KEY_XF86Q		:u32 = <span class="number">0x1008FF70</span>;   <span class="comment">/* Compaq's Q - don't use      */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Reply		:u32 = <span class="number">0x1008FF72</span>;   <span class="comment">/* Reply e.g., mail            */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Reload		:u32 = <span class="number">0x1008FF73</span>;   <span class="comment">/* Reload web page, file, etc. */
 </span><span class="kw">pub const </span>XKB_KEY_XF86RotateWindows	:u32 = <span class="number">0x1008FF74</span>;   <span class="comment">/* Rotate windows e.g. xrandr  */
-</span><span class="kw">pub const </span>XKB_KEY_XF86RotationPB	:u32 = <span class="number">0x1008FF75</span>;   <span class="comment">/* don&#39;t use                   */
-</span><span class="kw">pub const </span>XKB_KEY_XF86RotationKB	:u32 = <span class="number">0x1008FF76</span>;   <span class="comment">/* don&#39;t use                   */
+</span><span class="kw">pub const </span>XKB_KEY_XF86RotationPB	:u32 = <span class="number">0x1008FF75</span>;   <span class="comment">/* don't use                   */
+</span><span class="kw">pub const </span>XKB_KEY_XF86RotationKB	:u32 = <span class="number">0x1008FF76</span>;   <span class="comment">/* don't use                   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86Save		:u32 = <span class="number">0x1008FF77</span>;   <span class="comment">/* Save (file, document, state */
 </span><span class="kw">pub const </span>XKB_KEY_XF86ScrollUp		:u32 = <span class="number">0x1008FF78</span>;   <span class="comment">/* Scroll window/contents up   */
 </span><span class="kw">pub const </span>XKB_KEY_XF86ScrollDown	:u32 = <span class="number">0x1008FF79</span>;   <span class="comment">/* Scrool window/contentd down */
@@ -5686,7 +5687,7 @@ SOFTWARE.
  * Copyright (c) 1991, Oracle and/or its affiliates. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the &quot;Software&quot;),
+ * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
@@ -5696,7 +5697,7 @@ SOFTWARE.
  * paragraph) shall be included in all copies or substantial portions of the
  * Software.
  *
- * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -5717,7 +5718,7 @@ documentation.
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
 OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
@@ -5801,7 +5802,7 @@ documentation.
 The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
 OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
@@ -5850,7 +5851,7 @@ SOFTWARE.
 <span class="kw">pub const </span>XKB_KEY_Dtilde               :u32 = <span class="number">0x1000FE7E</span>;
 <span class="kw">pub const </span>XKB_KEY_Ddiaeresis           :u32 = <span class="number">0x1000FE22</span>;
 
-<span class="comment">/* special keysym for LK2** &quot;Remove&quot; key on editing keypad */
+<span class="comment">/* special keysym for LK2** "Remove" key on editing keypad */
 
 </span><span class="kw">pub const </span>XKB_KEY_DRemove	:u32 = <span class="number">0x1000FF00</span>;   <span class="comment">/* Remove */
 /*
@@ -5866,7 +5867,7 @@ documentation.
 The above copyright notice and this permission notice shall be included
 in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
 OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL THE OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR

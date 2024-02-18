@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/crossfont-0.5.2/src/ft/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="crossfont" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../crossfont/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/crossfont-0.5.2/src/ft/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="crossfont" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -918,19 +919,19 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>FaceLoadingProperties {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;Face&quot;</span>)
-            .field(<span class="string">&quot;ft_face&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.ft_face)
-            .field(<span class="string">&quot;load_flags&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.load_flags)
-            .field(<span class="string">&quot;render_mode&quot;</span>, <span class="kw-2">&amp;</span><span class="kw">match </span><span class="self">self</span>.render_mode {
-                freetype::RenderMode::Normal =&gt; <span class="string">&quot;Normal&quot;</span>,
-                freetype::RenderMode::Light =&gt; <span class="string">&quot;Light&quot;</span>,
-                freetype::RenderMode::Mono =&gt; <span class="string">&quot;Mono&quot;</span>,
-                freetype::RenderMode::Lcd =&gt; <span class="string">&quot;Lcd&quot;</span>,
-                freetype::RenderMode::LcdV =&gt; <span class="string">&quot;LcdV&quot;</span>,
-                freetype::RenderMode::Max =&gt; <span class="string">&quot;Max&quot;</span>,
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"Face"</span>)
+            .field(<span class="string">"ft_face"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.ft_face)
+            .field(<span class="string">"load_flags"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.load_flags)
+            .field(<span class="string">"render_mode"</span>, <span class="kw-2">&amp;</span><span class="kw">match </span><span class="self">self</span>.render_mode {
+                freetype::RenderMode::Normal =&gt; <span class="string">"Normal"</span>,
+                freetype::RenderMode::Light =&gt; <span class="string">"Light"</span>,
+                freetype::RenderMode::Mono =&gt; <span class="string">"Mono"</span>,
+                freetype::RenderMode::Lcd =&gt; <span class="string">"Lcd"</span>,
+                freetype::RenderMode::LcdV =&gt; <span class="string">"LcdV"</span>,
+                freetype::RenderMode::Max =&gt; <span class="string">"Max"</span>,
             })
-            .field(<span class="string">&quot;lcd_filter&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.lcd_filter)
+            .field(<span class="string">"lcd_filter"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.lcd_filter)
             .finish()
     }
 }
@@ -1024,8 +1025,8 @@
                     from_freetype_26_6(os2.y_strikeout_size() <span class="kw">as </span>f32 * x_scale),
                 ),
                 <span class="kw">_ </span>=&gt; {
-                    <span class="comment">// Fallback if font doesn&#39;t provide info about strikeout.
-                    </span><span class="macro">trace!</span>(<span class="string">&quot;Using fallback strikeout metrics&quot;</span>);
+                    <span class="comment">// Fallback if font doesn't provide info about strikeout.
+                    </span><span class="macro">trace!</span>(<span class="string">"Using fallback strikeout metrics"</span>);
                     <span class="kw">let </span>strikeout_position = height <span class="kw">as </span>f32 / <span class="number">2. </span>+ descent;
                     (strikeout_position, underline_thickness)
                 },
@@ -1093,7 +1094,7 @@
                 }
             }
 
-            <span class="comment">// Don&#39;t render bitmap glyphs, it results in error with freestype 2.11.0.
+            <span class="comment">// Don't render bitmap glyphs, it results in error with freestype 2.11.0.
             </span><span class="kw">if </span>(<span class="kw-2">*</span>raw_glyph).format != freetype_sys::FT_GLYPH_FORMAT_BITMAP {
                 glyph.render_glyph(face.render_mode)<span class="question-mark">?</span>;
             }
@@ -1238,7 +1239,7 @@
             <span class="kw">return </span><span class="prelude-val">Ok</span>(primary_font_key);
         }
 
-        <span class="comment">// Load font if we haven&#39;t loaded it yet.
+        <span class="comment">// Load font if we haven't loaded it yet.
         </span><span class="kw">if </span>!<span class="self">self</span>.loader.faces.contains_key(<span class="kw-2">&amp;</span>primary_font_key) {
             <span class="self">self</span>.loader
                 .face_from_pattern(<span class="kw-2">&amp;</span>primary_font, primary_font_key)
@@ -1272,7 +1273,7 @@
         <span class="kw">let </span>ft_face = <span class="kw-2">&amp;</span>face_load_props.ft_face;
         <span class="kw">let </span>size_metrics = ft_face.size_metrics().ok_or(Error::MetricsNotFound)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>width = <span class="kw">match </span>ft_face.load_char(<span class="string">&#39;0&#39; </span><span class="kw">as </span>usize, face_load_props.load_flags) {
+        <span class="kw">let </span>width = <span class="kw">match </span>ft_face.load_char(<span class="string">'0' </span><span class="kw">as </span>usize, face_load_props.load_flags) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; from_freetype_26_6(ft_face.glyph().metrics().horiAdvance),
             <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; from_freetype_26_6(size_metrics.max_advance),
         };
@@ -1307,7 +1308,7 @@
                 <span class="prelude-val">Some</span>(face) =&gt; {
                     <span class="kw">let </span>index = face.ft_face.get_char_index(glyph.character <span class="kw">as </span>usize);
 
-                    <span class="comment">// We found something in a current face, so let&#39;s use it.
+                    <span class="comment">// We found something in a current face, so let's use it.
                     </span><span class="kw">if </span>index != <span class="number">0 </span>{
                         <span class="kw">return </span><span class="prelude-val">Ok</span>(font_key);
                     }
@@ -1326,7 +1327,7 @@
             }
         }
 
-        <span class="comment">// You can hit this return, if you&#39;re failing to get charset from a pattern.
+        <span class="comment">// You can hit this return, if you're failing to get charset from a pattern.
         </span><span class="prelude-val">Ok</span>(glyph.font_key)
     }
 
@@ -1431,14 +1432,14 @@
                 }
                 <span class="prelude-val">Ok</span>((bitmap.rows(), bitmap.width(), BitmapBuffer::Rgba(packed)))
             },
-            mode =&gt; <span class="macro">panic!</span>(<span class="string">&quot;unhandled pixel mode: {:?}&quot;</span>, mode),
+            mode =&gt; <span class="macro">panic!</span>(<span class="string">"unhandled pixel mode: {:?}"</span>, mode),
         }
     }
 }
 
 <span class="doccomment">/// Downscale a bitmap by a fixed factor.
 ///
-/// This will take the `bitmap_glyph` as input and return the glyph&#39;s content downscaled by
+/// This will take the `bitmap_glyph` as input and return the glyph's content downscaled by
 /// `fixup_factor`.
 </span><span class="kw">fn </span>downsample_bitmap(<span class="kw-2">mut </span>bitmap_glyph: RasterizedGlyph, fixup_factor: f64) -&gt; RasterizedGlyph {
     <span class="comment">// Only scale colored buffers which are bigger than required.
@@ -1559,7 +1560,7 @@
                 <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(font_key));
             }
 
-            <span class="macro">trace!</span>(<span class="string">&quot;Got font path={:?}, index={:?}&quot;</span>, ft_face_location.path, ft_face_location.index);
+            <span class="macro">trace!</span>(<span class="string">"Got font path={:?}, index={:?}"</span>, ft_face_location.path, ft_face_location.index);
 
             <span class="kw">let </span>ft_face = <span class="kw">match </span><span class="self">self</span>.ft_faces.get(<span class="kw-2">&amp;</span>ft_face_location) {
                 <span class="prelude-val">Some</span>(ft_face) =&gt; Rc::clone(ft_face),
@@ -1569,7 +1570,7 @@
             <span class="kw">let </span>non_scalable = <span class="kw">if </span>pattern.scalable().next().unwrap_or(<span class="bool-val">true</span>) {
                 <span class="prelude-val">None
             </span>} <span class="kw">else </span>{
-                <span class="prelude-val">Some</span>(pattern.pixelsize().next().expect(<span class="string">&quot;has 1+ pixelsize&quot;</span>) <span class="kw">as </span>f32)
+                <span class="prelude-val">Some</span>(pattern.pixelsize().next().expect(<span class="string">"has 1+ pixelsize"</span>) <span class="kw">as </span>f32)
             };
 
             <span class="kw">let </span>embolden = pattern.embolden().next().unwrap_or(<span class="bool-val">false</span>);
@@ -1601,7 +1602,7 @@
                 rgba,
             };
 
-            <span class="macro">debug!</span>(<span class="string">&quot;Loaded Face {:?}&quot;</span>, face);
+            <span class="macro">debug!</span>(<span class="string">"Loaded Face {:?}"</span>, face);
 
             <span class="self">self</span>.faces.insert(font_key, face);
 
@@ -1636,7 +1637,7 @@
             //
             // According to the FreeType docs,
             //
-            // &gt; You can use a hinting algorithm that doesn&#39;t correspond to the
+            // &gt; You can use a hinting algorithm that doesn't correspond to the
             // &gt; same rendering mode.  As an example, it is possible to use the
             // &gt; ‘light’ hinting algorithm and have the results rendered in
             // &gt; horizontal LCD pixel mode.
@@ -1661,7 +1662,7 @@
         };
 
         <span class="comment">// Non scalable fonts only have bitmaps, so disabling them entirely is likely not a
-        // desirable thing. Colored fonts aren&#39;t scalable, but also only have bitmaps.
+        // desirable thing. Colored fonts aren't scalable, but also only have bitmaps.
         </span><span class="kw">if </span>!embedded_bitmaps &amp;&amp; scalable &amp;&amp; !color {
             flags |= LoadFlag::NO_BITMAP;
         }

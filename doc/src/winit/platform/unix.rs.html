@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform/unix.rs`."><title>unix.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../winit/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform/unix.rs`."><title>unix.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -463,15 +464,15 @@
 <a href="#463" id="463">463</a>
 <a href="#464" id="464">464</a>
 </pre></div><pre class="rust"><code><span class="attr">#![cfg(any(
-    target_os = <span class="string">&quot;linux&quot;</span>,
-    target_os = <span class="string">&quot;dragonfly&quot;</span>,
-    target_os = <span class="string">&quot;freebsd&quot;</span>,
-    target_os = <span class="string">&quot;netbsd&quot;</span>,
-    target_os = <span class="string">&quot;openbsd&quot;
+    target_os = <span class="string">"linux"</span>,
+    target_os = <span class="string">"dragonfly"</span>,
+    target_os = <span class="string">"freebsd"</span>,
+    target_os = <span class="string">"netbsd"</span>,
+    target_os = <span class="string">"openbsd"
 </span>))]
 
 </span><span class="kw">use </span>std::os::raw;
-<span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">use </span>std::{ptr, sync::Arc};
 
 <span class="kw">use crate</span>::{
@@ -480,9 +481,9 @@
     window::{Window, WindowBuilder},
 };
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::dpi::Size;
-<span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::platform_impl::{x11::ffi::XVisualInfo, x11::XConnection, XLIB_ERROR_HOOKS};
 <span class="kw">use </span><span class="kw">crate</span>::platform_impl::{
     ApplicationName, Backend, EventLoopWindowTarget <span class="kw">as </span>LinuxEventLoopWindowTarget,
@@ -491,12 +492,12 @@
 
 <span class="comment">// TODO: stupid hack so that glutin can do its work
 </span><span class="attr">#[doc(hidden)]
-#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::platform_impl::x11;
-<span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::platform_impl::{x11::util::WindowType <span class="kw">as </span>XWindowType, XNotSupported};
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
 </span><span class="kw">pub use </span><span class="kw">crate</span>::window::Theme;
 
 <span class="doccomment">/// The first argument in the provided hook will be the pointer to `XDisplay`
@@ -504,11 +505,11 @@
 /// indicator whether the error was handled by the callback.
 ///
 /// [`XErrorEvent`]: https://linux.die.net/man/3/xerrorevent
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">pub type </span>XlibErrorHook =
     Box&lt;<span class="kw">dyn </span>Fn(<span class="kw-2">*mut </span>std::ffi::c_void, <span class="kw-2">*mut </span>std::ffi::c_void) -&gt; bool + Send + Sync&gt;;
 
-<span class="doccomment">/// Hook to winit&#39;s xlib error handling callback.
+<span class="doccomment">/// Hook to winit's xlib error handling callback.
 ///
 /// This method is provided as a safe way to handle the errors comming from X11 when using xlib
 /// in external crates, like glutin for GLX access. Trying to handle errors by speculating with
@@ -516,7 +517,7 @@
 ///
 /// [`unsafe`]: https://www.remlab.net/op/xlib.shtml
 </span><span class="attr">#[inline]
-#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+#[cfg(feature = <span class="string">"x11"</span>)]
 </span><span class="kw">pub fn </span>register_xlib_error_hook(hook: XlibErrorHook) {
     <span class="comment">// Append new hook.
     </span><span class="kw">unsafe </span>{
@@ -527,60 +528,60 @@
 <span class="doccomment">/// Additional methods on [`EventLoopWindowTarget`] that are specific to Unix.
 </span><span class="kw">pub trait </span>EventLoopWindowTargetExtUnix {
     <span class="doccomment">/// True if the [`EventLoopWindowTarget`] uses Wayland.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>is_wayland(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="doccomment">/// True if the [`EventLoopWindowTarget`] uses X11.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>is_x11(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
 
     <span class="attr">#[doc(hidden)]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_xconnection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;XConnection&gt;&gt;;
 
     <span class="doccomment">/// Returns a pointer to the `wl_display` object of wayland that is used by this
     /// [`EventLoopWindowTarget`].
     ///
-    /// Returns `None` if the [`EventLoop`] doesn&#39;t use wayland (if it uses xlib for example).
+    /// Returns `None` if the [`EventLoop`] doesn't use wayland (if it uses xlib for example).
     ///
     /// The pointer will become invalid when the winit [`EventLoop`] is destroyed.
     ///
     /// [`EventLoop`]: crate::event_loop::EventLoop
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt;;
 }
 
 <span class="kw">impl</span>&lt;T&gt; EventLoopWindowTargetExtUnix <span class="kw">for </span>EventLoopWindowTarget&lt;T&gt; {
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>is_wayland(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.p.is_wayland()
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>is_x11(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         !<span class="self">self</span>.p.is_wayland()
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_xconnection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;XConnection&gt;&gt; {
         <span class="kw">match </span><span class="self">self</span>.p {
             LinuxEventLoopWindowTarget::X(<span class="kw-2">ref </span>e) =&gt; <span class="prelude-val">Some</span>(e.x_connection().clone()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt; {
         <span class="kw">match </span><span class="self">self</span>.p {
             LinuxEventLoopWindowTarget::Wayland(<span class="kw-2">ref </span>p) =&gt; {
                 <span class="prelude-val">Some</span>(p.display().get_display_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>)
             }
-            <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
@@ -589,11 +590,11 @@
 <span class="doccomment">/// Additional methods on [`EventLoopBuilder`] that are specific to Unix.
 </span><span class="kw">pub trait </span>EventLoopBuilderExtUnix {
     <span class="doccomment">/// Force using X11.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self</span>;
 
     <span class="doccomment">/// Force using Wayland.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>with_wayland(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self</span>;
 
     <span class="doccomment">/// Whether to allow the event loop to be created off of the main thread.
@@ -605,14 +606,14 @@
 
 <span class="kw">impl</span>&lt;T&gt; EventLoopBuilderExtUnix <span class="kw">for </span>EventLoopBuilder&lt;T&gt; {
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.forced_backend = <span class="prelude-val">Some</span>(Backend::X);
         <span class="self">self
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>with_wayland(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.forced_backend = <span class="prelude-val">Some</span>(Backend::Wayland);
         <span class="self">self
@@ -629,54 +630,54 @@
 </span><span class="kw">pub trait </span>WindowExtUnix {
     <span class="doccomment">/// Returns the ID of the [`Window`] xlib object that is used by this window.
     ///
-    /// Returns `None` if the window doesn&#39;t use xlib (if it uses wayland for example).
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    /// Returns `None` if the window doesn't use xlib (if it uses wayland for example).
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_window(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;raw::c_ulong&gt;;
 
     <span class="doccomment">/// Returns a pointer to the `Display` object of xlib that is used by this window.
     ///
-    /// Returns `None` if the window doesn&#39;t use xlib (if it uses wayland for example).
+    /// Returns `None` if the window doesn't use xlib (if it uses wayland for example).
     ///
     /// The pointer will become invalid when the [`Window`] is destroyed.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt;;
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_screen_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;raw::c_int&gt;;
 
     <span class="attr">#[doc(hidden)]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_xconnection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;XConnection&gt;&gt;;
 
     <span class="doccomment">/// This function returns the underlying `xcb_connection_t` of an xlib `Display`.
     ///
-    /// Returns `None` if the window doesn&#39;t use xlib (if it uses wayland for example).
+    /// Returns `None` if the window doesn't use xlib (if it uses wayland for example).
     ///
     /// The pointer will become invalid when the [`Window`] is destroyed.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xcb_connection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt;;
 
     <span class="doccomment">/// Returns a pointer to the `wl_surface` object of wayland that is used by this window.
     ///
-    /// Returns `None` if the window doesn&#39;t use wayland (if it uses xlib for example).
+    /// Returns `None` if the window doesn't use wayland (if it uses xlib for example).
     ///
     /// The pointer will become invalid when the [`Window`] is destroyed.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_surface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt;;
 
     <span class="doccomment">/// Returns a pointer to the `wl_display` object of wayland that is used by this window.
     ///
-    /// Returns `None` if the window doesn&#39;t use wayland (if it uses xlib for example).
+    /// Returns `None` if the window doesn't use wayland (if it uses xlib for example).
     ///
     /// The pointer will become invalid when the [`Window`] is destroyed.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt;;
 
     <span class="doccomment">/// Updates [`Theme`] of window decorations.
     ///
     /// You can also use `WINIT_WAYLAND_CSD_THEME` env variable to set the theme.
-    /// Possible values for env variable are: &quot;dark&quot; and light&quot;
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    /// Possible values for env variable are: "dark" and light"
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_set_csd_theme(<span class="kw-2">&amp;</span><span class="self">self</span>, config: Theme);
 
     <span class="doccomment">/// Check if the window is ready for drawing
@@ -691,82 +692,82 @@
 
 <span class="kw">impl </span>WindowExtUnix <span class="kw">for </span>Window {
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_window(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;raw::c_ulong&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::X(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.xlib_window()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::X(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.xlib_display()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_screen_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;raw::c_int&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::X(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.xlib_screen_id()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xlib_xconnection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Arc&lt;XConnection&gt;&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::X(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.xlib_xconnection()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>xcb_connection(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::X(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.xcb_connection()),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_surface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::Wayland(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.surface().as_ref().c_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">*mut </span>raw::c_void&gt; {
         <span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::Wayland(<span class="kw-2">ref </span>w) =&gt; <span class="prelude-val">Some</span>(w.display().get_display_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
             </span><span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>wayland_set_csd_theme(<span class="kw-2">&amp;</span><span class="self">self</span>, theme: Theme) {
         <span class="attr">#[allow(clippy::single_match)]
         </span><span class="kw">match </span><span class="self">self</span>.window {
             LinuxWindow::Wayland(<span class="kw-2">ref </span>w) =&gt; w.set_csd_theme(theme),
-            <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
             </span><span class="kw">_ </span>=&gt; (),
         }
     }
@@ -779,10 +780,10 @@
 
 <span class="doccomment">/// Additional methods on [`WindowBuilder`] that are specific to Unix.
 </span><span class="kw">pub trait </span>WindowBuilderExtUnix {
-    <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11_visual&lt;T&gt;(<span class="self">self</span>, visual_infos: <span class="kw-2">*const </span>T) -&gt; <span class="self">Self</span>;
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11_screen(<span class="self">self</span>, screen_id: i32) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with the given `general` and `instance` names.
@@ -791,29 +792,29 @@
     /// file destributed with your program. The `instance` is a `no-op`.
     ///
     /// On X11, the `general` sets general class of `WM_CLASS(STRING)`, while `instance` set the
-    /// instance part of it. The resulted property looks like `WM_CLASS(STRING) = &quot;general&quot;, &quot;instance&quot;`.
+    /// instance part of it. The resulted property looks like `WM_CLASS(STRING) = "general", "instance"`.
     ///
     /// For details about application ID conventions, see the
     /// [Desktop Entry Spec](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#desktop-file-id)
     </span><span class="kw">fn </span>with_name(<span class="self">self</span>, general: <span class="kw">impl </span>Into&lt;String&gt;, instance: <span class="kw">impl </span>Into&lt;String&gt;) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with override-redirect flag; defaults to false. Only relevant on X11.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_override_redirect(<span class="self">self</span>, override_redirect: bool) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with `_NET_WM_WINDOW_TYPE` hints; defaults to `Normal`. Only relevant on X11.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11_window_type(<span class="self">self</span>, x11_window_type: Vec&lt;XWindowType&gt;) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with `_GTK_THEME_VARIANT` hint set to the specified value. Currently only relevant on X11.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_gtk_theme_variant(<span class="self">self</span>, variant: String) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with certain decoration [`Theme`]
     ///
     /// You can also use `WINIT_WAYLAND_CSD_THEME` env variable to set the theme.
-    /// Possible values for env variable are: &quot;dark&quot; and light&quot;
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    /// Possible values for env variable are: "dark" and light"
+    </span><span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>with_wayland_csd_theme(<span class="self">self</span>, theme: Theme) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with resize increment hint. Only implemented on X11.
@@ -828,7 +829,7 @@
     /// // Or specify the size in physical dimensions like this:
     /// WindowBuilder::new().with_resize_increments(PhysicalSize::new(400, 200));
     /// ```
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_resize_increments&lt;S: Into&lt;Size&gt;&gt;(<span class="self">self</span>, increments: S) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Build window with base size hint. Only implemented on X11.
@@ -843,13 +844,13 @@
     /// // Or specify the size in physical dimensions like this:
     /// WindowBuilder::new().with_base_size(PhysicalSize::new(400, 200));
     /// ```
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_base_size&lt;S: Into&lt;Size&gt;&gt;(<span class="self">self</span>, base_size: S) -&gt; <span class="self">Self</span>;
 }
 
 <span class="kw">impl </span>WindowBuilderExtUnix <span class="kw">for </span>WindowBuilder {
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11_visual&lt;T&gt;(<span class="kw-2">mut </span><span class="self">self</span>, visual_infos: <span class="kw-2">*const </span>T) -&gt; <span class="self">Self </span>{
         {
             <span class="self">self</span>.platform_specific.visual_infos =
@@ -859,7 +860,7 @@
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11_screen(<span class="kw-2">mut </span><span class="self">self</span>, screen_id: i32) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.screen_id = <span class="prelude-val">Some</span>(screen_id);
         <span class="self">self
@@ -872,42 +873,42 @@
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_override_redirect(<span class="kw-2">mut </span><span class="self">self</span>, override_redirect: bool) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.override_redirect = override_redirect;
         <span class="self">self
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_x11_window_type(<span class="kw-2">mut </span><span class="self">self</span>, x11_window_types: Vec&lt;XWindowType&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.x11_window_types = x11_window_types;
         <span class="self">self
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_gtk_theme_variant(<span class="kw-2">mut </span><span class="self">self</span>, variant: String) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.gtk_theme_variant = <span class="prelude-val">Some</span>(variant);
         <span class="self">self
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+    #[cfg(feature = <span class="string">"wayland"</span>)]
     </span><span class="kw">fn </span>with_wayland_csd_theme(<span class="kw-2">mut </span><span class="self">self</span>, theme: Theme) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.csd_theme = <span class="prelude-val">Some</span>(theme);
         <span class="self">self
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_resize_increments&lt;S: Into&lt;Size&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, increments: S) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.resize_increments = <span class="prelude-val">Some</span>(increments.into());
         <span class="self">self
     </span>}
 
     <span class="attr">#[inline]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">fn </span>with_base_size&lt;S: Into&lt;Size&gt;&gt;(<span class="kw-2">mut </span><span class="self">self</span>, base_size: S) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.platform_specific.base_size = <span class="prelude-val">Some</span>(base_size.into());
         <span class="self">self

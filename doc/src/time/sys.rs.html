@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/time-0.1.45/src/sys.rs`."><title>sys.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="time" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../time/index.html"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/time-0.1.45/src/sys.rs`."><title>sys.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="time" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="icon" href="https://www.rust-lang.org/favicon.ico"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><a class="sub-logo-container" href="../../time/index.html"><img src="https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png" alt="time"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -999,8 +1000,8 @@
 </span><span class="kw">pub use </span><span class="self">self</span>::inner::<span class="kw-2">*</span>;
 
 <span class="attr">#[cfg(any(
-    all(target_arch = <span class="string">&quot;wasm32&quot;</span>, not(target_os = <span class="string">&quot;emscripten&quot;</span>)),
-    target_env = <span class="string">&quot;sgx&quot;
+    all(target_arch = <span class="string">"wasm32"</span>, not(target_os = <span class="string">"emscripten"</span>)),
+    target_env = <span class="string">"sgx"
 </span>))]
 </span><span class="kw">mod </span>common {
     <span class="kw">use </span>Tm;
@@ -1065,7 +1066,7 @@
     }
 }
 
-<span class="attr">#[cfg(all(target_arch = <span class="string">&quot;wasm32&quot;</span>, not(any(target_os = <span class="string">&quot;emscripten&quot;</span>, target_os = <span class="string">&quot;wasi&quot;</span>))))]
+<span class="attr">#[cfg(all(target_arch = <span class="string">"wasm32"</span>, not(any(target_os = <span class="string">"emscripten"</span>, target_os = <span class="string">"wasi"</span>))))]
 </span><span class="kw">mod </span>inner {
     <span class="kw">use </span>std::ops::{Add, Sub};
     <span class="kw">use </span>Tm;
@@ -1129,7 +1130,7 @@
     }
 }
 
-<span class="attr">#[cfg(target_os = <span class="string">&quot;wasi&quot;</span>)]
+<span class="attr">#[cfg(target_os = <span class="string">"wasi"</span>)]
 </span><span class="kw">mod </span>inner {
     <span class="kw">use </span>std::ops::{Add, Sub};
     <span class="kw">use </span>Tm;
@@ -1170,14 +1171,14 @@
 
     <span class="kw">pub fn </span>get_precise_ns() -&gt; u64 {
         <span class="kw">unsafe </span>{ clock_time_get(CLOCKID_REALTIME, <span class="number">1_000_000_000</span>) }
-            .expect(<span class="string">&quot;Host doesn&#39;t implement a real-time clock&quot;</span>)
+            .expect(<span class="string">"Host doesn't implement a real-time clock"</span>)
     }
 
     <span class="kw">impl </span>SteadyTime {
         <span class="kw">pub fn </span>now() -&gt; SteadyTime {
             SteadyTime {
                 t: <span class="kw">unsafe </span>{ clock_time_get(CLOCKID_MONOTONIC, <span class="number">1_000_000_000</span>) }
-                    .expect(<span class="string">&quot;Host doesn&#39;t implement a monotonic clock&quot;</span>),
+                    .expect(<span class="string">"Host doesn't implement a monotonic clock"</span>),
             }
         }
     }
@@ -1207,7 +1208,7 @@
     }
 }
 
-<span class="attr">#[cfg(target_env = <span class="string">&quot;sgx&quot;</span>)]
+<span class="attr">#[cfg(target_env = <span class="string">"sgx"</span>)]
 </span><span class="kw">mod </span>inner {
     <span class="kw">use </span>std::ops::{Add, Sub};
     <span class="kw">use </span>Tm;
@@ -1292,12 +1293,12 @@
     <span class="kw">use </span>std::io;
     <span class="kw">use </span>Tm;
 
-    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;macos&quot;</span>, target_os = <span class="string">&quot;ios&quot;</span>))]
+    <span class="attr">#[cfg(any(target_os = <span class="string">"macos"</span>, target_os = <span class="string">"ios"</span>))]
     </span><span class="kw">pub use </span><span class="self">self</span>::mac::<span class="kw-2">*</span>;
-    <span class="attr">#[cfg(all(not(target_os = <span class="string">&quot;macos&quot;</span>), not(target_os = <span class="string">&quot;ios&quot;</span>)))]
+    <span class="attr">#[cfg(all(not(target_os = <span class="string">"macos"</span>), not(target_os = <span class="string">"ios"</span>)))]
     </span><span class="kw">pub use </span><span class="self">self</span>::unix::<span class="kw-2">*</span>;
 
-    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;solaris&quot;</span>, target_os = <span class="string">&quot;illumos&quot;</span>))]
+    <span class="attr">#[cfg(any(target_os = <span class="string">"solaris"</span>, target_os = <span class="string">"illumos"</span>))]
     </span><span class="kw">extern </span>{
         <span class="kw">static </span>timezone: time_t;
         <span class="kw">static </span>altzone: time_t;
@@ -1328,7 +1329,7 @@
         rust_tm.tm_utcoff = utcoff;
     }
 
-    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;nacl&quot;</span>, target_os = <span class="string">&quot;solaris&quot;</span>, target_os = <span class="string">&quot;illumos&quot;</span>))]
+    <span class="attr">#[cfg(any(target_os = <span class="string">"nacl"</span>, target_os = <span class="string">"solaris"</span>, target_os = <span class="string">"illumos"</span>))]
     </span><span class="kw">unsafe fn </span>timegm(tm: <span class="kw-2">*mut </span>libc::tm) -&gt; time_t {
         <span class="kw">use </span>std::env::{set_var, var_os, remove_var};
         <span class="kw">extern </span>{
@@ -1337,16 +1338,16 @@
 
         <span class="kw">let </span>ret;
 
-        <span class="kw">let </span>current_tz = var_os(<span class="string">&quot;TZ&quot;</span>);
-        set_var(<span class="string">&quot;TZ&quot;</span>, <span class="string">&quot;UTC&quot;</span>);
+        <span class="kw">let </span>current_tz = var_os(<span class="string">"TZ"</span>);
+        set_var(<span class="string">"TZ"</span>, <span class="string">"UTC"</span>);
         tzset();
 
         ret = libc::mktime(tm);
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(tz) = current_tz {
-            set_var(<span class="string">&quot;TZ&quot;</span>, tz);
+            set_var(<span class="string">"TZ"</span>, tz);
         } <span class="kw">else </span>{
-            remove_var(<span class="string">&quot;TZ&quot;</span>);
+            remove_var(<span class="string">"TZ"</span>);
         }
         tzset();
 
@@ -1358,7 +1359,7 @@
             <span class="kw">let </span>sec = sec <span class="kw">as </span>time_t;
             <span class="kw">let </span><span class="kw-2">mut </span>out = mem::zeroed();
             <span class="kw">if </span>libc::gmtime_r(<span class="kw-2">&amp;</span>sec, <span class="kw-2">&amp;mut </span>out).is_null() {
-                <span class="macro">panic!</span>(<span class="string">&quot;gmtime_r failed: {}&quot;</span>, io::Error::last_os_error());
+                <span class="macro">panic!</span>(<span class="string">"gmtime_r failed: {}"</span>, io::Error::last_os_error());
             }
             tm_to_rust_tm(<span class="kw-2">&amp;</span>out, <span class="number">0</span>, tm);
         }
@@ -1369,12 +1370,12 @@
             <span class="kw">let </span>sec = sec <span class="kw">as </span>time_t;
             <span class="kw">let </span><span class="kw-2">mut </span>out = mem::zeroed();
             <span class="kw">if </span>libc::localtime_r(<span class="kw-2">&amp;</span>sec, <span class="kw-2">&amp;mut </span>out).is_null() {
-                <span class="macro">panic!</span>(<span class="string">&quot;localtime_r failed: {}&quot;</span>, io::Error::last_os_error());
+                <span class="macro">panic!</span>(<span class="string">"localtime_r failed: {}"</span>, io::Error::last_os_error());
             }
-            <span class="attr">#[cfg(any(target_os = <span class="string">&quot;solaris&quot;</span>, target_os = <span class="string">&quot;illumos&quot;</span>))]
+            <span class="attr">#[cfg(any(target_os = <span class="string">"solaris"</span>, target_os = <span class="string">"illumos"</span>))]
             </span><span class="kw">let </span>gmtoff = {
                 ::tzset();
-                <span class="comment">// &lt; 0 means we don&#39;t know; assume we&#39;re not in DST.
+                <span class="comment">// &lt; 0 means we don't know; assume we're not in DST.
                 </span><span class="kw">if </span>out.tm_isdst == <span class="number">0 </span>{
                     <span class="comment">// timezone is seconds west of UTC, tm_gmtoff is seconds east
                     </span>-timezone
@@ -1384,20 +1385,20 @@
                     -timezone
                 }
             };
-            <span class="attr">#[cfg(not(any(target_os = <span class="string">&quot;solaris&quot;</span>, target_os = <span class="string">&quot;illumos&quot;</span>)))]
+            <span class="attr">#[cfg(not(any(target_os = <span class="string">"solaris"</span>, target_os = <span class="string">"illumos"</span>)))]
             </span><span class="kw">let </span>gmtoff = out.tm_gmtoff;
             tm_to_rust_tm(<span class="kw-2">&amp;</span>out, gmtoff <span class="kw">as </span>i32, tm);
         }
     }
 
     <span class="kw">pub fn </span>utc_tm_to_time(rust_tm: <span class="kw-2">&amp;</span>Tm) -&gt; i64 {
-        <span class="attr">#[cfg(all(target_os = <span class="string">&quot;android&quot;</span>, target_pointer_width = <span class="string">&quot;32&quot;</span>))]
+        <span class="attr">#[cfg(all(target_os = <span class="string">"android"</span>, target_pointer_width = <span class="string">"32"</span>))]
         </span><span class="kw">use </span>libc::timegm64 <span class="kw">as </span>timegm;
         <span class="attr">#[cfg(not(any(
-            all(target_os = <span class="string">&quot;android&quot;</span>, target_pointer_width = <span class="string">&quot;32&quot;</span>),
-            target_os = <span class="string">&quot;nacl&quot;</span>,
-            target_os = <span class="string">&quot;solaris&quot;</span>,
-            target_os = <span class="string">&quot;illumos&quot;
+            all(target_os = <span class="string">"android"</span>, target_pointer_width = <span class="string">"32"</span>),
+            target_os = <span class="string">"nacl"</span>,
+            target_os = <span class="string">"solaris"</span>,
+            target_os = <span class="string">"illumos"
         </span>)))]
         </span><span class="kw">use </span>libc::timegm;
 
@@ -1412,7 +1413,7 @@
         <span class="kw">unsafe </span>{ libc::mktime(<span class="kw-2">&amp;mut </span>tm) <span class="kw">as </span>i64 }
     }
 
-    <span class="attr">#[cfg(any(target_os = <span class="string">&quot;macos&quot;</span>, target_os = <span class="string">&quot;ios&quot;</span>))]
+    <span class="attr">#[cfg(any(target_os = <span class="string">"macos"</span>, target_os = <span class="string">"ios"</span>))]
     </span><span class="kw">mod </span>mac {
         <span class="attr">#[allow(deprecated)]
         </span><span class="kw">use </span>libc::{<span class="self">self</span>, timeval, mach_timebase_info};
@@ -1422,7 +1423,7 @@
         <span class="kw">use </span>Duration;
 
         <span class="attr">#[allow(deprecated)]
-        </span><span class="kw">fn </span>info() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>mach_timebase_info {
+        </span><span class="kw">fn </span>info() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>mach_timebase_info {
             <span class="kw">static </span><span class="kw-2">mut </span>INFO: mach_timebase_info = mach_timebase_info {
                 numer: <span class="number">0</span>,
                 denom: <span class="number">0</span>,
@@ -1491,7 +1492,7 @@
     <span class="attr">#[cfg(test)]
     </span><span class="kw">pub fn </span>set_los_angeles_time_zone() -&gt; TzReset {
         <span class="kw">use </span>std::env;
-        env::set_var(<span class="string">&quot;TZ&quot;</span>, <span class="string">&quot;America/Los_Angeles&quot;</span>);
+        env::set_var(<span class="string">"TZ"</span>, <span class="string">"America/Los_Angeles"</span>);
         ::tzset();
         TzReset
     }
@@ -1499,12 +1500,12 @@
     <span class="attr">#[cfg(test)]
     </span><span class="kw">pub fn </span>set_london_with_dst_time_zone() -&gt; TzReset {
         <span class="kw">use </span>std::env;
-        env::set_var(<span class="string">&quot;TZ&quot;</span>, <span class="string">&quot;Europe/London&quot;</span>);
+        env::set_var(<span class="string">"TZ"</span>, <span class="string">"Europe/London"</span>);
         ::tzset();
         TzReset
     }
 
-    <span class="attr">#[cfg(all(not(target_os = <span class="string">&quot;macos&quot;</span>), not(target_os = <span class="string">&quot;ios&quot;</span>)))]
+    <span class="attr">#[cfg(all(not(target_os = <span class="string">"macos"</span>), not(target_os = <span class="string">"ios"</span>)))]
     </span><span class="kw">mod </span>unix {
         <span class="kw">use </span>std::fmt;
         <span class="kw">use </span>std::cmp::Ordering;
@@ -1537,7 +1538,7 @@
 
         <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>SteadyTime {
             <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-                <span class="macro">write!</span>(fmt, <span class="string">&quot;SteadyTime {{ tv_sec: {:?}, tv_nsec: {:?} }}&quot;</span>,
+                <span class="macro">write!</span>(fmt, <span class="string">"SteadyTime {{ tv_sec: {:?}, tv_nsec: {:?} }}"</span>,
                        <span class="self">self</span>.t.tv_sec, <span class="self">self</span>.t.tv_nsec)
             }
         }
@@ -1590,9 +1591,9 @@
                 <span class="kw">let </span>nanoseconds = other - Duration::seconds(seconds);
                 <span class="kw">let </span>nanoseconds = nanoseconds.num_nanoseconds().unwrap();
 
-                <span class="attr">#[cfg(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_pointer_width = <span class="string">&quot;32&quot;</span>))]
+                <span class="attr">#[cfg(all(target_arch = <span class="string">"x86_64"</span>, target_pointer_width = <span class="string">"32"</span>))]
                 </span><span class="kw">type </span>nsec = i64;
-                <span class="attr">#[cfg(not(all(target_arch = <span class="string">&quot;x86_64&quot;</span>, target_pointer_width = <span class="string">&quot;32&quot;</span>)))]
+                <span class="attr">#[cfg(not(all(target_arch = <span class="string">"x86_64"</span>, target_pointer_width = <span class="string">"32"</span>)))]
                 </span><span class="kw">type </span>nsec = libc::c_long;
 
                 <span class="self">self</span>.t.tv_sec += seconds <span class="kw">as </span>libc::time_t;
@@ -1751,7 +1752,7 @@
     <span class="macro">macro_rules! </span>call {
         (<span class="macro-nonterminal">$name</span>:ident($(<span class="macro-nonterminal">$arg</span>:expr),<span class="kw-2">*</span>)) =&gt; {
             <span class="kw">if </span><span class="macro-nonterminal">$name</span>($(<span class="macro-nonterminal">$arg</span>),<span class="kw-2">*</span>) == <span class="number">0 </span>{
-                <span class="macro">panic!</span>(<span class="macro">concat!</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$name</span>), <span class="string">&quot; failed with: {}&quot;</span>),
+                <span class="macro">panic!</span>(<span class="macro">concat!</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$name</span>), <span class="string">" failed with: {}"</span>),
                        io::Error::last_os_error());
             }
         }
@@ -1906,7 +1907,7 @@
             <span class="kw">let </span><span class="kw-2">mut </span>tz = mem::zeroed::&lt;TIME_ZONE_INFORMATION&gt;();
             GetTimeZoneInformation(<span class="kw-2">&amp;mut </span>tz);
             <span class="kw">let </span>ret = TzReset { old: tz };
-            <span class="comment">// Since date set precisely this is 2015&#39;s dates
+            <span class="comment">// Since date set precisely this is 2015's dates
             </span>tz.Bias = <span class="number">0</span>;
             tz.DaylightBias = -<span class="number">60</span>;
             tz.DaylightDate.wYear = <span class="number">0</span>;
@@ -1937,7 +1938,7 @@
         </span><span class="kw">static </span>INIT: Once = ONCE_INIT;
 
         <span class="comment">// TODO: FIXME
-        </span><span class="kw">extern </span><span class="string">&quot;system&quot; </span>{
+        </span><span class="kw">extern </span><span class="string">"system" </span>{
             <span class="kw">fn </span>AdjustTokenPrivileges(
                 TokenHandle: HANDLE, DisableAllPrivileges: BOOL, NewState: PTOKEN_PRIVILEGES,
                 BufferLength: DWORD, PreviousState: PTOKEN_PRIVILEGES, ReturnLength: PDWORD,
@@ -1952,7 +1953,7 @@
 
             <span class="kw">let </span><span class="kw-2">mut </span>tkp = mem::zeroed::&lt;TOKEN_PRIVILEGES&gt;();
             <span class="macro">assert_eq!</span>(tkp.Privileges.len(), <span class="number">1</span>);
-            <span class="kw">let </span>c = ::std::ffi::CString::new(<span class="string">&quot;SeTimeZonePrivilege&quot;</span>).unwrap();
+            <span class="kw">let </span>c = ::std::ffi::CString::new(<span class="string">"SeTimeZonePrivilege"</span>).unwrap();
             <span class="macro">call!</span>(LookupPrivilegeValueA(<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>, c.as_ptr(),
                                         <span class="kw-2">&amp;mut </span>tkp.Privileges[<span class="number">0</span>].Luid));
             tkp.Privileges[<span class="number">0</span>].Attributes = SE_PRIVILEGE_ENABLED;

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/output.rs`."><title>output.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../smithay_client_toolkit/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/output.rs`."><title>output.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -761,7 +762,7 @@
     /// also remain consistent across sessions with the same hardware and
     /// software configuration.
     ///
-    /// Examples of names include &#39;HDMI-A-1&#39;, &#39;WL-1&#39;, &#39;X11-1&#39;, etc. However, do
+    /// Examples of names include 'HDMI-A-1', 'WL-1', 'X11-1', etc. However, do
     /// not assume that the name is a reflection of an underlying DRM connector,
     /// X11 connection, etc.
     ///
@@ -774,8 +775,8 @@
     ///
     /// The description is a UTF-8 string with no convention defined for its
     /// contents. The description is not guaranteed to be unique among all
-    /// wl_output globals. Examples might include &#39;Foocorp 11&quot; Display&#39; or
-    /// &#39;Virtual X11 output via :1&#39;.
+    /// wl_output globals. Examples might include 'Foocorp 11" Display' or
+    /// 'Virtual X11 output via :1'.
     ///
     /// Note that this is not filled in by version 3 of the wl_output protocol,
     /// but it has been proposed for inclusion in version 4.  Until then, it is
@@ -811,7 +812,7 @@
     <span class="doccomment">/// Has this output been unadvertized by the registry
     ///
     /// If this is the case, it has become inert, you might want to
-    /// call its `release()` method if you don&#39;t plan to use it any
+    /// call its `release()` method if you don't plan to use it any
     /// longer.
     </span><span class="kw">pub </span>obsolete: bool,
 }
@@ -854,7 +855,7 @@
     },
 }
 
-<span class="kw">type </span>OutputStatusCallback = <span class="kw">dyn </span>FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">&#39;static</span>;
+<span class="kw">type </span>OutputStatusCallback = <span class="kw">dyn </span>FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">'static</span>;
 
 <span class="doccomment">/// A handler for `wl_output`
 ///
@@ -939,11 +940,11 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>OutputHandler {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;OutputHandler&quot;</span>)
-            .field(<span class="string">&quot;outputs&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.outputs)
-            .field(<span class="string">&quot;status_listeners&quot;</span>, <span class="kw-2">&amp;</span><span class="string">&quot;Fn() -&gt; { ... }&quot;</span>)
-            .field(<span class="string">&quot;xdg_listener&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.xdg_listener)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"OutputHandler"</span>)
+            .field(<span class="string">"outputs"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.outputs)
+            .field(<span class="string">"status_listeners"</span>, <span class="kw-2">&amp;</span><span class="string">"Fn() -&gt; { ... }"</span>)
+            .field(<span class="string">"xdg_listener"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.xdg_listener)
             .finish()
     }
 }
@@ -959,7 +960,7 @@
         .as_ref()
         .user_data()
         .get::&lt;Mutex&lt;OutputData&gt;&gt;()
-        .expect(<span class="string">&quot;SCTK: wl_output has invalid UserData&quot;</span>);
+        .expect(<span class="string">"SCTK: wl_output has invalid UserData"</span>);
     <span class="kw">let </span><span class="kw-2">mut </span>udata = udata_mutex.lock().unwrap();
     <span class="kw">if let </span>Event::Done = event {
         <span class="kw">let </span>(id, has_xdg, pending_events, <span class="kw-2">mut </span>callbacks) = <span class="kw">match </span><span class="kw-2">*</span>udata {
@@ -1015,7 +1016,7 @@
         .as_ref()
         .user_data()
         .get::&lt;Mutex&lt;OutputData&gt;&gt;()
-        .expect(<span class="string">&quot;SCTK: wl_output has invalid UserData&quot;</span>);
+        .expect(<span class="string">"SCTK: wl_output has invalid UserData"</span>);
     <span class="kw">let </span><span class="kw-2">mut </span>udata = udata_mutex.lock().unwrap();
     <span class="kw">if let </span><span class="prelude-val">Some</span>(xdg) = xdg_listener.as_ref().and_then(rc::Weak::upgrade) {
         xdg.borrow_mut().destroy_xdg_output(output);
@@ -1152,12 +1153,12 @@
 <span class="doccomment">/// Add a listener to this output
 ///
 /// The provided closure will be called whenever a property of the output changes,
-/// including when it is removed by the compositor (in this case it&#39;ll be marked as
+/// including when it is removed by the compositor (in this case it'll be marked as
 /// obsolete).
 ///
 /// The returned [`OutputListener`](struct.OutputListener) keeps your callback alive,
 /// dropping it will disable the callback and free the closure.
-</span><span class="kw">pub fn </span>add_output_listener&lt;F: Fn(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + Send + Sync + <span class="lifetime">&#39;static</span>&gt;(
+</span><span class="kw">pub fn </span>add_output_listener&lt;F: Fn(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + Send + Sync + <span class="lifetime">'static</span>&gt;(
     output: <span class="kw-2">&amp;</span>WlOutput,
     f: F,
 ) -&gt; OutputListener {
@@ -1182,12 +1183,12 @@
 ///
 /// Dropping it disables the associated callback and frees the closure.
 </span><span class="kw">pub struct </span>OutputListener {
-    _cb: Arc&lt;<span class="kw">dyn </span>Fn(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + Send + Sync + <span class="lifetime">&#39;static</span>&gt;,
+    _cb: Arc&lt;<span class="kw">dyn </span>Fn(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + Send + Sync + <span class="lifetime">'static</span>&gt;,
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>OutputListener {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;OutputListener&quot;</span>).field(<span class="string">&quot;_cb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">&quot;fn() -&gt; { ... }&quot;</span>).finish()
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"OutputListener"</span>).field(<span class="string">"_cb"</span>, <span class="kw-2">&amp;</span><span class="string">"fn() -&gt; { ... }"</span>).finish()
     }
 }
 
@@ -1199,8 +1200,8 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>OutputStatusListener {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;OutputStatusListener&quot;</span>).field(<span class="string">&quot;_cb&quot;</span>, <span class="kw-2">&amp;</span><span class="string">&quot;fn() -&gt; { ... }&quot;</span>).finish()
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.debug_struct(<span class="string">"OutputStatusListener"</span>).field(<span class="string">"_cb"</span>, <span class="kw-2">&amp;</span><span class="string">"fn() -&gt; { ... }"</span>).finish()
     }
 }
 
@@ -1212,14 +1213,14 @@
 /// method on your [`Environment`](../environment/struct.Environment.html).
 </span><span class="kw">pub trait </span>OutputHandling {
     <span class="doccomment">/// Insert a listener for output creation and removal events
-    </span><span class="kw">fn </span>listen&lt;F: FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">fn </span>listen&lt;F: FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         f: F,
     ) -&gt; OutputStatusListener;
 }
 
 <span class="kw">impl </span>OutputHandling <span class="kw">for </span>OutputHandler {
-    <span class="kw">fn </span>listen&lt;F: FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="kw">fn </span>listen&lt;F: FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         f: F,
     ) -&gt; OutputStatusListener {
@@ -1234,14 +1235,14 @@
     ///
     /// The provided closure will be invoked whenever a `wl_output` is created or removed.
     ///
-    /// Note that if outputs already exist when this callback is setup, it&#39;ll not be invoked on them.
+    /// Note that if outputs already exist when this callback is setup, it'll not be invoked on them.
     /// For you to be notified of them as well, you need to first process them manually by calling
     /// `.get_all_outputs()`.
     ///
     /// The returned [`OutputStatusListener`](../output/struct.OutputStatusListener.hmtl) keeps your
     /// callback alive, dropping it will disable it.
-    </span><span class="attr">#[must_use = <span class="string">&quot;the returned OutputStatusListener keeps your callback alive, dropping it will disable it&quot;</span>]
-    </span><span class="kw">pub fn </span>listen_for_outputs&lt;F: FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="attr">#[must_use = <span class="string">"the returned OutputStatusListener keeps your callback alive, dropping it will disable it"</span>]
+    </span><span class="kw">pub fn </span>listen_for_outputs&lt;F: FnMut(WlOutput, <span class="kw-2">&amp;</span>OutputInfo, DispatchData) + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         f: F,
     ) -&gt; OutputStatusListener {
@@ -1349,7 +1350,7 @@
         .as_ref()
         .user_data()
         .get::&lt;Mutex&lt;OutputData&gt;&gt;()
-        .expect(<span class="string">&quot;SCTK: wl_output has invalid UserData&quot;</span>);
+        .expect(<span class="string">"SCTK: wl_output has invalid UserData"</span>);
     <span class="kw">let </span><span class="kw-2">mut </span>udata = udata_mutex.lock().unwrap();
     <span class="kw">let </span>(info, callbacks, pending) = <span class="kw">match </span><span class="kw-2">&amp;mut *</span>udata {
         OutputData::Ready { info, callbacks } =&gt; (info, callbacks, <span class="bool-val">false</span>),

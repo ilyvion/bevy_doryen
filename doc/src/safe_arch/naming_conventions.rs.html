@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/safe_arch-0.5.2/src/naming_conventions.rs`."><title>naming_conventions.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="safe_arch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../safe_arch/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/safe_arch-0.5.2/src/naming_conventions.rs`."><title>naming_conventions.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="safe_arch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -163,10 +164,10 @@
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
 <a href="#165" id="165">165</a>
-</pre></div><pre class="rust"><code><span class="doccomment">//! An explanation of the crate&#39;s naming conventions.
+</pre></div><pre class="rust"><code><span class="doccomment">//! An explanation of the crate's naming conventions.
 //!
 //! This crate attempts to follow the general naming scheme of `verb_type` when
-//! the operation is &quot;simple&quot;, and `verb_description_words_type` when the
+//! the operation is "simple", and `verb_description_words_type` when the
 //! operation (op) needs to be more specific than normal. Like this:
 //! * `add_m128`
 //! * `add_saturating_i8_m128i`
@@ -177,27 +178,27 @@
 //! * `m128d` and `m256d` are always considered to hold `f64` lanes.
 //! * `m128i` and `m256i` hold integer data, but each op specifies what lane
 //!   width of integers the operation uses.
-//! * If the type has `_s` on the end then it&#39;s a &quot;scalar&quot; operation that
+//! * If the type has `_s` on the end then it's a "scalar" operation that
 //!   affects just the lowest lane. The other lanes are generally copied forward
 //!   from one of the inputs, though the details there vary from op to op.
-//! * The SIMD types are often referred to as &quot;registers&quot; because each SIMD
-//!   typed value represents exactly one CPU register when you&#39;re doing work.
+//! * The SIMD types are often referred to as "registers" because each SIMD
+//!   typed value represents exactly one CPU register when you're doing work.
 //!
 //! ## Operations
-//! There&#39;s many operations that can be performed. When possible, `safe_arch`
+//! There's many operations that can be performed. When possible, `safe_arch`
 //! tries to follow normal Rust naming (eg: adding is still `add` and left
-//! shifting is still `shl`), but if an operation doesn&#39;t normally exist at all
+//! shifting is still `shl`), but if an operation doesn't normally exist at all
 //! in Rust then we basically have to make something up.
 //!
 //! Many operations have more than one variant, such as `add` and also
-//! `add_saturating`. In this case, `safe_arch` puts the &quot;core operation&quot; first
-//! and then any &quot;modifiers&quot; go after, which isn&#39;t how you might normally say it
+//! `add_saturating`. In this case, `safe_arch` puts the "core operation" first
+//! and then any "modifiers" go after, which isn't how you might normally say it
 //! in English, but it makes the list of functions sort better.
 //!
 //! As a general note on SIMD terminology: When an operation uses the same
 //! indexed lane in two _different_ registers to determine the output, that is a
-//! &quot;vertical&quot; operation. When an operation uses more than one lane in the
-//! _same_ register to determine the output, that is a &quot;horizontal&quot; operation.
+//! "vertical" operation. When an operation uses more than one lane in the
+//! _same_ register to determine the output, that is a "horizontal" operation.
 //! * Vertical: `out[0] = a[0] + b[0]`, `out[1] = a[1] + b[1]`
 //! * Horizontal: `out[0] = a[0] + a[1]`, `out[1] = b[0] + b[1]`
 //!
@@ -205,13 +206,13 @@
 //! Here follows the list of all the main operations and their explanations.
 //!
 //! * `abs`: Absolute value (wrapping).
-//! * `add`: Addition. This is &quot;wrapping&quot; by default, though some other types of
+//! * `add`: Addition. This is "wrapping" by default, though some other types of
 //!   addition are available. Remember that wrapping signed addition is the same
 //!   as wrapping unsigned addition.
 //! * `average`: Averages the two inputs.
 //! * `bitand`: Bitwise And, `a &amp; b`, like [the trait](core::ops::BitAnd).
 //! * `bitandnot`: Bitwise `(!a) &amp; b`. This seems a little funny at first but
-//!   it&#39;s useful for clearing bits. The output will be based on the `b` side&#39;s
+//!   it's useful for clearing bits. The output will be based on the `b` side's
 //!   bit pattern, but with all active bits in `a` cleared:
 //!   * `bitandnot(0b0010, 0b1011) == 0b1001`
 //! * `bitor`: Bitwise Or, `a | b`, like [the trait](core::ops::BitOr).
@@ -222,14 +223,14 @@
 //!   mask can be either an immediate or a runtime value.
 //! * `cast`: Convert between data types while preserving the exact bit
 //!   patterns, like how [`transmute`](core::mem::transmute) works.
-//! * `ceil`: &quot;Ceiling&quot;, rounds towards positive infinity.
-//! * `cmp`: Numeric comparisons of various kinds. This generally gives &quot;mask&quot;
+//! * `ceil`: "Ceiling", rounds towards positive infinity.
+//! * `cmp`: Numeric comparisons of various kinds. This generally gives "mask"
 //!   output where the output value is of the same data type as the inputs, but
-//!   with all the bits in a &quot;true&quot; lane as 1 and all the bits in a &quot;false&quot; lane
+//!   with all the bits in a "true" lane as 1 and all the bits in a "false" lane
 //!   as 0. Remember that with floating point values all 1s bits is a NaN, and
 //!   with signed integers all 1s bits is -1.
-//!   * An &quot;Ordered comparison&quot; checks if _neither_ floating point value is NaN.
-//!   * An &quot;Unordered comparison&quot; checks if _either_ floating point value is
+//!   * An "Ordered comparison" checks if _neither_ floating point value is NaN.
+//!   * An "Unordered comparison" checks if _either_ floating point value is
 //!     NaN.
 //! * `convert`: This does some sort of numeric type change. The details can
 //!   vary wildly. Generally, if the number of lanes goes down then the lowest
@@ -250,21 +251,21 @@
 //! * `insert`: The opposite of `extract`, this puts a new value into a
 //!   particular lane of a SIMD type.
 //! * `load`: Reads an address and makes a SIMD register value. The details can
-//!   vary because there&#39;s more than one type of `load`, but generally this is a
+//!   vary because there's more than one type of `load`, but generally this is a
 //!   `&amp;T -&gt; U` style operation.
 //! * `max`: Picks the larger value from each of the two inputs.
 //! * `min`: Picks the smaller value from each of the two inputs.
-//! * `mul`: Multiplication. For floating point this is just &quot;normal&quot;
+//! * `mul`: Multiplication. For floating point this is just "normal"
 //!   multiplication, but for integer types you tend to have some options. An
 //!   integer multiplication of X bits will produce a 2X bit output, so
-//!   generally you&#39;ll get to pick if you want to keep the high half of that,
-//!   the low half of that (a normal &quot;wrapping&quot; mul), or &quot;widen&quot; the outputs to
+//!   generally you'll get to pick if you want to keep the high half of that,
+//!   the low half of that (a normal "wrapping" mul), or "widen" the outputs to
 //!   be all the bits at the expense of not multiplying half the lanes the
 //!   lanes.
 //! * `pack`: Take the integers in the `a` and `b` inputs, reduce them to fit
 //!   within the half-sized integer type (eg: `i16` to `i8`), and pack them all
 //!   together into the output.
-//! * `population`: The &quot;population&quot; operations refer to the bits within an
+//! * `population`: The "population" operations refer to the bits within an
 //!   integer. Either counting them or adjusting them in various ways.
 //! * `rdrand`: Use the hardware RNG to make a random value of the given length.
 //! * `rdseed`: Use the hardware RNG to make a random seed of the given length.
@@ -274,9 +275,9 @@
 //!   multiplicative rate instead of just an additive rate. For example, two
 //!   `u64` outputs concatenated to a single `u128` have a guess difficulty of
 //!   2^(64*64) with `rdseed` but only 2^(64+64) with `rdrand`.
-//! * `read_timestamp_counter`: Lets you read the CPU&#39;s cycle counter, which
-//!   doesn&#39;t strictly mean anything in particular since even the CPU&#39;s clock
-//!   rate isn&#39;t even stable over time, but you might find it interesting as an
+//! * `read_timestamp_counter`: Lets you read the CPU's cycle counter, which
+//!   doesn't strictly mean anything in particular since even the CPU's clock
+//!   rate isn't even stable over time, but you might find it interesting as an
 //!   approximation during benchmarks, or something like that.
 //! * `reciprocal`: Turns `x` into `1/x`. Can also be combined with a `sqrt`
 //!   operation.
@@ -291,17 +292,17 @@
 //! * `shl`: Bit shift left. New bits shifted in are always 0. Because the shift
 //!   is the same for both signed and unsigned values, this crate simply marks
 //!   left shift as always being an unsigned operation.
-//!   * You can shift by an immediate value (&quot;imm&quot;), all lanes by the same value
-//!     (&quot;all&quot;), or each lane by its own value (&quot;each&quot;).
-//! * `shr`: Bit shift right. This comes in two forms: &quot;Arithmetic&quot; shifts shift
+//!   * You can shift by an immediate value ("imm"), all lanes by the same value
+//!     ("all"), or each lane by its own value ("each").
+//! * `shr`: Bit shift right. This comes in two forms: "Arithmetic" shifts shift
 //!   in the starting sign bit (which preserves the sign of the value), and
-//!   &quot;Logical&quot; shifts shift in 0 regardless of the starting sign bit (so the
+//!   "Logical" shifts shift in 0 regardless of the starting sign bit (so the
 //!   result ends up being positive). With normal Rust types, signed integers
 //!   use arithmetic shifts and unsigned integers use logical shifts, so these
 //!   functions are marked as being for signed or unsigned integers
 //!   appropriately.
-//!   * As with `shl`, you can shift by an immediate value (&quot;imm&quot;), all lanes by
-//!     the same value (&quot;all&quot;), or each lane by its own value (&quot;each&quot;).
+//!   * As with `shl`, you can shift by an immediate value ("imm"), all lanes by
+//!     the same value ("all"), or each lane by its own value ("each").
 //! * `sign_apply`: Multiplies one set of values by the signum (1, 0, or -1) of
 //!   another set of values.
 //! * `sqrt`: Square Root.
@@ -311,19 +312,19 @@
 //!   searching through ASCII strings when the stars align.
 //! * `sub`: Subtract.
 //! * `shuffle`: This lets you re-order the data lanes. Sometimes x86/x64 calls
-//!   this is called &quot;shuffle&quot;, and sometimes it&#39;s called &quot;permute&quot;, and there&#39;s
+//!   this is called "shuffle", and sometimes it's called "permute", and there's
 //!   no particular reasoning behind the different names, so we just call them
 //!   all shuffle.
 //!   * `shuffle_{args}_{lane-type}_{lane-sources}_{simd-type}`.
-//!   * &quot;args&quot; is the input arguments: `a` (one arg) or `ab` (two args), then
+//!   * "args" is the input arguments: `a` (one arg) or `ab` (two args), then
 //!     either `v` (runtime-varying) or `i` (immediate). All the immediate
 //!     shuffles are macros, of course.
-//!   * &quot;lane type&quot; is `f32`, `f64`, `i8`, etc. If there&#39;s a `z` after the type
-//!     then you&#39;ll also be able to zero an output position instead of making it
+//!   * "lane type" is `f32`, `f64`, `i8`, etc. If there's a `z` after the type
+//!     then you'll also be able to zero an output position instead of making it
 //!     come from a particular source lane.
-//!   * &quot;lane sources&quot; is generally either &quot;all&quot; which means that all lanes can
-//!     go to all other lanes, or &quot;half&quot; which means that each half of the lanes
-//!     is isolated from the other half, and you can&#39;t cross data between the
+//!   * "lane sources" is generally either "all" which means that all lanes can
+//!     go to all other lanes, or "half" which means that each half of the lanes
+//!     is isolated from the other half, and you can't cross data between the
 //!     two halves, only within a half (this is how most of the 256-bit x86/x64
 //!     shuffles work).
 //! * `unpack`: Takes a SIMD value and gets out some of the lanes while widening

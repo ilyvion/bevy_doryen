@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wayland-client-0.29.5/src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wayland_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../wayland_client/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wayland-client-0.29.5/src/proxy.rs`."><title>proxy.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wayland_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -458,7 +459,7 @@
 ///
 /// This represents a wayland object instantiated in your client
 /// session. Several handles to the same object can exist at a given
-/// time, and cloning them won&#39;t create a new protocol object, only
+/// time, and cloning them won't create a new protocol object, only
 /// clone the handle. The lifetime of the protocol object is **not**
 /// tied to the lifetime of these handles, but rather to sending or
 /// receiving destroying messages.
@@ -471,7 +472,7 @@
 /// but you cannot send any message that would create a new object using it.
 /// You must attach it to a event queue, that will host the newly created objects.
 </span><span class="kw">pub struct </span>Proxy&lt;I: Interface&gt; {
-    _i: ::std::marker::PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>I&gt;,
+    _i: ::std::marker::PhantomData&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>I&gt;,
     <span class="kw">pub</span>(<span class="kw">crate</span>) inner: ProxyInner,
 }
 
@@ -494,8 +495,8 @@
 }
 
 <span class="kw">impl</span>&lt;I: Interface&gt; Debug <span class="kw">for </span>Proxy&lt;I&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}@{}&quot;</span>, I::NAME, <span class="self">self</span>.inner.id())
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"{}@{}"</span>, I::NAME, <span class="self">self</span>.inner.id())
     }
 }
 
@@ -524,7 +525,7 @@
         <span class="kw">if </span>msg.since() &gt; <span class="self">self</span>.version() &amp;&amp; <span class="self">self</span>.version() &gt; <span class="number">0 </span>{
             <span class="kw">let </span>opcode = msg.opcode() <span class="kw">as </span>usize;
             <span class="macro">panic!</span>(
-                <span class="string">&quot;Cannot send request {} which requires version &gt;= {} on proxy {}@{} which is version {}.&quot;</span>,
+                <span class="string">"Cannot send request {} which requires version &gt;= {} on proxy {}@{} which is version {}."</span>,
                 I::Request::MESSAGES[opcode].name,
                 msg.since(),
                 I::NAME,
@@ -608,8 +609,8 @@
 }
 
 <span class="kw">impl</span>&lt;I: Interface + Debug&gt; Debug <span class="kw">for </span>Attached&lt;I&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{:?}[ATTACHED]&quot;</span>, <span class="self">self</span>.inner)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"{:?}[ATTACHED]"</span>, <span class="self">self</span>.inner)
     }
 }
 
@@ -693,7 +694,7 @@
     </span><span class="kw">pub fn </span>assign&lt;E&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, filter: Filter&lt;E&gt;)
     <span class="kw">where
         </span>I: Sync,
-        E: From&lt;(Main&lt;I&gt;, I::Event)&gt; + <span class="lifetime">&#39;static</span>,
+        E: From&lt;(Main&lt;I&gt;, I::Event)&gt; + <span class="lifetime">'static</span>,
         I::Event: MessageGroup&lt;Map = <span class="kw">crate</span>::ProxyMap&gt;,
     {
         <span class="self">self</span>.inner.inner.as_ref().inner.assign(filter);
@@ -708,7 +709,7 @@
     </span><span class="kw">pub fn </span>quick_assign&lt;F&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut </span>f: F)
     <span class="kw">where
         </span>I: Interface + AsRef&lt;Proxy&lt;I&gt;&gt; + From&lt;Proxy&lt;I&gt;&gt; + Sync,
-        F: FnMut(Main&lt;I&gt;, I::Event, <span class="kw">crate</span>::DispatchData) + <span class="lifetime">&#39;static</span>,
+        F: FnMut(Main&lt;I&gt;, I::Event, <span class="kw">crate</span>::DispatchData) + <span class="lifetime">'static</span>,
         I::Event: MessageGroup&lt;Map = <span class="kw">crate</span>::ProxyMap&gt;,
     {
         <span class="self">self</span>.assign(Filter::new(<span class="kw">move </span>|(proxy, event), <span class="kw">_</span>, data| f(proxy, event, data)))
@@ -758,8 +759,8 @@
 <span class="kw">where
     </span>I: Debug + AsRef&lt;Proxy&lt;I&gt;&gt; + From&lt;Proxy&lt;I&gt;&gt;,
 {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{:?}[MAIN]&quot;</span>, <span class="self">self</span>.inner.inner)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"{:?}[MAIN]"</span>, <span class="self">self</span>.inner.inner)
     }
 }
 
@@ -791,13 +792,13 @@
     /// - This is called from the same thread as the one hosting the event queue
     ///   handling this proxy
     </span><span class="kw">pub unsafe fn </span>from_c_ptr(_ptr: <span class="kw-2">*mut </span>wl_proxy) -&gt; Main&lt;I&gt; {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
         </span>{
             Main::wrap(ProxyInner::init_from_c_ptr::&lt;I&gt;(_ptr))
         }
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;use_system_lib&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"use_system_lib"</span>))]
         </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature.&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature."</span>)
         }
     }
 }
@@ -810,13 +811,13 @@
     /// NOTE: This method will panic if called while the `use_system_lib` feature is
     /// not activated.
     </span><span class="kw">pub fn </span>is_external(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
         </span>{
             <span class="self">self</span>.inner.is_external()
         }
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;use_system_lib&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"use_system_lib"</span>))]
         </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature.&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature."</span>)
         }
     }
 
@@ -829,13 +830,13 @@
     /// NOTE: This method will panic if called while the `use_system_lib` feature is
     /// not activated.
     </span><span class="kw">pub fn </span>c_ptr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*mut </span>wl_proxy {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
         </span>{
             <span class="self">self</span>.inner.c_ptr()
         }
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;use_system_lib&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"use_system_lib"</span>))]
         </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature.&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature."</span>)
         }
     }
 
@@ -849,9 +850,9 @@
     /// method would have.
     ///
     /// If the object was created by some other C library you are interfacing
-    /// with, it will be created in an &quot;unmanaged&quot; state: wayland-client will
+    /// with, it will be created in an "unmanaged" state: wayland-client will
     /// treat it as foreign, and as such most of the safeties will be absent.
-    /// Notably the lifetime of the object can&#39;t be tracked, so the `alive()`
+    /// Notably the lifetime of the object can't be tracked, so the `alive()`
     /// method will always return `true` and you are responsible of not using
     /// an object past its destruction (as this would cause a protocol error).
     /// You will also be unable to associate any user data value to this object.
@@ -870,13 +871,13 @@
     <span class="kw">where
         </span>I: From&lt;Proxy&lt;I&gt;&gt;,
     {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
         </span>{
             Proxy { _i: ::std::marker::PhantomData, inner: ProxyInner::from_c_ptr::&lt;I&gt;(_ptr) }
         }
-        <span class="attr">#[cfg(not(feature = <span class="string">&quot;use_system_lib&quot;</span>))]
+        <span class="attr">#[cfg(not(feature = <span class="string">"use_system_lib"</span>))]
         </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature.&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"[wayland-client] C interfacing methods can only be used with the `use_system_lib` cargo feature."</span>)
         }
     }
 }

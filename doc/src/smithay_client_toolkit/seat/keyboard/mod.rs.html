@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/seat/keyboard/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../smithay_client_toolkit/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/smithay-client-toolkit-0.16.1/src/seat/keyboard/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="smithay_client_toolkit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -659,11 +660,11 @@
 //! calloop event loop. Not doing so will prevent key repetition to work
 //! (but the rest of the functionnality will not be affected).
 
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">use </span>calloop::{timer::Timer, RegistrationToken};
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">use </span>std::num::NonZeroU32;
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">use </span>std::time::Duration;
 <span class="kw">use </span>std::{
     cell::{Cell, RefCell},
@@ -688,7 +689,7 @@
 <span class="kw">use </span><span class="self">self</span>::state::KbState;
 <span class="kw">pub use </span><span class="self">self</span>::state::{ModifiersState, RMLVO};
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">const </span>MICROS_IN_SECOND: u32 = <span class="number">1000000</span>;
 
 <span class="doccomment">/// Possible kinds of key repetition
@@ -720,7 +721,7 @@
 
 <span class="doccomment">/// Events received from a mapped keyboard
 </span><span class="attr">#[derive(Debug)]
-</span><span class="kw">pub enum </span>Event&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub enum </span>Event&lt;<span class="lifetime">'a</span>&gt; {
     <span class="doccomment">/// The keyboard focus has entered a surface
     </span>Enter {
         <span class="doccomment">/// serial number of the event
@@ -728,9 +729,9 @@
         <span class="doccomment">/// surface that was entered
         </span>surface: wl_surface::WlSurface,
         <span class="doccomment">/// raw values of the currently pressed keys
-        </span>rawkeys: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u32],
+        </span>rawkeys: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u32],
         <span class="doccomment">/// interpreted symbols of the currently pressed keys
-        </span>keysyms: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>[u32],
+        </span>keysyms: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[u32],
     },
     <span class="doccomment">/// The keyboard focus has left a surface
     </span>Leave {
@@ -792,7 +793,7 @@
     callback: F,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;wl_keyboard::WlKeyboard, Error&gt;
 <span class="kw">where
-    </span>F: FnMut(Event&lt;<span class="lifetime">&#39;_</span>&gt;, wl_keyboard::WlKeyboard, wayland_client::DispatchData&lt;<span class="lifetime">&#39;_</span>&gt;) + <span class="lifetime">&#39;static</span>,
+    </span>F: FnMut(Event&lt;<span class="lifetime">'_</span>&gt;, wl_keyboard::WlKeyboard, wayland_client::DispatchData&lt;<span class="lifetime">'_</span>&gt;) + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>has_kbd = <span class="kw">super</span>::with_seat_data(seat, |data| data.has_keyboard).unwrap_or(<span class="bool-val">false</span>);
     <span class="kw">let </span>keyboard = <span class="kw">if </span>has_kbd {
@@ -809,7 +810,7 @@
     </span><span class="kw">let </span><span class="kw-2">mut </span>kbd_handler = KbdHandler {
         callback,
         state,
-        <span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
         </span>repeat: <span class="prelude-val">None</span>,
     };
 
@@ -832,16 +833,16 @@
 /// contained invalid values, or if the provided seat does not have keyboard capability.
 ///
 /// **Note:** The keyboard repetition handling requires the `calloop` cargo feature.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
-</span><span class="kw">pub fn </span>map_keyboard_repeat&lt;F, Data: <span class="lifetime">&#39;static</span>&gt;(
-    loop_handle: calloop::LoopHandle&lt;<span class="lifetime">&#39;static</span>, Data&gt;,
+</span><span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
+</span><span class="kw">pub fn </span>map_keyboard_repeat&lt;F, Data: <span class="lifetime">'static</span>&gt;(
+    loop_handle: calloop::LoopHandle&lt;<span class="lifetime">'static</span>, Data&gt;,
     seat: <span class="kw-2">&amp;</span>Attached&lt;wl_seat::WlSeat&gt;,
     rmlvo: <span class="prelude-ty">Option</span>&lt;RMLVO&gt;,
     repeatkind: RepeatKind,
     callback: F,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;wl_keyboard::WlKeyboard, Error&gt;
 <span class="kw">where
-    </span>F: FnMut(Event&lt;<span class="lifetime">&#39;_</span>&gt;, wl_keyboard::WlKeyboard, wayland_client::DispatchData&lt;<span class="lifetime">&#39;_</span>&gt;) + <span class="lifetime">&#39;static</span>,
+    </span>F: FnMut(Event&lt;<span class="lifetime">'_</span>&gt;, wl_keyboard::WlKeyboard, wayland_client::DispatchData&lt;<span class="lifetime">'_</span>&gt;) + <span class="lifetime">'static</span>,
 {
     <span class="kw">let </span>has_kbd = <span class="kw">super</span>::with_seat_data(seat, |data| data.has_keyboard).unwrap_or(<span class="bool-val">false</span>);
     <span class="kw">let </span>keyboard = <span class="kw">if </span>has_kbd {
@@ -895,7 +896,7 @@
     <span class="prelude-val">Ok</span>(keyboard.detach())
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">fn </span>rate_to_gap(rate: i32) -&gt; <span class="prelude-ty">Option</span>&lt;NonZeroU32&gt; {
     <span class="kw">if </span>rate &lt;= <span class="number">0 </span>{
         <span class="prelude-val">None
@@ -910,9 +911,9 @@
  * Classic handling
  */
 
-</span><span class="kw">type </span>KbdCallback = <span class="kw">dyn </span>FnMut(Event&lt;<span class="lifetime">&#39;_</span>&gt;, wl_keyboard::WlKeyboard, wayland_client::DispatchData&lt;<span class="lifetime">&#39;_</span>&gt;);
+</span><span class="kw">type </span>KbdCallback = <span class="kw">dyn </span>FnMut(Event&lt;<span class="lifetime">'_</span>&gt;, wl_keyboard::WlKeyboard, wayland_client::DispatchData&lt;<span class="lifetime">'_</span>&gt;);
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">struct </span>RepeatDetails {
     locked: bool,
     <span class="doccomment">/// Gap between key presses in microseconds.
@@ -926,11 +927,11 @@
 <span class="kw">struct </span>KbdHandler {
     state: Rc&lt;RefCell&lt;KbState&gt;&gt;,
     callback: Rc&lt;RefCell&lt;KbdCallback&gt;&gt;,
-    <span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
     </span>repeat: <span class="prelude-ty">Option</span>&lt;KbdRepeat&gt;,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">struct </span>KbdRepeat {
     start_timer: Box&lt;<span class="kw">dyn </span>Fn(RepeatSource) -&gt; RegistrationToken&gt;,
     stop_timer: Box&lt;<span class="kw">dyn </span>Fn(RegistrationToken)&gt;,
@@ -939,7 +940,7 @@
     details: RepeatDetails,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">impl </span>KbdRepeat {
     <span class="kw">fn </span>start_repeat(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -995,7 +996,7 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">impl </span>Drop <span class="kw">for </span>KbdRepeat {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="self">self</span>.stop_all_repeat();
@@ -1086,7 +1087,7 @@
         surface: wl_surface::WlSurface,
         dispatch_data: wayland_client::DispatchData,
     ) {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
         </span>{
             <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>repeat) = <span class="self">self</span>.repeat {
                 repeat.stop_all_repeat();
@@ -1095,7 +1096,7 @@
         (<span class="self">self</span>.callback.borrow_mut())(Event::Leave { serial, surface }, object, dispatch_data);
     }
 
-    <span class="attr">#[cfg_attr(not(feature = <span class="string">&quot;calloop&quot;</span>), allow(unused_variables))]
+    <span class="attr">#[cfg_attr(not(feature = <span class="string">"calloop"</span>), allow(unused_variables))]
     </span><span class="kw">fn </span>key(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         object: wl_keyboard::WlKeyboard,
@@ -1142,7 +1143,7 @@
             (sym, utf8, repeats)
         };
 
-        <span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
         </span>{
             <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>repeat_handle) = <span class="self">self</span>.repeat {
                 <span class="kw">if </span>repeats {
@@ -1182,9 +1183,9 @@
         }
     }
 
-    <span class="attr">#[cfg_attr(not(feature = <span class="string">&quot;calloop&quot;</span>), allow(unused_variables))]
+    <span class="attr">#[cfg_attr(not(feature = <span class="string">"calloop"</span>), allow(unused_variables))]
     </span><span class="kw">fn </span>repeat_info(<span class="kw-2">&amp;mut </span><span class="self">self</span>, <span class="kw">_</span>: wl_keyboard::WlKeyboard, rate: i32, delay: i32) {
-        <span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
         </span>{
             <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>repeat_handle) = <span class="self">self</span>.repeat {
                 <span class="kw">if </span>!repeat_handle.details.locked {
@@ -1201,7 +1202,7 @@
  */
 
 </span><span class="attr">#[derive(Debug)]
-#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">struct </span>RepeatData {
     keyboard: wl_keyboard::WlKeyboard,
     keycode: u32,
@@ -1216,12 +1217,12 @@
 /// It is given to you from [`map_keyboard`](fn.map_keyboard.html), and you need to
 /// insert it in your calloop event loop if you want to have functionning key repetition.
 ///
-/// If don&#39;t want key repetition you can just drop it.
+/// If don't want key repetition you can just drop it.
 ///
 /// This source will not directly generate calloop events, and the callback provided to
 /// `EventLoopHandle::insert_source()` will be ignored. Instead it triggers the
 /// callback you provided to [`map_keyboard`](fn.map_keyboard.html).
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 #[derive(Debug)]
 </span><span class="kw">pub struct </span>RepeatSource {
     timer: calloop::timer::Timer,
@@ -1229,9 +1230,9 @@
     current_repeat: Rc&lt;RefCell&lt;<span class="prelude-ty">Option</span>&lt;RepeatData&gt;&gt;&gt;,
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;calloop&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"calloop"</span>)]
 </span><span class="kw">impl </span>calloop::EventSource <span class="kw">for </span>RepeatSource {
-    <span class="kw">type </span>Event = Event&lt;<span class="lifetime">&#39;static</span>&gt;;
+    <span class="kw">type </span>Event = Event&lt;<span class="lifetime">'static</span>&gt;;
     <span class="kw">type </span>Metadata = wl_keyboard::WlKeyboard;
     <span class="kw">type </span>Error = &lt;calloop::timer::Timer <span class="kw">as </span>calloop::EventSource&gt;::Error;
     <span class="kw">type </span>Ret = ();
@@ -1243,7 +1244,7 @@
         <span class="kw-2">mut </span>callback: F,
     ) -&gt; std::io::Result&lt;calloop::PostAction&gt;
     <span class="kw">where
-        </span>F: FnMut(Event&lt;<span class="lifetime">&#39;static</span>&gt;, <span class="kw-2">&amp;mut </span>wl_keyboard::WlKeyboard),
+        </span>F: FnMut(Event&lt;<span class="lifetime">'static</span>&gt;, <span class="kw-2">&amp;mut </span>wl_keyboard::WlKeyboard),
     {
         <span class="kw">let </span>current_repeat = <span class="kw-2">&amp;</span><span class="self">self</span>.current_repeat;
         <span class="kw">let </span>state = <span class="kw-2">&amp;</span><span class="self">self</span>.state;

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/image-0.23.14/./src/dynimage.rs`."><title>dynimage.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="image" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../image/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/image-0.23.14/./src/dynimage.rs`."><title>dynimage.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="image" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1362,23 +1363,23 @@
 <span class="kw">use </span>std::path::Path;
 <span class="kw">use </span>std::u32;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;bmp&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"bmp"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::bmp;
-<span class="attr">#[cfg(feature = <span class="string">&quot;gif&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"gif"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::gif;
-<span class="attr">#[cfg(feature = <span class="string">&quot;ico&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"ico"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::ico;
-<span class="attr">#[cfg(feature = <span class="string">&quot;jpeg&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"jpeg"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::jpeg;
-<span class="attr">#[cfg(feature = <span class="string">&quot;png&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"png"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::png;
-<span class="attr">#[cfg(feature = <span class="string">&quot;pnm&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"pnm"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::pnm;
-<span class="attr">#[cfg(feature = <span class="string">&quot;farbfeld&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"farbfeld"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::farbfeld;
-<span class="attr">#[cfg(feature = <span class="string">&quot;tga&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"tga"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::tga;
-<span class="attr">#[cfg(feature = <span class="string">&quot;avif&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"avif"</span>)]
 </span><span class="kw">use </span><span class="kw">crate</span>::codecs::avif;
 
 <span class="kw">use </span><span class="kw">crate</span>::buffer_::{
@@ -1547,14 +1548,14 @@
     }
 
     <span class="doccomment">/// Decodes an encoded image into a dynamic image.
-    </span><span class="kw">pub fn </span>from_decoder&lt;<span class="lifetime">&#39;a</span>&gt;(decoder: <span class="kw">impl </span>ImageDecoder&lt;<span class="lifetime">&#39;a</span>&gt;)
+    </span><span class="kw">pub fn </span>from_decoder&lt;<span class="lifetime">'a</span>&gt;(decoder: <span class="kw">impl </span>ImageDecoder&lt;<span class="lifetime">'a</span>&gt;)
         -&gt; ImageResult&lt;<span class="self">Self</span>&gt;
     {
         decoder_to_image(decoder)
     }
 
     <span class="doccomment">/// Returns a copy of this image as an RGB image.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `to_rgb8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `to_rgb8`"</span>]
     </span><span class="kw">pub fn </span>to_rgb(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RgbImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p -&gt; {
             p.convert()
@@ -1576,7 +1577,7 @@
     }
 
     <span class="doccomment">/// Returns a copy of this image as an RGBA image.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `to_rgba8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `to_rgba8`"</span>]
     </span><span class="kw">pub fn </span>to_rgba(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; RgbaImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p -&gt; {
             p.convert()
@@ -1598,7 +1599,7 @@
     }
 
     <span class="doccomment">/// Returns a copy of this image as an BGR image.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `to_bgr8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `to_bgr8`"</span>]
     </span><span class="kw">pub fn </span>to_bgr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BgrImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p -&gt; {
             p.convert()
@@ -1613,7 +1614,7 @@
     }
 
     <span class="doccomment">/// Returns a copy of this image as an BGRA image.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `to_bgra8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `to_bgra8`"</span>]
     </span><span class="kw">pub fn </span>to_bgra(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BgraImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p -&gt; {
             p.convert()
@@ -1628,7 +1629,7 @@
     }
 
     <span class="doccomment">/// Returns a copy of this image as a Luma image.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `to_luma8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `to_luma8`"</span>]
     </span><span class="kw">pub fn </span>to_luma(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; GrayImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p -&gt; {
             p.convert()
@@ -1650,7 +1651,7 @@
     }
 
     <span class="doccomment">/// Returns a copy of this image as a LumaA image.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `to_luma_alpha8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `to_luma_alpha8`"</span>]
     </span><span class="kw">pub fn </span>to_luma_alpha(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; GrayAlphaImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p -&gt; {
             p.convert()
@@ -1675,7 +1676,7 @@
     ///
     /// If the image was already the correct format, it is returned as is.
     /// Otherwise, a copy is created.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `into_rgb8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `into_rgb8`"</span>]
     </span><span class="kw">pub fn </span>into_rgb(<span class="self">self</span>) -&gt; RgbImage {
         <span class="kw">match </span><span class="self">self </span>{
             DynamicImage::ImageRgb8(x) =&gt; x,
@@ -1709,7 +1710,7 @@
     ///
     /// If the image was already the correct format, it is returned as is.
     /// Otherwise, a copy is created.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `into_rgba8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `into_rgba8`"</span>]
     </span><span class="kw">pub fn </span>into_rgba(<span class="self">self</span>) -&gt; RgbaImage {
         <span class="kw">match </span><span class="self">self </span>{
             DynamicImage::ImageRgba8(x) =&gt; x,
@@ -1743,7 +1744,7 @@
     ///
     /// If the image was already the correct format, it is returned as is.
     /// Otherwise, a copy is created.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `into_bgra8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `into_bgra8`"</span>]
     </span><span class="kw">pub fn </span>into_bgr(<span class="self">self</span>) -&gt; BgrImage {
         <span class="kw">match </span><span class="self">self </span>{
             DynamicImage::ImageBgr8(x) =&gt; x,
@@ -1768,7 +1769,7 @@
     ///
     /// If the image was already the correct format, it is returned as is.
     /// Otherwise, a copy is created.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `into_bgra8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `into_bgra8`"</span>]
     </span><span class="kw">pub fn </span>into_bgra(<span class="self">self</span>) -&gt; BgraImage {
         <span class="kw">match </span><span class="self">self </span>{
             DynamicImage::ImageBgra8(x) =&gt; x,
@@ -1793,7 +1794,7 @@
     ///
     /// If the image was already the correct format, it is returned as is.
     /// Otherwise, a copy is created.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `into_luma8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `into_luma8`"</span>]
     </span><span class="kw">pub fn </span>into_luma(<span class="self">self</span>) -&gt; GrayImage {
         <span class="kw">match </span><span class="self">self </span>{
             DynamicImage::ImageLuma8(x) =&gt; x,
@@ -1827,7 +1828,7 @@
     ///
     /// If the image was already the correct format, it is returned as is.
     /// Otherwise, a copy is created.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;replaced by `into_luma_alpha8`&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"replaced by `into_luma_alpha8`"</span>]
     </span><span class="kw">pub fn </span>into_luma_alpha(<span class="self">self</span>) -&gt; GrayAlphaImage {
         <span class="kw">match </span><span class="self">self </span>{
             DynamicImage::ImageLumaA8(x) =&gt; x,
@@ -1860,7 +1861,7 @@
     <span class="doccomment">/// Return a cut-out of this image delimited by the bounding rectangle.
     ///
     /// Note: this method does *not* modify the object,
-    /// and its signature will be replaced with `crop_imm()`&#39;s in the 0.24 release
+    /// and its signature will be replaced with `crop_imm()`'s in the 0.24 release
     </span><span class="kw">pub fn </span>crop(<span class="kw-2">&amp;mut </span><span class="self">self</span>, x: u32, y: u32, width: u32, height: u32) -&gt; DynamicImage {
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref mut </span>p =&gt; imageops::crop(p, x, y, width, height).to_image())
     }
@@ -2054,24 +2055,24 @@
         }
     }
 
-    <span class="doccomment">/// Return this image&#39;s pixels as a native endian byte slice.
+    <span class="doccomment">/// Return this image's pixels as a native endian byte slice.
     </span><span class="kw">pub fn </span>as_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
         image_as_bytes(<span class="self">self</span>)
     }
 
-    <span class="doccomment">/// Return this image&#39;s pixels as a byte vector. If the `ImageBuffer`
+    <span class="doccomment">/// Return this image's pixels as a byte vector. If the `ImageBuffer`
     /// container is `Vec&lt;u8&gt;`, this operation is free. Otherwise, a copy
     /// is returned.
     </span><span class="kw">pub fn </span>into_bytes(<span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         image_into_bytes(<span class="self">self</span>)
     }
 
-    <span class="doccomment">/// Return a copy of this image&#39;s pixels as a byte vector.
+    <span class="doccomment">/// Return a copy of this image's pixels as a byte vector.
     </span><span class="kw">pub fn </span>to_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         image_to_bytes(<span class="self">self</span>)
     }
 
-    <span class="doccomment">/// Return this image&#39;s color type.
+    <span class="doccomment">/// Return this image's color type.
     </span><span class="kw">pub fn </span>color(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; color::ColorType {
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
             DynamicImage::ImageLuma8(<span class="kw">_</span>) =&gt; color::ColorType::L8,
@@ -2110,7 +2111,7 @@
     }
 
     <span class="doccomment">/// Resize this image using the specified filter algorithm.
-    /// Returns a new image. The image&#39;s aspect ratio is preserved.
+    /// Returns a new image. The image's aspect ratio is preserved.
     /// The image is scaled to the maximum possible size that fits
     /// within the bounds specified by ```nwidth``` and ```nheight```.
     </span><span class="kw">pub fn </span>resize(<span class="kw-2">&amp;</span><span class="self">self</span>, nwidth: u32, nheight: u32, filter: imageops::FilterType) -&gt; DynamicImage {
@@ -2122,7 +2123,7 @@
 
     <span class="doccomment">/// Resize this image using the specified filter algorithm.
     /// Returns a new image. Does not preserve aspect ratio.
-    /// ```nwidth``` and ```nheight``` are the new image&#39;s dimensions
+    /// ```nwidth``` and ```nheight``` are the new image's dimensions
     </span><span class="kw">pub fn </span>resize_exact(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         nwidth: u32,
@@ -2133,7 +2134,7 @@
     }
 
     <span class="doccomment">/// Scale this image down to fit within a specific size.
-    /// Returns a new image. The image&#39;s aspect ratio is preserved.
+    /// Returns a new image. The image's aspect ratio is preserved.
     /// The image is scaled to the maximum possible size that fits
     /// within the bounds specified by ```nwidth``` and ```nheight```.
     ///
@@ -2148,7 +2149,7 @@
 
     <span class="doccomment">/// Scale this image down to a specific size.
     /// Returns a new image. Does not preserve aspect ratio.
-    /// ```nwidth``` and ```nheight``` are the new image&#39;s dimensions.
+    /// ```nwidth``` and ```nheight``` are the new image's dimensions.
     /// This method uses a fast integer algorithm where each source
     /// pixel contributes to exactly one target pixel.
     /// May give aliasing artifacts if new size is close to old size.
@@ -2157,7 +2158,7 @@
     }
 
     <span class="doccomment">/// Resize this image using the specified filter algorithm.
-    /// Returns a new image. The image&#39;s aspect ratio is preserved.
+    /// Returns a new image. The image's aspect ratio is preserved.
     /// The image is scaled to the maximum possible size that fits
     /// within the larger (relative to aspect ratio) of the bounds
     /// specified by ```nwidth``` and ```nheight```, then cropped to
@@ -2201,7 +2202,7 @@
     <span class="doccomment">/// Filters this image with the specified 3x3 kernel.
     </span><span class="kw">pub fn </span>filter3x3(<span class="kw-2">&amp;</span><span class="self">self</span>, kernel: <span class="kw-2">&amp;</span>[f32]) -&gt; DynamicImage {
         <span class="kw">if </span>kernel.len() != <span class="number">9 </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;filter must be 3 x 3&quot;</span>)
+            <span class="macro">panic!</span>(<span class="string">"filter must be 3 x 3"</span>)
         }
 
         <span class="macro">dynamic_map!</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">ref </span>p =&gt; imageops::filter3x3(p, kernel))
@@ -2273,7 +2274,7 @@
 
         <span class="attr">#[allow(deprecated)]
         </span><span class="kw">match </span>format {
-            <span class="attr">#[cfg(feature = <span class="string">&quot;png&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"png"</span>)]
             </span>image::ImageOutputFormat::Png =&gt; {
                 <span class="kw">let </span>p = png::PngEncoder::new(w);
                 <span class="kw">let </span>converted;
@@ -2294,7 +2295,7 @@
                 <span class="prelude-val">Ok</span>(())
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;pnm&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"pnm"</span>)]
             </span>image::ImageOutputFormat::Pnm(subtype) =&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>p = pnm::PnmEncoder::new(w).with_subtype(subtype);
                 <span class="kw">let </span>converted;
@@ -2315,45 +2316,45 @@
                 <span class="prelude-val">Ok</span>(())
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;jpeg&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"jpeg"</span>)]
             </span>image::ImageOutputFormat::Jpeg(quality) =&gt; {
                 <span class="kw">let </span>j = jpeg::JpegEncoder::new_with_quality(w, quality);
                 j.write_image(bytes, width, height, color)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(())
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;gif&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"gif"</span>)]
             </span>image::ImageOutputFormat::Gif =&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>g = gif::GifEncoder::new(w);
                 g.encode_frame(<span class="kw">crate</span>::animation::Frame::new(<span class="self">self</span>.to_rgba()))<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(())
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;ico&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"ico"</span>)]
             </span>image::ImageOutputFormat::Ico =&gt; {
                 <span class="kw">let </span>i = ico::IcoEncoder::new(w);
                 i.encode(bytes, width, height, color)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(())
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;bmp&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"bmp"</span>)]
             </span>image::ImageOutputFormat::Bmp =&gt; {
                 <span class="kw">let </span><span class="kw-2">mut </span>b = bmp::BmpEncoder::new(w);
                 b.encode(bytes, width, height, color)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(())
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;farbfeld&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"farbfeld"</span>)]
             </span>image::ImageOutputFormat::Farbfeld =&gt; {
                 farbfeld::FarbfeldEncoder::new(w).write_image(bytes, width, height, color)
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;tga&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"tga"</span>)]
             </span>image::ImageOutputFormat::Tga =&gt; {
                 tga::TgaEncoder::new(w).write_image(bytes, width, height, color)
             }
 
-            <span class="attr">#[cfg(feature = <span class="string">&quot;avif&quot;</span>)]
+            <span class="attr">#[cfg(feature = <span class="string">"avif"</span>)]
             </span>image::ImageOutputFormat::Avif =&gt; {
                 avif::AvifEncoder::new(w).write_image(bytes, width, height, color)
             }
@@ -2462,7 +2463,7 @@
 }
 
 <span class="doccomment">/// Decodes an image and stores it into a dynamic image
-</span><span class="kw">fn </span>decoder_to_image&lt;<span class="lifetime">&#39;a</span>, I: ImageDecoder&lt;<span class="lifetime">&#39;a</span>&gt;&gt;(decoder: I) -&gt; ImageResult&lt;DynamicImage&gt; {
+</span><span class="kw">fn </span>decoder_to_image&lt;<span class="lifetime">'a</span>, I: ImageDecoder&lt;<span class="lifetime">'a</span>&gt;&gt;(decoder: I) -&gt; ImageResult&lt;DynamicImage&gt; {
     <span class="kw">let </span>(w, h) = decoder.dimensions();
     <span class="kw">let </span>color_type = decoder.color_type();
 
@@ -2578,9 +2579,9 @@
 }
 
 <span class="doccomment">/// Open the image located at the path specified.
-/// The image&#39;s format is determined from the path&#39;s file extension.
+/// The image's format is determined from the path's file extension.
 ///
-/// Try [`io::Reader`] for more advanced uses, including guessing the format based on the file&#39;s
+/// Try [`io::Reader`] for more advanced uses, including guessing the format based on the file's
 /// content before its path.
 ///
 /// [`io::Reader`]: io/struct.Reader.html
@@ -2595,7 +2596,7 @@
 <span class="doccomment">/// Read the dimensions of the image located at the specified path.
 /// This is faster than fully loading the image and then getting its dimensions.
 ///
-/// Try [`io::Reader`] for more advanced uses, including guessing the format based on the file&#39;s
+/// Try [`io::Reader`] for more advanced uses, including guessing the format based on the file's
 /// content before its path or manually supplying the format.
 ///
 /// [`io::Reader`]: io/struct.Reader.html
@@ -2681,11 +2682,11 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>bench {
-    <span class="attr">#[cfg(feature = <span class="string">&quot;benchmarks&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"benchmarks"</span>)]
     </span><span class="kw">use </span>test;
 
     <span class="attr">#[bench]
-    #[cfg(feature = <span class="string">&quot;benchmarks&quot;</span>)]
+    #[cfg(feature = <span class="string">"benchmarks"</span>)]
     </span><span class="kw">fn </span>bench_conversion(b: <span class="kw-2">&amp;mut </span>test::Bencher) {
         <span class="kw">let </span>a = <span class="kw">super</span>::DynamicImage::ImageRgb8(<span class="kw">crate</span>::ImageBuffer::new(<span class="number">1000</span>, <span class="number">1000</span>));
         b.iter(|| a.to_luma8());
@@ -2697,21 +2698,21 @@
 </span><span class="kw">mod </span>test {
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_empty_file() {
-        <span class="macro">assert!</span>(<span class="kw">super</span>::load_from_memory(<span class="string">b&quot;&quot;</span>).is_err());
+        <span class="macro">assert!</span>(<span class="kw">super</span>::load_from_memory(<span class="string">b""</span>).is_err());
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;jpeg&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"jpeg"</span>)]
     #[test]
     </span><span class="kw">fn </span>image_dimensions() {
-        <span class="kw">let </span>im_path = <span class="string">&quot;./tests/images/jpg/progressive/cat.jpg&quot;</span>;
+        <span class="kw">let </span>im_path = <span class="string">"./tests/images/jpg/progressive/cat.jpg"</span>;
         <span class="kw">let </span>dims = <span class="kw">super</span>::image_dimensions(im_path).unwrap();
         <span class="macro">assert_eq!</span>(dims, (<span class="number">320</span>, <span class="number">240</span>));
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;png&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"png"</span>)]
     #[test]
     </span><span class="kw">fn </span>open_16bpc_png() {
-        <span class="kw">let </span>im_path = <span class="string">&quot;./tests/images/png/16bpc/basn6a16.png&quot;</span>;
+        <span class="kw">let </span>im_path = <span class="string">"./tests/images/png/16bpc/basn6a16.png"</span>;
         <span class="kw">let </span>image = <span class="kw">super</span>::open(im_path).unwrap();
         <span class="macro">assert_eq!</span>(image.color(), <span class="kw">super</span>::color::ColorType::Rgba16);
     }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/window.rs`."><title>window.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../winit/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/window.rs`."><title>window.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1355,8 +1356,8 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>Window {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmtr: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        fmtr.pad(<span class="string">&quot;Window { .. }&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmtr: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        fmtr.pad(<span class="string">"Window { .. }"</span>)
     }
 }
 
@@ -1364,7 +1365,7 @@
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="comment">// If the window is in exclusive fullscreen, we must restore the desktop
         // video mode (generally this would be done on application exit, but
-        // closing the window doesn&#39;t necessarily always mean application exit,
+        // closing the window doesn't necessarily always mean application exit,
         // such as when there are multiple windows)
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(Fullscreen::Exclusive(<span class="kw">_</span>)) = <span class="self">self</span>.fullscreen() {
             <span class="self">self</span>.set_fullscreen(<span class="prelude-val">None</span>);
@@ -1420,9 +1421,9 @@
 }
 
 <span class="kw">impl </span>fmt::Debug <span class="kw">for </span>WindowBuilder {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmtr: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        fmtr.debug_struct(<span class="string">&quot;WindowBuilder&quot;</span>)
-            .field(<span class="string">&quot;window&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.window)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmtr: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        fmtr.debug_struct(<span class="string">"WindowBuilder"</span>)
+            .field(<span class="string">"window"</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.window)
             .finish()
     }
 }
@@ -1454,7 +1455,7 @@
             max_inner_size: <span class="prelude-val">None</span>,
             position: <span class="prelude-val">None</span>,
             resizable: <span class="bool-val">true</span>,
-            title: <span class="string">&quot;winit window&quot;</span>.to_owned(),
+            title: <span class="string">"winit window"</span>.to_owned(),
             maximized: <span class="bool-val">false</span>,
             fullscreen: <span class="prelude-val">None</span>,
             visible: <span class="bool-val">true</span>,
@@ -1499,7 +1500,7 @@
     <span class="doccomment">/// Sets the maximum dimensions a window can have.
     ///
     /// If this is not set, the window will have no maximum or will be set to
-    /// the primary monitor&#39;s dimensions by the platform.
+    /// the primary monitor's dimensions by the platform.
     ///
     /// See [`Window::set_max_inner_size`] for details.
     </span><span class="attr">#[inline]
@@ -1517,17 +1518,17 @@
     /// ## Platform-specific
     ///
     /// - **macOS:** The top left corner position of the window content, the
-    ///   window&#39;s &quot;inner&quot; position. The window title bar will be placed above
+    ///   window's "inner" position. The window title bar will be placed above
     ///   it. The window will be positioned such that it fits on screen,
     ///   maintaining set `inner_size` if any.
     ///   If you need to precisely position the top left corner of the whole
     ///   window you have to use [`Window::set_outer_position`] after creating
     ///   the window.
     /// - **Windows:** The top left corner position of the window title bar,
-    ///   the window&#39;s &quot;outer&quot; position.
+    ///   the window's "outer" position.
     ///   There may be a small gap between this position and the window due to
     ///   the specifics of the Window Manager.
-    /// - **X11:** The top left corner of the window, the window&#39;s &quot;outer&quot;
+    /// - **X11:** The top left corner of the window, the window's "outer"
     ///   position.
     /// - **Others:** Ignored.
     </span><span class="attr">#[inline]
@@ -1549,7 +1550,7 @@
 
     <span class="doccomment">/// Sets the initial title of the window in the title bar.
     ///
-    /// The default is `&quot;winit window&quot;`.
+    /// The default is `"winit window"`.
     ///
     /// See [`Window::set_title`] for details.
     </span><span class="attr">#[inline]
@@ -1651,7 +1652,7 @@
     /// - **Web:** The window is created but not inserted into the web page automatically. Please
     ///   see the web platform module for more information.
     </span><span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>build&lt;T: <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>build&lt;T: <span class="lifetime">'static</span>&gt;(
         <span class="self">self</span>,
         window_target: <span class="kw-2">&amp;</span>EventLoopWindowTarget&lt;T&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Window, OsError&gt; {
@@ -1680,7 +1681,7 @@
     ///
     /// [`WindowBuilder::new().build(event_loop)`]: WindowBuilder::build
     </span><span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>new&lt;T: <span class="lifetime">&#39;static</span>&gt;(event_loop: <span class="kw-2">&amp;</span>EventLoopWindowTarget&lt;T&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Window, OsError&gt; {
+    </span><span class="kw">pub fn </span>new&lt;T: <span class="lifetime">'static</span>&gt;(event_loop: <span class="kw-2">&amp;</span>EventLoopWindowTarget&lt;T&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Window, OsError&gt; {
         <span class="kw">let </span>builder = WindowBuilder::new();
         builder.build(event_loop)
     }
@@ -1703,7 +1704,7 @@
     ///
     /// - **X11:** This respects Xft.dpi, and can be overridden using the `WINIT_X11_SCALE_FACTOR` environment variable.
     /// - **Android:** Always returns 1.0.
-    /// - **iOS:** Can only be called on the main thread. Returns the underlying `UIView`&#39;s
+    /// - **iOS:** Can only be called on the main thread. Returns the underlying `UIView`'s
     ///   [`contentScaleFactor`].
     ///
     /// [`WindowEvent::ScaleFactorChanged`]: crate::event::WindowEvent::ScaleFactorChanged
@@ -1740,7 +1741,7 @@
 
 <span class="doccomment">/// Position and size functions.
 </span><span class="kw">impl </span>Window {
-    <span class="doccomment">/// Returns the position of the top-left hand corner of the window&#39;s client area relative to the
+    <span class="doccomment">/// Returns the position of the top-left hand corner of the window's client area relative to the
     /// top-left hand corner of the desktop.
     ///
     /// The same conditions that apply to [`Window::outer_position`] apply to this method.
@@ -1748,7 +1749,7 @@
     /// ## Platform-specific
     ///
     /// - **iOS:** Can only be called on the main thread. Returns the top left coordinates of the
-    ///   window&#39;s [safe area] in the screen space coordinate system.
+    ///   window's [safe area] in the screen space coordinate system.
     /// - **Web:** Returns the top-left coordinates relative to the viewport. _Note: this returns the
     ///    same value as [`Window::outer_position`]._
     /// - **Android / Wayland:** Always returns [`NotSupportedError`].
@@ -1783,7 +1784,7 @@
     <span class="doccomment">/// Modifies the position of the window.
     ///
     /// See [`Window::outer_position`] for more information about the coordinates.
-    /// This automatically un-maximizes the window if it&#39;s maximized.
+    /// This automatically un-maximizes the window if it's maximized.
     ///
     /// ```no_run
     /// # use winit::dpi::{LogicalPosition, PhysicalPosition};
@@ -1809,13 +1810,13 @@
         <span class="self">self</span>.window.set_outer_position(position.into())
     }
 
-    <span class="doccomment">/// Returns the physical size of the window&#39;s client area.
+    <span class="doccomment">/// Returns the physical size of the window's client area.
     ///
     /// The client area is the content of the window, excluding the title bar and borders.
     ///
     /// ## Platform-specific
     ///
-    /// - **iOS:** Can only be called on the main thread. Returns the `PhysicalSize` of the window&#39;s
+    /// - **iOS:** Can only be called on the main thread. Returns the `PhysicalSize` of the window's
     ///   [safe area] in screen space coordinates.
     /// - **Web:** Returns the size of the canvas element.
     ///
@@ -1828,7 +1829,7 @@
     <span class="doccomment">/// Modifies the inner size of the window.
     ///
     /// See [`Window::inner_size`] for more information about the values.
-    /// This automatically un-maximizes the window if it&#39;s maximized.
+    /// This automatically un-maximizes the window if it's maximized.
     ///
     /// ```no_run
     /// # use winit::dpi::{LogicalSize, PhysicalSize};
@@ -1854,7 +1855,7 @@
 
     <span class="doccomment">/// Returns the physical size of the entire window.
     ///
-    /// These dimensions include the title bar and borders. If you don&#39;t want that (and you usually don&#39;t),
+    /// These dimensions include the title bar and borders. If you don't want that (and you usually don't),
     /// use [`Window::inner_size`] instead.
     ///
     /// ## Platform-specific
@@ -1927,7 +1928,7 @@
         <span class="self">self</span>.window.set_title(title)
     }
 
-    <span class="doccomment">/// Modifies the window&#39;s visibility.
+    <span class="doccomment">/// Modifies the window's visibility.
     ///
     /// If `false`, this will hide the window. If `true`, this will show the window.
     ///
@@ -1940,9 +1941,9 @@
         <span class="self">self</span>.window.set_visible(visible)
     }
 
-    <span class="doccomment">/// Gets the window&#39;s current visibility state.
+    <span class="doccomment">/// Gets the window's current visibility state.
     ///
-    /// `None` means it couldn&#39;t be determined, so it is not recommended to use this to drive your rendering backend.
+    /// `None` means it couldn't be determined, so it is not recommended to use this to drive your rendering backend.
     ///
     /// ## Platform-specific
     ///
@@ -1955,7 +1956,7 @@
 
     <span class="doccomment">/// Sets whether the window is resizable or not.
     ///
-    /// Note that making the window unresizable doesn&#39;t exempt you from handling [`WindowEvent::Resized`], as that
+    /// Note that making the window unresizable doesn't exempt you from handling [`WindowEvent::Resized`], as that
     /// event can still be triggered by DPI scaling, entering fullscreen mode, etc. Also, the
     /// window could still be resized by calling [`Window::set_inner_size`].
     ///
@@ -1972,7 +1973,7 @@
         <span class="self">self</span>.window.set_resizable(resizable)
     }
 
-    <span class="doccomment">/// Gets the window&#39;s current resizable state.
+    <span class="doccomment">/// Gets the window's current resizable state.
     ///
     /// ## Platform-specific
     ///
@@ -2004,7 +2005,7 @@
         <span class="self">self</span>.window.set_maximized(maximized)
     }
 
-    <span class="doccomment">/// Gets the window&#39;s current maximized state.
+    <span class="doccomment">/// Gets the window's current maximized state.
     ///
     /// ## Platform-specific
     ///
@@ -2019,7 +2020,7 @@
     /// ## Platform-specific
     ///
     /// - **macOS:** [`Fullscreen::Exclusive`] provides true exclusive mode with a
-    ///   video mode change. *Caveat!* macOS doesn&#39;t provide task switching (or
+    ///   video mode change. *Caveat!* macOS doesn't provide task switching (or
     ///   spaces!) while in exclusive fullscreen mode. This mode should be used
     ///   when a video mode change is desired, but for a better user experience,
     ///   borderless fullscreen might be preferred.
@@ -2039,7 +2040,7 @@
         <span class="self">self</span>.window.set_fullscreen(fullscreen)
     }
 
-    <span class="doccomment">/// Gets the window&#39;s current fullscreen state.
+    <span class="doccomment">/// Gets the window's current fullscreen state.
     ///
     /// ## Platform-specific
     ///
@@ -2061,7 +2062,7 @@
         <span class="self">self</span>.window.set_decorations(decorations)
     }
 
-    <span class="doccomment">/// Gets the window&#39;s current decorations state.
+    <span class="doccomment">/// Gets the window's current decorations state.
     ///
     /// ## Platform-specific
     ///
@@ -2091,11 +2092,11 @@
     ///
     /// - **iOS / Android / Web / Wayland / macOS:** Unsupported.
     ///
-    /// - **Windows:** Sets `ICON_SMALL`. The base size for a window icon is 16x16, but it&#39;s
+    /// - **Windows:** Sets `ICON_SMALL`. The base size for a window icon is 16x16, but it's
     ///   recommended to account for screen scaling and pick a multiple of that, i.e. 32x32.
     ///
-    /// - **X11:** Has no universal guidelines for icon sizes, so you&#39;re at the whims of the WM. That
-    ///   said, it&#39;s usually in the same ballpark as on Windows.
+    /// - **X11:** Has no universal guidelines for icon sizes, so you're at the whims of the WM. That
+    ///   said, it's usually in the same ballpark as on Windows.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>set_window_icon(<span class="kw-2">&amp;</span><span class="self">self</span>, window_icon: <span class="prelude-ty">Option</span>&lt;Icon&gt;) {
         <span class="self">self</span>.window.set_window_icon(window_icon)
@@ -2106,7 +2107,7 @@
     /// This is the window / popup / overlay that allows you to select the desired characters.
     /// The look of this box may differ between input devices, even on the same platform.
     ///
-    /// (Apple&#39;s official term is &quot;candidate window&quot;, see their [chinese] and [japanese] guides).
+    /// (Apple's official term is "candidate window", see their [chinese] and [japanese] guides).
     ///
     /// ## Example
     ///
@@ -2141,7 +2142,7 @@
     /// [`ReceivedCharacter`] events. The window should allow IME while it is
     /// expecting text input.
     ///
-    /// When IME is not allowed, the window won&#39;t receive [`Ime`] events, and will
+    /// When IME is not allowed, the window won't receive [`Ime`] events, and will
     /// receive [`KeyboardInput`] events for every keypress instead. Without
     /// allowing IME, the window will also get [`ReceivedCharacter`] events for
     /// certain keyboard input. Not allowing IME is useful for games for example.
@@ -2165,7 +2166,7 @@
     /// already in focus, minimized, or not visible.
     ///
     /// This method steals input focus from other applications. Do not use this method unless
-    /// you are certain that&#39;s what the user wants. Focus stealing can cause an extremely disruptive
+    /// you are certain that's what the user wants. Focus stealing can cause an extremely disruptive
     /// user experience.
     ///
     /// ## Platform-specific
@@ -2250,7 +2251,7 @@
         <span class="self">self</span>.window.set_cursor_grab(mode)
     }
 
-    <span class="doccomment">/// Modifies the cursor&#39;s visibility.
+    <span class="doccomment">/// Modifies the cursor's visibility.
     ///
     /// If `false`, this will hide the cursor. If `true`, this will show the cursor.
     ///
@@ -2269,7 +2270,7 @@
 
     <span class="doccomment">/// Moves the window with the left mouse button until the button is released.
     ///
-    /// There&#39;s no guarantee that this will work unless the left mouse button was pressed
+    /// There's no guarantee that this will work unless the left mouse button was pressed
     /// immediately before this function is called.
     ///
     /// ## Platform-specific
@@ -2301,7 +2302,7 @@
 </span><span class="kw">impl </span>Window {
     <span class="doccomment">/// Returns the monitor on which the window currently resides.
     ///
-    /// Returns `None` if current monitor can&#39;t be detected.
+    /// Returns `None` if current monitor can't be detected.
     ///
     /// ## Platform-specific
     ///
@@ -2330,7 +2331,7 @@
 
     <span class="doccomment">/// Returns the primary monitor of the system.
     ///
-    /// Returns `None` if it can&#39;t identify any monitor as a primary one.
+    /// Returns `None` if it can't identify any monitor as a primary one.
     ///
     /// This is the same as [`EventLoopWindowTarget::primary_monitor`], and is provided for convenience.
     ///
@@ -2474,7 +2475,7 @@
                 handle.b_direct_window = window_handle.b_direct_window;
                 raw_window_handle_04::RawWindowHandle::Haiku(handle)
             },
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;No HasRawWindowHandle version 0.4 backwards compatibility for new Winit window type&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"No HasRawWindowHandle version 0.4 backwards compatibility for new Winit window type"</span>),
         }
     }
 }
@@ -2483,14 +2484,14 @@
 ///
 /// Use this enum with [`Window::set_cursor_grab`] to grab the cursor.
 </span><span class="attr">#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>CursorGrabMode {
     <span class="doccomment">/// No grabbing of the cursor is performed.
     </span><span class="prelude-val">None</span>,
 
     <span class="doccomment">/// The cursor is confined to the window area.
     ///
-    /// There&#39;s no guarantee that the cursor will be hidden. You should hide it by yourself if you
+    /// There's no guarantee that the cursor will be hidden. You should hide it by yourself if you
     /// want to do so.
     ///
     /// ## Platform-specific
@@ -2501,7 +2502,7 @@
 
     <span class="doccomment">/// The cursor is locked inside the window area to the certain position.
     ///
-    /// There&#39;s no guarantee that the cursor will be hidden. You should hide it by yourself if you
+    /// There's no guarantee that the cursor will be hidden. You should hide it by yourself if you
     /// want to do so.
     ///
     /// ## Platform-specific
@@ -2513,7 +2514,7 @@
 
 <span class="doccomment">/// Describes the appearance of the mouse cursor.
 </span><span class="attr">#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>CursorIcon {
     <span class="doccomment">/// The platform-dependent default cursor.
     </span>Default,
@@ -2529,10 +2530,10 @@
     </span>Text,
     <span class="doccomment">/// Program busy indicator.
     </span>Wait,
-    <span class="doccomment">/// Help indicator (often rendered as a &quot;?&quot;)
+    <span class="doccomment">/// Help indicator (often rendered as a "?")
     </span>Help,
     <span class="doccomment">/// Progress indicator. Shows that processing is being done. But in contrast
-    /// with &quot;Wait&quot; the user may still interact with the program. Often rendered
+    /// with "Wait" the user may still interact with the program. Often rendered
     /// as a spinning beach ball, or an arrow with a watch or hourglass.
     </span>Progress,
 
@@ -2552,7 +2553,7 @@
     ZoomIn,
     ZoomOut,
 
-    <span class="doccomment">/// Indicate that some edge is to be moved. For example, the &#39;SeResize&#39; cursor
+    <span class="doccomment">/// Indicate that some edge is to be moved. For example, the 'SeResize' cursor
     /// is used when the movement starts from the south-east corner of the box.
     </span>EResize,
     NResize,
@@ -2593,7 +2594,7 @@
 
 <span class="doccomment">/// ## Platform-specific
 ///
-/// - **X11:** Sets the WM&#39;s `XUrgencyHint`. No distinction between [`Critical`] and [`Informational`].
+/// - **X11:** Sets the WM's `XUrgencyHint`. No distinction between [`Critical`] and [`Informational`].
 ///
 /// [`Critical`]: Self::Critical
 /// [`Informational`]: Self::Informational

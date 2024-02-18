@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glutin-0.29.1/src/platform_impl/unix/x11.rs`."><title>x11.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="glutin" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../glutin/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glutin-0.29.1/src/platform_impl/unix/x11.rs`."><title>x11.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="glutin" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -668,7 +669,7 @@
 <a href="#668" id="668">668</a>
 <a href="#669" id="669">669</a>
 <a href="#670" id="670">670</a>
-</pre></div><pre class="rust"><code><span class="attr">#![cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+</pre></div><pre class="rust"><code><span class="attr">#![cfg(feature = <span class="string">"x11"</span>)]
 
 </span><span class="kw">use </span><span class="kw">crate</span>::api::egl::{
     <span class="self">self</span>, Context <span class="kw">as </span>EglContext, NativeDisplay, SurfaceType <span class="kw">as </span>EglSurfaceType, EGL,
@@ -701,7 +702,7 @@
 
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>NoX11Connection {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter) -&gt; std::fmt::Result {
-        f.write_str(<span class="string">&quot;failed to get x11 connection&quot;</span>)
+        f.write_str(<span class="string">"failed to get x11 connection"</span>)
     }
 }
 
@@ -716,9 +717,9 @@
     context: X11Context,
 }
 
-<span class="kw">enum </span>Prototype&lt;<span class="lifetime">&#39;a</span>&gt; {
-    Glx(<span class="kw">crate</span>::api::glx::ContextPrototype&lt;<span class="lifetime">&#39;a</span>&gt;),
-    Egl(<span class="kw">crate</span>::api::egl::ContextPrototype&lt;<span class="lifetime">&#39;a</span>&gt;),
+<span class="kw">enum </span>Prototype&lt;<span class="lifetime">'a</span>&gt; {
+    Glx(<span class="kw">crate</span>::api::glx::ContextPrototype&lt;<span class="lifetime">'a</span>&gt;),
+    Egl(<span class="kw">crate</span>::api::egl::ContextPrototype&lt;<span class="lifetime">'a</span>&gt;),
 }
 
 <span class="attr">#[derive(Debug)]
@@ -758,7 +759,7 @@
 // transparency does work with glx.
 //
 // https://bugs.freedesktop.org/show_bug.cgi?id=67676&lt;Paste&gt;
-// I&#39;m on a patch.
+// I'm on a patch.
 </span><span class="kw">pub fn </span>select_config&lt;T, F&gt;(
     xconn: <span class="kw-2">&amp;</span>Arc&lt;XConnection&gt;,
     transparent: <span class="prelude-ty">Option</span>&lt;bool&gt;,
@@ -817,7 +818,7 @@
     <span class="kw">match </span>lacks_what {
         <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(())) =&gt; (),
         <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(Lacks::Transparency)) =&gt; <span class="macro">log::warn!</span>(
-            <span class="string">&quot;Glutin could not a find fb config with an alpha mask. Transparency may be broken.&quot;
+            <span class="string">"Glutin could not a find fb config with an alpha mask. Transparency may be broken."
         </span>),
         <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(Lacks::Xid)) =&gt; <span class="macro">panic!</span>(),
         <span class="prelude-val">None </span>=&gt; <span class="macro">unreachable!</span>(),
@@ -921,7 +922,7 @@
                 // &gt;
                 // &gt; RESOLVED: Yes. ES2 + OES_surfaceless_context, ES 3.0, and
                 // &gt; GL 3.0 all support binding a context without a drawable.
-                // &gt; This implies that they don&#39;t need to know drawable
+                // &gt; This implies that they don't need to know drawable
                 // &gt; attributes at context creation time.
                 // &gt;
                 // &gt; In principle, equivalent functionality could be possible
@@ -936,7 +937,7 @@
                 </span>Prototype::Egl(ctx) =&gt; X11Context::Egl(ctx.finish_surfaceless()<span class="question-mark">?</span>),
                 <span class="kw">_ </span>=&gt; {
                     <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NotSupported(
-                        <span class="string">&quot;Surfaceless GLX context not implemented&quot;</span>.to_string(),
+                        <span class="string">"Surfaceless GLX context not implemented"</span>.to_string(),
                     ))
                 }
             };
@@ -948,18 +949,18 @@
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>new_first_stage&lt;<span class="lifetime">&#39;a</span>&gt;(
+    </span><span class="kw">fn </span>new_first_stage&lt;<span class="lifetime">'a</span>&gt;(
         xconn: <span class="kw-2">&amp;</span>Arc&lt;XConnection&gt;,
         pf_reqs: <span class="kw-2">&amp;</span>PixelFormatRequirements,
-        gl_attr: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Context&gt;,
+        gl_attr: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Context&gt;,
         screen_id: raw::c_int,
-        builder_glx_u: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>GlxContext&gt;&gt;,
-        builder_egl_u: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>EglContext&gt;&gt;,
+        builder_glx_u: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>GlxContext&gt;&gt;,
+        builder_egl_u: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>EglContext&gt;&gt;,
         surface_type: EglSurfaceType,
         prefer_egl: bool,
         force_prefer_unless_only: bool,
         transparent: <span class="prelude-ty">Option</span>&lt;bool&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Prototype&lt;<span class="lifetime">&#39;a</span>&gt;, CreationError&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;Prototype&lt;<span class="lifetime">'a</span>&gt;, CreationError&gt; {
         <span class="kw">let </span>select_config = |cs, display| {
             select_config(xconn, transparent, pf_reqs, cs, |config_id| {
                 <span class="kw">let </span>xid = egl::get_native_visual_id(display, <span class="kw-2">*</span>config_id) <span class="kw">as </span>ffi::VisualID;
@@ -977,13 +978,13 @@
                 <span class="comment">// GLX should be preferred over EGL, otherwise crashes may occur
                 // on X11 – issue #314
                 //
-                // However, with surfaceless, GLX isn&#39;t really there, so we
+                // However, with surfaceless, GLX isn't really there, so we
                 // should prefer EGL.
-                </span><span class="kw">let </span>glx = |builder_u: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;<span class="kw">_</span>&gt;| {
+                </span><span class="kw">let </span>glx = |builder_u: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;<span class="kw">_</span>&gt;| {
                     <span class="kw">let </span>builder = gl_attr.clone();
                     <span class="kw-2">*</span>builder_u = <span class="prelude-val">Some</span>(builder.map_sharing(|c| <span class="kw">match </span>c.context {
                         X11Context::Glx(<span class="kw-2">ref </span>c) =&gt; c,
-                        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;context already exists but is wrong type&quot;</span>),
+                        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"context already exists but is wrong type"</span>),
                     }));
                     <span class="prelude-val">Ok</span>(Prototype::Glx(GlxContext::new(
                         Arc::clone(xconn),
@@ -995,11 +996,11 @@
                     )<span class="question-mark">?</span>))
                 };
 
-                <span class="kw">let </span>egl = |builder_u: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;<span class="kw">_</span>&gt;| {
+                <span class="kw">let </span>egl = |builder_u: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="prelude-ty">Option</span>&lt;<span class="kw">_</span>&gt;| {
                     <span class="kw">let </span>builder = gl_attr.clone();
                     <span class="kw-2">*</span>builder_u = <span class="prelude-val">Some</span>(builder.map_sharing(|c| <span class="kw">match </span>c.context {
                         X11Context::Egl(<span class="kw-2">ref </span>c) =&gt; c,
-                        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;context already exists but is wrong type&quot;</span>),
+                        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"context already exists but is wrong type"</span>),
                     }));
                     <span class="kw">let </span>native_display = NativeDisplay::X11(<span class="prelude-val">Some</span>(xconn.display <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>));
                     <span class="prelude-val">Ok</span>(Prototype::Egl(EglContext::new(
@@ -1012,22 +1013,22 @@
                 };
 
                 <span class="comment">// if there is already a context, just use that.
-                // this prevents the &quot;context already exists but is wrong type&quot; panics above.
+                // this prevents the "context already exists but is wrong type" panics above.
                 </span><span class="kw">if let </span><span class="prelude-val">Some</span>(c) = gl_attr.sharing {
                     <span class="kw">match </span>c.context {
                         X11Context::Glx(<span class="kw">_</span>) =&gt; {
-                            GLX.as_ref().expect(<span class="string">&quot;found GLX context but GLX not loaded&quot;</span>);
+                            GLX.as_ref().expect(<span class="string">"found GLX context but GLX not loaded"</span>);
                             <span class="kw">return </span>glx(builder_glx_u);
                         }
                         X11Context::Egl(<span class="kw">_</span>) =&gt; {
-                            EGL.as_ref().expect(<span class="string">&quot;found EGL context but EGL not loaded&quot;</span>);
+                            EGL.as_ref().expect(<span class="string">"found EGL context but EGL not loaded"</span>);
                             <span class="kw">return </span>egl(builder_egl_u);
                         }
                     }
                 }
 
                 <span class="comment">// force_prefer_unless_only does what it says on the tin, it
-                // forces only the preferred method to happen unless it&#39;s the
+                // forces only the preferred method to happen unless it's the
                 // only method available.
                 //
                 // Users of this function should first call with `prefer_egl`
@@ -1039,10 +1040,10 @@
                 // `!&lt;status of their choice&gt;` and `force_prefer_unless_only`
                 // as true.
                 //
-                // That way, they&#39;ll try their fallback if available, unless
+                // That way, they'll try their fallback if available, unless
                 // it was their only option and they have already tried it.
                 </span><span class="kw">if </span>!force_prefer_unless_only {
-                    <span class="comment">// If the preferred choice works, don&#39;t spend time testing
+                    <span class="comment">// If the preferred choice works, don't spend time testing
                     // if the other works.
                     </span><span class="kw">if </span>prefer_egl {
                         <span class="kw">if </span>EGL.is_some() {
@@ -1057,7 +1058,7 @@
                     }
 
                     <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NotSupported(
-                        <span class="string">&quot;both libGL and libEGL are not present&quot;</span>.to_string(),
+                        <span class="string">"both libGL and libEGL are not present"</span>.to_string(),
                     ));
                 } <span class="kw">else </span>{
                     <span class="kw">if </span>prefer_egl {
@@ -1069,7 +1070,7 @@
                     }
 
                     <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NotSupported(
-                        <span class="string">&quot;lacking either libGL or libEGL so could not fallback to other&quot;</span>.to_string(),
+                        <span class="string">"lacking either libGL or libEGL so could not fallback to other"</span>.to_string(),
                     ));
                 }
             }
@@ -1088,12 +1089,12 @@
                         select_config,
                     )<span class="question-mark">?</span>)
                 } <span class="kw">else </span>{
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NotSupported(<span class="string">&quot;libEGL not present&quot;</span>.to_string()));
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NotSupported(<span class="string">"libEGL not present"</span>.to_string()));
                 }
             }
             GlRequest::Specific(<span class="kw">_</span>, <span class="kw">_</span>) =&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(CreationError::NotSupported(
-                    <span class="string">&quot;requested specific without gl or gles&quot;</span>.to_string(),
+                    <span class="string">"requested specific without gl or gles"</span>.to_string(),
                 ));
             }
         })
@@ -1194,7 +1195,7 @@
             attrs
         };
 
-        <span class="comment">// Not particularly efficient, but it&#39;s the only method I can find.
+        <span class="comment">// Not particularly efficient, but it's the only method I can find.
         </span><span class="kw">let </span><span class="kw-2">mut </span>screen_id = <span class="number">0</span>;
         <span class="kw">unsafe </span>{
             <span class="kw">while </span>attrs.screen != (xconn.xlib.XScreenOfDisplay)(xconn.display, screen_id) {
@@ -1316,7 +1317,7 @@
     </span><span class="kw">pub fn </span>swap_buffers_with_damage(<span class="kw-2">&amp;</span><span class="self">self</span>, rects: <span class="kw-2">&amp;</span>[Rect]) -&gt; <span class="prelude-ty">Result</span>&lt;(), ContextError&gt; {
         <span class="kw">match </span><span class="self">self</span>.context {
             X11Context::Glx(<span class="kw">_</span>) =&gt; {
-                <span class="prelude-val">Err</span>(ContextError::OsError(<span class="string">&quot;buffer damage not suported&quot;</span>.to_string()))
+                <span class="prelude-val">Err</span>(ContextError::OsError(<span class="string">"buffer damage not suported"</span>.to_string()))
             }
             X11Context::Egl(<span class="kw-2">ref </span>ctx) =&gt; ctx.swap_buffers_with_damage(rects),
         }

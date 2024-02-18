@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/event.rs`."><title>event.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../winit/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/event.rs`."><title>event.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1291,7 +1292,7 @@
 //! These are sent to the closure given to [`EventLoop::run(...)`], where they get
 //! processed and used to modify the program state. For more details, see the root-level documentation.
 //!
-//! Some of these events represent different &quot;parts&quot; of a traditional event-handling loop. You could
+//! Some of these events represent different "parts" of a traditional event-handling loop. You could
 //! approximate the basic ordering loop of [`EventLoop::run(...)`] like this:
 //!
 //! ```rust,ignore
@@ -1337,7 +1338,7 @@
 ///
 /// See the module-level docs for more information on the event loop manages each event.
 </span><span class="attr">#[derive(Debug, PartialEq)]
-</span><span class="kw">pub enum </span>Event&lt;<span class="lifetime">&#39;a</span>, T: <span class="lifetime">&#39;static</span>&gt; {
+</span><span class="kw">pub enum </span>Event&lt;<span class="lifetime">'a</span>, T: <span class="lifetime">'static</span>&gt; {
     <span class="doccomment">/// Emitted when new events arrive from the OS to be processed.
     ///
     /// This event type is useful as a place to put code that should be done before you start
@@ -1349,7 +1350,7 @@
     <span class="doccomment">/// Emitted when the OS sends an event to a winit window.
     </span>WindowEvent {
         window_id: WindowId,
-        event: WindowEvent&lt;<span class="lifetime">&#39;a</span>&gt;,
+        event: WindowEvent&lt;<span class="lifetime">'a</span>&gt;,
     },
 
     <span class="doccomment">/// Emitted when the OS sends an event to a device.
@@ -1373,14 +1374,14 @@
     ///
     /// Considering that the implementation of `Suspended` and [`Resumed`] events may be internally
     /// driven by multiple platform-specific events, and that there may be subtle differences across
-    /// platforms with how these internal events are delivered, it&#39;s recommended that applications
+    /// platforms with how these internal events are delivered, it's recommended that applications
     /// be able to gracefully handle redundant (i.e. back-to-back) `Suspended` or [`Resumed`] events.
     ///
     /// Also see [`Resumed`] notes.
     ///
     /// ## Android
     ///
-    /// On Android, the `Suspended` event is only sent when the application&#39;s associated
+    /// On Android, the `Suspended` event is only sent when the application's associated
     /// [`SurfaceView`] is destroyed. This is expected to closely correlate with the [`onPause`]
     /// lifecycle event but there may technically be a discrepancy.
     ///
@@ -1413,21 +1414,21 @@
 
     <span class="doccomment">/// Emitted when the application has been resumed.
     ///
-    /// For consistency, all platforms emit a `Resumed` event even if they don&#39;t themselves have a
+    /// For consistency, all platforms emit a `Resumed` event even if they don't themselves have a
     /// formal suspend/resume lifecycle. For systems without a standard suspend/resume lifecycle
     /// the `Resumed` event is always emitted after the [`NewEvents(StartCause::Init)`][StartCause::Init]
     /// event.
     ///
     /// # Portability
     ///
-    /// It&#39;s recommended that applications should only initialize their graphics context and create
+    /// It's recommended that applications should only initialize their graphics context and create
     /// a window after they have received their first `Resumed` event. Some systems
-    /// (specifically Android) won&#39;t allow applications to create a render surface until they are
+    /// (specifically Android) won't allow applications to create a render surface until they are
     /// resumed.
     ///
     /// Considering that the implementation of [`Suspended`] and `Resumed` events may be internally
     /// driven by multiple platform-specific events, and that there may be subtle differences across
-    /// platforms with how these internal events are delivered, it&#39;s recommended that applications
+    /// platforms with how these internal events are delivered, it's recommended that applications
     /// be able to gracefully handle redundant (i.e. back-to-back) [`Suspended`] or `Resumed` events.
     ///
     /// Also see [`Suspended`] notes.
@@ -1456,7 +1457,7 @@
     /// ## iOS
     ///
     /// On iOS, the `Resumed` event is emitted in response to an [`applicationDidBecomeActive`]
-    /// callback which means the application is &quot;active&quot; (according to the
+    /// callback which means the application is "active" (according to the
     /// [iOS application lifecycle]).
     ///
     /// [`applicationDidBecomeActive`]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622956-applicationdidbecomeactive
@@ -1465,13 +1466,13 @@
     /// [`Suspended`]: Self::Suspended
     </span>Resumed,
 
-    <span class="doccomment">/// Emitted when all of the event loop&#39;s input events have been processed and redraw processing
+    <span class="doccomment">/// Emitted when all of the event loop's input events have been processed and redraw processing
     /// is about to begin.
     ///
     /// This event is useful as a place to put your code that should be run after all
     /// state-changing events have been handled and you want to do stuff (updating state, performing
-    /// calculations, etc) that happens as the &quot;main body&quot; of your event loop. If your program only draws
-    /// graphics when something changes, it&#39;s usually better to do it in response to
+    /// calculations, etc) that happens as the "main body" of your event loop. If your program only draws
+    /// graphics when something changes, it's usually better to do it in response to
     /// [`Event::RedrawRequested`](crate::event::Event::RedrawRequested), which gets emitted
     /// immediately after this event. Programs that draw graphics continuously, like most games,
     /// can render here unconditionally for simplicity.
@@ -1480,7 +1481,7 @@
     <span class="doccomment">/// Emitted after [`MainEventsCleared`] when a window should be redrawn.
     ///
     /// This gets triggered in two scenarios:
-    /// - The OS has performed an operation that&#39;s invalidated the window&#39;s contents (such as
+    /// - The OS has performed an operation that's invalidated the window's contents (such as
     ///   resizing the window).
     /// - The application has explicitly requested a redraw via [`Window::request_redraw`].
     ///
@@ -1506,11 +1507,11 @@
     <span class="doccomment">/// Emitted when the event loop is being shut down.
     ///
     /// This is irreversible - if this event is emitted, it is guaranteed to be the last event that
-    /// gets emitted. You generally want to treat this as an &quot;do on quit&quot; event.
+    /// gets emitted. You generally want to treat this as an "do on quit" event.
     </span>LoopDestroyed,
 }
 
-<span class="kw">impl</span>&lt;T: Clone&gt; Clone <span class="kw">for </span>Event&lt;<span class="lifetime">&#39;static</span>, T&gt; {
+<span class="kw">impl</span>&lt;T: Clone&gt; Clone <span class="kw">for </span>Event&lt;<span class="lifetime">'static</span>, T&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="kw">use </span><span class="self">self</span>::Event::<span class="kw-2">*</span>;
         <span class="kw">match </span><span class="self">self </span>{
@@ -1534,8 +1535,8 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T&gt; Event&lt;<span class="lifetime">&#39;a</span>, T&gt; {
-    <span class="kw">pub fn </span>map_nonuser_event&lt;U&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Event&lt;<span class="lifetime">&#39;a</span>, U&gt;, Event&lt;<span class="lifetime">&#39;a</span>, T&gt;&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T&gt; Event&lt;<span class="lifetime">'a</span>, T&gt; {
+    <span class="kw">pub fn </span>map_nonuser_event&lt;U&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Event&lt;<span class="lifetime">'a</span>, U&gt;, Event&lt;<span class="lifetime">'a</span>, T&gt;&gt; {
         <span class="kw">use </span><span class="self">self</span>::Event::<span class="kw-2">*</span>;
         <span class="kw">match </span><span class="self">self </span>{
             UserEvent(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="self">self</span>),
@@ -1551,9 +1552,9 @@
         }
     }
 
-    <span class="doccomment">/// If the event doesn&#39;t contain a reference, turn it into an event with a `&#39;static` lifetime.
+    <span class="doccomment">/// If the event doesn't contain a reference, turn it into an event with a `'static` lifetime.
     /// Otherwise, return `None`.
-    </span><span class="kw">pub fn </span>to_static(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Event&lt;<span class="lifetime">&#39;static</span>, T&gt;&gt; {
+    </span><span class="kw">pub fn </span>to_static(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Event&lt;<span class="lifetime">'static</span>, T&gt;&gt; {
         <span class="kw">use </span><span class="self">self</span>::Event::<span class="kw-2">*</span>;
         <span class="kw">match </span><span class="self">self </span>{
             WindowEvent { window_id, event } =&gt; event
@@ -1592,7 +1593,7 @@
         requested_resume: <span class="prelude-ty">Option</span>&lt;Instant&gt;,
     },
 
-    <span class="doccomment">/// Sent if the event loop is being resumed after the loop&#39;s control flow was set to
+    <span class="doccomment">/// Sent if the event loop is being resumed after the loop's control flow was set to
     /// [`ControlFlow::Poll`].
     ///
     /// [`ControlFlow::Poll`]: crate::event_loop::ControlFlow::Poll
@@ -1604,11 +1605,11 @@
 
 <span class="doccomment">/// Describes an event from a [`Window`].
 </span><span class="attr">#[derive(Debug, PartialEq)]
-</span><span class="kw">pub enum </span>WindowEvent&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="doccomment">/// The size of the window has changed. Contains the client area&#39;s new dimensions.
+</span><span class="kw">pub enum </span>WindowEvent&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="doccomment">/// The size of the window has changed. Contains the client area's new dimensions.
     </span>Resized(PhysicalSize&lt;u32&gt;),
 
-    <span class="doccomment">/// The position of the window has changed. Contains the window&#39;s new position.
+    <span class="doccomment">/// The position of the window has changed. Contains the window's new position.
     ///
     /// ## Platform-specific
     ///
@@ -1669,8 +1670,8 @@
     ///
     /// ## Platform-specific
     ///
-    /// - **Web:** This API is currently unimplemented on the web. This isn&#39;t by design - it&#39;s an
-    ///   issue, and it should get fixed - but it&#39;s the current state of the API.
+    /// - **Web:** This API is currently unimplemented on the web. This isn't by design - it's an
+    ///   issue, and it should get fixed - but it's the current state of the API.
     </span>ModifiersChanged(ModifiersState),
 
     <span class="doccomment">/// An event from an input method.
@@ -1690,7 +1691,7 @@
         /// limited by the display area and it may have been transformed by the OS to implement effects such as cursor
         /// acceleration, it should not be used to implement non-cursor-like interactions such as 3D camera control.
         </span>position: PhysicalPosition&lt;f64&gt;,
-        <span class="attr">#[deprecated = <span class="string">&quot;Deprecated in favor of WindowEvent::ModifiersChanged&quot;</span>]
+        <span class="attr">#[deprecated = <span class="string">"Deprecated in favor of WindowEvent::ModifiersChanged"</span>]
         </span>modifiers: ModifiersState,
     },
 
@@ -1705,7 +1706,7 @@
         device_id: DeviceId,
         delta: MouseScrollDelta,
         phase: TouchPhase,
-        <span class="attr">#[deprecated = <span class="string">&quot;Deprecated in favor of WindowEvent::ModifiersChanged&quot;</span>]
+        <span class="attr">#[deprecated = <span class="string">"Deprecated in favor of WindowEvent::ModifiersChanged"</span>]
         </span>modifiers: ModifiersState,
     },
 
@@ -1714,7 +1715,7 @@
         device_id: DeviceId,
         state: ElementState,
         button: MouseButton,
-        <span class="attr">#[deprecated = <span class="string">&quot;Deprecated in favor of WindowEvent::ModifiersChanged&quot;</span>]
+        <span class="attr">#[deprecated = <span class="string">"Deprecated in favor of WindowEvent::ModifiersChanged"</span>]
         </span>modifiers: ModifiersState,
     },
 
@@ -1739,12 +1740,12 @@
     <span class="doccomment">/// Touch event has been received
     </span>Touch(Touch),
 
-    <span class="doccomment">/// The window&#39;s scale factor has changed.
+    <span class="doccomment">/// The window's scale factor has changed.
     ///
     /// The following user actions can cause DPI changes:
     ///
-    /// * Changing the display&#39;s resolution.
-    /// * Changing the display&#39;s scale factor (e.g. in Control Panel on Windows).
+    /// * Changing the display's resolution.
+    /// * Changing the display's scale factor (e.g. in Control Panel on Windows).
     /// * Moving the window to a display with a different scale factor.
     ///
     /// After this event callback has been processed, the window will be resized to whatever value
@@ -1754,7 +1755,7 @@
     /// For more information about DPI in general, see the [`dpi`](crate::dpi) module.
     </span>ScaleFactorChanged {
         scale_factor: f64,
-        new_inner_size: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>PhysicalSize&lt;u32&gt;,
+        new_inner_size: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>PhysicalSize&lt;u32&gt;,
     },
 
     <span class="doccomment">/// The system window theme has changed.
@@ -1777,7 +1778,7 @@
     </span>Occluded(bool),
 }
 
-<span class="kw">impl </span>Clone <span class="kw">for </span>WindowEvent&lt;<span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">impl </span>Clone <span class="kw">for </span>WindowEvent&lt;<span class="lifetime">'static</span>&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="kw">use </span><span class="self">self</span>::WindowEvent::<span class="kw-2">*</span>;
         <span class="kw">return match </span><span class="self">self </span>{
@@ -1862,15 +1863,15 @@
             Touch(touch) =&gt; Touch(<span class="kw-2">*</span>touch),
             ThemeChanged(theme) =&gt; ThemeChanged(<span class="kw-2">*</span>theme),
             ScaleFactorChanged { .. } =&gt; {
-                <span class="macro">unreachable!</span>(<span class="string">&quot;Static event can&#39;t be about scale factor changing&quot;</span>)
+                <span class="macro">unreachable!</span>(<span class="string">"Static event can't be about scale factor changing"</span>)
             }
             Occluded(occluded) =&gt; Occluded(<span class="kw-2">*</span>occluded),
         };
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; WindowEvent&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">pub fn </span>to_static(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WindowEvent&lt;<span class="lifetime">&#39;static</span>&gt;&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; WindowEvent&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">pub fn </span>to_static(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;WindowEvent&lt;<span class="lifetime">'static</span>&gt;&gt; {
         <span class="kw">use </span><span class="self">self</span>::WindowEvent::<span class="kw-2">*</span>;
         <span class="kw">match </span><span class="self">self </span>{
             Resized(size) =&gt; <span class="prelude-val">Some</span>(Resized(size)),
@@ -2028,12 +2029,12 @@
 
 <span class="doccomment">/// Describes a keyboard input event.
 </span><span class="attr">#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub struct </span>KeyboardInput {
     <span class="doccomment">/// Identifies the physical key pressed
     ///
-    /// This should not change if the user adjusts the host&#39;s keyboard map. Use when the physical location of the
-    /// key is more important than the key&#39;s host GUI semantics, such as for movement controls in a first-person
+    /// This should not change if the user adjusts the host's keyboard map. Use when the physical location of the
+    /// key is more important than the key's host GUI semantics, such as for movement controls in a first-person
     /// game.
     </span><span class="kw">pub </span>scancode: ScanCode,
 
@@ -2042,33 +2043,33 @@
     <span class="doccomment">/// Identifies the semantic meaning of the key
     ///
     /// Use when the semantics of the key are more important than the physical location of the key, such as when
-    /// implementing appropriate behavior for &quot;page up.&quot;
+    /// implementing appropriate behavior for "page up."
     </span><span class="kw">pub </span>virtual_keycode: <span class="prelude-ty">Option</span>&lt;VirtualKeyCode&gt;,
 
     <span class="doccomment">/// Modifier keys active at the time of this input.
     ///
     /// This is tracked internally to avoid tracking errors arising from modifier key state changes when events from
     /// this device are not being delivered to the application, e.g. due to keyboard focus being elsewhere.
-    </span><span class="attr">#[deprecated = <span class="string">&quot;Deprecated in favor of WindowEvent::ModifiersChanged&quot;</span>]
+    </span><span class="attr">#[deprecated = <span class="string">"Deprecated in favor of WindowEvent::ModifiersChanged"</span>]
     </span><span class="kw">pub </span>modifiers: ModifiersState,
 }
 
 <span class="doccomment">/// Describes [input method](https://en.wikipedia.org/wiki/Input_method) events.
 ///
-/// This is also called a &quot;composition event&quot;.
+/// This is also called a "composition event".
 ///
 /// Most keypresses using a latin-like keyboard layout simply generate a [`WindowEvent::ReceivedCharacter`].
-/// However, one couldn&#39;t possibly have a key for every single unicode character that the user might want to type
+/// However, one couldn't possibly have a key for every single unicode character that the user might want to type
 /// - so the solution operating systems employ is to allow the user to type these using _a sequence of keypresses_ instead.
 ///
-/// A prominent example of this is accents - many keyboard layouts allow you to first click the &quot;accent key&quot;, and then
+/// A prominent example of this is accents - many keyboard layouts allow you to first click the "accent key", and then
 /// the character you want to apply the accent to. This will generate the following event sequence:
 /// ```ignore
-/// // Press &quot;`&quot; key
-/// Ime::Preedit(&quot;`&quot;, Some((0, 0)))
-/// // Press &quot;E&quot; key
-/// Ime::Preedit(&quot;&quot;, None) // Synthetic event generated by winit to clear preedit.
-/// Ime::Commit(&quot;é&quot;)
+/// // Press "`" key
+/// Ime::Preedit("`", Some((0, 0)))
+/// // Press "E" key
+/// Ime::Preedit("", None) // Synthetic event generated by winit to clear preedit.
+/// Ime::Commit("é")
 /// ```
 ///
 /// Additionally, certain input devices are configured to display a candidate box that allow the user to select the
@@ -2077,20 +2078,20 @@
 /// An example of a keyboard layout which uses candidate boxes is pinyin. On a latin keybaord the following event
 /// sequence could be obtained:
 /// ```ignore
-/// // Press &quot;A&quot; key
-/// Ime::Preedit(&quot;a&quot;, Some((1, 1)))
-/// // Press &quot;B&quot; key
-/// Ime::Preedit(&quot;a b&quot;, Some((3, 3)))
+/// // Press "A" key
+/// Ime::Preedit("a", Some((1, 1)))
+/// // Press "B" key
+/// Ime::Preedit("a b", Some((3, 3)))
 /// // Press left arrow key
-/// Ime::Preedit(&quot;a b&quot;, Some((1, 1)))
+/// Ime::Preedit("a b", Some((1, 1)))
 /// // Press space key
-/// Ime::Preedit(&quot;啊b&quot;, Some((3, 3)))
+/// Ime::Preedit("啊b", Some((3, 3)))
 /// // Press space key
-/// Ime::Preedit(&quot;&quot;, None) // Synthetic event generated by winit to clear preedit.
-/// Ime::Commit(&quot;啊不&quot;)
+/// Ime::Preedit("", None) // Synthetic event generated by winit to clear preedit.
+/// Ime::Commit("啊不")
 /// ```
 </span><span class="attr">#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Ime {
     <span class="doccomment">/// Notifies when the IME was enabled.
     ///
@@ -2102,7 +2103,7 @@
     <span class="doccomment">/// Notifies when a new composing text should be set at the cursor position.
     ///
     /// The value represents a pair of the preedit string and the cursor begin position and end
-    /// position. When it&#39;s `None`, the cursor should be hidden. When `String` is an empty string
+    /// position. When it's `None`, the cursor should be hidden. When `String` is an empty string
     /// this indicates that preedit was cleared.
     ///
     /// The cursor position is byte-wise indexed.
@@ -2115,7 +2116,7 @@
 
     <span class="doccomment">/// Notifies when the IME was disabled.
     ///
-    /// After receiving this event you won&#39;t get any more [`Preedit`](Self::Preedit) or
+    /// After receiving this event you won't get any more [`Preedit`](Self::Preedit) or
     /// [`Commit`](Self::Commit) events until the next [`Enabled`](Self::Enabled) event. You should
     /// also stop issuing IME related requests like [`Window::set_ime_position`] and clear pending
     /// preedit text.
@@ -2124,7 +2125,7 @@
 
 <span class="doccomment">/// Describes touch-screen input state.
 </span><span class="attr">#[derive(Debug, Hash, PartialEq, Eq, Clone, Copy)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>TouchPhase {
     Started,
     Moved,
@@ -2191,7 +2192,7 @@
         </span>altitude_angle: <span class="prelude-ty">Option</span>&lt;f64&gt;,
     },
     <span class="doccomment">/// If the platform reports the force as normalized, we have no way of
-    /// knowing how much pressure 1.0 corresponds to – we know it&#39;s the maximum
+    /// knowing how much pressure 1.0 corresponds to – we know it's the maximum
     /// amount of force, but as to how much force, you might either have to
     /// press really really hard, or not hard at all, depending on the device.
     </span>Normalized(f64),
@@ -2232,7 +2233,7 @@
 
 <span class="doccomment">/// Describes the input state of a key.
 </span><span class="attr">#[derive(Debug, Hash, PartialEq, Eq, Clone, Copy)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>ElementState {
     Pressed,
     Released,
@@ -2240,7 +2241,7 @@
 
 <span class="doccomment">/// Describes a button of a mouse controller.
 </span><span class="attr">#[derive(Debug, Hash, PartialEq, Eq, Clone, Copy)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>MouseButton {
     Left,
     Right,
@@ -2250,7 +2251,7 @@
 
 <span class="doccomment">/// Describes a difference in the mouse scroll wheel state.
 </span><span class="attr">#[derive(Debug, Clone, Copy, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>MouseScrollDelta {
     <span class="doccomment">/// Amount in lines or rows to scroll in the horizontal
     /// and vertical directions.
@@ -2269,7 +2270,7 @@
     /// Positive values indicate that the content being scrolled should
     /// move right/down.
     ///
-    /// For a &#39;natural scrolling&#39; touch pad (that acts like a touch screen)
+    /// For a 'natural scrolling' touch pad (that acts like a touch screen)
     /// this means moving your fingers right and down should give positive values,
     /// and move the content right and down (to reveal more things left and up).
     </span>PixelDelta(PhysicalPosition&lt;f64&gt;),
@@ -2278,27 +2279,27 @@
 <span class="doccomment">/// Symbolic name for a keyboard key.
 </span><span class="attr">#[derive(Debug, Hash, Ord, PartialOrd, PartialEq, Eq, Clone, Copy)]
 #[repr(u32)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>VirtualKeyCode {
-    <span class="doccomment">/// The &#39;1&#39; key over the letters.
+    <span class="doccomment">/// The '1' key over the letters.
     </span>Key1,
-    <span class="doccomment">/// The &#39;2&#39; key over the letters.
+    <span class="doccomment">/// The '2' key over the letters.
     </span>Key2,
-    <span class="doccomment">/// The &#39;3&#39; key over the letters.
+    <span class="doccomment">/// The '3' key over the letters.
     </span>Key3,
-    <span class="doccomment">/// The &#39;4&#39; key over the letters.
+    <span class="doccomment">/// The '4' key over the letters.
     </span>Key4,
-    <span class="doccomment">/// The &#39;5&#39; key over the letters.
+    <span class="doccomment">/// The '5' key over the letters.
     </span>Key5,
-    <span class="doccomment">/// The &#39;6&#39; key over the letters.
+    <span class="doccomment">/// The '6' key over the letters.
     </span>Key6,
-    <span class="doccomment">/// The &#39;7&#39; key over the letters.
+    <span class="doccomment">/// The '7' key over the letters.
     </span>Key7,
-    <span class="doccomment">/// The &#39;8&#39; key over the letters.
+    <span class="doccomment">/// The '8' key over the letters.
     </span>Key8,
-    <span class="doccomment">/// The &#39;9&#39; key over the letters.
+    <span class="doccomment">/// The '9' key over the letters.
     </span>Key9,
-    <span class="doccomment">/// The &#39;0&#39; key over the &#39;O&#39; and &#39;P&#39; keys.
+    <span class="doccomment">/// The '0' key over the 'O' and 'P' keys.
     </span>Key0,
 
     A,
@@ -2384,7 +2385,7 @@
     <span class="doccomment">/// The space bar.
     </span>Space,
 
-    <span class="doccomment">/// The &quot;Compose&quot; key on Linux.
+    <span class="doccomment">/// The "Compose" key on Linux.
     </span>Compose,
 
     Caret,
@@ -2437,9 +2438,9 @@
     Minus,
     Mute,
     MyComputer,
-    <span class="comment">// also called &quot;Next&quot;
+    <span class="comment">// also called "Next"
     </span>NavigateForward,
-    <span class="comment">// also called &quot;Prior&quot;
+    <span class="comment">// also called "Prior"
     </span>NavigateBackward,
     NextTrack,
     NoConvert,
@@ -2505,33 +2506,33 @@
     </span><span class="kw">pub struct </span>ModifiersState: u32 {
         <span class="comment">// left and right modifiers are currently commented out, but we should be able to support
         // them in a future release
-        </span><span class="doccomment">/// The &quot;shift&quot; key.
+        </span><span class="doccomment">/// The "shift" key.
         </span><span class="kw">const </span>SHIFT = <span class="number">0b100</span>;
         <span class="comment">// const LSHIFT = 0b010;
         // const RSHIFT = 0b001;
-        </span><span class="doccomment">/// The &quot;control&quot; key.
+        </span><span class="doccomment">/// The "control" key.
         </span><span class="kw">const </span>CTRL = <span class="number">0b100 </span>&lt;&lt; <span class="number">3</span>;
         <span class="comment">// const LCTRL = 0b010 &lt;&lt; 3;
         // const RCTRL = 0b001 &lt;&lt; 3;
-        </span><span class="doccomment">/// The &quot;alt&quot; key.
+        </span><span class="doccomment">/// The "alt" key.
         </span><span class="kw">const </span>ALT = <span class="number">0b100 </span>&lt;&lt; <span class="number">6</span>;
         <span class="comment">// const LALT = 0b010 &lt;&lt; 6;
         // const RALT = 0b001 &lt;&lt; 6;
-        </span><span class="doccomment">/// This is the &quot;windows&quot; key on PC and &quot;command&quot; key on Mac.
+        </span><span class="doccomment">/// This is the "windows" key on PC and "command" key on Mac.
         </span><span class="kw">const </span>LOGO = <span class="number">0b100 </span>&lt;&lt; <span class="number">9</span>;
         <span class="comment">// const LLOGO = 0b010 &lt;&lt; 9;
         // const RLOGO = 0b001 &lt;&lt; 9;
     </span>}
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"serde"</span>)]
 </span><span class="kw">mod </span>modifiers_serde {
     <span class="kw">use </span><span class="kw">super</span>::ModifiersState;
     <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize, Serializer};
 
     <span class="attr">#[derive(Default, Serialize, Deserialize)]
     #[serde(default)]
-    #[serde(rename = <span class="string">&quot;ModifiersState&quot;</span>)]
+    #[serde(rename = <span class="string">"ModifiersState"</span>)]
     </span><span class="kw">pub struct </span>ModifiersStateSerialize {
         <span class="kw">pub </span>shift: bool,
         <span class="kw">pub </span>ctrl: bool,
@@ -2554,10 +2555,10 @@
         }
     }
 
-    <span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>ModifiersState {
+    <span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ModifiersState {
         <span class="kw">fn </span>deserialize&lt;D&gt;(deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
         <span class="kw">where
-            </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+            </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
         {
             <span class="kw">let </span>ModifiersStateSerialize {
                 shift,

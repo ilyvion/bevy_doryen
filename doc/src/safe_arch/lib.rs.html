@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/safe_arch-0.5.2/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="safe_arch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../safe_arch/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/safe_arch-0.5.2/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="safe_arch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -298,7 +299,7 @@
 //! runtime and then call an intrinsic or use a fallback path based on that then
 //! this crate is sadly not for you.
 //!
-//! SIMD register types are &quot;newtype&#39;d&quot; so that better trait impls can be given
+//! SIMD register types are "newtype'd" so that better trait impls can be given
 //! to them, but the inner value is a `pub` field so feel free to just grab it
 //! out if you need to. Trait impls of the newtypes include: `Default` (zeroed),
 //! `From`/`Into` of appropriate data types, and appropriate operator
@@ -313,21 +314,21 @@
 //!   * Try the [bytemuck](https://docs.rs/bytemuck) crate (and turn on the
 //!     `bytemuck` feature of this crate) if you want help safely casting
 //!     between reference types.
-//! * Some intrinsics are not safe unless you&#39;re _very_ careful about how you
+//! * Some intrinsics are not safe unless you're _very_ careful about how you
 //!   use them, such as the streaming operations requiring you to use them in
-//!   combination with an appropriate memory fence. Those operations aren&#39;t
+//!   combination with an appropriate memory fence. Those operations aren't
 //!   exposed here.
 //! * Some intrinsics mess with the processor state, such as changing the
 //!   floating point flags, saving and loading special register state, and so
-//!   on. LLVM doesn&#39;t really support you messing with that within a high level
-//!   language, so those operations aren&#39;t exposed here. Use assembly or
+//!   on. LLVM doesn't really support you messing with that within a high level
+//!   language, so those operations aren't exposed here. Use assembly or
 //!   something if you want to do that.
 //!
 //! ## Naming Conventions
-//! The `safe_arch` crate does not simply use the &quot;official&quot; names for each
+//! The `safe_arch` crate does not simply use the "official" names for each
 //! intrinsic, because the official names are generally poor. Instead, the
 //! operations have been given better names that makes things hopefully easier
-//! to understand then you&#39;re reading the code.
+//! to understand then you're reading the code.
 //!
 //! For a full explanation of the naming used, see the [Naming
 //! Conventions](crate::naming_conventions) page.
@@ -343,41 +344,41 @@
 //!
 //! At the time of me writing this, Rust enables the `sse` and `sse2` CPU
 //! features by default for all `i686` (x86) and `x86_64` builds. Those CPU
-//! features are built into the design of `x86_64`, and you&#39;d need a _super_ old
-//! `x86` CPU for it to not support at least `sse` and `sse2`, so they&#39;re a safe
+//! features are built into the design of `x86_64`, and you'd need a _super_ old
+//! `x86` CPU for it to not support at least `sse` and `sse2`, so they're a safe
 //! bet for the language to enable all the time. In fact, because the standard
 //! library is compiled with them enabled, simply trying to _disable_ those
 //! features would actually cause ABI issues and fill your program with UB
 //! ([link][rustc_docs]).
 //!
-//! If you want additional CPU features available at compile time you&#39;ll have to
+//! If you want additional CPU features available at compile time you'll have to
 //! enable them with an additional arg to `rustc`. For a feature named `name`
 //! you pass `-C target-feature=+name`, such as `-C target-feature=+sse3` for
 //! `sse3`.
 //!
 //! You can alternately enable _all_ target features of the current CPU with `-C
-//! target-cpu=native`. This is primarily of use if you&#39;re building a program
-//! you&#39;ll only run on your own system.
+//! target-cpu=native`. This is primarily of use if you're building a program
+//! you'll only run on your own system.
 //!
-//! It&#39;s sometimes hard to know if your target platform will support a given
+//! It's sometimes hard to know if your target platform will support a given
 //! feature set, but the [Steam Hardware Survey][steam-survey] is generally
 //! taken as a guide to what you can expect people to have available. If you
-//! click &quot;Other Settings&quot; it&#39;ll expand into a list of CPU target features and
+//! click "Other Settings" it'll expand into a list of CPU target features and
 //! how common they are. These days, it seems that `sse3` can be safely assumed,
 //! and `ssse3`, `sse4.1`, and `sse4.2` are pretty safe bets as well. The stuff
-//! above 128-bit isn&#39;t as common yet, give it another few years.
+//! above 128-bit isn't as common yet, give it another few years.
 //!
-//! **Please note that executing a program on a CPU that doesn&#39;t support the
+//! **Please note that executing a program on a CPU that doesn't support the
 //! target features it was compiles for is Undefined Behavior.**
 //!
-//! Currently, Rust doesn&#39;t actually support an easy way for you to check that a
+//! Currently, Rust doesn't actually support an easy way for you to check that a
 //! feature enabled at compile time is _actually_ available at runtime. There is
-//! the &quot;[feature_detected][feature_detected]&quot; family of macros, but if you
+//! the "[feature_detected][feature_detected]" family of macros, but if you
 //! enable a feature they will evaluate to a constant `true` instead of actually
 //! deferring the check for the feature to runtime. This means that, if you
 //! _did_ want a check at the start of your program, to confirm that all the
-//! assumed features are present and error out when the assumptions don&#39;t hold,
-//! you can&#39;t use that macro. You gotta use CPUID and check manually. rip.
+//! assumed features are present and error out when the assumptions don't hold,
+//! you can't use that macro. You gotta use CPUID and check manually. rip.
 //! Hopefully we can make that process easier in a future version of this crate.
 //!
 //! [steam-survey]:
@@ -388,26 +389,26 @@
 //!
 //! ### A Note On Working With Cfg
 //!
-//! There&#39;s two main ways to use `cfg`:
+//! There's two main ways to use `cfg`:
 //! * Via an attribute placed on an item, block, or expression:
-//!   * `#[cfg(debug_assertions)] println!(&quot;hello&quot;);`
+//!   * `#[cfg(debug_assertions)] println!("hello");`
 //! * Via a macro used within an expression position:
-//!   * `if cfg!(debug_assertions) { println!(&quot;hello&quot;); }`
+//!   * `if cfg!(debug_assertions) { println!("hello"); }`
 //!
-//! The difference might seem small but it&#39;s actually very important:
+//! The difference might seem small but it's actually very important:
 //! * The attribute form will include code or not _before_ deciding if all the
 //!   items named and so forth really exist or not. This means that code that is
-//!   configured via attribute can safely name things that don&#39;t always exist as
+//!   configured via attribute can safely name things that don't always exist as
 //!   long as the things they name do exist whenever that code is configured
 //!   into the build.
 //! * The macro form will include the configured code _no matter what_, and then
 //!   the macro resolves to a constant `true` or `false` and the compiler uses
 //!   dead code elimination to cut out the path not taken.
 //!
-//! This crate uses `cfg` via the attribute, so the functions it exposes don&#39;t
-//! exist at all when the appropriate CPU target features aren&#39;t enabled.
+//! This crate uses `cfg` via the attribute, so the functions it exposes don't
+//! exist at all when the appropriate CPU target features aren't enabled.
 //! Accordingly, if you plan to call this crate or not depending on what
-//! features are enabled in the build you&#39;ll also need to control your use of
+//! features are enabled in the build you'll also need to control your use of
 //! this crate via cfg attribute, not cfg macro.
 
 </span><span class="kw">use </span>core::{
@@ -437,22 +438,22 @@
 
 <span class="comment">// Note(Lokathor): Stupid as it sounds, we need to put the imports here at the
 // crate root because the arch-specific macros that we define in our inner
-// modules are actually &quot;scoped&quot; to also be at the crate root. We want the
-// rustdoc generation of the macros to &quot;see&quot; these imports so that the docs link
+// modules are actually "scoped" to also be at the crate root. We want the
+// rustdoc generation of the macros to "see" these imports so that the docs link
 // over to the `core::arch` module correctly.
 // https://github.com/rust-lang/rust/issues/72243
 
-</span><span class="attr">#[cfg(target_arch = <span class="string">&quot;x86&quot;</span>)]
+</span><span class="attr">#[cfg(target_arch = <span class="string">"x86"</span>)]
 </span><span class="kw">use </span>core::arch::x86::<span class="kw-2">*</span>;
-<span class="attr">#[cfg(target_arch = <span class="string">&quot;x86_64&quot;</span>)]
+<span class="attr">#[cfg(target_arch = <span class="string">"x86_64"</span>)]
 </span><span class="kw">use </span>core::arch::x86_64::<span class="kw-2">*</span>;
 
-<span class="attr">#[cfg(any(target_arch = <span class="string">&quot;x86&quot;</span>, target_arch = <span class="string">&quot;x86_64&quot;</span>))]
+<span class="attr">#[cfg(any(target_arch = <span class="string">"x86"</span>, target_arch = <span class="string">"x86_64"</span>))]
 </span><span class="macro">submodule!</span>(<span class="kw">pub </span>x86_x64 {
   <span class="doccomment">//! Types and functions for safe `x86` / `x86_64` intrinsic usage.
   //!
   //! `x86_64` is essentially a superset of `x86`, so we just lump it all into
-  //! one module. Anything not available on `x86` simply won&#39;t be in the build
+  //! one module. Anything not available on `x86` simply won't be in the build
   //! on that arch.
   </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
@@ -466,56 +467,56 @@
 
   <span class="comment">// Note(Lokathor): We only include these sub-modules with the actual functions
   // if the feature is enabled. Ae *also* have a cfg attribute on the inside of
-  // the modules as a &quot;double-verification&quot; of sorts. Technically either way on
+  // the modules as a "double-verification" of sorts. Technically either way on
   // its own would also be fine.
 
-  // These CPU features follow a fairly clear and strict progression that&#39;s easy
+  // These CPU features follow a fairly clear and strict progression that's easy
   // to remember. Most of them offer a fair pile of new functions.
-  </span><span class="attr">#[cfg(target_feature = <span class="string">&quot;sse&quot;</span>)]
+  </span><span class="attr">#[cfg(target_feature = <span class="string">"sse"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>sse);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;sse2&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"sse2"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>sse2);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;sse3&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"sse3"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>sse3);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;ssse3&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"ssse3"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>ssse3);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;sse4.1&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"sse4.1"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>sse4_1);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;sse4.2&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"sse4.2"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>sse4_2);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;avx&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"avx"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>avx);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;avx2&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"avx2"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>avx2);
 
-  <span class="comment">// These features aren&#39;t as easy to remember the progression of and they each
+  <span class="comment">// These features aren't as easy to remember the progression of and they each
   // only add a small handful of functions.
-  </span><span class="attr">#[cfg(target_feature = <span class="string">&quot;adx&quot;</span>)]
+  </span><span class="attr">#[cfg(target_feature = <span class="string">"adx"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>adx);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;aes&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"aes"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>aes);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;bmi1&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"bmi1"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>bmi1);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;bmi2&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"bmi2"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>bmi2);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;fma&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"fma"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>fma);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;lzcnt&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"lzcnt"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>lzcnt);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;pclmulqdq&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"pclmulqdq"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>pclmulqdq);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;popcnt&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"popcnt"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>popcnt);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;rdrand&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"rdrand"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>rdrand);
-  <span class="attr">#[cfg(target_feature = <span class="string">&quot;rdseed&quot;</span>)]
+  <span class="attr">#[cfg(target_feature = <span class="string">"rdseed"</span>)]
   </span><span class="macro">submodule!</span>(<span class="kw">pub </span>rdseed);
 
-  <span class="doccomment">/// Reads the CPU&#39;s timestamp counter value.
+  <span class="doccomment">/// Reads the CPU's timestamp counter value.
   ///
   /// This is a monotonically increasing time-stamp that goes up every clock
   /// cycle of the CPU. However, since modern CPUs are variable clock rate
-  /// depending on demand this can&#39;t actually be used for telling the time. It
+  /// depending on demand this can't actually be used for telling the time. It
   /// also does _not_ fully serialize all operations, so previous instructions
   /// might still be in progress when this reads the timestamp.
   ///
@@ -523,20 +524,20 @@
   /// * **Assembly:** `rdtsc`
   </span><span class="kw">pub fn </span>read_timestamp_counter() -&gt; u64 {
     <span class="comment">// Note(Lokathor): This was changed from i64 to u64 at some point, but
-    // everyone ever was already casting this value to `u64` so crater didn&#39;t
+    // everyone ever was already casting this value to `u64` so crater didn't
     // even consider it a problem. We will follow suit.
     </span><span class="kw">unsafe </span>{ _rdtsc() <span class="kw">as </span>u64 }
   }
 
-  <span class="doccomment">/// Reads the CPU&#39;s timestamp counter value and store the processor signature.
+  <span class="doccomment">/// Reads the CPU's timestamp counter value and store the processor signature.
   ///
   /// This works similar to [`read_timestamp_counter`] with two main
   /// differences:
   /// * It and also stores the `IA32_TSC_AUX MSR` value to the reference given.
   /// * It waits on all previous instructions to finish before reading the
-  ///   timestamp (though it doesn&#39;t prevent other instructions from starting).
+  ///   timestamp (though it doesn't prevent other instructions from starting).
   ///
-  /// As with `read_timestamp_counter`, you can&#39;t actually use this to tell the
+  /// As with `read_timestamp_counter`, you can't actually use this to tell the
   /// time.
   ///
   /// * **Intrinsic:** `__rdtscp`
@@ -565,7 +566,7 @@
   /// ```
   /// * **Intrinsic:** `_bswap64`
   /// * **Assembly:** `bswap r64`
-  </span><span class="attr">#[cfg(target_arch=<span class="string">&quot;x86_64&quot;</span>)]
+  </span><span class="attr">#[cfg(target_arch=<span class="string">"x86_64"</span>)]
   </span><span class="kw">pub fn </span>byte_swap_i64(i: i64) -&gt; i64 {
     <span class="kw">unsafe </span>{ _bswap64(i) }
   }

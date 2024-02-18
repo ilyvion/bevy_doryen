@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/event_loop.rs`."><title>event_loop.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../winit/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/event_loop.rs`."><title>event_loop.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -431,7 +432,7 @@
 <span class="doccomment">/// Provides a way to retrieve events from the system and from the windows that were registered to
 /// the events loop.
 ///
-/// An `EventLoop` can be seen more or less as a &quot;context&quot;. Calling [`EventLoop::new`]
+/// An `EventLoop` can be seen more or less as a "context". Calling [`EventLoop::new`]
 /// initializes everything that will be required to create windows. For example on Linux creating
 /// an event loop opens a connection to the X or Wayland server.
 ///
@@ -443,7 +444,7 @@
 /// [`EventLoopProxy`] allows you to wake up an `EventLoop` from another thread.
 ///
 /// [`Window`]: crate::window::Window
-</span><span class="kw">pub struct </span>EventLoop&lt;T: <span class="lifetime">&#39;static</span>&gt; {
+</span><span class="kw">pub struct </span>EventLoop&lt;T: <span class="lifetime">'static</span>&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) event_loop: platform_impl::EventLoop&lt;T&gt;,
     <span class="kw">pub</span>(<span class="kw">crate</span>) _marker: PhantomData&lt;<span class="kw-2">*mut </span>()&gt;, <span class="comment">// Not Send nor Sync
 </span>}
@@ -454,7 +455,7 @@
 /// your callback. [`EventLoop`] will coerce into this type (`impl&lt;T&gt; Deref for
 /// EventLoop&lt;T&gt;`), so functions that take this as a parameter can also take
 /// `&amp;EventLoop`.
-</span><span class="kw">pub struct </span>EventLoopWindowTarget&lt;T: <span class="lifetime">&#39;static</span>&gt; {
+</span><span class="kw">pub struct </span>EventLoopWindowTarget&lt;T: <span class="lifetime">'static</span>&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) p: platform_impl::EventLoopWindowTarget&lt;T&gt;,
     <span class="kw">pub</span>(<span class="kw">crate</span>) _marker: PhantomData&lt;<span class="kw-2">*mut </span>()&gt;, <span class="comment">// Not Send nor Sync
 </span>}
@@ -464,7 +465,7 @@
 /// This is used to make specifying options that affect the whole application
 /// easier. But note that constructing multiple event loops is not supported.
 </span><span class="attr">#[derive(Default)]
-</span><span class="kw">pub struct </span>EventLoopBuilder&lt;T: <span class="lifetime">&#39;static</span>&gt; {
+</span><span class="kw">pub struct </span>EventLoopBuilder&lt;T: <span class="lifetime">'static</span>&gt; {
     <span class="kw">pub</span>(<span class="kw">crate</span>) platform_specific: platform_impl::PlatformSpecificEventLoopAttributes,
     _p: PhantomData&lt;T&gt;,
 }
@@ -494,7 +495,7 @@
     /// and only once per application.***
     ///
     /// Attempting to create the event loop on a different thread, or multiple event loops in
-    /// the same application, will panic. This restriction isn&#39;t
+    /// the same application, will panic. This restriction isn't
     /// strictly necessary on all platforms, but is imposed to eliminate any nasty surprises when
     /// porting to platforms that require it. `EventLoopBuilderExt::any_thread` functions are exposed
     /// in the relevant [`platform`] module if the target platform supports creating an event loop on
@@ -514,7 +515,7 @@
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; EventLoop&lt;T&gt; {
         <span class="kw">static </span>EVENT_LOOP_CREATED: OnceCell&lt;()&gt; = OnceCell::new();
         <span class="kw">if </span>EVENT_LOOP_CREATED.set(()).is_err() {
-            <span class="macro">panic!</span>(<span class="string">&quot;Creating EventLoop multiple times is not supported.&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">"Creating EventLoop multiple times is not supported."</span>);
         }
         <span class="comment">// Certain platforms accept a mutable reference in their API.
         </span><span class="attr">#[allow(clippy::unnecessary_mut_passed)]
@@ -526,14 +527,14 @@
 }
 
 <span class="kw">impl</span>&lt;T&gt; fmt::Debug <span class="kw">for </span>EventLoop&lt;T&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.pad(<span class="string">&quot;EventLoop { .. }&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.pad(<span class="string">"EventLoop { .. }"</span>)
     }
 }
 
 <span class="kw">impl</span>&lt;T&gt; fmt::Debug <span class="kw">for </span>EventLoopWindowTarget&lt;T&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.pad(<span class="string">&quot;EventLoopWindowTarget { .. }&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.pad(<span class="string">"EventLoopWindowTarget { .. }"</span>)
     }
 }
 
@@ -569,7 +570,7 @@
     <span class="doccomment">/// When the current loop iteration finishes, suspend the thread until either another event
     /// arrives or the given time is reached.
     ///
-    /// Useful for implementing efficient timers. Applications which want to render at the display&#39;s
+    /// Useful for implementing efficient timers. Applications which want to render at the display's
     /// native refresh rate should instead use [`Poll`] and the VSync functionality of a graphics API
     /// to reduce odds of missed frames.
     ///
@@ -661,17 +662,17 @@
 }
 
 <span class="kw">impl</span>&lt;T&gt; EventLoop&lt;T&gt; {
-    <span class="attr">#[deprecated = <span class="string">&quot;Use `EventLoopBuilder::&lt;T&gt;::with_user_event().build()` instead.&quot;</span>]
+    <span class="attr">#[deprecated = <span class="string">"Use `EventLoopBuilder::&lt;T&gt;::with_user_event().build()` instead."</span>]
     </span><span class="kw">pub fn </span>with_user_event() -&gt; EventLoop&lt;T&gt; {
         EventLoopBuilder::&lt;T&gt;::with_user_event().build()
     }
 
     <span class="doccomment">/// Hijacks the calling thread and initializes the winit event loop with the provided
-    /// closure. Since the closure is `&#39;static`, it must be a `move` closure if it needs to
+    /// closure. Since the closure is `'static`, it must be a `move` closure if it needs to
     /// access any data from the calling context.
     ///
     /// See the [`ControlFlow`] docs for information on how changes to `&amp;mut ControlFlow` impact the
-    /// event loop&#39;s behavior.
+    /// event loop's behavior.
     ///
     /// Any values not passed to this function will *not* be dropped.
     ///
@@ -684,7 +685,7 @@
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>run&lt;F&gt;(<span class="self">self</span>, event_handler: F) -&gt; !
     <span class="kw">where
-        </span>F: <span class="lifetime">&#39;static </span>+ FnMut(Event&lt;<span class="lifetime">&#39;_</span>, T&gt;, <span class="kw-2">&amp;</span>EventLoopWindowTarget&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
+        </span>F: <span class="lifetime">'static </span>+ FnMut(Event&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw-2">&amp;</span>EventLoopWindowTarget&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
     {
         <span class="self">self</span>.event_loop.run(event_handler)
     }
@@ -716,7 +717,7 @@
 
     <span class="doccomment">/// Returns the primary monitor of the system.
     ///
-    /// Returns `None` if it can&#39;t identify any monitor as a primary one.
+    /// Returns `None` if it can't identify any monitor as a primary one.
     ///
     /// ## Platform-specific
     ///
@@ -739,12 +740,12 @@
     /// [`DeviceEvent`]: crate::event::DeviceEvent
     </span><span class="kw">pub fn </span>set_device_event_filter(<span class="kw-2">&amp;</span><span class="self">self</span>, _filter: DeviceEventFilter) {
         <span class="attr">#[cfg(any(
-            target_os = <span class="string">&quot;linux&quot;</span>,
-            target_os = <span class="string">&quot;dragonfly&quot;</span>,
-            target_os = <span class="string">&quot;freebsd&quot;</span>,
-            target_os = <span class="string">&quot;netbsd&quot;</span>,
-            target_os = <span class="string">&quot;openbsd&quot;</span>,
-            target_os = <span class="string">&quot;windows&quot;
+            target_os = <span class="string">"linux"</span>,
+            target_os = <span class="string">"dragonfly"</span>,
+            target_os = <span class="string">"freebsd"</span>,
+            target_os = <span class="string">"netbsd"</span>,
+            target_os = <span class="string">"openbsd"</span>,
+            target_os = <span class="string">"windows"
         </span>))]
         </span><span class="self">self</span>.p.set_device_event_filter(_filter);
     }
@@ -758,11 +759,11 @@
 }
 
 <span class="doccomment">/// Used to send custom events to [`EventLoop`].
-</span><span class="kw">pub struct </span>EventLoopProxy&lt;T: <span class="lifetime">&#39;static</span>&gt; {
+</span><span class="kw">pub struct </span>EventLoopProxy&lt;T: <span class="lifetime">'static</span>&gt; {
     event_loop_proxy: platform_impl::EventLoopProxy&lt;T&gt;,
 }
 
-<span class="kw">impl</span>&lt;T: <span class="lifetime">&#39;static</span>&gt; Clone <span class="kw">for </span>EventLoopProxy&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <span class="lifetime">'static</span>&gt; Clone <span class="kw">for </span>EventLoopProxy&lt;T&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             event_loop_proxy: <span class="self">self</span>.event_loop_proxy.clone(),
@@ -770,7 +771,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;T: <span class="lifetime">&#39;static</span>&gt; EventLoopProxy&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <span class="lifetime">'static</span>&gt; EventLoopProxy&lt;T&gt; {
     <span class="doccomment">/// Send an event to the [`EventLoop`] from which this proxy was created. This emits a
     /// `UserEvent(event)` event in the event loop, where `event` is the value passed to this
     /// function.
@@ -783,9 +784,9 @@
     }
 }
 
-<span class="kw">impl</span>&lt;T: <span class="lifetime">&#39;static</span>&gt; fmt::Debug <span class="kw">for </span>EventLoopProxy&lt;T&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.pad(<span class="string">&quot;EventLoopProxy { .. }&quot;</span>)
+<span class="kw">impl</span>&lt;T: <span class="lifetime">'static</span>&gt; fmt::Debug <span class="kw">for </span>EventLoopProxy&lt;T&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.pad(<span class="string">"EventLoopProxy { .. }"</span>)
     }
 }
 
@@ -797,8 +798,8 @@
 </span><span class="kw">pub struct </span>EventLoopClosed&lt;T&gt;(<span class="kw">pub </span>T);
 
 <span class="kw">impl</span>&lt;T&gt; fmt::Display <span class="kw">for </span>EventLoopClosed&lt;T&gt; {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        f.write_str(<span class="string">&quot;Tried to wake up a closed `EventLoop`&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        f.write_str(<span class="string">"Tried to wake up a closed `EventLoop`"</span>)
     }
 }
 

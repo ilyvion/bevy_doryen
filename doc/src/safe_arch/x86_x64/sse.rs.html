@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/safe_arch-0.5.2/src/x86_x64/sse.rs`."><title>sse.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="safe_arch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../safe_arch/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/safe_arch-0.5.2/src/x86_x64/sse.rs`."><title>sse.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="safe_arch" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1440,7 +1441,7 @@
 <a href="#1440" id="1440">1440</a>
 <a href="#1441" id="1441">1441</a>
 <a href="#1442" id="1442">1442</a>
-</pre></div><pre class="rust"><code><span class="attr">#![cfg(target_feature = <span class="string">&quot;sse&quot;</span>)]
+</pre></div><pre class="rust"><code><span class="attr">#![cfg(target_feature = <span class="string">"sse"</span>)]
 
 </span><span class="kw">use super</span>::<span class="kw-2">*</span>;
 
@@ -1454,7 +1455,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>add_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_add_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1469,7 +1470,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>add_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_add_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1484,7 +1485,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>bitand_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_and_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1499,7 +1500,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>bitandnot_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_andnot_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1516,7 +1517,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_eq_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpeq_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1533,7 +1534,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_eq_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpeq_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1550,7 +1551,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ge_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpge_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1567,7 +1568,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ge_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpge_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1584,7 +1585,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_gt_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpgt_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1601,7 +1602,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_gt_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpgt_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1618,7 +1619,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_le_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmple_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1635,7 +1636,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_le_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmple_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1652,7 +1653,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_lt_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmplt_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1669,7 +1670,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_lt_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmplt_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1686,7 +1687,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_neq_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpneq_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1703,7 +1704,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_neq_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpneq_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1720,7 +1721,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_nge_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpnge_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1737,7 +1738,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_nge_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpnge_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1754,7 +1755,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ngt_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpngt_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1771,7 +1772,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ngt_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpngt_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1788,7 +1789,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_nle_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpnle_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1805,7 +1806,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_nle_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpnle_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1822,7 +1823,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_nlt_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpnlt_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1839,7 +1840,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_nlt_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpnlt_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1856,7 +1857,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ordinary_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpord_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1873,7 +1874,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ordinary_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpord_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1890,7 +1891,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_unord_mask_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpunord_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1907,7 +1908,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_unord_mask_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cmpunord_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -1923,7 +1924,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_eq_i32_m128_s(a: m128, b: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_comieq_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) }
 }
@@ -1939,7 +1940,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_ge_i32_m128_s(a: m128, b: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_comige_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) }
 }
@@ -1955,7 +1956,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_gt_i32_m128_s(a: m128, b: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_comigt_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) }
 }
@@ -1971,7 +1972,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_le_i32_m128_s(a: m128, b: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_comile_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) }
 }
@@ -1987,7 +1988,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_lt_i32_m128_s(a: m128, b: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_comilt_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) }
 }
@@ -2003,7 +2004,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>cmp_neq_i32_m128_s(a: m128, b: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_comineq_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) }
 }
@@ -2019,7 +2020,7 @@
 /// * **Assembly:** `cvtsi2ss xmm, r32`
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>convert_i32_replace_m128_s(a: m128, i: i32) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cvtsi32_ss(a.<span class="number">0</span>, i) })
 }
@@ -2035,8 +2036,8 @@
 /// * **Assembly:** `cvtsi2ss xmm, r64`
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg(arch = <span class="string">&quot;x86_64&quot;</span>)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg(arch = <span class="string">"x86_64"</span>)]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>convert_i64_replace_m128_s(a: m128, i: i64) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_cvtsi64_ss(a.<span class="number">0</span>, i) })
 }
@@ -2049,7 +2050,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>get_f32_from_m128_s(a: m128) -&gt; f32 {
   <span class="kw">unsafe </span>{ _mm_cvtss_f32(a.<span class="number">0</span>) }
 }
@@ -2062,7 +2063,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>get_i32_from_m128_s(a: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_cvtss_si32(a.<span class="number">0</span>) }
 }
@@ -2075,8 +2076,8 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg(arch = <span class="string">&quot;x86_64&quot;</span>)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg(arch = <span class="string">"x86_64"</span>)]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>get_i64_from_m128_s(a: m128) -&gt; i64 {
   <span class="kw">unsafe </span>{ _mm_cvttss_si64(a.<span class="number">0</span>) }
 }
@@ -2091,7 +2092,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>div_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_div_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2106,7 +2107,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>div_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_div_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2120,7 +2121,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>load_m128(a: <span class="kw-2">&amp;</span>m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_load_ps(a <span class="kw">as </span><span class="kw-2">*const </span>m128 <span class="kw">as </span><span class="kw-2">*const </span>f32) })
 }
@@ -2135,7 +2136,7 @@
 </span><span class="attr">#[must_use]
 #[inline(always)]
 #[allow(clippy::trivially_copy_pass_by_ref)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>load_f32_splat_m128(a: <span class="kw-2">&amp;</span>f32) -&gt; m128 {
   <span class="comment">// question: how is this different from _mm_broadcast_ss?
   </span>m128(<span class="kw">unsafe </span>{ _mm_load_ps1(a) })
@@ -2151,7 +2152,7 @@
 </span><span class="attr">#[must_use]
 #[inline(always)]
 #[allow(clippy::trivially_copy_pass_by_ref)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>load_f32_m128_s(a: <span class="kw-2">&amp;</span>f32) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_load_ss(a) })
 }
@@ -2165,7 +2166,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>load_reverse_m128(a: <span class="kw-2">&amp;</span>m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_loadr_ps(a <span class="kw">as </span><span class="kw-2">*const </span>m128 <span class="kw">as </span><span class="kw-2">*const </span>f32) })
 }
@@ -2183,7 +2184,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>load_unaligned_m128(a: <span class="kw-2">&amp;</span>[f32; <span class="number">4</span>]) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_loadu_ps(a <span class="kw">as </span><span class="kw-2">*const </span>[f32; <span class="number">4</span>] <span class="kw">as </span><span class="kw-2">*const </span>f32) })
 }
@@ -2198,7 +2199,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>max_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_max_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2213,7 +2214,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>max_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_max_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2228,7 +2229,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>min_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_min_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2243,7 +2244,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>min_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_min_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2258,7 +2259,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>move_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_move_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2273,7 +2274,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>move_high_low_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_movehl_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2288,7 +2289,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>move_low_high_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_movelh_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2304,7 +2305,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>move_mask_m128(a: m128) -&gt; i32 {
   <span class="kw">unsafe </span>{ _mm_movemask_ps(a.<span class="number">0</span>) }
 }
@@ -2319,7 +2320,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>mul_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_mul_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2334,7 +2335,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>mul_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_mul_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2349,7 +2350,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>bitor_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_or_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2366,7 +2367,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>reciprocal_m128(a: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_rcp_ps(a.<span class="number">0</span>) })
 }
@@ -2383,7 +2384,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>reciprocal_m128_s(a: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_rcp_ss(a.<span class="number">0</span>) })
 }
@@ -2400,7 +2401,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>reciprocal_sqrt_m128(a: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_rsqrt_ps(a.<span class="number">0</span>) })
 }
@@ -2417,7 +2418,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>reciprocal_sqrt_m128_s(a: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_rsqrt_ss(a.<span class="number">0</span>) })
 }
@@ -2431,7 +2432,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>set_m128(three: f32, two: f32, one: f32, zero: f32) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_set_ps(three, two, one, zero) })
 }
@@ -2445,7 +2446,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>set_m128_s(low: f32) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_set_ss(low) })
 }
@@ -2459,7 +2460,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>set_splat_m128(all: f32) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_set1_ps(all) })
 }
@@ -2473,7 +2474,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>set_reversed_m128(zero: f32, one: f32, two: f32, three: f32) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_setr_ps(zero, one, two, three) })
 }
@@ -2486,7 +2487,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>zeroed_m128() -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_setzero_ps() })
 }
@@ -2500,7 +2501,7 @@
 ///
 /// You can pass the same value as both arguments, but if you want to swizzle
 /// within only a single register and you have `avx` available consider using
-/// [`shuffle_ai_f32_all_m128`] instead. You&#39;ll get much better performance.
+/// [`shuffle_ai_f32_all_m128`] instead. You'll get much better performance.
 /// ```
 /// # use safe_arch::*;
 /// let a = m128::from_array([1.0, 2.0, 3.0, 4.0]);
@@ -2518,7 +2519,7 @@
 /// * **Intrinsic:** [`_mm_shuffle_ps`]
 /// * **Assembly:** `shufps xmm, xmm, imm8`
 </span><span class="attr">#[macro_export]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="macro">macro_rules! </span>shuffle_abi_f32_all_m128 {
   (<span class="macro-nonterminal">$a</span>:expr, <span class="macro-nonterminal">$b</span>:expr, [a:<span class="macro-nonterminal">$z</span>:expr, a:<span class="macro-nonterminal">$o</span>:expr, b:<span class="macro-nonterminal">$t</span>:expr, b:<span class="macro-nonterminal">$e</span>:expr]) =&gt; {{
     <span class="kw">const </span>MASK: ::core::primitive::i32 =
@@ -2526,9 +2527,9 @@
         <span class="kw">as </span>::core::primitive::i32;
     <span class="kw">let </span>a: <span class="macro-nonterminal">$crate::m128 </span>= <span class="macro-nonterminal">$a</span>;
     <span class="kw">let </span>b: <span class="macro-nonterminal">$crate::m128 </span>= <span class="macro-nonterminal">$b</span>;
-    <span class="attr">#[cfg(target_arch = <span class="string">&quot;x86&quot;</span>)]
+    <span class="attr">#[cfg(target_arch = <span class="string">"x86"</span>)]
     </span><span class="kw">use </span>::core::arch::x86::_mm_shuffle_ps;
-    <span class="attr">#[cfg(target_arch = <span class="string">&quot;x86_64&quot;</span>)]
+    <span class="attr">#[cfg(target_arch = <span class="string">"x86_64"</span>)]
     </span><span class="kw">use </span>::core::arch::x86_64::_mm_shuffle_ps;
     <span class="macro-nonterminal">$crate::m128</span>(<span class="kw">unsafe </span>{ _mm_shuffle_ps(a.<span class="number">0</span>, b.<span class="number">0</span>, MASK) })
   }};
@@ -2543,7 +2544,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>sqrt_m128(a: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_sqrt_ps(a.<span class="number">0</span>) })
 }
@@ -2557,7 +2558,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>sqrt_m128_s(a: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_sqrt_ss(a.<span class="number">0</span>) })
 }
@@ -2572,7 +2573,7 @@
 /// assert_eq!(c, [10.0, 12.0, 13.0, 14.0]);
 /// ```
 </span><span class="attr">#[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>store_m128(r: <span class="kw-2">&amp;mut </span>m128, a: m128) {
   <span class="kw">unsafe </span>{ _mm_store_ps(r <span class="kw">as </span><span class="kw-2">*mut </span>m128 <span class="kw">as </span><span class="kw-2">*mut </span>f32, a.<span class="number">0</span>) }
 }
@@ -2586,7 +2587,7 @@
 /// assert_eq!(f, 10.0);
 /// ```
 </span><span class="attr">#[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>store_m128_s(r: <span class="kw-2">&amp;mut </span>f32, a: m128) {
   <span class="kw">unsafe </span>{ _mm_store_ss(r <span class="kw">as </span><span class="kw-2">*mut </span>f32, a.<span class="number">0</span>) }
 }
@@ -2601,7 +2602,7 @@
 /// assert_eq!(c, [10.0, 10.0, 10.0, 10.0]);
 /// ```
 </span><span class="attr">#[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>store_splat_m128(r: <span class="kw-2">&amp;mut </span>m128, a: m128) {
   <span class="kw">unsafe </span>{ _mm_store1_ps(r <span class="kw">as </span><span class="kw-2">*mut </span>m128 <span class="kw">as </span><span class="kw-2">*mut </span>f32, a.<span class="number">0</span>) }
 }
@@ -2616,7 +2617,7 @@
 /// assert_eq!(c, [14.0, 13.0, 12.0, 10.0]);
 /// ```
 </span><span class="attr">#[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>store_reverse_m128(r: <span class="kw-2">&amp;mut </span>m128, a: m128) {
   <span class="kw">unsafe </span>{ _mm_storer_ps(r <span class="kw">as </span><span class="kw-2">*mut </span>m128 <span class="kw">as </span><span class="kw-2">*mut </span>f32, a.<span class="number">0</span>) }
 }
@@ -2634,7 +2635,7 @@
 /// assert_eq!(b, [10.0, 12.0, 13.0, 14.0]);
 /// ```
 </span><span class="attr">#[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>store_unaligned_m128(r: <span class="kw-2">&amp;mut </span>[f32; <span class="number">4</span>], a: m128) {
   <span class="kw">unsafe </span>{ _mm_store_ps(r.as_mut_ptr(), a.<span class="number">0</span>) }
 }
@@ -2649,7 +2650,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>sub_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_sub_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2664,7 +2665,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>sub_m128_s(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_sub_ss(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2683,7 +2684,7 @@
 /// assert_eq!(d.to_array(), [4.0, 8.0, 12.0, 16.0]);
 /// ```
 </span><span class="attr">#[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>transpose_four_m128(
   a: <span class="kw-2">&amp;mut </span>m128, b: <span class="kw-2">&amp;mut </span>m128, c: <span class="kw-2">&amp;mut </span>m128, d: <span class="kw-2">&amp;mut </span>m128,
 ) {
@@ -2700,7 +2701,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>unpack_high_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_unpackhi_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2715,7 +2716,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>unpack_low_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_unpacklo_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2730,7 +2731,7 @@
 /// ```
 </span><span class="attr">#[must_use]
 #[inline(always)]
-#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">&quot;sse&quot;</span>)))]
+#[cfg_attr(docs_rs, doc(cfg(target_feature = <span class="string">"sse"</span>)))]
 </span><span class="kw">pub fn </span>bitxor_m128(a: m128, b: m128) -&gt; m128 {
   m128(<span class="kw">unsafe </span>{ _mm_xor_ps(a.<span class="number">0</span>, b.<span class="number">0</span>) })
 }
@@ -2739,10 +2740,10 @@
 // Here we define the Operator Overloads for `m128`. Each one just calls the
 // correct function from above. By putting the impls here and not with the
 // `m128` type we theoretically would be able to build the crate safely even if
-// there&#39;s no `sse` feature enabled. You&#39;d just have a `m128` type without the
+// there's no `sse` feature enabled. You'd just have a `m128` type without the
 // operator overloads is all. Not that the standard Rust distribution can build
-// properly without `sse` enabled, but maybe you&#39;re using a custom target or
-// something. It doesn&#39;t really put us out of our way, so it doesn&#39;t hurt to try
+// properly without `sse` enabled, but maybe you're using a custom target or
+// something. It doesn't really put us out of our way, so it doesn't hurt to try
 // and accommodate the potential use case.
 //
 
@@ -2847,7 +2848,7 @@
 
 <span class="kw">impl </span>Not <span class="kw">for </span>m128 {
   <span class="kw">type </span>Output = <span class="self">Self</span>;
-  <span class="doccomment">/// Not a direct intrinsic, but it&#39;s very useful and the implementation is
+  <span class="doccomment">/// Not a direct intrinsic, but it's very useful and the implementation is
   /// simple enough.
   ///
   /// Negates the bits by performing an `xor` with an all-1s bit pattern.

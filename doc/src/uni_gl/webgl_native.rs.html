@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uni-gl-0.2.1/src/webgl_native.rs`."><title>webgl_native.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="uni_gl" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../uni_gl/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/uni-gl-0.2.1/src/webgl_native.rs`."><title>webgl_native.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="uni_gl" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -934,7 +935,7 @@
 <span class="attr">#[derive(Debug, PartialEq, Clone)]
 </span><span class="doccomment">/// uni-gl internal OpenGL context.
 ///
-/// You shouldn&#39;t use this struct directly. Instead, call the methods on [`WebGLRenderingContext`]
+/// You shouldn't use this struct directly. Instead, call the methods on [`WebGLRenderingContext`]
 /// as it automatically dereferences into a [`GLContext`].
 ///
 /// This doc is not intended to cover all OpenGL API in depth.
@@ -952,17 +953,17 @@
         <span class="kw">let </span>err = gl::GetError();
         <span class="kw">if </span>err != gl::NO_ERROR {
             <span class="macro">panic!</span>(
-                <span class="string">&quot;GLError: {} {} ({})&quot;</span>,
+                <span class="string">"GLError: {} {} ({})"</span>,
                 msg,
                 err,
                 <span class="kw">match </span>err {
-                    gl::INVALID_ENUM =&gt; <span class="string">&quot;invalid enum&quot;</span>,
-                    gl::INVALID_OPERATION =&gt; <span class="string">&quot;invalid operation&quot;</span>,
-                    gl::INVALID_VALUE =&gt; <span class="string">&quot;invalid value&quot;</span>,
-                    gl::OUT_OF_MEMORY =&gt; <span class="string">&quot;out of memory&quot;</span>,
-                    gl::STACK_OVERFLOW =&gt; <span class="string">&quot;stack overflow&quot;</span>,
-                    gl::STACK_UNDERFLOW =&gt; <span class="string">&quot;stack underflow&quot;</span>,
-                    <span class="kw">_ </span>=&gt; <span class="string">&quot;unknown error&quot;</span>,
+                    gl::INVALID_ENUM =&gt; <span class="string">"invalid enum"</span>,
+                    gl::INVALID_OPERATION =&gt; <span class="string">"invalid operation"</span>,
+                    gl::INVALID_VALUE =&gt; <span class="string">"invalid value"</span>,
+                    gl::OUT_OF_MEMORY =&gt; <span class="string">"out of memory"</span>,
+                    gl::STACK_OVERFLOW =&gt; <span class="string">"stack overflow"</span>,
+                    gl::STACK_UNDERFLOW =&gt; <span class="string">"stack underflow"</span>,
+                    <span class="kw">_ </span>=&gt; <span class="string">"unknown error"</span>,
                 }
             );
         }
@@ -979,7 +980,7 @@
     };
 }
 
-<span class="kw">pub type </span>WebGLContext&lt;<span class="lifetime">&#39;p</span>&gt; = Box&lt;<span class="kw">dyn </span><span class="lifetime">&#39;p </span>+ <span class="kw">for</span>&lt;<span class="lifetime">&#39;a</span>&gt; FnMut(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="kw-2">*const </span>c_void&gt;;
+<span class="kw">pub type </span>WebGLContext&lt;<span class="lifetime">'p</span>&gt; = Box&lt;<span class="kw">dyn </span><span class="lifetime">'p </span>+ <span class="kw">for</span>&lt;<span class="lifetime">'a</span>&gt; FnMut(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>str) -&gt; <span class="kw-2">*const </span>c_void&gt;;
 
 <span class="kw">impl </span>WebGLRenderingContext {
     <span class="doccomment">/// create an OpenGL context.
@@ -990,7 +991,7 @@
     /// let app = uni_app::App::new(...);
     /// let gl = uni_gl::WebGLRenderingContext::new(app.canvas());
     /// ```
-    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">&#39;p</span>&gt;(<span class="kw-2">mut </span>loadfn: WebGLContext&lt;<span class="lifetime">&#39;p</span>&gt;) -&gt; WebGLRenderingContext {
+    </span><span class="kw">pub fn </span>new&lt;<span class="lifetime">'p</span>&gt;(<span class="kw-2">mut </span>loadfn: WebGLContext&lt;<span class="lifetime">'p</span>&gt;) -&gt; WebGLRenderingContext {
         gl::load_with(<span class="kw">move </span>|name| loadfn(name));
 
         WebGLRenderingContext {
@@ -1002,12 +1003,12 @@
 <span class="kw">impl </span>GLContext {
     <span class="kw">pub fn </span>new() -&gt; GLContext {
         <span class="comment">//  unsafe { gl::Enable(gl::DEPTH_TEST) };
-        </span><span class="macro">println!</span>(<span class="string">&quot;opengl {}&quot;</span>, get_string(gl::VERSION));
+        </span><span class="macro">println!</span>(<span class="string">"opengl {}"</span>, get_string(gl::VERSION));
         <span class="macro">println!</span>(
-            <span class="string">&quot;shading language {}&quot;</span>,
+            <span class="string">"shading language {}"</span>,
             get_string(gl::SHADING_LANGUAGE_VERSION)
         );
-        <span class="macro">println!</span>(<span class="string">&quot;vendor {}&quot;</span>, get_string(gl::VENDOR));
+        <span class="macro">println!</span>(<span class="string">"vendor {}"</span>, get_string(gl::VENDOR));
         GLContext {
             reference: <span class="number">0</span>,
             is_webgl2: <span class="bool-val">true</span>,
@@ -1015,7 +1016,7 @@
     }
 
     <span class="kw">pub fn </span>print&lt;T: Into&lt;String&gt;&gt;(msg: T) {
-        <span class="macro">print!</span>(<span class="string">&quot;{}&quot;</span>, msg.into());
+        <span class="macro">print!</span>(<span class="string">"{}"</span>, msg.into());
     }
 
     <span class="doccomment">/// create a new OpenGL buffer
@@ -1024,7 +1025,7 @@
         <span class="kw">unsafe </span>{
             gl::GenBuffers(<span class="number">1</span>, <span class="kw-2">&amp;mut </span>buffer.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;create_buffer&quot;</span>);
+        check_gl_error(<span class="string">"create_buffer"</span>);
         buffer
     }
 
@@ -1033,7 +1034,7 @@
         <span class="kw">unsafe </span>{
             gl::DeleteBuffers(<span class="number">1</span>, <span class="kw-2">&amp;</span>buffer.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;delete_buffer&quot;</span>);
+        check_gl_error(<span class="string">"delete_buffer"</span>);
     }
 
     <span class="doccomment">/// bind a buffer to current state.
@@ -1041,7 +1042,7 @@
         <span class="kw">unsafe </span>{
             gl::BindBuffer(kind <span class="kw">as _</span>, buffer.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;bind_buffer&quot;</span>);
+        check_gl_error(<span class="string">"bind_buffer"</span>);
     }
 
     <span class="doccomment">/// fills a buffer with data.
@@ -1051,7 +1052,7 @@
         <span class="kw">unsafe </span>{
             gl::BufferData(kind <span class="kw">as _</span>, data.len() <span class="kw">as _</span>, data.as_ptr() <span class="kw">as _</span>, draw <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;buffer_data&quot;</span>);
+        check_gl_error(<span class="string">"buffer_data"</span>);
     }
 
     <span class="doccomment">/// update a subset of a buffer
@@ -1063,7 +1064,7 @@
         <span class="kw">unsafe </span>{
             gl::BufferSubData(kind <span class="kw">as _</span>, offset <span class="kw">as _</span>, data.len() <span class="kw">as _</span>, data.as_ptr() <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;buffer_sub_data&quot;</span>);
+        check_gl_error(<span class="string">"buffer_sub_data"</span>);
     }
 
     <span class="doccomment">/// this buffer is not bound to the current state anymore.
@@ -1071,13 +1072,13 @@
         <span class="kw">unsafe </span>{
             gl::BindBuffer(kind <span class="kw">as _</span>, <span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;unbind_buffer&quot;</span>);
+        check_gl_error(<span class="string">"unbind_buffer"</span>);
     }
 
     <span class="doccomment">/// create a new shader.
     </span><span class="kw">pub fn </span>create_shader(<span class="kw-2">&amp;</span><span class="self">self</span>, kind: ShaderKind) -&gt; WebGLShader {
         <span class="kw">let </span>shader = <span class="kw">unsafe </span>{ WebGLShader(gl::CreateShader(kind <span class="kw">as _</span>)) };
-        check_gl_error(<span class="string">&quot;create_shader&quot;</span>);
+        check_gl_error(<span class="string">"create_shader"</span>);
 
         <span class="kw">return </span>shader;
     }
@@ -1088,7 +1089,7 @@
         <span class="kw">unsafe </span>{
             gl::ShaderSource(shader.<span class="number">0</span>, <span class="number">1</span>, <span class="kw-2">&amp;</span>src.as_ptr(), ptr::null());
         }
-        check_gl_error(<span class="string">&quot;shader_source&quot;</span>);
+        check_gl_error(<span class="string">"shader_source"</span>);
     }
 
     <span class="doccomment">/// compile a shader
@@ -1114,19 +1115,19 @@
                 );
 
                 <span class="kw">match </span>String::from_utf8(buf) {
-                    <span class="prelude-val">Ok</span>(s) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, s),
-                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Compile shader fail, reason unknown&quot;</span>),
+                    <span class="prelude-val">Ok</span>(s) =&gt; <span class="macro">panic!</span>(<span class="string">"{}"</span>, s),
+                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">"Compile shader fail, reason unknown"</span>),
                 }
             }
         }
 
-        check_gl_error(<span class="string">&quot;compile_shader&quot;</span>);
+        check_gl_error(<span class="string">"compile_shader"</span>);
     }
 
     <span class="doccomment">/// create a program
     </span><span class="kw">pub fn </span>create_program(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; WebGLProgram {
         <span class="kw">let </span>p = <span class="kw">unsafe </span>{ WebGLProgram(gl::CreateProgram()) };
-        check_gl_error(<span class="string">&quot;create_program&quot;</span>);
+        check_gl_error(<span class="string">"create_program"</span>);
         p
     }
 
@@ -1152,12 +1153,12 @@
                 );
 
                 <span class="kw">match </span>String::from_utf8(buf) {
-                    <span class="prelude-val">Ok</span>(s) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, s),
-                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Link program fail, reason unknown&quot;</span>),
+                    <span class="prelude-val">Ok</span>(s) =&gt; <span class="macro">panic!</span>(<span class="string">"{}"</span>, s),
+                    <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="macro">panic!</span>(<span class="string">"Link program fail, reason unknown"</span>),
                 }
             }
         }
-        check_gl_error(<span class="string">&quot;link_program&quot;</span>);
+        check_gl_error(<span class="string">"link_program"</span>);
     }
 
     <span class="doccomment">/// bind a program to the current state.
@@ -1165,7 +1166,7 @@
         <span class="kw">unsafe </span>{
             gl::UseProgram(program.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;use_program&quot;</span>);
+        check_gl_error(<span class="string">"use_program"</span>);
     }
 
     <span class="doccomment">/// attach a shader to a program. A program must have two shaders : vertex and fragment shader.
@@ -1173,7 +1174,7 @@
         <span class="kw">unsafe </span>{
             gl::AttachShader(program.<span class="number">0</span>, shader.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;attach_shader&quot;</span>);
+        check_gl_error(<span class="string">"attach_shader"</span>);
     }
 
     <span class="doccomment">/// associate a generic vertex attribute index with a named attribute
@@ -1181,7 +1182,7 @@
         <span class="kw">let </span>c_name = CString::new(name).unwrap();
         <span class="kw">unsafe </span>{
             gl::BindAttribLocation(program.<span class="number">0 </span><span class="kw">as _</span>, loc <span class="kw">as _</span>, c_name.as_ptr());
-            check_gl_error(<span class="string">&quot;bind_attrib_location&quot;</span>);
+            check_gl_error(<span class="string">"bind_attrib_location"</span>);
         }
     }
 
@@ -1190,7 +1191,7 @@
         <span class="kw">let </span>c_name = CString::new(name).unwrap();
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>location = gl::GetAttribLocation(program.<span class="number">0 </span><span class="kw">as _</span>, c_name.as_ptr());
-            check_gl_error(<span class="string">&quot;get_attrib_location&quot;</span>);
+            check_gl_error(<span class="string">"get_attrib_location"</span>);
             <span class="kw">if </span>location == -<span class="number">1 </span>{
                 <span class="kw">return </span><span class="prelude-val">None</span>;
             }
@@ -1207,7 +1208,7 @@
         <span class="kw">let </span>c_name = CString::new(name).unwrap();
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>location = gl::GetUniformLocation(program.<span class="number">0 </span><span class="kw">as _</span>, c_name.as_ptr());
-            check_gl_error(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;get_uniform_location {}&quot;</span>, name));
+            check_gl_error(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"get_uniform_location {}"</span>, name));
             <span class="kw">if </span>location == -<span class="number">1 </span>{
                 <span class="kw">return </span><span class="prelude-val">None</span>;
             }
@@ -1239,10 +1240,10 @@
             );
         }
         <span class="comment">// println!(
-        //     &quot;{:?} {:?} {:?} {:?} {:?} {:?} {:?}&quot;,
+        //     "{:?} {:?} {:?} {:?} {:?} {:?} {:?}",
         //     location, size, kind, kind as u32, normalized, stride, offset
         // );
-        </span>check_gl_error(<span class="string">&quot;vertex_attrib_pointer&quot;</span>);
+        </span>check_gl_error(<span class="string">"vertex_attrib_pointer"</span>);
     }
 
     <span class="doccomment">/// enable a generic vertex attribute array
@@ -1250,7 +1251,7 @@
         <span class="kw">unsafe </span>{
             gl::EnableVertexAttribArray(location <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;enable_vertex_attrib_array&quot;</span>);
+        check_gl_error(<span class="string">"enable_vertex_attrib_array"</span>);
     }
 
     <span class="doccomment">/// specify clear values for the color buffers
@@ -1258,7 +1259,7 @@
         <span class="kw">unsafe </span>{
             gl::ClearColor(r, g, b, a);
         }
-        check_gl_error(<span class="string">&quot;clear_color&quot;</span>);
+        check_gl_error(<span class="string">"clear_color"</span>);
     }
 
     <span class="doccomment">/// enable GL capabilities.
@@ -1268,7 +1269,7 @@
         <span class="kw">unsafe </span>{
             gl::Enable(flag <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;enable&quot;</span>);
+        check_gl_error(<span class="string">"enable"</span>);
     }
 
     <span class="doccomment">/// disable GL capabilities.
@@ -1278,7 +1279,7 @@
         <span class="kw">unsafe </span>{
             gl::Disable(flag <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;disable&quot;</span>);
+        check_gl_error(<span class="string">"disable"</span>);
     }
 
     <span class="doccomment">/// specify whether front- or back-facing polygons can be culled
@@ -1286,7 +1287,7 @@
         <span class="kw">unsafe </span>{
             gl::CullFace(flag <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;cullface&quot;</span>);
+        check_gl_error(<span class="string">"cullface"</span>);
     }
 
     <span class="doccomment">/// enable or disable writing into the depth buffer
@@ -1294,7 +1295,7 @@
         <span class="kw">unsafe </span>{
             gl::DepthMask(b <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;depth_mask&quot;</span>);
+        check_gl_error(<span class="string">"depth_mask"</span>);
     }
 
     <span class="doccomment">/// specify the value used for depth buffer comparisons
@@ -1303,7 +1304,7 @@
             gl::DepthFunc(d <span class="kw">as _</span>);
         }
 
-        check_gl_error(<span class="string">&quot;depth_func&quot;</span>);
+        check_gl_error(<span class="string">"depth_func"</span>);
     }
 
     <span class="doccomment">/// specify the clear value for the depth buffer
@@ -1311,7 +1312,7 @@
         <span class="kw">unsafe </span>{
             gl::ClearDepth(value <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;clear_depth&quot;</span>);
+        check_gl_error(<span class="string">"clear_depth"</span>);
     }
 
     <span class="doccomment">/// clear buffers to preset values
@@ -1319,7 +1320,7 @@
         <span class="kw">unsafe </span>{
             gl::Clear(bit <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;clear&quot;</span>);
+        check_gl_error(<span class="string">"clear"</span>);
     }
 
     <span class="doccomment">/// set the viewport
@@ -1327,7 +1328,7 @@
         <span class="kw">unsafe </span>{
             gl::Viewport(x, y, width <span class="kw">as _</span>, height <span class="kw">as _</span>);
         };
-        check_gl_error(<span class="string">&quot;viewport&quot;</span>);
+        check_gl_error(<span class="string">"viewport"</span>);
     }
 
     <span class="doccomment">/// render primitives from indexed array data
@@ -1335,7 +1336,7 @@
         <span class="kw">unsafe </span>{
             gl::DrawElements(mode <span class="kw">as _</span>, count <span class="kw">as _</span>, kind <span class="kw">as _</span>, offset <span class="kw">as _</span>);
         };
-        check_gl_error(<span class="string">&quot;draw_elements&quot;</span>);
+        check_gl_error(<span class="string">"draw_elements"</span>);
     }
 
     <span class="doccomment">/// render primitives from array data
@@ -1343,7 +1344,7 @@
         <span class="kw">unsafe </span>{
             gl::DrawArrays(mode <span class="kw">as _</span>, <span class="number">0</span>, count <span class="kw">as _</span>);
         };
-        check_gl_error(<span class="string">&quot;draw_arrays&quot;</span>);
+        check_gl_error(<span class="string">"draw_arrays"</span>);
     }
 
     <span class="doccomment">/// read a block of pixels from the frame buffer
@@ -1367,7 +1368,7 @@
                 kind <span class="kw">as _</span>,
                 data.as_mut_ptr() <span class="kw">as _</span>,
             );
-            check_gl_error(<span class="string">&quot;read_pixels&quot;</span>);
+            check_gl_error(<span class="string">"read_pixels"</span>);
         }
     }
 
@@ -1375,7 +1376,7 @@
     </span><span class="kw">pub fn </span>pixel_storei(<span class="kw-2">&amp;</span><span class="self">self</span>, storage: PixelStorageMode, value: i32) {
         <span class="kw">unsafe </span>{
             gl::PixelStorei(storage <span class="kw">as _</span>, value);
-            check_gl_error(<span class="string">&quot;pixel_storei&quot;</span>);
+            check_gl_error(<span class="string">"pixel_storei"</span>);
         }
     }
 
@@ -1412,7 +1413,7 @@
             );
         }
 
-        check_gl_error(<span class="string">&quot;tex_image2d&quot;</span>);
+        check_gl_error(<span class="string">"tex_image2d"</span>);
     }
 
     <span class="doccomment">/// update a part of a two-dimensional texture subimage
@@ -1442,7 +1443,7 @@
             );
         }
 
-        check_gl_error(<span class="string">&quot;tex_sub_image2d&quot;</span>);
+        check_gl_error(<span class="string">"tex_sub_image2d"</span>);
     }
 
     <span class="doccomment">/// specify a two-dimensional texture image in a compressed format
@@ -1468,7 +1469,7 @@
             );
         }
 
-        check_gl_error(<span class="string">&quot;compressed_tex_image2d&quot;</span>);
+        check_gl_error(<span class="string">"compressed_tex_image2d"</span>);
     }
 
     <span class="doccomment">/// return informations about current program
@@ -1478,7 +1479,7 @@
             gl::GetProgramiv(program.<span class="number">0</span>, pname <span class="kw">as _</span>, <span class="kw-2">&amp;mut </span>res);
         }
 
-        check_gl_error(<span class="string">&quot;get_program_parameter&quot;</span>);
+        check_gl_error(<span class="string">"get_program_parameter"</span>);
         res
     }
 
@@ -1531,11 +1532,11 @@
     //         );
     //         name.set_len(len as _);
     //     }
-    //     println!(&quot;name {:?}&quot;, name);
+    //     println!("name {:?}", name);
     //     use std::mem;
     //     //let c_name = unsafe { CString::from_raw(name[0..(len+1)].as_mut_ptr())};
     //     WebGLActiveInfo::new(
-    //         String::from_utf8(name).expect(&quot;utf8 parse failed&quot;),
+    //         String::from_utf8(name).expect("utf8 parse failed"),
     //         //location,
     //         size as _,
     //         //DataType::Float
@@ -1550,7 +1551,7 @@
         <span class="kw">unsafe </span>{
             gl::GenTextures(<span class="number">1</span>, <span class="kw-2">&amp;mut </span>handle.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;create_texture&quot;</span>);
+        check_gl_error(<span class="string">"create_texture"</span>);
 
         handle
     }
@@ -1561,7 +1562,7 @@
             gl::DeleteTextures(<span class="number">1</span>, texture.<span class="number">0 </span><span class="kw">as _</span>);
         }
 
-        check_gl_error(<span class="string">&quot;delete_texture&quot;</span>);
+        check_gl_error(<span class="string">"delete_texture"</span>);
     }
 
     <span class="doccomment">/// generate mipmaps for current 2D texture
@@ -1570,7 +1571,7 @@
             gl::GenerateMipmap(gl::TEXTURE_2D);
         }
 
-        check_gl_error(<span class="string">&quot;generate_mipmap&quot;</span>);
+        check_gl_error(<span class="string">"generate_mipmap"</span>);
     }
 
     <span class="doccomment">/// generate mipmaps for current cube map texture
@@ -1579,7 +1580,7 @@
             gl::GenerateMipmap(gl::TEXTURE_CUBE_MAP);
         }
 
-        check_gl_error(<span class="string">&quot;generate_mipmap_cube&quot;</span>);
+        check_gl_error(<span class="string">"generate_mipmap_cube"</span>);
     }
 
     <span class="doccomment">/// select active texture unit
@@ -1588,7 +1589,7 @@
             gl::ActiveTexture(gl::TEXTURE0 + active);
         }
 
-        check_gl_error(<span class="string">&quot;active_texture&quot;</span>);
+        check_gl_error(<span class="string">"active_texture"</span>);
     }
 
     <span class="doccomment">/// bind a named 2D texture to a texturing target
@@ -1597,7 +1598,7 @@
             gl::BindTexture(gl::TEXTURE_2D, texture.<span class="number">0</span>);
         }
 
-        check_gl_error(<span class="string">&quot;bind_texture&quot;</span>);
+        check_gl_error(<span class="string">"bind_texture"</span>);
     }
 
     <span class="doccomment">/// current 2D texture is not bound to current state anymore
@@ -1606,7 +1607,7 @@
             gl::BindTexture(gl::TEXTURE_2D, <span class="number">0</span>);
         }
 
-        check_gl_error(<span class="string">&quot;unbind_texture&quot;</span>);
+        check_gl_error(<span class="string">"unbind_texture"</span>);
     }
 
     <span class="doccomment">/// bind a named cube map texture to a texturing target
@@ -1615,7 +1616,7 @@
             gl::BindTexture(gl::TEXTURE_CUBE_MAP, texture.<span class="number">0</span>);
         }
 
-        check_gl_error(<span class="string">&quot;bind_texture_cube&quot;</span>);
+        check_gl_error(<span class="string">"bind_texture_cube"</span>);
     }
 
     <span class="doccomment">/// current cube map texture is not bound to current state anymore
@@ -1624,7 +1625,7 @@
             gl::BindTexture(gl::TEXTURE_CUBE_MAP, <span class="number">0</span>);
         }
 
-        check_gl_error(<span class="string">&quot;unbind_texture_cube&quot;</span>);
+        check_gl_error(<span class="string">"unbind_texture_cube"</span>);
     }
 
     <span class="doccomment">/// set the RGB alpha blend equation
@@ -1633,7 +1634,7 @@
             gl::BlendEquation(eq <span class="kw">as _</span>);
         }
 
-        check_gl_error(<span class="string">&quot;blend_equation&quot;</span>);
+        check_gl_error(<span class="string">"blend_equation"</span>);
     }
 
     <span class="doccomment">/// specify pixel arithmetic for RGB and alpha components separately
@@ -1642,7 +1643,7 @@
             gl::BlendFunc(b1 <span class="kw">as _</span>, b2 <span class="kw">as _</span>);
         }
 
-        check_gl_error(<span class="string">&quot;blend_func&quot;</span>);
+        check_gl_error(<span class="string">"blend_func"</span>);
     }
 
     <span class="doccomment">/// set the blend color
@@ -1651,7 +1652,7 @@
             gl::BlendColor(r, g, b, a);
         }
 
-        check_gl_error(<span class="string">&quot;blend_color&quot;</span>);
+        check_gl_error(<span class="string">"blend_color"</span>);
     }
 
     <span class="doccomment">/// specify the value of a mat4 uniform variable for the current program object
@@ -1659,7 +1660,7 @@
         <span class="kw">unsafe </span>{
             gl::UniformMatrix4fv(<span class="kw-2">*</span>location.deref() <span class="kw">as </span>i32, <span class="number">1</span>, <span class="bool-val">false </span><span class="kw">as _</span>, <span class="kw-2">&amp;</span>value[<span class="number">0</span>] <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_matrix_4fv&quot;</span>);
+        check_gl_error(<span class="string">"uniform_matrix_4fv"</span>);
     }
 
     <span class="doccomment">/// specify the value of a mat3 uniform variable for the current program object
@@ -1667,7 +1668,7 @@
         <span class="kw">unsafe </span>{
             gl::UniformMatrix3fv(<span class="kw-2">*</span>location.deref() <span class="kw">as </span>i32, <span class="number">1</span>, <span class="bool-val">false </span><span class="kw">as _</span>, <span class="kw-2">&amp;</span>value[<span class="number">0</span>] <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_matrix_3fv&quot;</span>);
+        check_gl_error(<span class="string">"uniform_matrix_3fv"</span>);
     }
 
     <span class="doccomment">/// specify the value of a mat2 uniform variable for the current program object
@@ -1675,7 +1676,7 @@
         <span class="kw">unsafe </span>{
             gl::UniformMatrix2fv(<span class="kw-2">*</span>location.deref() <span class="kw">as </span>i32, <span class="number">1</span>, <span class="bool-val">false </span><span class="kw">as _</span>, <span class="kw-2">&amp;</span>value[<span class="number">0</span>] <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_matrix_2fv&quot;</span>);
+        check_gl_error(<span class="string">"uniform_matrix_2fv"</span>);
     }
 
     <span class="doccomment">/// specify the value of an int uniform variable for the current program object
@@ -1683,7 +1684,7 @@
         <span class="kw">unsafe </span>{
             gl::Uniform1i(<span class="kw-2">*</span>location.deref() <span class="kw">as </span>i32, value <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_1i&quot;</span>);
+        check_gl_error(<span class="string">"uniform_1i"</span>);
     }
 
     <span class="doccomment">/// specify the value of a float uniform variable for the current program object
@@ -1691,7 +1692,7 @@
         <span class="kw">unsafe </span>{
             gl::Uniform1f(<span class="kw-2">*</span>location.deref() <span class="kw">as </span>i32, value <span class="kw">as _</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_1f&quot;</span>);
+        check_gl_error(<span class="string">"uniform_1f"</span>);
     }
 
     <span class="doccomment">/// specify the value of a vec2 uniform variable for the current program object
@@ -1699,7 +1700,7 @@
         <span class="kw">unsafe </span>{
             gl::Uniform2f(<span class="kw-2">*</span>location.deref() <span class="kw">as _</span>, value.<span class="number">0</span>, value.<span class="number">1</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_2f&quot;</span>);
+        check_gl_error(<span class="string">"uniform_2f"</span>);
     }
 
     <span class="doccomment">/// specify the value of a vec3 uniform variable for the current program object
@@ -1707,7 +1708,7 @@
         <span class="kw">unsafe </span>{
             gl::Uniform3f(<span class="kw-2">*</span>location.deref() <span class="kw">as _</span>, value.<span class="number">0</span>, value.<span class="number">1</span>, value.<span class="number">2</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_3f&quot;</span>);
+        check_gl_error(<span class="string">"uniform_3f"</span>);
     }
 
     <span class="doccomment">/// specify the value of a vec4 uniform variable for the current program object
@@ -1715,7 +1716,7 @@
         <span class="kw">unsafe </span>{
             gl::Uniform4f(<span class="kw-2">*</span>location.deref() <span class="kw">as _</span>, value.<span class="number">0</span>, value.<span class="number">1</span>, value.<span class="number">2</span>, value.<span class="number">3</span>);
         }
-        check_gl_error(<span class="string">&quot;uniform_4f&quot;</span>);
+        check_gl_error(<span class="string">"uniform_4f"</span>);
     }
 
     <span class="doccomment">/// set texture integer parameters
@@ -1723,7 +1724,7 @@
         <span class="kw">unsafe </span>{
             gl::TexParameteri(kind <span class="kw">as _</span>, pname <span class="kw">as _</span>, param);
         }
-        check_gl_error(<span class="string">&quot;tex_parameteri&quot;</span>);
+        check_gl_error(<span class="string">"tex_parameteri"</span>);
     }
 
     <span class="doccomment">/// set texture float parameters
@@ -1731,7 +1732,7 @@
         <span class="kw">unsafe </span>{
             gl::TexParameterfv(kind <span class="kw">as _</span>, pname <span class="kw">as _</span>, <span class="kw-2">&amp;</span>param);
         }
-        check_gl_error(<span class="string">&quot;tex_parameterfv&quot;</span>);
+        check_gl_error(<span class="string">"tex_parameterfv"</span>);
     }
 
     <span class="doccomment">/// create a vertex array object
@@ -1740,7 +1741,7 @@
         <span class="kw">unsafe </span>{
             gl::GenVertexArrays(<span class="number">1</span>, <span class="kw-2">&amp;mut </span>vao.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;create_vertex_array&quot;</span>);
+        check_gl_error(<span class="string">"create_vertex_array"</span>);
         vao
     }
 
@@ -1749,7 +1750,7 @@
         <span class="kw">unsafe </span>{
             gl::DeleteVertexArrays(<span class="number">1</span>, <span class="kw-2">&amp;</span>vao.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;delete_vertex_array&quot;</span>);
+        check_gl_error(<span class="string">"delete_vertex_array"</span>);
     }
 
     <span class="doccomment">/// bind a vertex array object to current state
@@ -1757,7 +1758,7 @@
         <span class="kw">unsafe </span>{
             gl::BindVertexArray(vao.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;bind_vertex_array&quot;</span>);
+        check_gl_error(<span class="string">"bind_vertex_array"</span>);
     }
 
     <span class="doccomment">/// current vertex array object is not bound to the current state anymore
@@ -1765,7 +1766,7 @@
         <span class="kw">unsafe </span>{
             gl::BindVertexArray(<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;unbind_vertex_array&quot;</span>);
+        check_gl_error(<span class="string">"unbind_vertex_array"</span>);
     }
 
     <span class="doccomment">/// specify which color buffers are to be drawn into
@@ -1775,7 +1776,7 @@
                 gl::DrawBuffer(<span class="kw-2">*</span>value <span class="kw">as _</span>);
             }
         }
-        check_gl_error(<span class="string">&quot;draw_buffer&quot;</span>);
+        check_gl_error(<span class="string">"draw_buffer"</span>);
     }
 
     <span class="doccomment">/// create a new framebuffer
@@ -1784,7 +1785,7 @@
         <span class="kw">unsafe </span>{
             gl::GenFramebuffers(<span class="number">1</span>, <span class="kw-2">&amp;mut </span>fb.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;create_framebuffer&quot;</span>);
+        check_gl_error(<span class="string">"create_framebuffer"</span>);
         fb
     }
 
@@ -1793,7 +1794,7 @@
         <span class="kw">unsafe </span>{
             gl::DeleteFramebuffers(<span class="number">1</span>, <span class="kw-2">&amp;</span>fb.<span class="number">0</span>);
         }
-        check_gl_error(<span class="string">&quot;delete_framebuffer&quot;</span>);
+        check_gl_error(<span class="string">"delete_framebuffer"</span>);
     }
 
     <span class="doccomment">/// bind a framebuffer to the current state
@@ -1802,7 +1803,7 @@
             gl::BindFramebuffer(buffer <span class="kw">as </span>u32, fb.<span class="number">0</span>);
         }
 
-        check_gl_error(<span class="string">&quot;bind_framebuffer&quot;</span>);
+        check_gl_error(<span class="string">"bind_framebuffer"</span>);
     }
 
     <span class="doccomment">/// attach a texture to a framebuffer
@@ -1824,7 +1825,7 @@
             );
         }
 
-        check_gl_error(<span class="string">&quot;framebuffer_texture2d&quot;</span>);
+        check_gl_error(<span class="string">"framebuffer_texture2d"</span>);
     }
 
     <span class="doccomment">/// unbind a framebuffer
@@ -1833,7 +1834,7 @@
             gl::BindFramebuffer(buffer <span class="kw">as </span>u32, <span class="number">0</span>);
         }
 
-        check_gl_error(<span class="string">&quot;unbind_framebuffer&quot;</span>);
+        check_gl_error(<span class="string">"unbind_framebuffer"</span>);
     }
 }
 </code></pre></div></section></main></body></html>

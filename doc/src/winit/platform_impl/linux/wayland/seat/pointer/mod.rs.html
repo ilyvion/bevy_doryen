@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/wayland/seat/pointer/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../" data-static-root-path="../../../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../../../src-files.js"></script><script defer src="../../../../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../../../../winit/index.html"><img class="rust-logo" src="../../../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/wayland/seat/pointer/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../" data-static-root-path="../../../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../../../src-files.js"></script><script defer src="../../../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -419,46 +420,46 @@
         };
 
         <span class="kw">let </span>cursors: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str] = <span class="kw">match </span>cursor_icon {
-            CursorIcon::Alias =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;link&quot;</span>],
-            CursorIcon::Arrow =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;arrow&quot;</span>],
-            CursorIcon::Cell =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;plus&quot;</span>],
-            CursorIcon::Copy =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;copy&quot;</span>],
-            CursorIcon::Crosshair =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;crosshair&quot;</span>],
-            CursorIcon::Default =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;left_ptr&quot;</span>],
-            CursorIcon::Hand =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;hand2&quot;</span>, <span class="string">&quot;hand1&quot;</span>],
-            CursorIcon::Help =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;question_arrow&quot;</span>],
-            CursorIcon::Move =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;move&quot;</span>],
-            CursorIcon::Grab =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;openhand&quot;</span>, <span class="string">&quot;grab&quot;</span>],
-            CursorIcon::Grabbing =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;closedhand&quot;</span>, <span class="string">&quot;grabbing&quot;</span>],
-            CursorIcon::Progress =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;progress&quot;</span>],
-            CursorIcon::AllScroll =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;all-scroll&quot;</span>],
-            CursorIcon::ContextMenu =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;context-menu&quot;</span>],
+            CursorIcon::Alias =&gt; <span class="kw-2">&amp;</span>[<span class="string">"link"</span>],
+            CursorIcon::Arrow =&gt; <span class="kw-2">&amp;</span>[<span class="string">"arrow"</span>],
+            CursorIcon::Cell =&gt; <span class="kw-2">&amp;</span>[<span class="string">"plus"</span>],
+            CursorIcon::Copy =&gt; <span class="kw-2">&amp;</span>[<span class="string">"copy"</span>],
+            CursorIcon::Crosshair =&gt; <span class="kw-2">&amp;</span>[<span class="string">"crosshair"</span>],
+            CursorIcon::Default =&gt; <span class="kw-2">&amp;</span>[<span class="string">"left_ptr"</span>],
+            CursorIcon::Hand =&gt; <span class="kw-2">&amp;</span>[<span class="string">"hand2"</span>, <span class="string">"hand1"</span>],
+            CursorIcon::Help =&gt; <span class="kw-2">&amp;</span>[<span class="string">"question_arrow"</span>],
+            CursorIcon::Move =&gt; <span class="kw-2">&amp;</span>[<span class="string">"move"</span>],
+            CursorIcon::Grab =&gt; <span class="kw-2">&amp;</span>[<span class="string">"openhand"</span>, <span class="string">"grab"</span>],
+            CursorIcon::Grabbing =&gt; <span class="kw-2">&amp;</span>[<span class="string">"closedhand"</span>, <span class="string">"grabbing"</span>],
+            CursorIcon::Progress =&gt; <span class="kw-2">&amp;</span>[<span class="string">"progress"</span>],
+            CursorIcon::AllScroll =&gt; <span class="kw-2">&amp;</span>[<span class="string">"all-scroll"</span>],
+            CursorIcon::ContextMenu =&gt; <span class="kw-2">&amp;</span>[<span class="string">"context-menu"</span>],
 
-            CursorIcon::NoDrop =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;no-drop&quot;</span>, <span class="string">&quot;circle&quot;</span>],
-            CursorIcon::NotAllowed =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;crossed_circle&quot;</span>],
+            CursorIcon::NoDrop =&gt; <span class="kw-2">&amp;</span>[<span class="string">"no-drop"</span>, <span class="string">"circle"</span>],
+            CursorIcon::NotAllowed =&gt; <span class="kw-2">&amp;</span>[<span class="string">"crossed_circle"</span>],
 
             <span class="comment">// Resize cursors
-            </span>CursorIcon::EResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;right_side&quot;</span>],
-            CursorIcon::NResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;top_side&quot;</span>],
-            CursorIcon::NeResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;top_right_corner&quot;</span>],
-            CursorIcon::NwResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;top_left_corner&quot;</span>],
-            CursorIcon::SResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;bottom_side&quot;</span>],
-            CursorIcon::SeResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;bottom_right_corner&quot;</span>],
-            CursorIcon::SwResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;bottom_left_corner&quot;</span>],
-            CursorIcon::WResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;left_side&quot;</span>],
-            CursorIcon::EwResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;h_double_arrow&quot;</span>],
-            CursorIcon::NsResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;v_double_arrow&quot;</span>],
-            CursorIcon::NwseResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;bd_double_arrow&quot;</span>, <span class="string">&quot;size_fdiag&quot;</span>],
-            CursorIcon::NeswResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;fd_double_arrow&quot;</span>, <span class="string">&quot;size_bdiag&quot;</span>],
-            CursorIcon::ColResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;split_h&quot;</span>, <span class="string">&quot;h_double_arrow&quot;</span>],
-            CursorIcon::RowResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;split_v&quot;</span>, <span class="string">&quot;v_double_arrow&quot;</span>],
-            CursorIcon::Text =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;text&quot;</span>, <span class="string">&quot;xterm&quot;</span>],
-            CursorIcon::VerticalText =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;vertical-text&quot;</span>],
+            </span>CursorIcon::EResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"right_side"</span>],
+            CursorIcon::NResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"top_side"</span>],
+            CursorIcon::NeResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"top_right_corner"</span>],
+            CursorIcon::NwResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"top_left_corner"</span>],
+            CursorIcon::SResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"bottom_side"</span>],
+            CursorIcon::SeResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"bottom_right_corner"</span>],
+            CursorIcon::SwResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"bottom_left_corner"</span>],
+            CursorIcon::WResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"left_side"</span>],
+            CursorIcon::EwResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"h_double_arrow"</span>],
+            CursorIcon::NsResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"v_double_arrow"</span>],
+            CursorIcon::NwseResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"bd_double_arrow"</span>, <span class="string">"size_fdiag"</span>],
+            CursorIcon::NeswResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"fd_double_arrow"</span>, <span class="string">"size_bdiag"</span>],
+            CursorIcon::ColResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"split_h"</span>, <span class="string">"h_double_arrow"</span>],
+            CursorIcon::RowResize =&gt; <span class="kw-2">&amp;</span>[<span class="string">"split_v"</span>, <span class="string">"v_double_arrow"</span>],
+            CursorIcon::Text =&gt; <span class="kw-2">&amp;</span>[<span class="string">"text"</span>, <span class="string">"xterm"</span>],
+            CursorIcon::VerticalText =&gt; <span class="kw-2">&amp;</span>[<span class="string">"vertical-text"</span>],
 
-            CursorIcon::Wait =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;watch&quot;</span>],
+            CursorIcon::Wait =&gt; <span class="kw-2">&amp;</span>[<span class="string">"watch"</span>],
 
-            CursorIcon::ZoomIn =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;zoom-in&quot;</span>],
-            CursorIcon::ZoomOut =&gt; <span class="kw-2">&amp;</span>[<span class="string">&quot;zoom-out&quot;</span>],
+            CursorIcon::ZoomIn =&gt; <span class="kw-2">&amp;</span>[<span class="string">"zoom-in"</span>],
+            CursorIcon::ZoomOut =&gt; <span class="kw-2">&amp;</span>[<span class="string">"zoom-out"</span>],
         };
 
         <span class="kw">let </span>serial = <span class="prelude-val">Some</span>(<span class="self">self</span>.latest_enter_serial.get());
@@ -467,7 +468,7 @@
                 <span class="kw">return</span>;
             }
         }
-        <span class="macro">warn!</span>(<span class="string">&quot;Failed to set cursor to {:?}&quot;</span>, cursor_icon);
+        <span class="macro">warn!</span>(<span class="string">"Failed to set cursor to {:?}"</span>, cursor_icon);
     }
 
     <span class="doccomment">/// Confine the pointer to a surface.
@@ -606,7 +607,7 @@
             },
         );
 
-        <span class="comment">// Setup relative_pointer if it&#39;s available.
+        <span class="comment">// Setup relative_pointer if it's available.
         </span><span class="kw">let </span>relative_pointer = relative_pointer_manager
             .as_ref()
             .map(|relative_pointer_manager| {
@@ -639,7 +640,7 @@
             locked_pointer.destroy();
         }
 
-        <span class="comment">// Drop the pointer itself in case it&#39;s possible.
+        <span class="comment">// Drop the pointer itself in case it's possible.
         </span><span class="kw">if </span><span class="self">self</span>.pointer.as_ref().version() &gt;= <span class="number">3 </span>{
             <span class="self">self</span>.pointer.release();
         }

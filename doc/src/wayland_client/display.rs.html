@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wayland-client-0.29.5/src/display.rs`."><title>display.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wayland_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../wayland_client/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/wayland-client-0.29.5/src/display.rs`."><title>display.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="wayland_client" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -274,7 +275,7 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::imp::DisplayInner;
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
 </span><span class="kw">use </span>wayland_sys::client::wl_display;
 
 <span class="doccomment">/// Enum representing the possible reasons why connecting to the wayland server failed
@@ -300,20 +301,20 @@
 <span class="kw">impl </span>::std::fmt::Display <span class="kw">for </span>ConnectError {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; <span class="prelude-ty">Result</span>&lt;(), ::std::fmt::Error&gt; {
         <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
-            ConnectError::NoWaylandLib =&gt; f.write_str(<span class="string">&quot;Could not find libwayland-client.so.&quot;</span>),
-            ConnectError::XdgRuntimeDirNotSet =&gt; f.write_str(<span class="string">&quot;XDG_RUNTIME_DIR is not set.&quot;</span>),
+            ConnectError::NoWaylandLib =&gt; f.write_str(<span class="string">"Could not find libwayland-client.so."</span>),
+            ConnectError::XdgRuntimeDirNotSet =&gt; f.write_str(<span class="string">"XDG_RUNTIME_DIR is not set."</span>),
             ConnectError::NoCompositorListening =&gt; {
-                f.write_str(<span class="string">&quot;Could not find a listening wayland compositor.&quot;</span>)
+                f.write_str(<span class="string">"Could not find a listening wayland compositor."</span>)
             }
-            ConnectError::InvalidName =&gt; f.write_str(<span class="string">&quot;The wayland socket name is invalid.&quot;</span>),
-            ConnectError::InvalidFd =&gt; f.write_str(<span class="string">&quot;The FD provided in WAYLAND_SOCKET is invalid.&quot;</span>),
+            ConnectError::InvalidName =&gt; f.write_str(<span class="string">"The wayland socket name is invalid."</span>),
+            ConnectError::InvalidFd =&gt; f.write_str(<span class="string">"The FD provided in WAYLAND_SOCKET is invalid."</span>),
         }
     }
 }
 
 <span class="doccomment">/// A protocol error
 ///
-/// This kind of error is generated by the server if your client didn&#39;t respect
+/// This kind of error is generated by the server if your client didn't respect
 /// the protocol, after which the server will kill your connection.
 ///
 /// If the dispatching methods of `EventQueues` start to fail, you may want to
@@ -328,14 +329,14 @@
     <span class="doccomment">/// The id of the object that caused the error
     </span><span class="kw">pub </span>object_id: u32,
     <span class="doccomment">/// The interface of the object that caused the error
-    </span><span class="kw">pub </span>object_interface: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str,
+    </span><span class="kw">pub </span>object_interface: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str,
     <span class="doccomment">/// The message sent by the server describing the error
     </span><span class="kw">pub </span>message: String,
 }
 
 <span class="kw">impl </span>::std::error::Error <span class="kw">for </span>ProtocolError {
     <span class="kw">fn </span>description(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="string">&quot;Wayland protocol error&quot;
+        <span class="string">"Wayland protocol error"
     </span>}
 }
 
@@ -343,7 +344,7 @@
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>::std::fmt::Formatter) -&gt; <span class="prelude-ty">Result</span>&lt;(), ::std::fmt::Error&gt; {
         <span class="macro">write!</span>(
             f,
-            <span class="string">&quot;Protocol error {} on object {}@{}: {}&quot;</span>,
+            <span class="string">"Protocol error {} on object {}@{}: {}"</span>,
             <span class="self">self</span>.code, <span class="self">self</span>.object_interface, <span class="self">self</span>.object_id, <span class="self">self</span>.message
         )
     }
@@ -366,15 +367,15 @@
 }
 
 <span class="kw">impl </span>std::fmt::Debug <span class="kw">for </span>Display {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        f.write_str(<span class="string">&quot;Display { ... }&quot;</span>)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        f.write_str(<span class="string">"Display { ... }"</span>)
     }
 }
 
 <span class="kw">impl </span>Display {
     <span class="doccomment">/// Attempt to connect to a wayland server using the contents of the environment variables
     ///
-    /// First of all, if the `WAYLAND_SOCKET` environment variable is set, it&#39;ll try to interpret
+    /// First of all, if the `WAYLAND_SOCKET` environment variable is set, it'll try to interpret
     /// it as a FD number to use.
     ///
     /// Otherwise, it will try to connect to the socket name defined in the `WAYLAND_DISPLAY`
@@ -382,11 +383,11 @@
     ///
     /// This requires the `XDG_RUNTIME_DIR` variable to be properly set.
     </span><span class="kw">pub fn </span>connect_to_env() -&gt; <span class="prelude-ty">Result</span>&lt;Display, ConnectError&gt; {
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(txt) = env::var(<span class="string">&quot;WAYLAND_SOCKET&quot;</span>) {
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(txt) = env::var(<span class="string">"WAYLAND_SOCKET"</span>) {
             <span class="comment">// We should connect to the provided WAYLAND_SOCKET
             </span><span class="kw">let </span>fd = txt.parse::&lt;i32&gt;().map_err(|<span class="kw">_</span>| ConnectError::InvalidFd)<span class="question-mark">?</span>;
-            <span class="comment">// remove the variable so any child processes don&#39;t see it
-            </span>env::remove_var(<span class="string">&quot;WAYLAND_SOCKET&quot;</span>);
+            <span class="comment">// remove the variable so any child processes don't see it
+            </span>env::remove_var(<span class="string">"WAYLAND_SOCKET"</span>);
             <span class="comment">// set the CLOEXEC flag on this FD
             </span><span class="kw">let </span>flags = fcntl::fcntl(fd, fcntl::FcntlArg::F_GETFD);
             <span class="kw">let </span>result = flags
@@ -404,11 +405,11 @@
                 }
             }
         } <span class="kw">else </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>socket_path = env::var_os(<span class="string">&quot;XDG_RUNTIME_DIR&quot;</span>)
+            <span class="kw">let </span><span class="kw-2">mut </span>socket_path = env::var_os(<span class="string">"XDG_RUNTIME_DIR"</span>)
                 .map(Into::&lt;PathBuf&gt;::into)
                 .ok_or(ConnectError::XdgRuntimeDirNotSet)<span class="question-mark">?</span>;
             socket_path
-                .push(env::var_os(<span class="string">&quot;WAYLAND_DISPLAY&quot;</span>).ok_or(ConnectError::NoCompositorListening)<span class="question-mark">?</span>);
+                .push(env::var_os(<span class="string">"WAYLAND_DISPLAY"</span>).ok_or(ConnectError::NoCompositorListening)<span class="question-mark">?</span>);
 
             <span class="kw">let </span>socket = UnixStream::connect(socket_path)
                 .map_err(|<span class="kw">_</span>| ConnectError::NoCompositorListening)<span class="question-mark">?</span>;
@@ -423,7 +424,7 @@
     ///
     /// This requires the `XDG_RUNTIME_DIR` variable to be properly set.
     </span><span class="kw">pub fn </span>connect_to_name&lt;S: Into&lt;OsString&gt;&gt;(name: S) -&gt; <span class="prelude-ty">Result</span>&lt;Display, ConnectError&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>socket_path = env::var_os(<span class="string">&quot;XDG_RUNTIME_DIR&quot;</span>)
+        <span class="kw">let </span><span class="kw-2">mut </span>socket_path = env::var_os(<span class="string">"XDG_RUNTIME_DIR"</span>)
             .map(Into::&lt;PathBuf&gt;::into)
             .ok_or(ConnectError::XdgRuntimeDirNotSet)<span class="question-mark">?</span>;
         socket_path.push(name.into());
@@ -466,7 +467,7 @@
     <span class="doccomment">/// Retrieve the last protocol error if any occured
     ///
     /// If your client does not respect some part of a protocol it is using, the server
-    /// will send a special &quot;protocol error&quot; event and kill your connection. This method
+    /// will send a special "protocol error" event and kill your connection. This method
     /// allows you to retrieve the contents of this event if it occured.
     ///
     /// If the dispatch methods of the `EventQueue` return an error, this is an indication
@@ -485,7 +486,7 @@
         <span class="self">self</span>.inner.get_connection_fd()
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
     </span><span class="doccomment">/// Create a Display and from an external display
     ///
     /// This allows you to interface with an already-existing wayland connection,
@@ -501,7 +502,7 @@
         Display { inner: DisplayInner::from_external(display_ptr) }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;use_system_lib&quot;</span>)]
+    <span class="attr">#[cfg(feature = <span class="string">"use_system_lib"</span>)]
     </span><span class="doccomment">/// Retrieve the `wl_display` pointer
     ///
     /// If this `Display` was created from an external `wl_display`, its `c_ptr()` method will

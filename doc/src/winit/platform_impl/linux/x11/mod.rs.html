@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/x11/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../../winit/index.html"><img class="rust-logo" src="../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winit-0.27.5/src/platform_impl/linux/x11/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="winit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -815,11 +816,11 @@
 <a href="#815" id="815">815</a>
 <a href="#816" id="816">816</a>
 </pre></div><pre class="rust"><code><span class="attr">#![cfg(any(
-    target_os = <span class="string">&quot;linux&quot;</span>,
-    target_os = <span class="string">&quot;dragonfly&quot;</span>,
-    target_os = <span class="string">&quot;freebsd&quot;</span>,
-    target_os = <span class="string">&quot;netbsd&quot;</span>,
-    target_os = <span class="string">&quot;openbsd&quot;
+    target_os = <span class="string">"linux"</span>,
+    target_os = <span class="string">"dragonfly"</span>,
+    target_os = <span class="string">"freebsd"</span>,
+    target_os = <span class="string">"netbsd"</span>,
+    target_os = <span class="string">"openbsd"
 </span>))]
 
 </span><span class="kw">mod </span>dnd;
@@ -906,7 +907,7 @@
             </span>}
             <span class="prelude-val">Err</span>(TryRecvError::Empty) =&gt; <span class="bool-val">false</span>,
             <span class="prelude-val">Err</span>(TryRecvError::Disconnected) =&gt; {
-                <span class="macro">warn!</span>(<span class="string">&quot;Channel was disconnected when checking incoming&quot;</span>);
+                <span class="macro">warn!</span>(<span class="string">"Channel was disconnected when checking incoming"</span>);
                 <span class="bool-val">false
             </span>}
         }
@@ -932,7 +933,7 @@
     _marker: ::std::marker::PhantomData&lt;T&gt;,
 }
 
-<span class="kw">pub struct </span>EventLoop&lt;T: <span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">pub struct </span>EventLoop&lt;T: <span class="lifetime">'static</span>&gt; {
     poll: Poll,
     waker: Arc&lt;Waker&gt;,
     event_processor: EventProcessor&lt;T&gt;,
@@ -942,12 +943,12 @@
     target: Rc&lt;RootELW&lt;T&gt;&gt;,
 }
 
-<span class="kw">pub struct </span>EventLoopProxy&lt;T: <span class="lifetime">&#39;static</span>&gt; {
+<span class="kw">pub struct </span>EventLoopProxy&lt;T: <span class="lifetime">'static</span>&gt; {
     user_sender: Sender&lt;T&gt;,
     waker: Arc&lt;Waker&gt;,
 }
 
-<span class="kw">impl</span>&lt;T: <span class="lifetime">&#39;static</span>&gt; Clone <span class="kw">for </span>EventLoopProxy&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <span class="lifetime">'static</span>&gt; Clone <span class="kw">for </span>EventLoopProxy&lt;T&gt; {
     <span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self </span>{
         EventLoopProxy {
             user_sender: <span class="self">self</span>.user_sender.clone(),
@@ -956,26 +957,26 @@
     }
 }
 
-<span class="kw">impl</span>&lt;T: <span class="lifetime">&#39;static</span>&gt; EventLoop&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <span class="lifetime">'static</span>&gt; EventLoop&lt;T&gt; {
     <span class="kw">pub fn </span>new(xconn: Arc&lt;XConnection&gt;) -&gt; EventLoop&lt;T&gt; {
         <span class="kw">let </span>root = <span class="kw">unsafe </span>{ (xconn.xlib.XDefaultRootWindow)(xconn.display) };
 
-        <span class="kw">let </span>wm_delete_window = <span class="kw">unsafe </span>{ xconn.get_atom_unchecked(<span class="string">b&quot;WM_DELETE_WINDOW\0&quot;</span>) };
+        <span class="kw">let </span>wm_delete_window = <span class="kw">unsafe </span>{ xconn.get_atom_unchecked(<span class="string">b"WM_DELETE_WINDOW\0"</span>) };
 
-        <span class="kw">let </span>net_wm_ping = <span class="kw">unsafe </span>{ xconn.get_atom_unchecked(<span class="string">b&quot;_NET_WM_PING\0&quot;</span>) };
+        <span class="kw">let </span>net_wm_ping = <span class="kw">unsafe </span>{ xconn.get_atom_unchecked(<span class="string">b"_NET_WM_PING\0"</span>) };
 
         <span class="kw">let </span>dnd = Dnd::new(Arc::clone(<span class="kw-2">&amp;</span>xconn))
-            .expect(<span class="string">&quot;Failed to call XInternAtoms when initializing drag and drop&quot;</span>);
+            .expect(<span class="string">"Failed to call XInternAtoms when initializing drag and drop"</span>);
 
         <span class="kw">let </span>(ime_sender, ime_receiver) = mpsc::channel();
         <span class="kw">let </span>(ime_event_sender, ime_event_receiver) = mpsc::channel();
-        <span class="comment">// Input methods will open successfully without setting the locale, but it won&#39;t be
+        <span class="comment">// Input methods will open successfully without setting the locale, but it won't be
         // possible to actually commit pre-edit sequences.
         </span><span class="kw">unsafe </span>{
             <span class="comment">// Remember default locale to restore it if target locale is unsupported
             // by Xlib
             </span><span class="kw">let </span>default_locale = setlocale(LC_CTYPE, ptr::null());
-            setlocale(LC_CTYPE, <span class="string">b&quot;\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>);
+            setlocale(LC_CTYPE, <span class="string">b"\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>);
 
             <span class="comment">// Check if set locale is supported by Xlib.
             // If not, calls to some Xlib functions like `XSetLocaleModifiers`
@@ -984,7 +985,7 @@
             <span class="kw">if </span>!locale_supported {
                 <span class="kw">let </span>unsupported_locale = setlocale(LC_CTYPE, ptr::null());
                 <span class="macro">warn!</span>(
-                    <span class="string">&quot;Unsupported locale \&quot;{}\&quot;. Restoring default locale \&quot;{}\&quot;.&quot;</span>,
+                    <span class="string">"Unsupported locale \"{}\". Restoring default locale \"{}\"."</span>,
                     CStr::from_ptr(unsupported_locale).to_string_lossy(),
                     CStr::from_ptr(default_locale).to_string_lossy()
                 );
@@ -995,28 +996,28 @@
         <span class="kw">let </span>ime = RefCell::new({
             <span class="kw">let </span>result = Ime::new(Arc::clone(<span class="kw-2">&amp;</span>xconn), ime_event_sender);
             <span class="kw">if let </span><span class="prelude-val">Err</span>(ImeCreationError::OpenFailure(<span class="kw-2">ref </span>state)) = result {
-                <span class="macro">panic!</span>(<span class="string">&quot;Failed to open input method: {:#?}&quot;</span>, state);
+                <span class="macro">panic!</span>(<span class="string">"Failed to open input method: {:#?}"</span>, state);
             }
-            result.expect(<span class="string">&quot;Failed to set input method destruction callback&quot;</span>)
+            result.expect(<span class="string">"Failed to set input method destruction callback"</span>)
         });
 
         <span class="kw">let </span>randr_event_offset = xconn
             .select_xrandr_input(root)
-            .expect(<span class="string">&quot;Failed to query XRandR extension&quot;</span>);
+            .expect(<span class="string">"Failed to query XRandR extension"</span>);
 
         <span class="kw">let </span>xi2ext = <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>ext = XExtension::default();
 
             <span class="kw">let </span>res = (xconn.xlib.XQueryExtension)(
                 xconn.display,
-                <span class="string">b&quot;XInputExtension\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char,
+                <span class="string">b"XInputExtension\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char,
                 <span class="kw-2">&amp;mut </span>ext.opcode,
                 <span class="kw-2">&amp;mut </span>ext.first_event_id,
                 <span class="kw-2">&amp;mut </span>ext.first_error_id,
             );
 
             <span class="kw">if </span>res == ffi::False {
-                <span class="macro">panic!</span>(<span class="string">&quot;X server missing XInput extension&quot;</span>);
+                <span class="macro">panic!</span>(<span class="string">"X server missing XInput extension"</span>);
             }
 
             ext
@@ -1032,7 +1033,7 @@
             ) != ffi::Success <span class="kw">as </span>libc::c_int
             {
                 <span class="macro">panic!</span>(
-                    <span class="string">&quot;X server has XInput extension {}.{} but does not support XInput2&quot;</span>,
+                    <span class="string">"X server has XInput extension {}.{} but does not support XInput2"</span>,
                     xinput_major_ver, xinput_minor_ver,
                 );
             }
@@ -1126,7 +1127,7 @@
 
     <span class="kw">pub fn </span>run_return&lt;F&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, <span class="kw-2">mut </span>callback: F) -&gt; i32
     <span class="kw">where
-        </span>F: FnMut(Event&lt;<span class="lifetime">&#39;_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
+        </span>F: FnMut(Event&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
     {
         <span class="kw">struct </span>IterationResult {
             deadline: <span class="prelude-ty">Option</span>&lt;Instant&gt;,
@@ -1140,7 +1141,7 @@
             callback: <span class="kw-2">&amp;mut </span>F,
         ) -&gt; IterationResult
         <span class="kw">where
-            </span>F: FnMut(Event&lt;<span class="lifetime">&#39;_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
+            </span>F: FnMut(Event&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
         {
             sticky_exit_callback(
                 <span class="kw">crate</span>::event::Event::NewEvents(<span class="kw-2">*</span>cause),
@@ -1149,8 +1150,8 @@
                 callback,
             );
 
-            <span class="comment">// NB: For consistency all platforms must emit a &#39;resumed&#39; event even though X11
-            // applications don&#39;t themselves have a formal suspend/resume lifecycle.
+            <span class="comment">// NB: For consistency all platforms must emit a 'resumed' event even though X11
+            // applications don't themselves have a formal suspend/resume lifecycle.
             </span><span class="kw">if </span><span class="kw-2">*</span>cause == StartCause::Init {
                 sticky_exit_callback(
                     <span class="kw">crate</span>::event::Event::Resumed,
@@ -1274,17 +1275,17 @@
                 <span class="comment">// Wait until
                 </span><span class="kw">if let </span><span class="prelude-val">Err</span>(e) = <span class="self">self</span>.poll.poll(<span class="kw-2">&amp;mut </span>events, iter_result.timeout) {
                     <span class="kw">if </span>e.raw_os_error() != <span class="prelude-val">Some</span>(libc::EINTR) {
-                        <span class="macro">panic!</span>(<span class="string">&quot;epoll returned an error: {:?}&quot;</span>, e);
+                        <span class="macro">panic!</span>(<span class="string">"epoll returned an error: {:?}"</span>, e);
                     }
                 }
                 events.clear();
 
                 <span class="kw">if </span>control_flow == ControlFlow::Wait {
-                    <span class="comment">// We don&#39;t go straight into executing the event loop iteration, we instead go
-                    // to the start of this loop and check again if there&#39;s any pending event. We
+                    <span class="comment">// We don't go straight into executing the event loop iteration, we instead go
+                    // to the start of this loop and check again if there's any pending event. We
                     // must do this because during the execution of the iteration we sometimes wake
                     // the mio waker, and if the waker is already awaken before we call poll(),
-                    // then poll doesn&#39;t block, but it returns immediately. This caused the event
+                    // then poll doesn't block, but it returns immediately. This caused the event
                     // loop to run continuously even if the control_flow was `Wait`
                     </span><span class="kw">continue</span>;
                 }
@@ -1314,7 +1315,7 @@
 
     <span class="kw">pub fn </span>run&lt;F&gt;(<span class="kw-2">mut </span><span class="self">self</span>, callback: F) -&gt; !
     <span class="kw">where
-        </span>F: <span class="lifetime">&#39;static </span>+ FnMut(Event&lt;<span class="lifetime">&#39;_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
+        </span>F: <span class="lifetime">'static </span>+ FnMut(Event&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
     {
         <span class="kw">let </span>exit_code = <span class="self">self</span>.run_return(callback);
         ::std::process::exit(exit_code);
@@ -1322,7 +1323,7 @@
 
     <span class="kw">fn </span>drain_events&lt;F&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback: <span class="kw-2">&amp;mut </span>F, control_flow: <span class="kw-2">&amp;mut </span>ControlFlow)
     <span class="kw">where
-        </span>F: FnMut(Event&lt;<span class="lifetime">&#39;_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
+        </span>F: FnMut(Event&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw-2">&amp;</span>RootELW&lt;T&gt;, <span class="kw-2">&amp;mut </span>ControlFlow),
     {
         <span class="kw">let </span>target = <span class="kw-2">&amp;</span><span class="self">self</span>.target;
         <span class="kw">let </span><span class="kw-2">mut </span>xev = MaybeUninit::uninit();
@@ -1352,7 +1353,7 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_xtarget&lt;T&gt;(target: <span class="kw-2">&amp;</span>RootELW&lt;T&gt;) -&gt; <span class="kw-2">&amp;</span>EventLoopWindowTarget&lt;T&gt; {
     <span class="kw">match </span>target.p {
         <span class="kw">super</span>::EventLoopWindowTarget::X(<span class="kw-2">ref </span>target) =&gt; target,
-        <span class="attr">#[cfg(feature = <span class="string">&quot;wayland&quot;</span>)]
+        <span class="attr">#[cfg(feature = <span class="string">"wayland"</span>)]
         </span><span class="kw">_ </span>=&gt; <span class="macro">unreachable!</span>(),
     }
 }
@@ -1396,7 +1397,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;T: <span class="lifetime">&#39;static</span>&gt; EventLoopProxy&lt;T&gt; {
+<span class="kw">impl</span>&lt;T: <span class="lifetime">'static</span>&gt; EventLoopProxy&lt;T&gt; {
     <span class="kw">pub fn </span>send_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), EventLoopClosed&lt;T&gt;&gt; {
         <span class="self">self</span>.user_sender
             .send(event)
@@ -1405,14 +1406,14 @@
     }
 }
 
-<span class="kw">struct </span>DeviceInfo&lt;<span class="lifetime">&#39;a</span>&gt; {
-    xconn: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>XConnection,
+<span class="kw">struct </span>DeviceInfo&lt;<span class="lifetime">'a</span>&gt; {
+    xconn: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>XConnection,
     info: <span class="kw-2">*const </span>ffi::XIDeviceInfo,
     count: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; DeviceInfo&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>get(xconn: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>XConnection, device: c_int) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; DeviceInfo&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>get(xconn: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>XConnection, device: c_int) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>count = <span class="number">0</span>;
             <span class="kw">let </span>info = (xconn.xinput2.XIQueryDevice)(xconn.display, device, <span class="kw-2">&amp;mut </span>count);
@@ -1431,14 +1432,14 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Drop <span class="kw">for </span>DeviceInfo&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>DeviceInfo&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="macro">assert!</span>(!<span class="self">self</span>.info.is_null());
         <span class="kw">unsafe </span>{ (<span class="self">self</span>.xconn.xinput2.XIFreeDeviceInfo)(<span class="self">self</span>.info <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>) };
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Deref <span class="kw">for </span>DeviceInfo&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Deref <span class="kw">for </span>DeviceInfo&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">type </span>Target = [ffi::XIDeviceInfo];
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
         <span class="kw">unsafe </span>{ slice::from_raw_parts(<span class="self">self</span>.info, <span class="self">self</span>.count) }
@@ -1485,7 +1486,7 @@
         <span class="kw">let </span>xconn = <span class="kw-2">&amp;</span>window.xconn;
         <span class="kw">unsafe </span>{
             (xconn.xlib.XDestroyWindow)(xconn.display, window.id().<span class="number">0 </span><span class="kw">as </span>ffi::Window);
-            <span class="comment">// If the window was somehow already destroyed, we&#39;ll get a `BadWindow` error, which we don&#39;t care about.
+            <span class="comment">// If the window was somehow already destroyed, we'll get a `BadWindow` error, which we don't care about.
             </span><span class="kw">let _ </span>= xconn.check_errors();
         }
     }
@@ -1493,13 +1494,13 @@
 
 <span class="doccomment">/// XEvents of type GenericEvent store their actual data in an XGenericEventCookie data structure. This is a wrapper to
 /// extract the cookie from a GenericEvent XEvent and release the cookie data once it has been processed
-</span><span class="kw">struct </span>GenericEventCookie&lt;<span class="lifetime">&#39;a</span>&gt; {
-    xconn: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>XConnection,
+</span><span class="kw">struct </span>GenericEventCookie&lt;<span class="lifetime">'a</span>&gt; {
+    xconn: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>XConnection,
     cookie: ffi::XGenericEventCookie,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; GenericEventCookie&lt;<span class="lifetime">&#39;a</span>&gt; {
-    <span class="kw">fn </span>from_event(xconn: <span class="kw-2">&amp;</span>XConnection, event: ffi::XEvent) -&gt; <span class="prelude-ty">Option</span>&lt;GenericEventCookie&lt;<span class="lifetime">&#39;_</span>&gt;&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; GenericEventCookie&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">fn </span>from_event(xconn: <span class="kw-2">&amp;</span>XConnection, event: ffi::XEvent) -&gt; <span class="prelude-ty">Option</span>&lt;GenericEventCookie&lt;<span class="lifetime">'_</span>&gt;&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>cookie: ffi::XGenericEventCookie = From::from(event);
             <span class="kw">if </span>(xconn.xlib.XGetEventData)(xconn.display, <span class="kw-2">&amp;mut </span>cookie) == ffi::True {
@@ -1511,7 +1512,7 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; Drop <span class="kw">for </span>GenericEventCookie&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; Drop <span class="kw">for </span>GenericEventCookie&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             (<span class="self">self</span>.xconn.xlib.XFreeEventData)(<span class="self">self</span>.xconn.display, <span class="kw-2">&amp;mut </span><span class="self">self</span>.cookie);

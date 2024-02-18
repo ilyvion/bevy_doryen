@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glutin-0.29.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glutin" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../glutin/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/glutin-0.29.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="glutin" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -678,7 +679,7 @@
 //! # fn main() {
 //! let el = glutin::event_loop::EventLoop::new();
 //! let wb = glutin::window::WindowBuilder::new()
-//!     .with_title(&quot;Hello world!&quot;)
+//!     .with_title("Hello world!")
 //!     .with_inner_size(glutin::dpi::LogicalSize::new(1024.0, 768.0));
 //! let windowed_context = glutin::ContextBuilder::new()
 //!     .build_windowed(wb, &amp;el)
@@ -696,41 +697,41 @@
 //!
 //! [`Window`]: crate::window::Window
 </span><span class="attr">#![cfg_attr(
-    target_os = <span class="string">&quot;windows&quot;</span>,
-    doc = <span class="string">&quot;\
+    target_os = <span class="string">"windows"</span>,
+    doc = <span class="string">"\
 [`RawContextExt`]: crate::platform::windows::RawContextExt
-&quot;
+"
 </span>)]
 #![cfg_attr(
     not(any(
-        target_os = <span class="string">&quot;linux&quot;</span>,
-        target_os = <span class="string">&quot;dragonfly&quot;</span>,
-        target_os = <span class="string">&quot;freebsd&quot;</span>,
-        target_os = <span class="string">&quot;netbsd&quot;</span>,
-        target_os = <span class="string">&quot;windows&quot;</span>,
-        target_os = <span class="string">&quot;openbsd&quot;</span>,
+        target_os = <span class="string">"linux"</span>,
+        target_os = <span class="string">"dragonfly"</span>,
+        target_os = <span class="string">"freebsd"</span>,
+        target_os = <span class="string">"netbsd"</span>,
+        target_os = <span class="string">"windows"</span>,
+        target_os = <span class="string">"openbsd"</span>,
     )),
-    doc = <span class="string">&quot;\
+    doc = <span class="string">"\
 [`RawContextExt`]: crate::platform
-&quot;
+"
 </span>)]
 #![cfg_attr(
     any(
-        target_os = <span class="string">&quot;linux&quot;</span>,
-        target_os = <span class="string">&quot;dragonfly&quot;</span>,
-        target_os = <span class="string">&quot;freebsd&quot;</span>,
-        target_os = <span class="string">&quot;netbsd&quot;</span>,
-        target_os = <span class="string">&quot;openbsd&quot;</span>,
+        target_os = <span class="string">"linux"</span>,
+        target_os = <span class="string">"dragonfly"</span>,
+        target_os = <span class="string">"freebsd"</span>,
+        target_os = <span class="string">"netbsd"</span>,
+        target_os = <span class="string">"openbsd"</span>,
     ),
-    doc = <span class="string">&quot;\
+    doc = <span class="string">"\
 [`RawContextExt`]: crate::platform::unix::RawContextExt
-&quot;
+"
 </span>)]
 #![deny(missing_debug_implementations)]
 #![allow(clippy::missing_safety_doc, clippy::too_many_arguments)]
-#![cfg_attr(feature = <span class="string">&quot;cargo-clippy&quot;</span>, deny(warnings))]
+#![cfg_attr(feature = <span class="string">"cargo-clippy"</span>, deny(warnings))]
 
-#[cfg(any(target_os = <span class="string">&quot;macos&quot;</span>, target_os = <span class="string">&quot;ios&quot;</span>))]
+#[cfg(any(target_os = <span class="string">"macos"</span>, target_os = <span class="string">"ios"</span>))]
 #[macro_use]
 </span><span class="kw">extern crate </span>objc;
 
@@ -755,27 +756,27 @@
 /// One notable limitation of the Wayland backend when it comes to shared
 /// [`Context`]s is that both contexts must use the same events loop.
 </span><span class="attr">#[derive(Debug, Clone)]
-</span><span class="kw">pub struct </span>ContextBuilder&lt;<span class="lifetime">&#39;a</span>, T: ContextCurrentState&gt; {
+</span><span class="kw">pub struct </span>ContextBuilder&lt;<span class="lifetime">'a</span>, T: ContextCurrentState&gt; {
     <span class="doccomment">/// The attributes to use to create the context.
-    </span><span class="kw">pub </span>gl_attr: GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Context&lt;T&gt;&gt;,
+    </span><span class="kw">pub </span>gl_attr: GlAttributes&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>Context&lt;T&gt;&gt;,
     <span class="doccomment">/// The pixel format requirements
     </span><span class="kw">pub </span>pf_reqs: PixelFormatRequirements,
 }
 
-<span class="kw">impl </span>Default <span class="kw">for </span>ContextBuilder&lt;<span class="lifetime">&#39;_</span>, NotCurrent&gt; {
+<span class="kw">impl </span>Default <span class="kw">for </span>ContextBuilder&lt;<span class="lifetime">'_</span>, NotCurrent&gt; {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ gl_attr: Default::default(), pf_reqs: Default::default() }
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ContextBuilder&lt;<span class="lifetime">&#39;a</span>, NotCurrent&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ContextBuilder&lt;<span class="lifetime">'a</span>, NotCurrent&gt; {
     <span class="doccomment">/// Initializes a new `ContextBuilder` with default values.
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         Default::default()
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>, T: ContextCurrentState&gt; ContextBuilder&lt;<span class="lifetime">&#39;a</span>, T&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: ContextCurrentState&gt; ContextBuilder&lt;<span class="lifetime">'a</span>, T&gt; {
     <span class="doccomment">/// Sets how the backend should choose the OpenGL API and version.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>with_gl(<span class="kw-2">mut </span><span class="self">self</span>, request: GlRequest) -&gt; <span class="self">Self </span>{
@@ -793,7 +794,7 @@
     <span class="doccomment">/// Sets the *debug* flag for the OpenGL [`Context`].
     ///
     /// The default value for this flag is `cfg!(debug_assertions)`, which means
-    /// that it&#39;s enabled when you run `cargo build` and disabled when you run
+    /// that it's enabled when you run `cargo build` and disabled when you run
     /// `cargo build --release`.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>with_gl_debug_flag(<span class="kw-2">mut </span><span class="self">self</span>, flag: bool) -&gt; <span class="self">Self </span>{
@@ -822,8 +823,8 @@
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>with_shared_lists&lt;T2: ContextCurrentState&gt;(
         <span class="self">self</span>,
-        other: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Context&lt;T2&gt;,
-    ) -&gt; ContextBuilder&lt;<span class="lifetime">&#39;a</span>, T2&gt; {
+        other: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Context&lt;T2&gt;,
+    ) -&gt; ContextBuilder&lt;<span class="lifetime">'a</span>, T2&gt; {
         ContextBuilder { gl_attr: <span class="self">self</span>.gl_attr.set_sharing(<span class="prelude-val">Some</span>(other)), pf_reqs: <span class="self">self</span>.pf_reqs }
     }
 
@@ -936,13 +937,13 @@
 
 <span class="kw">impl </span>CreationError {
     <span class="attr">#[cfg(any(
-        target_os = <span class="string">&quot;linux&quot;</span>,
-        target_os = <span class="string">&quot;dragonfly&quot;</span>,
-        target_os = <span class="string">&quot;freebsd&quot;</span>,
-        target_os = <span class="string">&quot;netbsd&quot;</span>,
-        target_os = <span class="string">&quot;openbsd&quot;</span>,
+        target_os = <span class="string">"linux"</span>,
+        target_os = <span class="string">"dragonfly"</span>,
+        target_os = <span class="string">"freebsd"</span>,
+        target_os = <span class="string">"netbsd"</span>,
+        target_os = <span class="string">"openbsd"</span>,
     ))]
-    #[cfg(feature = <span class="string">&quot;x11&quot;</span>)]
+    #[cfg(feature = <span class="string">"x11"</span>)]
     </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>append(<span class="self">self</span>, err: CreationError) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span><span class="self">self </span>{
             CreationError::CreationErrors(<span class="kw-2">mut </span>errs) =&gt; {
@@ -961,24 +962,24 @@
             | CreationError::NotSupported(text)
             | CreationError::PlatformSpecific(text) =&gt; text,
             CreationError::NoBackendAvailable(err) =&gt; {
-                <span class="kw">return </span><span class="macro">write!</span>(f, <span class="string">&quot;No backend is available: {}&quot;</span>, err);
+                <span class="kw">return </span><span class="macro">write!</span>(f, <span class="string">"No backend is available: {}"</span>, err);
             }
             CreationError::RobustnessNotSupported =&gt; {
-                <span class="string">&quot;You requested robustness, but it is not supported.&quot;
+                <span class="string">"You requested robustness, but it is not supported."
             </span>}
             CreationError::OpenGlVersionNotSupported =&gt; {
-                <span class="string">&quot;The requested OpenGL version is not supported.&quot;
+                <span class="string">"The requested OpenGL version is not supported."
             </span>}
             CreationError::NoAvailablePixelFormat =&gt; {
-                <span class="string">&quot;Couldn&#39;t find any pixel format that matches the criteria.&quot;
+                <span class="string">"Couldn't find any pixel format that matches the criteria."
             </span>}
             CreationError::Window(err) =&gt; {
-                <span class="kw">return </span><span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, err);
+                <span class="kw">return </span><span class="macro">write!</span>(f, <span class="string">"{}"</span>, err);
             }
             CreationError::CreationErrors(<span class="kw-2">ref </span>es) =&gt; {
-                <span class="macro">writeln!</span>(f, <span class="string">&quot;Received multiple errors:&quot;</span>)<span class="question-mark">?</span>;
+                <span class="macro">writeln!</span>(f, <span class="string">"Received multiple errors:"</span>)<span class="question-mark">?</span>;
                 <span class="kw">for </span>e <span class="kw">in </span>es {
-                    <span class="macro">writeln!</span>(f, <span class="string">&quot;\t{}&quot;</span>, e)<span class="question-mark">?</span>;
+                    <span class="macro">writeln!</span>(f, <span class="string">"\t{}"</span>, e)<span class="question-mark">?</span>;
                 }
                 <span class="kw">return </span><span class="prelude-val">Ok</span>(());
             }
@@ -987,7 +988,7 @@
 }
 
 <span class="kw">impl </span>std::error::Error <span class="kw">for </span>CreationError {
-    <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">&#39;static</span>)&gt; {
+    <span class="kw">fn </span>source(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>(<span class="kw">dyn </span>std::error::Error + <span class="lifetime">'static</span>)&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             CreationError::NoBackendAvailable(err) =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">&amp;**</span>err),
             CreationError::Window(err) =&gt; <span class="prelude-val">Some</span>(err),
@@ -1015,10 +1016,10 @@
 <span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>ContextError {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>std::fmt::Formatter) -&gt; <span class="prelude-ty">Result</span>&lt;(), std::fmt::Error&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            ContextError::OsError(string) =&gt; <span class="macro">write!</span>(formatter, <span class="string">&quot;{}&quot;</span>, string),
-            ContextError::IoError(err) =&gt; <span class="macro">write!</span>(formatter, <span class="string">&quot;{}&quot;</span>, err),
-            ContextError::ContextLost =&gt; <span class="macro">write!</span>(formatter, <span class="string">&quot;Context lost&quot;</span>),
-            ContextError::FunctionUnavailable =&gt; <span class="macro">write!</span>(formatter, <span class="string">&quot;Function unavailable&quot;</span>),
+            ContextError::OsError(string) =&gt; <span class="macro">write!</span>(formatter, <span class="string">"{}"</span>, string),
+            ContextError::IoError(err) =&gt; <span class="macro">write!</span>(formatter, <span class="string">"{}"</span>, err),
+            ContextError::ContextLost =&gt; <span class="macro">write!</span>(formatter, <span class="string">"Context lost"</span>),
+            ContextError::FunctionUnavailable =&gt; <span class="macro">write!</span>(formatter, <span class="string">"Function unavailable"</span>),
         }
     }
 }
@@ -1050,7 +1051,7 @@
 /// is created.
 </span><span class="attr">#[derive(Debug, Copy, Clone)]
 </span><span class="kw">pub enum </span>GlRequest {
-    <span class="doccomment">/// Request the latest version of the &quot;best&quot; API of this platform.
+    <span class="doccomment">/// Request the latest version of the "best" API of this platform.
     ///
     /// On desktop, will try OpenGL.
     </span>Latest,
@@ -1096,12 +1097,12 @@
     /// something wrong with your shaders.
     </span>NotRobust,
 
-    <span class="doccomment">/// The driver doesn&#39;t check anything. This option is very dangerous.
-    /// Please know what you&#39;re doing before using it. See the
+    <span class="doccomment">/// The driver doesn't check anything. This option is very dangerous.
+    /// Please know what you're doing before using it. See the
     /// `GL_KHR_no_error` extension.
     ///
     /// Since this option is purely an optimization, no error will be returned
-    /// if the backend doesn&#39;t support it. Instead it will automatically
+    /// if the backend doesn't support it. Instead it will automatically
     /// fall back to [`NotRobust`][Self::NotRobust].
     </span>NoError,
 
@@ -1111,24 +1112,24 @@
     </span>RobustNoResetNotification,
 
     <span class="doccomment">/// Same as [`RobustNoResetNotification`][Self::RobustNoResetNotification]
-    /// but the context creation doesn&#39;t fail if it&#39;s not supported.
+    /// but the context creation doesn't fail if it's not supported.
     </span>TryRobustNoResetNotification,
 
     <span class="doccomment">/// Everything is checked to avoid any crash. If a problem occurs, the
-    /// context will enter a &quot;context lost&quot; state. It must then be
-    /// recreated. For the moment, glutin doesn&#39;t provide a way to recreate
+    /// context will enter a "context lost" state. It must then be
+    /// recreated. For the moment, glutin doesn't provide a way to recreate
     /// a context with the same window :-/
     </span>RobustLoseContextOnReset,
 
     <span class="doccomment">/// Same as [`RobustLoseContextOnReset`][Self::RobustLoseContextOnReset]
-    /// but the context creation doesn&#39;t fail if it&#39;s not supported.
+    /// but the context creation doesn't fail if it's not supported.
     </span>TryRobustLoseContextOnReset,
 }
 
 <span class="doccomment">/// The behavior of the driver when you change the current context.
 </span><span class="attr">#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 </span><span class="kw">pub enum </span>ReleaseBehavior {
-    <span class="doccomment">/// Doesn&#39;t do anything. Most notably doesn&#39;t flush.
+    <span class="doccomment">/// Doesn't do anything. Most notably doesn't flush.
     </span><span class="prelude-val">None</span>,
 
     <span class="doccomment">/// Flushes the context that was previously current as if `glFlush` was
@@ -1159,12 +1160,12 @@
 </span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>PixelFormatRequirements {
     <span class="doccomment">/// If true, only hardware-accelerated formats will be considered. If
-    /// false, only software renderers. [`None`] means &quot;don&#39;t care&quot;. Default
+    /// false, only software renderers. [`None`] means "don't care". Default
     /// is `Some(true)`.
     </span><span class="kw">pub </span>hardware_accelerated: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 
     <span class="doccomment">/// Minimum number of bits for the color buffer, excluding alpha. [`None`]
-    /// means &quot;don&#39;t care&quot;. The default is `Some(24)`.
+    /// means "don't care". The default is `Some(24)`.
     </span><span class="kw">pub </span>color_bits: <span class="prelude-ty">Option</span>&lt;u8&gt;,
 
     <span class="doccomment">/// If true, the color buffer must be in a floating point format. Default
@@ -1175,24 +1176,24 @@
     </span><span class="kw">pub </span>float_color_buffer: bool,
 
     <span class="doccomment">/// Minimum number of bits for the alpha in the color buffer. [`None`] means
-    /// &quot;don&#39;t care&quot;. The default is `Some(8)`.
+    /// "don't care". The default is `Some(8)`.
     </span><span class="kw">pub </span>alpha_bits: <span class="prelude-ty">Option</span>&lt;u8&gt;,
 
-    <span class="doccomment">/// Minimum number of bits for the depth buffer. [`None`] means &quot;don&#39;t care&quot;.
+    <span class="doccomment">/// Minimum number of bits for the depth buffer. [`None`] means "don't care".
     /// The default value is `Some(24)`.
     </span><span class="kw">pub </span>depth_bits: <span class="prelude-ty">Option</span>&lt;u8&gt;,
 
-    <span class="doccomment">/// Minimum number of stencil bits. [`None`] means &quot;don&#39;t care&quot;.
+    <span class="doccomment">/// Minimum number of stencil bits. [`None`] means "don't care".
     /// The default value is `Some(8)`.
     </span><span class="kw">pub </span>stencil_bits: <span class="prelude-ty">Option</span>&lt;u8&gt;,
 
     <span class="doccomment">/// If true, only double-buffered formats will be considered. If false,
-    /// only single-buffer formats. [`None`] means &quot;don&#39;t care&quot;. The default
+    /// only single-buffer formats. [`None`] means "don't care". The default
     /// is `Some(true)`.
     </span><span class="kw">pub </span>double_buffer: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 
     <span class="doccomment">/// Contains the minimum number of samples per pixel in the color, depth
-    /// and stencil buffers. [`None`] means &quot;don&#39;t care&quot;. Default is [`None`].
+    /// and stencil buffers. [`None`] means "don't care". Default is [`None`].
     /// A value of `Some(0)` indicates that multisampling must not be enabled.
     </span><span class="kw">pub </span>multisampling: <span class="prelude-ty">Option</span>&lt;u16&gt;,
 
@@ -1200,7 +1201,7 @@
     /// non-stereoscopic formats. The default is [`false`].
     </span><span class="kw">pub </span>stereoscopy: bool,
 
-    <span class="doccomment">/// If true, only sRGB-capable formats will be considered. If false, don&#39;t
+    <span class="doccomment">/// If true, only sRGB-capable formats will be considered. If false, don't
     /// care. The default is [`true`].
     </span><span class="kw">pub </span>srgb: bool,
 
