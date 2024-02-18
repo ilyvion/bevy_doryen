@@ -113,15 +113,16 @@ jobs:
                   mv target/doc deploy/
                   touch deploy/.nojekyll
 
+            - name: Install Binstall
+              uses: cargo-bins/cargo-binstall@main
+
             - name: Install trunk
-              uses: jetli/trunk-action@v0.4.0
-              with:
-                  version: "latest"
+              run: cargo binstall --no-confirm trunk-ng
 
             - name: Build examples
               run: |
                   cd example_runner
-                  trunk build --release --public-url /bevy_doryen/examples/
+                  trunk-ng build --release --public-url /bevy_doryen/examples/
                   ls -lh dist/*.wasm
                   cd ..
 

@@ -4,7 +4,7 @@ version = "0.4.1"
 edition = "2021"
 description = "A Bevy plugin that integrates the Doryen roguelike library with Bevy"
 license = "Apache-2.0 OR MIT"
-repository = "https://github.com/alexschrod/bevy_doryen"
+repository = "https://github.com/ilyvion/bevy_doryen"
 readme = "README.md"
 keywords = ["game", "engine", "gamedev", "graphics", "bevy"]
 exclude = ["/www/", "/demo_thumbnails/", "/example_runner/", "/.github/"]
@@ -13,10 +13,10 @@ exclude = ["/www/", "/demo_thumbnails/", "/example_runner/", "/.github/"]
 
 [dependencies]
 # bevy
-bevy_app = { version = "0.12.1" }
-bevy_ecs = { version = "0.12.1" }
-bevy_utils = { version = "0.12.1" }
-bevy_asset = { version = "0.12.1" }
+bevy_app = { version = "0.13" }
+bevy_ecs = { version = "0.13" }
+bevy_utils = { version = "0.13" }
+bevy_asset = { version = "0.13" }
 # doryen
 doryen-rs = "1.3.0"
 

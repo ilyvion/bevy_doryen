@@ -2,14 +2,15 @@
 name = "example_runner"
 version = "0.1.0"
 edition = "2021"
+publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 # bevy
-bevy_app = { version = "0.12.1" }
-bevy_ecs = { version = "0.12.1" }
-bevy_utils = { version = "0.12.1" }
+bevy_app = { version = "0.13" }
+bevy_ecs = { version = "0.13" }
+bevy_utils = { version = "0.13" }
 # doryen
 doryen-fov = "0.1"
 doryen-rs = "1.3.0"
@@ -17,7 +18,7 @@ doryen-rs = "1.3.0"
 bevy_doryen = { version = "0.4.1", path = "../" }
 # other
 console_error_panic_hook = "0.1"
-gloo-utils = "0.1"
+gloo-utils = "0.2"
 rand = "0.8"
 serde = { version = "1", features = ["derive"] }
 serde_qs = "0.12"

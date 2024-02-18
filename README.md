@@ -5,10 +5,10 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 
 [![Crates.io](https://img.shields.io/crates/v/bevy_doryen)](https://crates.io/crates/bevy_doryen)
 [![Docs.io](https://docs.rs/bevy_doryen/badge.svg)](https://docs.rs/bevy_doryen)
-[![Docs master](https://img.shields.io/static/v1?label=docs&message=master&color=5479ab)](https://alexschrod.github.io/bevy_doryen/doc)
-[![GitHub](https://github.com/alexschrod/bevy_doryen/actions/workflows/rust.yml/badge.svg)](https://github.com/alexschrod/bevy_doryen)
-[![Bevy tracking](https://img.shields.io/badge/Bevy%20tracking-released%20version-lightblue)](https://github.com/bevyengine/bevy/blob/main/docs/plugins_guidelines.md#main-branch-tracking)
-[![codecov](https://codecov.io/github/alexschrod/bevy_doryen/branch/master/graph/badge.svg?token=08P69DV34A)](https://codecov.io/github/alexschrod/bevy_doryen)
+[![Docs master](https://img.shields.io/static/v1?label=docs&message=master&color=5479ab)](https://ilyvion.github.io/bevy_doryen/doc)
+[![GitHub](https://github.com/ilyvion/bevy_doryen/actions/workflows/rust.yml/badge.svg)](https://github.com/ilyvion/bevy_doryen)
+[![Following released Bevy versions](https://img.shields.io/badge/Bevy%20tracking-released%20version-lightblue)](https://bevyengine.org/learn/quick-start/plugin-development/#main-branch-tracking)
+[![codecov](https://codecov.io/github/ilyvion/bevy_doryen/branch/master/graph/badge.svg?token=08P69DV34A)](https://codecov.io/github/ilyvion/bevy_doryen)
 
 ## Usage
 
@@ -59,7 +59,7 @@ App::new()
     .run();
 ```
 
-See the [examples](https://github.com/alexschrod/bevy_doryen/tree/master/examples)
+See the [examples](https://github.com/ilyvion/bevy_doryen/tree/master/examples)
 for more usage scenarios, as well as live demos.
 
 ## Bevy Version Support

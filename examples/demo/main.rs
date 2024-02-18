@@ -51,12 +51,12 @@ pub enum GameState {
 
 #[inline(always)]
 fn is_running() -> impl FnMut(Option<Res<State<GameState>>>) -> bool + Clone {
-    state_exists_and_equals(GameState::Running)
+    in_state(GameState::Running)
 }
 
 #[inline(always)]
 fn is_loading_level() -> impl FnMut(Option<Res<State<GameState>>>) -> bool + Clone {
-    state_exists_and_equals(GameState::LoadingLevel)
+    in_state(GameState::LoadingLevel)
 }
 
 pub fn main() {
@@ -76,7 +76,7 @@ pub fn main() {
             player::PlayerPlugin,
             shared::CharacterPlugin,
         ))
-        .add_state::<GameState>()
+        .init_state::<GameState>()
         .add_systems(Startup, init)
         .add_systems(Render, clear.in_set(RenderSet::Clear).run_if(is_running()))
         .add_systems(PostRender, render_instructions.run_if(is_running()))

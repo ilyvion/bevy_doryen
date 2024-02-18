@@ -105,9 +105,7 @@ fn input(
     mut screenshot_index: ResMut<ScreenshotIndex>,
     mut capture_events: EventWriter<Capture>,
 ) {
-    let mut player_position = player_query
-        .get_component_mut::<Position<i32>>(entities.player)
-        .unwrap();
+    let (mut player_position, _) = player_query.get_mut(entities.player).unwrap();
 
     if input.key("ArrowLeft") {
         player_position.x = (player_position.x - 1).max(1);
@@ -120,9 +118,7 @@ fn input(
         player_position.y = (player_position.y + 1).min(CONSOLE_HEIGHT as i32 - 2);
     }
 
-    let mut mouse_position = mouse_query
-        .get_component_mut::<Position<f32>>(entities.mouse)
-        .unwrap();
+    let (mut mouse_position, _) = mouse_query.get_mut(entities.mouse).unwrap();
 
     let new_mouse_position = input.mouse_pos();
     mouse_position.x = new_mouse_position.0;
@@ -162,9 +158,7 @@ fn render(
         Some('&' as u16),
     );
 
-    let player_position = player_query
-        .get_component::<Position<i32>>(entities.player)
-        .unwrap();
+    let (player_position, _) = player_query.get(entities.player).unwrap();
 
     root_console.ascii(player_position.x, player_position.y, '@' as u16);
     root_console.fore(player_position.x, player_position.y, (255, 255, 255, 255));
@@ -176,9 +170,7 @@ fn render(
         None,
     );
 
-    let mouse_position = mouse_query
-        .get_component::<Position<f32>>(entities.mouse)
-        .unwrap();
+    let (mouse_position, _) = mouse_query.get(entities.mouse).unwrap();
 
     root_console.print_color(
         (CONSOLE_WIDTH / 2) as i32,
