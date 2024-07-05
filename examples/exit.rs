@@ -32,7 +32,7 @@ fn process_input(
 ) {
     if close_requested.0 {
         if input.key("KeyY") {
-            app_exit.send(AppExit);
+            app_exit.send(AppExit::Success);
         } else if input.key("KeyN") {
             close_requested.0 = false;
         }

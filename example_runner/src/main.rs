@@ -49,7 +49,7 @@ fn main() {
             .expect("document.location.search failed");
 
         let query: Query = match query_string
-            .strip_prefix("?")
+            .strip_prefix('?')
             .ok_or(())
             .and_then(|query| serde_qs::from_str(query).map_err(|_| ()))
         {

@@ -2,6 +2,7 @@ use bevy_app::prelude::*;
 use bevy_doryen::doryen::{color_blend, Color, Image, TextAlign};
 use bevy_doryen::prelude::*;
 use bevy_ecs::prelude::*;
+use bevy_state::prelude::*;
 use doryen_fov::{FovAlgorithm, FovRestrictive, MapData};
 
 use super::goblin::GoblinBundle;

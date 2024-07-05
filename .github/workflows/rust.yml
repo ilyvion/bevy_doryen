@@ -117,12 +117,12 @@ jobs:
               uses: cargo-bins/cargo-binstall@main
 
             - name: Install trunk
-              run: cargo binstall --no-confirm trunk-ng
+              run: cargo binstall --no-confirm trunk
 
             - name: Build examples
               run: |
                   cd example_runner
-                  trunk-ng build --release --public-url /bevy_doryen/examples/
+                  trunk build --release --public-url /bevy_doryen/examples/
                   ls -lh dist/*.wasm
                   cd ..
 

@@ -5,6 +5,8 @@ use bevy_doryen::doryen::{AppOptions, Color, TextAlign};
 use bevy_doryen::prelude::*;
 use bevy_doryen::{FpsInfo, PostRender};
 use bevy_ecs::prelude::*;
+use bevy_state::app::StatesPlugin;
+use bevy_state::prelude::*;
 
 mod goblin;
 mod level;
@@ -69,6 +71,7 @@ pub fn main() {
             },
             ..Default::default()
         })
+        .add_plugins(StatesPlugin)
         .add_plugins(DoryenPlugin)
         .add_plugins((
             level::LevelPlugin,
