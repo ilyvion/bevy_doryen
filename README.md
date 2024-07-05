@@ -12,13 +12,13 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 
 ## Usage
 
-### Targeting Bevy 0.13
+### Targeting Bevy 0.14
 
 ```toml
 [dependencies]
-bevy_app = "0.13"
-bevy_ecs = "0.13"
-bevy_doryen = "0.5"
+bevy_app = "0.14"
+bevy_ecs = "0.14"
+bevy_doryen = "0.6"
 ```
 
 ```rust
@@ -68,6 +68,7 @@ I intend to track the latest release version of Bevy. PRs supporting this are we
 
 | bevy   | bevy_doryen |
 | ------ | ----------- |
+| 0.14   | 0.6         |
 | 0.13   | 0.5         |
 | 0.12.1 | 0.4.1       |
 | 0.11   | 0.3         |
