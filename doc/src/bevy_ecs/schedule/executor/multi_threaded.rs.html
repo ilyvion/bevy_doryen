@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/schedule/executor/multi_threaded.rs`."><title>multi_threaded.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/schedule/executor/multi_threaded.rs`."><title>multi_threaded.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -776,19 +775,28 @@
 <a href="#775" id="775">775</a>
 <a href="#776" id="776">776</a>
 <a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
     any::Any,
-    sync::{Arc, Mutex},
+    sync::{Arc, Mutex, MutexGuard},
 };
 
-<span class="kw">use </span>bevy_tasks::{block_on, poll_once, ComputeTaskPool, Scope, TaskPool, ThreadExecutor};
+<span class="kw">use </span>bevy_tasks::{ComputeTaskPool, Scope, TaskPool, ThreadExecutor};
 <span class="kw">use </span>bevy_utils::default;
 <span class="kw">use </span>bevy_utils::syncunsafecell::SyncUnsafeCell;
 <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-</span><span class="kw">use </span>bevy_utils::tracing::{info_span, Instrument, Span};
+</span><span class="kw">use </span>bevy_utils::tracing::{info_span, Span};
 <span class="kw">use </span>std::panic::AssertUnwindSafe;
 
-<span class="kw">use </span>async_channel::{Receiver, Sender};
+<span class="kw">use </span>concurrent_queue::ConcurrentQueue;
 <span class="kw">use </span>fixedbitset::FixedBitSet;
 
 <span class="kw">use crate</span>::{
@@ -802,10 +810,14 @@
 
 <span class="kw">use crate as </span>bevy_ecs;
 
-<span class="doccomment">/// A funky borrow split of [`SystemSchedule`] required by the [`MultiThreadedExecutor`].
-</span><span class="kw">struct </span>SyncUnsafeSchedule&lt;<span class="lifetime">'a</span>&gt; {
-    systems: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[SyncUnsafeCell&lt;BoxedSystem&gt;],
-    conditions: Conditions&lt;<span class="lifetime">'a</span>&gt;,
+<span class="kw">use </span><span class="kw">super</span>::__rust_begin_short_backtrace;
+
+<span class="doccomment">/// Borrowed data used by the [`MultiThreadedExecutor`].
+</span><span class="kw">struct </span>Environment&lt;<span class="lifetime">'env</span>, <span class="lifetime">'sys</span>&gt; {
+    executor: <span class="kw-2">&amp;</span><span class="lifetime">'env </span>MultiThreadedExecutor,
+    systems: <span class="kw-2">&amp;</span><span class="lifetime">'sys </span>[SyncUnsafeCell&lt;BoxedSystem&gt;],
+    conditions: SyncUnsafeCell&lt;Conditions&lt;<span class="lifetime">'sys</span>&gt;&gt;,
+    world_cell: UnsafeWorldCell&lt;<span class="lifetime">'env</span>&gt;,
 }
 
 <span class="kw">struct </span>Conditions&lt;<span class="lifetime">'a</span>&gt; {
@@ -815,16 +827,22 @@
     systems_in_sets_with_conditions: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>[FixedBitSet],
 }
 
-<span class="kw">impl </span>SyncUnsafeSchedule&lt;<span class="lifetime">'_</span>&gt; {
-    <span class="kw">fn </span>new(schedule: <span class="kw-2">&amp;mut </span>SystemSchedule) -&gt; SyncUnsafeSchedule&lt;<span class="lifetime">'_</span>&gt; {
-        SyncUnsafeSchedule {
+<span class="kw">impl</span>&lt;<span class="lifetime">'env</span>, <span class="lifetime">'sys</span>&gt; Environment&lt;<span class="lifetime">'env</span>, <span class="lifetime">'sys</span>&gt; {
+    <span class="kw">fn </span>new(
+        executor: <span class="kw-2">&amp;</span><span class="lifetime">'env </span>MultiThreadedExecutor,
+        schedule: <span class="kw-2">&amp;</span><span class="lifetime">'sys </span><span class="kw-2">mut </span>SystemSchedule,
+        world: <span class="kw-2">&amp;</span><span class="lifetime">'env </span><span class="kw-2">mut </span>World,
+    ) -&gt; <span class="self">Self </span>{
+        Environment {
+            executor,
             systems: SyncUnsafeCell::from_mut(schedule.systems.as_mut_slice()).as_slice_of_cells(),
-            conditions: Conditions {
+            conditions: SyncUnsafeCell::new(Conditions {
                 system_conditions: <span class="kw-2">&amp;mut </span>schedule.system_conditions,
                 set_conditions: <span class="kw-2">&amp;mut </span>schedule.set_conditions,
                 sets_with_conditions_of_systems: <span class="kw-2">&amp;</span>schedule.sets_with_conditions_of_systems,
                 systems_in_sets_with_conditions: <span class="kw-2">&amp;</span>schedule.systems_in_sets_with_conditions,
-            },
+            }),
+            world_cell: world.as_unsafe_world_cell(),
         }
     }
 }
@@ -840,23 +858,31 @@
     </span>is_send: bool,
     <span class="doccomment">/// Is `true` if the system is exclusive.
     </span>is_exclusive: bool,
-    <span class="doccomment">/// Cached tracing span for system task
-    </span><span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-    </span>system_task_span: Span,
 }
 
 <span class="doccomment">/// The result of running a system that is sent across a channel.
 </span><span class="kw">struct </span>SystemResult {
     system_index: usize,
-    success: bool,
 }
 
 <span class="doccomment">/// Runs the schedule using a thread pool. Non-conflicting systems can run in parallel.
 </span><span class="kw">pub struct </span>MultiThreadedExecutor {
-    <span class="doccomment">/// Sends system completion events.
-    </span>sender: Sender&lt;SystemResult&gt;,
-    <span class="doccomment">/// Receives system completion events.
-    </span>receiver: Receiver&lt;SystemResult&gt;,
+    <span class="doccomment">/// The running state, protected by a mutex so that a reference to the executor can be shared across tasks.
+    </span>state: Mutex&lt;ExecutorState&gt;,
+    <span class="doccomment">/// Queue of system completion events.
+    </span>system_completion: ConcurrentQueue&lt;SystemResult&gt;,
+    <span class="doccomment">/// Setting when true applies deferred system buffers after all systems have run
+    </span>apply_final_deferred: bool,
+    <span class="doccomment">/// When set, tells the executor that a thread has panicked.
+    </span>panic_payload: Mutex&lt;<span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Any + Send&gt;&gt;&gt;,
+    starting_systems: FixedBitSet,
+    <span class="doccomment">/// Cached tracing span
+    </span><span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+    </span>executor_span: Span,
+}
+
+<span class="doccomment">/// The state of the executor while running.
+</span><span class="kw">pub struct </span>ExecutorState {
     <span class="doccomment">/// Metadata for scheduling and running system tasks.
     </span>system_task_metadata: Vec&lt;SystemTaskMetadata&gt;,
     <span class="doccomment">/// Union of the accesses of all currently running systems.
@@ -865,12 +891,8 @@
     </span>local_thread_running: bool,
     <span class="doccomment">/// Returns `true` if an exclusive system is running.
     </span>exclusive_running: bool,
-    <span class="doccomment">/// The number of systems expected to run.
-    </span>num_systems: usize,
     <span class="doccomment">/// The number of systems that are running.
     </span>num_running_systems: usize,
-    <span class="doccomment">/// The number of systems that have completed.
-    </span>num_completed_systems: usize,
     <span class="doccomment">/// The number of dependencies each system has that have not completed.
     </span>num_dependencies_remaining: Vec&lt;usize&gt;,
     <span class="doccomment">/// System sets whose conditions have been evaluated.
@@ -887,12 +909,16 @@
     </span>completed_systems: FixedBitSet,
     <span class="doccomment">/// Systems that have run but have not had their buffers applied.
     </span>unapplied_systems: FixedBitSet,
-    <span class="doccomment">/// Setting when true applies deferred system buffers after all systems have run
-    </span>apply_final_deferred: bool,
-    <span class="doccomment">/// When set, tells the executor that a thread has panicked.
-    </span>panic_payload: Arc&lt;Mutex&lt;<span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Any + Send&gt;&gt;&gt;&gt;,
-    <span class="doccomment">/// When set, stops the executor from running any more systems.
-    </span>stop_spawning: bool,
+}
+
+<span class="doccomment">/// References to data required by the executor.
+/// This is copied to each system task so that can invoke the executor when they complete.
+</span><span class="comment">// These all need to outlive 'scope in order to be sent to new tasks,
+// and keeping them all in a struct means we can use lifetime elision.
+</span><span class="attr">#[derive(Copy, Clone)]
+</span><span class="kw">struct </span>Context&lt;<span class="lifetime">'scope</span>, <span class="lifetime">'env</span>, <span class="lifetime">'sys</span>&gt; {
+    environment: <span class="kw-2">&amp;</span><span class="lifetime">'env </span>Environment&lt;<span class="lifetime">'env</span>, <span class="lifetime">'sys</span>&gt;,
+    scope: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span>Scope&lt;<span class="lifetime">'scope</span>, <span class="lifetime">'env</span>, ()&gt;,
 }
 
 <span class="kw">impl </span>Default <span class="kw">for </span>MultiThreadedExecutor {
@@ -907,86 +933,68 @@
     }
 
     <span class="kw">fn </span>init(<span class="kw-2">&amp;mut </span><span class="self">self</span>, schedule: <span class="kw-2">&amp;</span>SystemSchedule) {
+        <span class="kw">let </span>state = <span class="self">self</span>.state.get_mut().unwrap();
         <span class="comment">// pre-allocate space
         </span><span class="kw">let </span>sys_count = schedule.system_ids.len();
         <span class="kw">let </span>set_count = schedule.set_ids.len();
 
-        <span class="kw">let </span>(tx, rx) = async_channel::bounded(sys_count.max(<span class="number">1</span>));
+        <span class="self">self</span>.system_completion = ConcurrentQueue::bounded(sys_count.max(<span class="number">1</span>));
+        <span class="self">self</span>.starting_systems = FixedBitSet::with_capacity(sys_count);
+        state.evaluated_sets = FixedBitSet::with_capacity(set_count);
+        state.ready_systems = FixedBitSet::with_capacity(sys_count);
+        state.ready_systems_copy = FixedBitSet::with_capacity(sys_count);
+        state.running_systems = FixedBitSet::with_capacity(sys_count);
+        state.completed_systems = FixedBitSet::with_capacity(sys_count);
+        state.skipped_systems = FixedBitSet::with_capacity(sys_count);
+        state.unapplied_systems = FixedBitSet::with_capacity(sys_count);
 
-        <span class="self">self</span>.sender = tx;
-        <span class="self">self</span>.receiver = rx;
-        <span class="self">self</span>.evaluated_sets = FixedBitSet::with_capacity(set_count);
-        <span class="self">self</span>.ready_systems = FixedBitSet::with_capacity(sys_count);
-        <span class="self">self</span>.ready_systems_copy = FixedBitSet::with_capacity(sys_count);
-        <span class="self">self</span>.running_systems = FixedBitSet::with_capacity(sys_count);
-        <span class="self">self</span>.completed_systems = FixedBitSet::with_capacity(sys_count);
-        <span class="self">self</span>.skipped_systems = FixedBitSet::with_capacity(sys_count);
-        <span class="self">self</span>.unapplied_systems = FixedBitSet::with_capacity(sys_count);
-
-        <span class="self">self</span>.system_task_metadata = Vec::with_capacity(sys_count);
+        state.system_task_metadata = Vec::with_capacity(sys_count);
         <span class="kw">for </span>index <span class="kw">in </span><span class="number">0</span>..sys_count {
-            <span class="self">self</span>.system_task_metadata.push(SystemTaskMetadata {
+            state.system_task_metadata.push(SystemTaskMetadata {
                 archetype_component_access: default(),
                 dependents: schedule.system_dependents[index].clone(),
                 is_send: schedule.systems[index].is_send(),
                 is_exclusive: schedule.systems[index].is_exclusive(),
-                <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-                </span>system_task_span: <span class="macro">info_span!</span>(
-                    <span class="string">"system_task"</span>,
-                    name = <span class="kw-2">&amp;*</span>schedule.systems[index].name()
-                ),
             });
+            <span class="kw">if </span>schedule.system_dependencies[index] == <span class="number">0 </span>{
+                <span class="self">self</span>.starting_systems.insert(index);
+            }
         }
 
-        <span class="self">self</span>.num_dependencies_remaining = Vec::with_capacity(sys_count);
+        state.num_dependencies_remaining = Vec::with_capacity(sys_count);
     }
 
     <span class="kw">fn </span>run(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         schedule: <span class="kw-2">&amp;mut </span>SystemSchedule,
-        _skip_systems: <span class="prelude-ty">Option</span>&lt;FixedBitSet&gt;,
         world: <span class="kw-2">&amp;mut </span>World,
+        _skip_systems: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>FixedBitSet&gt;,
     ) {
+        <span class="kw">let </span>state = <span class="self">self</span>.state.get_mut().unwrap();
         <span class="comment">// reset counts
-        </span><span class="self">self</span>.num_systems = schedule.systems.len();
-        <span class="kw">if </span><span class="self">self</span>.num_systems == <span class="number">0 </span>{
+        </span><span class="kw">if </span>schedule.systems.is_empty() {
             <span class="kw">return</span>;
         }
-        <span class="self">self</span>.num_running_systems = <span class="number">0</span>;
-        <span class="self">self</span>.num_completed_systems = <span class="number">0</span>;
-        <span class="self">self</span>.num_dependencies_remaining.clear();
-        <span class="self">self</span>.num_dependencies_remaining
-            .extend_from_slice(<span class="kw-2">&amp;</span>schedule.system_dependencies);
-
-        <span class="kw">for </span>(system_index, dependencies) <span class="kw">in </span><span class="self">self</span>.num_dependencies_remaining.iter_mut().enumerate() {
-            <span class="kw">if </span><span class="kw-2">*</span>dependencies == <span class="number">0 </span>{
-                <span class="self">self</span>.ready_systems.insert(system_index);
-            }
-        }
+        state.num_running_systems = <span class="number">0</span>;
+        state
+            .num_dependencies_remaining
+            .clone_from(<span class="kw-2">&amp;</span>schedule.system_dependencies);
+        state.ready_systems.clone_from(<span class="kw-2">&amp;</span><span class="self">self</span>.starting_systems);
 
         <span class="comment">// If stepping is enabled, make sure we skip those systems that should
         // not be run.
         </span><span class="attr">#[cfg(feature = <span class="string">"bevy_debug_stepping"</span>)]
-        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>skipped_systems) = _skip_systems {
-            <span class="macro">debug_assert_eq!</span>(skipped_systems.len(), <span class="self">self</span>.completed_systems.len());
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(skipped_systems) = _skip_systems {
+            <span class="macro">debug_assert_eq!</span>(skipped_systems.len(), state.completed_systems.len());
             <span class="comment">// mark skipped systems as completed
-            </span><span class="self">self</span>.completed_systems |= <span class="kw-2">&amp;</span>skipped_systems;
-            <span class="self">self</span>.num_completed_systems = <span class="self">self</span>.completed_systems.count_ones(..);
+            </span>state.completed_systems |= skipped_systems;
 
             <span class="comment">// signal the dependencies for each of the skipped systems, as
             // though they had run
             </span><span class="kw">for </span>system_index <span class="kw">in </span>skipped_systems.ones() {
-                <span class="self">self</span>.signal_dependents(system_index);
+                state.signal_dependents(system_index);
+                state.ready_systems.remove(system_index);
             }
-
-            <span class="comment">// Finally, we need to clear all skipped systems from the ready
-            // list.
-            //
-            // We invert the skipped system mask to get the list of systems
-            // that should be run.  Then we bitwise AND it with the ready list,
-            // resulting in a list of ready systems that aren't skipped.
-            </span>skipped_systems.toggle_range(..);
-            <span class="self">self</span>.ready_systems &amp;= skipped_systems;
         }
 
         <span class="kw">let </span>thread_executor = world
@@ -994,83 +1002,47 @@
             .map(|e| e.<span class="number">0</span>.clone());
         <span class="kw">let </span>thread_executor = thread_executor.as_deref();
 
-        <span class="kw">let </span>SyncUnsafeSchedule {
-            systems,
-            <span class="kw-2">mut </span>conditions,
-        } = SyncUnsafeSchedule::new(schedule);
+        <span class="kw">let </span>environment = <span class="kw-2">&amp;</span>Environment::new(<span class="self">self</span>, schedule, world);
 
         ComputeTaskPool::get_or_init(TaskPool::default).scope_with_executor(
             <span class="bool-val">false</span>,
             thread_executor,
             |scope| {
-                <span class="comment">// the executor itself is a `Send` future so that it can run
-                // alongside systems that claim the local thread
-                </span><span class="attr">#[allow(unused_mut)]
-                </span><span class="kw">let </span><span class="kw-2">mut </span>executor = Box::pin(<span class="kw">async </span>{
-                    <span class="kw">let </span>world_cell = world.as_unsafe_world_cell();
-                    <span class="kw">while </span><span class="self">self</span>.num_completed_systems &lt; <span class="self">self</span>.num_systems {
-                        <span class="comment">// SAFETY:
-                        // - self.ready_systems does not contain running systems.
-                        // - `world_cell` has mutable access to the entire world.
-                        </span><span class="kw">unsafe </span>{
-                            <span class="self">self</span>.spawn_system_tasks(scope, systems, <span class="kw-2">&amp;mut </span>conditions, world_cell);
-                        }
+                <span class="kw">let </span>context = Context { environment, scope };
 
-                        <span class="kw">if </span><span class="self">self</span>.num_running_systems &gt; <span class="number">0 </span>{
-                            <span class="comment">// wait for systems to complete
-                            </span><span class="kw">if let </span><span class="prelude-val">Ok</span>(result) = <span class="self">self</span>.receiver.recv().<span class="kw">await </span>{
-                                <span class="self">self</span>.finish_system_and_handle_dependents(result);
-                            } <span class="kw">else </span>{
-                                <span class="macro">panic!</span>(<span class="string">"Channel closed unexpectedly!"</span>);
-                            }
-
-                            <span class="kw">while let </span><span class="prelude-val">Ok</span>(result) = <span class="self">self</span>.receiver.try_recv() {
-                                <span class="self">self</span>.finish_system_and_handle_dependents(result);
-                            }
-
-                            <span class="self">self</span>.rebuild_active_access();
-                        }
-                    }
-                });
-
-                <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-                </span><span class="kw">let </span>executor_span = <span class="macro">info_span!</span>(<span class="string">"multithreaded executor"</span>);
-                <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-                </span><span class="kw">let </span><span class="kw-2">mut </span>executor = executor.instrument(executor_span);
-
-                <span class="comment">// Immediately poll the task once to avoid the overhead of the executor
-                // and thread wake-up. Only spawn the task if the executor does not immediately
-                // terminate.
-                </span><span class="kw">if </span>block_on(poll_once(<span class="kw-2">&amp;mut </span>executor)).is_none() {
-                    scope.spawn(executor);
-                }
+                <span class="comment">// The first tick won't need to process finished systems, but we still need to run the loop in
+                // tick_executor() in case a system completes while the first tick still holds the mutex.
+                </span>context.tick_executor();
             },
         );
 
+        <span class="comment">// End the borrows of self and world in environment by copying out the reference to systems.
+        </span><span class="kw">let </span>systems = environment.systems;
+
+        <span class="kw">let </span>state = <span class="self">self</span>.state.get_mut().unwrap();
         <span class="kw">if </span><span class="self">self</span>.apply_final_deferred {
             <span class="comment">// Do one final apply buffers after all systems have completed
             // Commands should be applied while on the scope's thread, not the executor's thread
-            </span><span class="kw">let </span>res = apply_deferred(<span class="kw-2">&amp;</span><span class="self">self</span>.unapplied_systems, systems, world);
+            </span><span class="kw">let </span>res = apply_deferred(<span class="kw-2">&amp;</span>state.unapplied_systems, systems, world);
             <span class="kw">if let </span><span class="prelude-val">Err</span>(payload) = res {
-                <span class="kw">let </span><span class="kw-2">mut </span>panic_payload = <span class="self">self</span>.panic_payload.lock().unwrap();
+                <span class="kw">let </span>panic_payload = <span class="self">self</span>.panic_payload.get_mut().unwrap();
                 <span class="kw-2">*</span>panic_payload = <span class="prelude-val">Some</span>(payload);
             }
-            <span class="self">self</span>.unapplied_systems.clear();
-            <span class="macro">debug_assert!</span>(<span class="self">self</span>.unapplied_systems.is_clear());
+            state.unapplied_systems.clear();
         }
 
         <span class="comment">// check to see if there was a panic
-        </span><span class="kw">let </span><span class="kw-2">mut </span>payload = <span class="self">self</span>.panic_payload.lock().unwrap();
+        </span><span class="kw">let </span>payload = <span class="self">self</span>.panic_payload.get_mut().unwrap();
         <span class="kw">if let </span><span class="prelude-val">Some</span>(payload) = payload.take() {
             std::panic::resume_unwind(payload);
         }
 
-        <span class="macro">debug_assert!</span>(<span class="self">self</span>.ready_systems.is_clear());
-        <span class="macro">debug_assert!</span>(<span class="self">self</span>.running_systems.is_clear());
-        <span class="self">self</span>.active_access.clear();
-        <span class="self">self</span>.evaluated_sets.clear();
-        <span class="self">self</span>.skipped_systems.clear();
-        <span class="self">self</span>.completed_systems.clear();
+        <span class="macro">debug_assert!</span>(state.ready_systems.is_clear());
+        <span class="macro">debug_assert!</span>(state.running_systems.is_clear());
+        state.active_access.clear();
+        state.evaluated_sets.clear();
+        state.skipped_systems.clear();
+        state.completed_systems.clear();
     }
 
     <span class="kw">fn </span>set_apply_final_deferred(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: bool) {
@@ -1078,19 +1050,80 @@
     }
 }
 
+<span class="kw">impl</span>&lt;<span class="lifetime">'scope</span>, <span class="lifetime">'env</span>: <span class="lifetime">'scope</span>, <span class="lifetime">'sys</span>&gt; Context&lt;<span class="lifetime">'scope</span>, <span class="lifetime">'env</span>, <span class="lifetime">'sys</span>&gt; {
+    <span class="kw">fn </span>system_completed(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        system_index: usize,
+        res: <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>Any + Send&gt;&gt;,
+        system: <span class="kw-2">&amp;</span>BoxedSystem,
+    ) {
+        <span class="comment">// tell the executor that the system finished
+        </span><span class="self">self</span>.environment
+            .executor
+            .system_completion
+            .push(SystemResult { system_index })
+            .unwrap_or_else(|error| <span class="macro">unreachable!</span>(<span class="string">"{}"</span>, error));
+        <span class="kw">if let </span><span class="prelude-val">Err</span>(payload) = res {
+            <span class="macro">eprintln!</span>(<span class="string">"Encountered a panic in system `{}`!"</span>, <span class="kw-2">&amp;*</span>system.name());
+            <span class="comment">// set the payload to propagate the error
+            </span>{
+                <span class="kw">let </span><span class="kw-2">mut </span>panic_payload = <span class="self">self</span>.environment.executor.panic_payload.lock().unwrap();
+                <span class="kw-2">*</span>panic_payload = <span class="prelude-val">Some</span>(payload);
+            }
+        }
+        <span class="self">self</span>.tick_executor();
+    }
+
+    <span class="kw">fn </span>try_lock&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Conditions&lt;<span class="lifetime">'sys</span>&gt;, MutexGuard&lt;<span class="lifetime">'a</span>, ExecutorState&gt;)&gt; {
+        <span class="kw">let </span>guard = <span class="self">self</span>.environment.executor.state.try_lock().ok()<span class="question-mark">?</span>;
+        <span class="comment">// SAFETY: This is an exclusive access as no other location fetches conditions mutably, and
+        // is synchronized by the lock on the executor state.
+        </span><span class="kw">let </span>conditions = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span><span class="self">self</span>.environment.conditions.get() };
+        <span class="prelude-val">Some</span>((conditions, guard))
+    }
+
+    <span class="kw">fn </span>tick_executor(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="comment">// Ensure that the executor handles any events pushed to the system_completion queue by this thread.
+        // If this thread acquires the lock, the exector runs after the push() and they are processed.
+        // If this thread does not acquire the lock, then the is_empty() check on the other thread runs
+        // after the lock is released, which is after try_lock() failed, which is after the push()
+        // on this thread, so the is_empty() check will see the new events and loop.
+        </span><span class="kw">loop </span>{
+            <span class="kw">let </span><span class="prelude-val">Some</span>((conditions, <span class="kw-2">mut </span>guard)) = <span class="self">self</span>.try_lock() <span class="kw">else </span>{
+                <span class="kw">return</span>;
+            };
+            guard.tick(<span class="self">self</span>, conditions);
+            <span class="comment">// Make sure we drop the guard before checking system_completion.is_empty(), or we could lose events.
+            </span>drop(guard);
+            <span class="kw">if </span><span class="self">self</span>.environment.executor.system_completion.is_empty() {
+                <span class="kw">return</span>;
+            }
+        }
+    }
+}
+
 <span class="kw">impl </span>MultiThreadedExecutor {
-    <span class="doccomment">/// Creates a new multi-threaded executor for use with a [`Schedule`].
+    <span class="doccomment">/// Creates a new `multi_threaded` executor for use with a [`Schedule`].
     ///
     /// [`Schedule`]: crate::schedule::Schedule
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>(sender, receiver) = async_channel::unbounded();
         <span class="self">Self </span>{
-            sender,
-            receiver,
+            state: Mutex::new(ExecutorState::new()),
+            system_completion: ConcurrentQueue::unbounded(),
+            starting_systems: FixedBitSet::new(),
+            apply_final_deferred: <span class="bool-val">true</span>,
+            panic_payload: Mutex::new(<span class="prelude-val">None</span>),
+            <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+            </span>executor_span: <span class="macro">info_span!</span>(<span class="string">"multithreaded executor"</span>),
+        }
+    }
+}
+
+<span class="kw">impl </span>ExecutorState {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
             system_task_metadata: Vec::new(),
-            num_systems: <span class="number">0</span>,
             num_running_systems: <span class="number">0</span>,
-            num_completed_systems: <span class="number">0</span>,
             num_dependencies_remaining: Vec::new(),
             active_access: default(),
             local_thread_running: <span class="bool-val">false</span>,
@@ -1102,9 +1135,24 @@
             skipped_systems: FixedBitSet::new(),
             completed_systems: FixedBitSet::new(),
             unapplied_systems: FixedBitSet::new(),
-            apply_final_deferred: <span class="bool-val">true</span>,
-            panic_payload: Arc::new(Mutex::new(<span class="prelude-val">None</span>)),
-            stop_spawning: <span class="bool-val">false</span>,
+        }
+    }
+
+    <span class="kw">fn </span>tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, context: <span class="kw-2">&amp;</span>Context, conditions: <span class="kw-2">&amp;mut </span>Conditions) {
+        <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+        </span><span class="kw">let </span>_span = context.environment.executor.executor_span.enter();
+
+        <span class="kw">for </span>result <span class="kw">in </span>context.environment.executor.system_completion.try_iter() {
+            <span class="self">self</span>.finish_system_and_handle_dependents(result);
+        }
+
+        <span class="self">self</span>.rebuild_active_access();
+
+        <span class="comment">// SAFETY:
+        // - `finish_system_and_handle_dependents` has updated the currently running systems.
+        // - `rebuild_active_access` locks access for all currently running systems.
+        </span><span class="kw">unsafe </span>{
+            <span class="self">self</span>.spawn_system_tasks(context, conditions);
         }
     }
 
@@ -1113,67 +1161,80 @@
     ///   have been mutably borrowed (such as the systems currently running).
     /// - `world_cell` must have permission to access all world data (not counting
     ///   any world data that is claimed by systems currently running on this executor).
-    </span><span class="kw">unsafe fn </span>spawn_system_tasks&lt;<span class="lifetime">'scope</span>&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        scope: <span class="kw-2">&amp;</span>Scope&lt;<span class="lifetime">'_</span>, <span class="lifetime">'scope</span>, ()&gt;,
-        systems: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span>[SyncUnsafeCell&lt;BoxedSystem&gt;],
-        conditions: <span class="kw-2">&amp;mut </span>Conditions,
-        world_cell: UnsafeWorldCell&lt;<span class="lifetime">'scope</span>&gt;,
-    ) {
+    </span><span class="kw">unsafe fn </span>spawn_system_tasks(<span class="kw-2">&amp;mut </span><span class="self">self</span>, context: <span class="kw-2">&amp;</span>Context, conditions: <span class="kw-2">&amp;mut </span>Conditions) {
         <span class="kw">if </span><span class="self">self</span>.exclusive_running {
             <span class="kw">return</span>;
         }
 
         <span class="comment">// can't borrow since loop mutably borrows `self`
         </span><span class="kw">let </span><span class="kw-2">mut </span>ready_systems = std::mem::take(<span class="kw-2">&amp;mut </span><span class="self">self</span>.ready_systems_copy);
-        ready_systems.clear();
-        ready_systems.union_with(<span class="kw-2">&amp;</span><span class="self">self</span>.ready_systems);
 
-        <span class="kw">for </span>system_index <span class="kw">in </span>ready_systems.ones() {
-            <span class="macro">assert!</span>(!<span class="self">self</span>.running_systems.contains(system_index));
-            <span class="comment">// SAFETY: Caller assured that these systems are not running.
-            // Therefore, no other reference to this system exists and there is no aliasing.
-            </span><span class="kw">let </span>system = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>systems[system_index].get() };
+        <span class="comment">// Skipping systems may cause their dependents to become ready immediately.
+        // If that happens, we need to run again immediately or we may fail to spawn those dependents.
+        </span><span class="kw">let </span><span class="kw-2">mut </span>check_for_new_ready_systems = <span class="bool-val">true</span>;
+        <span class="kw">while </span>check_for_new_ready_systems {
+            check_for_new_ready_systems = <span class="bool-val">false</span>;
 
-            <span class="kw">if </span>!<span class="self">self</span>.can_run(system_index, system, conditions, world_cell) {
-                <span class="comment">// NOTE: exclusive systems with ambiguities are susceptible to
-                // being significantly displaced here (compared to single-threaded order)
-                // if systems after them in topological order can run
-                // if that becomes an issue, `break;` if exclusive system
-                </span><span class="kw">continue</span>;
-            }
+            ready_systems.clone_from(<span class="kw-2">&amp;</span><span class="self">self</span>.ready_systems);
 
-            <span class="self">self</span>.ready_systems.set(system_index, <span class="bool-val">false</span>);
+            <span class="kw">for </span>system_index <span class="kw">in </span>ready_systems.ones() {
+                <span class="macro">debug_assert!</span>(!<span class="self">self</span>.running_systems.contains(system_index));
+                <span class="comment">// SAFETY: Caller assured that these systems are not running.
+                // Therefore, no other reference to this system exists and there is no aliasing.
+                </span><span class="kw">let </span>system = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>context.environment.systems[system_index].get() };
 
-            <span class="comment">// SAFETY: `can_run` returned true, which means that:
-            // - It must have called `update_archetype_component_access` for each run condition.
-            // - There can be no systems running whose accesses would conflict with any conditions.
-            </span><span class="kw">if </span>!<span class="self">self</span>.should_run(system_index, system, conditions, world_cell) {
-                <span class="self">self</span>.skip_system_and_signal_dependents(system_index);
-                <span class="kw">continue</span>;
-            }
-
-            <span class="self">self</span>.running_systems.insert(system_index);
-            <span class="self">self</span>.num_running_systems += <span class="number">1</span>;
-
-            <span class="kw">if </span><span class="self">self</span>.system_task_metadata[system_index].is_exclusive {
-                <span class="comment">// SAFETY: `can_run` returned true for this system, which means
-                // that no other systems currently have access to the world.
-                </span><span class="kw">let </span>world = <span class="kw">unsafe </span>{ world_cell.world_mut() };
-                <span class="comment">// SAFETY: `can_run` returned true for this system,
-                // which means no systems are currently borrowed.
-                </span><span class="kw">unsafe </span>{
-                    <span class="self">self</span>.spawn_exclusive_system_task(scope, system_index, systems, world);
+                <span class="kw">if </span>!<span class="self">self</span>.can_run(
+                    system_index,
+                    system,
+                    conditions,
+                    context.environment.world_cell,
+                ) {
+                    <span class="comment">// NOTE: exclusive systems with ambiguities are susceptible to
+                    // being significantly displaced here (compared to single-threaded order)
+                    // if systems after them in topological order can run
+                    // if that becomes an issue, `break;` if exclusive system
+                    </span><span class="kw">continue</span>;
                 }
-                <span class="kw">break</span>;
-            }
 
-            <span class="comment">// SAFETY:
-            // - No other reference to this system exists.
-            // - `can_run` has been called, which calls `update_archetype_component_access` with this system.
-            // - `can_run` returned true, so no systems with conflicting world access are running.
-            </span><span class="kw">unsafe </span>{
-                <span class="self">self</span>.spawn_system_task(scope, system_index, systems, world_cell);
+                <span class="self">self</span>.ready_systems.remove(system_index);
+
+                <span class="comment">// SAFETY: `can_run` returned true, which means that:
+                // - It must have called `update_archetype_component_access` for each run condition.
+                // - There can be no systems running whose accesses would conflict with any conditions.
+                </span><span class="kw">if unsafe </span>{
+                    !<span class="self">self</span>.should_run(
+                        system_index,
+                        system,
+                        conditions,
+                        context.environment.world_cell,
+                    )
+                } {
+                    <span class="self">self</span>.skip_system_and_signal_dependents(system_index);
+                    <span class="comment">// signal_dependents may have set more systems to ready.
+                    </span>check_for_new_ready_systems = <span class="bool-val">true</span>;
+                    <span class="kw">continue</span>;
+                }
+
+                <span class="self">self</span>.running_systems.insert(system_index);
+                <span class="self">self</span>.num_running_systems += <span class="number">1</span>;
+
+                <span class="kw">if </span><span class="self">self</span>.system_task_metadata[system_index].is_exclusive {
+                    <span class="comment">// SAFETY: `can_run` returned true for this system,
+                    // which means no systems are currently borrowed.
+                    </span><span class="kw">unsafe </span>{
+                        <span class="self">self</span>.spawn_exclusive_system_task(context, system_index);
+                    }
+                    check_for_new_ready_systems = <span class="bool-val">false</span>;
+                    <span class="kw">break</span>;
+                }
+
+                <span class="comment">// SAFETY:
+                // - Caller ensured no other reference to this system exists.
+                // - `can_run` has been called, which calls `update_archetype_component_access` with this system.
+                // - `can_run` returned true, so no systems with conflicting world access are running.
+                </span><span class="kw">unsafe </span>{
+                    <span class="self">self</span>.spawn_system_task(context, system_index);
+                }
             }
         }
 
@@ -1231,11 +1292,9 @@
                 <span class="kw">return </span><span class="bool-val">false</span>;
             }
 
-            <span class="comment">// PERF: use an optimized clear() + extend() operation
-            </span><span class="kw">let </span>meta_access =
-                <span class="kw-2">&amp;mut </span><span class="self">self</span>.system_task_metadata[system_index].archetype_component_access;
-            meta_access.clear();
-            meta_access.extend(system.archetype_component_access());
+            <span class="self">self</span>.system_task_metadata[system_index]
+                .archetype_component_access
+                .clone_from(system.archetype_component_access());
         }
 
         <span class="bool-val">true
@@ -1265,8 +1324,9 @@
             // - The caller ensures that `world` has permission to read any data
             //   required by the conditions.
             // - `update_archetype_component_access` has been called for each run condition.
-            </span><span class="kw">let </span>set_conditions_met =
-                evaluate_and_fold_conditions(<span class="kw-2">&amp;mut </span>conditions.set_conditions[set_idx], world);
+            </span><span class="kw">let </span>set_conditions_met = <span class="kw">unsafe </span>{
+                evaluate_and_fold_conditions(<span class="kw-2">&amp;mut </span>conditions.set_conditions[set_idx], world)
+            };
 
             <span class="kw">if </span>!set_conditions_met {
                 <span class="self">self</span>.skipped_systems
@@ -1282,8 +1342,9 @@
         // - The caller ensures that `world` has permission to read any data
         //   required by the conditions.
         // - `update_archetype_component_access` has been called for each run condition.
-        </span><span class="kw">let </span>system_conditions_met =
-            evaluate_and_fold_conditions(<span class="kw-2">&amp;mut </span>conditions.system_conditions[system_index], world);
+        </span><span class="kw">let </span>system_conditions_met = <span class="kw">unsafe </span>{
+            evaluate_and_fold_conditions(<span class="kw-2">&amp;mut </span>conditions.system_conditions[system_index], world)
+        };
 
         <span class="kw">if </span>!system_conditions_met {
             <span class="self">self</span>.skipped_systems.insert(system_index);
@@ -1300,132 +1361,71 @@
     ///   used by the specified system.
     /// - `update_archetype_component_access` must have been called with `world`
     ///   on the system associated with `system_index`.
-    </span><span class="kw">unsafe fn </span>spawn_system_task&lt;<span class="lifetime">'scope</span>&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        scope: <span class="kw-2">&amp;</span>Scope&lt;<span class="lifetime">'_</span>, <span class="lifetime">'scope</span>, ()&gt;,
-        system_index: usize,
-        systems: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span>[SyncUnsafeCell&lt;BoxedSystem&gt;],
-        world: UnsafeWorldCell&lt;<span class="lifetime">'scope</span>&gt;,
-    ) {
+    </span><span class="kw">unsafe fn </span>spawn_system_task(<span class="kw-2">&amp;mut </span><span class="self">self</span>, context: <span class="kw-2">&amp;</span>Context, system_index: usize) {
         <span class="comment">// SAFETY: this system is not running, no other reference exists
-        </span><span class="kw">let </span>system = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>systems[system_index].get() };
-        <span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
-        <span class="kw">let </span>panic_payload = <span class="self">self</span>.panic_payload.clone();
+        </span><span class="kw">let </span>system = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>context.environment.systems[system_index].get() };
+        <span class="comment">// Move the full context object into the new future.
+        </span><span class="kw">let </span>context = <span class="kw-2">*</span>context;
+
+        <span class="kw">let </span>system_meta = <span class="kw-2">&amp;</span><span class="self">self</span>.system_task_metadata[system_index];
+
         <span class="kw">let </span>task = <span class="kw">async move </span>{
             <span class="kw">let </span>res = std::panic::catch_unwind(AssertUnwindSafe(|| {
                 <span class="comment">// SAFETY:
                 // - The caller ensures that we have permission to
                 // access the world data used by the system.
                 // - `update_archetype_component_access` has been called.
-                </span><span class="kw">unsafe </span>{ system.run_unsafe((), world) };
+                </span><span class="kw">unsafe </span>{
+                    __rust_begin_short_backtrace::run_unsafe(
+                        <span class="kw-2">&amp;mut **</span>system,
+                        context.environment.world_cell,
+                    );
+                };
             }));
-            <span class="comment">// tell the executor that the system finished
-            </span>sender
-                .try_send(SystemResult {
-                    system_index,
-                    success: res.is_ok(),
-                })
-                .unwrap_or_else(|error| <span class="macro">unreachable!</span>(<span class="string">"{}"</span>, error));
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(payload) = res {
-                <span class="macro">eprintln!</span>(<span class="string">"Encountered a panic in system `{}`!"</span>, <span class="kw-2">&amp;*</span>system.name());
-                <span class="comment">// set the payload to propagate the error
-                </span>{
-                    <span class="kw">let </span><span class="kw-2">mut </span>panic_payload = panic_payload.lock().unwrap();
-                    <span class="kw-2">*</span>panic_payload = <span class="prelude-val">Some</span>(payload);
-                }
-            }
+            context.system_completed(system_index, res, system);
         };
 
-        <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-        </span><span class="kw">let </span>task = task.instrument(
-            <span class="self">self</span>.system_task_metadata[system_index]
-                .system_task_span
-                .clone(),
-        );
-
-        <span class="kw">let </span>system_meta = <span class="kw-2">&amp;</span><span class="self">self</span>.system_task_metadata[system_index];
         <span class="self">self</span>.active_access
             .extend(<span class="kw-2">&amp;</span>system_meta.archetype_component_access);
 
         <span class="kw">if </span>system_meta.is_send {
-            scope.spawn(task);
+            context.scope.spawn(task);
         } <span class="kw">else </span>{
             <span class="self">self</span>.local_thread_running = <span class="bool-val">true</span>;
-            scope.spawn_on_external(task);
+            context.scope.spawn_on_external(task);
         }
     }
 
     <span class="doccomment">/// # Safety
     /// Caller must ensure no systems are currently borrowed.
-    </span><span class="kw">unsafe fn </span>spawn_exclusive_system_task&lt;<span class="lifetime">'scope</span>&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        scope: <span class="kw-2">&amp;</span>Scope&lt;<span class="lifetime">'_</span>, <span class="lifetime">'scope</span>, ()&gt;,
-        system_index: usize,
-        systems: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span>[SyncUnsafeCell&lt;BoxedSystem&gt;],
-        world: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span><span class="kw-2">mut </span>World,
-    ) {
+    </span><span class="kw">unsafe fn </span>spawn_exclusive_system_task(<span class="kw-2">&amp;mut </span><span class="self">self</span>, context: <span class="kw-2">&amp;</span>Context, system_index: usize) {
+        <span class="comment">// SAFETY: `can_run` returned true for this system, which means
+        // that no other systems currently have access to the world.
+        </span><span class="kw">let </span>world = <span class="kw">unsafe </span>{ context.environment.world_cell.world_mut() };
         <span class="comment">// SAFETY: this system is not running, no other reference exists
-        </span><span class="kw">let </span>system = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>systems[system_index].get() };
+        </span><span class="kw">let </span>system = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>context.environment.systems[system_index].get() };
+        <span class="comment">// Move the full context object into the new future.
+        </span><span class="kw">let </span>context = <span class="kw-2">*</span>context;
 
-        <span class="kw">let </span>sender = <span class="self">self</span>.sender.clone();
-        <span class="kw">let </span>panic_payload = <span class="self">self</span>.panic_payload.clone();
         <span class="kw">if </span>is_apply_deferred(system) {
             <span class="comment">// TODO: avoid allocation
             </span><span class="kw">let </span>unapplied_systems = <span class="self">self</span>.unapplied_systems.clone();
             <span class="self">self</span>.unapplied_systems.clear();
             <span class="kw">let </span>task = <span class="kw">async move </span>{
-                <span class="kw">let </span>res = apply_deferred(<span class="kw-2">&amp;</span>unapplied_systems, systems, world);
-                <span class="comment">// tell the executor that the system finished
-                </span>sender
-                    .try_send(SystemResult {
-                        system_index,
-                        success: res.is_ok(),
-                    })
-                    .unwrap_or_else(|error| <span class="macro">unreachable!</span>(<span class="string">"{}"</span>, error));
-                <span class="kw">if let </span><span class="prelude-val">Err</span>(payload) = res {
-                    <span class="comment">// set the payload to propagate the error
-                    </span><span class="kw">let </span><span class="kw-2">mut </span>panic_payload = panic_payload.lock().unwrap();
-                    <span class="kw-2">*</span>panic_payload = <span class="prelude-val">Some</span>(payload);
-                }
+                <span class="kw">let </span>res = apply_deferred(<span class="kw-2">&amp;</span>unapplied_systems, context.environment.systems, world);
+                context.system_completed(system_index, res, system);
             };
 
-            <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-            </span><span class="kw">let </span>task = task.instrument(
-                <span class="self">self</span>.system_task_metadata[system_index]
-                    .system_task_span
-                    .clone(),
-            );
-            scope.spawn_on_scope(task);
+            context.scope.spawn_on_scope(task);
         } <span class="kw">else </span>{
             <span class="kw">let </span>task = <span class="kw">async move </span>{
                 <span class="kw">let </span>res = std::panic::catch_unwind(AssertUnwindSafe(|| {
-                    system.run((), world);
+                    __rust_begin_short_backtrace::run(<span class="kw-2">&amp;mut **</span>system, world);
                 }));
-                <span class="comment">// tell the executor that the system finished
-                </span>sender
-                    .try_send(SystemResult {
-                        system_index,
-                        success: res.is_ok(),
-                    })
-                    .unwrap_or_else(|error| <span class="macro">unreachable!</span>(<span class="string">"{}"</span>, error));
-                <span class="kw">if let </span><span class="prelude-val">Err</span>(payload) = res {
-                    <span class="macro">eprintln!</span>(
-                        <span class="string">"Encountered a panic in exclusive system `{}`!"</span>,
-                        <span class="kw-2">&amp;*</span>system.name()
-                    );
-                    <span class="comment">// set the payload to propagate the error
-                    </span><span class="kw">let </span><span class="kw-2">mut </span>panic_payload = panic_payload.lock().unwrap();
-                    <span class="kw-2">*</span>panic_payload = <span class="prelude-val">Some</span>(payload);
-                }
+                context.system_completed(system_index, res, system);
             };
 
-            <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
-            </span><span class="kw">let </span>task = task.instrument(
-                <span class="self">self</span>.system_task_metadata[system_index]
-                    .system_task_span
-                    .clone(),
-            );
-            scope.spawn_on_scope(task);
+            context.scope.spawn_on_scope(task);
         }
 
         <span class="self">self</span>.exclusive_running = <span class="bool-val">true</span>;
@@ -1433,10 +1433,7 @@
     }
 
     <span class="kw">fn </span>finish_system_and_handle_dependents(<span class="kw-2">&amp;mut </span><span class="self">self</span>, result: SystemResult) {
-        <span class="kw">let </span>SystemResult {
-            system_index,
-            success,
-        } = result;
+        <span class="kw">let </span>SystemResult { system_index, .. } = result;
 
         <span class="kw">if </span><span class="self">self</span>.system_task_metadata[system_index].is_exclusive {
             <span class="self">self</span>.exclusive_running = <span class="bool-val">false</span>;
@@ -1448,20 +1445,14 @@
 
         <span class="macro">debug_assert!</span>(<span class="self">self</span>.num_running_systems &gt;= <span class="number">1</span>);
         <span class="self">self</span>.num_running_systems -= <span class="number">1</span>;
-        <span class="self">self</span>.num_completed_systems += <span class="number">1</span>;
-        <span class="self">self</span>.running_systems.set(system_index, <span class="bool-val">false</span>);
+        <span class="self">self</span>.running_systems.remove(system_index);
         <span class="self">self</span>.completed_systems.insert(system_index);
         <span class="self">self</span>.unapplied_systems.insert(system_index);
 
         <span class="self">self</span>.signal_dependents(system_index);
-
-        <span class="kw">if </span>!success {
-            <span class="self">self</span>.stop_spawning_systems();
-        }
     }
 
     <span class="kw">fn </span>skip_system_and_signal_dependents(<span class="kw-2">&amp;mut </span><span class="self">self</span>, system_index: usize) {
-        <span class="self">self</span>.num_completed_systems += <span class="number">1</span>;
         <span class="self">self</span>.completed_systems.insert(system_index);
         <span class="self">self</span>.signal_dependents(system_index);
     }
@@ -1474,13 +1465,6 @@
             <span class="kw">if </span><span class="kw-2">*</span>remaining == <span class="number">0 </span>&amp;&amp; !<span class="self">self</span>.completed_systems.contains(dep_idx) {
                 <span class="self">self</span>.ready_systems.insert(dep_idx);
             }
-        }
-    }
-
-    <span class="kw">fn </span>stop_spawning_systems(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">if </span>!<span class="self">self</span>.stop_spawning {
-            <span class="self">self</span>.num_systems = <span class="self">self</span>.num_completed_systems + <span class="self">self</span>.num_running_systems;
-            <span class="self">self</span>.stop_spawning = <span class="bool-val">true</span>;
         }
     }
 
@@ -1532,7 +1516,7 @@
         .map(|condition| {
             <span class="comment">// SAFETY: The caller ensures that `world` has permission to
             // access any data required by the condition.
-            </span><span class="kw">unsafe </span>{ condition.run_unsafe((), world) }
+            </span><span class="kw">unsafe </span>{ __rust_begin_short_backtrace::readonly_run_unsafe(<span class="kw-2">&amp;mut **</span>condition, world) }
         })
         .fold(<span class="bool-val">true</span>, |acc, res| acc &amp;&amp; res)
 }
@@ -1551,6 +1535,39 @@
     <span class="doccomment">/// Creates a new executor that can be used to run systems on the main thread.
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         MainThreadExecutor(TaskPool::get_thread_executor())
+    }
+}
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use crate</span>::{
+        <span class="self">self </span><span class="kw">as </span>bevy_ecs,
+        prelude::Resource,
+        schedule::{ExecutorKind, IntoSystemConfigs, Schedule},
+        system::Commands,
+        world::World,
+    };
+
+    <span class="attr">#[derive(Resource)]
+    </span><span class="kw">struct </span>R;
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>skipped_systems_notify_dependents() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>schedule = Schedule::default();
+        schedule.set_executor_kind(ExecutorKind::MultiThreaded);
+        schedule.add_systems(
+            (
+                (|| {}).run_if(|| <span class="bool-val">false</span>),
+                <span class="comment">// This system depends on a system that is always skipped.
+                </span>|<span class="kw-2">mut </span>commands: Commands| {
+                    commands.insert_resource(R);
+                },
+            )
+                .chain(),
+        );
+        schedule.run(<span class="kw-2">&amp;mut </span>world);
+        <span class="macro">assert!</span>(world.get_resource::&lt;R&gt;().is_some());
     }
 }
 </code></pre></div></section></main></body></html>

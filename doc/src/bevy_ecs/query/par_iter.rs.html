@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/query/par_iter.rs`."><title>par_iter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/query/par_iter.rs`."><title>par_iter.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -147,127 +146,11 @@
 <a href="#146" id="146">146</a>
 <a href="#147" id="147">147</a>
 <a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a>
-<a href="#172" id="172">172</a>
-<a href="#173" id="173">173</a>
-<a href="#174" id="174">174</a>
-<a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
-<a href="#181" id="181">181</a>
-<a href="#182" id="182">182</a>
-<a href="#183" id="183">183</a>
-<a href="#184" id="184">184</a>
-<a href="#185" id="185">185</a>
-<a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{component::Tick, world::unsafe_world_cell::UnsafeWorldCell};
-<span class="kw">use </span>std::ops::Range;
+</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
+    batching::BatchingStrategy, component::Tick, world::unsafe_world_cell::UnsafeWorldCell,
+};
 
 <span class="kw">use super</span>::{QueryData, QueryFilter, QueryItem, QueryState};
-
-<span class="doccomment">/// Dictates how a parallel query chunks up large tables/archetypes
-/// during iteration.
-///
-/// A parallel query will chunk up large tables and archetypes into
-/// chunks of at most a certain batch size.
-///
-/// By default, this batch size is automatically determined by dividing
-/// the size of the largest matched archetype by the number
-/// of threads (rounded up). This attempts to minimize the overhead of scheduling
-/// tasks onto multiple threads, but assumes each entity has roughly the
-/// same amount of work to be done, which may not hold true in every
-/// workload.
-///
-/// See [`Query::par_iter`] for more information.
-///
-/// [`Query::par_iter`]: crate::system::Query::par_iter
-</span><span class="attr">#[derive(Clone)]
-</span><span class="kw">pub struct </span>BatchingStrategy {
-    <span class="doccomment">/// The upper and lower limits for how large a batch of entities.
-    ///
-    /// Setting the bounds to the same value will result in a fixed
-    /// batch size.
-    ///
-    /// Defaults to `[1, usize::MAX]`.
-    </span><span class="kw">pub </span>batch_size_limits: Range&lt;usize&gt;,
-    <span class="doccomment">/// The number of batches per thread in the [`ComputeTaskPool`].
-    /// Increasing this value will decrease the batch size, which may
-    /// increase the scheduling overhead for the iteration.
-    ///
-    /// Defaults to 1.
-    ///
-    /// [`ComputeTaskPool`]: bevy_tasks::ComputeTaskPool
-    </span><span class="kw">pub </span>batches_per_thread: usize,
-}
-
-<span class="kw">impl </span>BatchingStrategy {
-    <span class="doccomment">/// Creates a new unconstrained default batching strategy.
-    </span><span class="kw">pub const fn </span>new() -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            batch_size_limits: <span class="number">1</span>..usize::MAX,
-            batches_per_thread: <span class="number">1</span>,
-        }
-    }
-
-    <span class="doccomment">/// Declares a batching strategy with a fixed batch size.
-    </span><span class="kw">pub const fn </span>fixed(batch_size: usize) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            batch_size_limits: batch_size..batch_size,
-            batches_per_thread: <span class="number">1</span>,
-        }
-    }
-
-    <span class="doccomment">/// Configures the minimum allowed batch size of this instance.
-    </span><span class="kw">pub const fn </span>min_batch_size(<span class="kw-2">mut </span><span class="self">self</span>, batch_size: usize) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.batch_size_limits.start = batch_size;
-        <span class="self">self
-    </span>}
-
-    <span class="doccomment">/// Configures the maximum allowed batch size of this instance.
-    </span><span class="kw">pub const fn </span>max_batch_size(<span class="kw-2">mut </span><span class="self">self</span>, batch_size: usize) -&gt; <span class="self">Self </span>{
-        <span class="self">self</span>.batch_size_limits.end = batch_size;
-        <span class="self">self
-    </span>}
-
-    <span class="doccomment">/// Configures the number of batches to assign to each thread for this instance.
-    </span><span class="kw">pub fn </span>batches_per_thread(<span class="kw-2">mut </span><span class="self">self</span>, batches_per_thread: usize) -&gt; <span class="self">Self </span>{
-        <span class="macro">assert!</span>(
-            batches_per_thread &gt; <span class="number">0</span>,
-            <span class="string">"The number of batches per thread must be non-zero."
-        </span>);
-        <span class="self">self</span>.batches_per_thread = batches_per_thread;
-        <span class="self">self
-    </span>}
-}
 
 <span class="doccomment">/// A parallel iterator over query results of a [`Query`](crate::system::Query).
 ///
@@ -300,8 +183,52 @@
     /// [`ComputeTaskPool`]: bevy_tasks::ComputeTaskPool
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>for_each&lt;FN: Fn(QueryItem&lt;<span class="lifetime">'w</span>, D&gt;) + Send + Sync + Clone&gt;(<span class="self">self</span>, func: FN) {
-        <span class="attr">#[cfg(any(target = <span class="string">"wasm32"</span>, not(feature = <span class="string">"multi-threaded"</span>)))]
+        <span class="self">self</span>.for_each_init(|| {}, |<span class="kw">_</span>, item| func(item));
+    }
+
+    <span class="doccomment">/// Runs `func` on each query result in parallel on a value returned by `init`.
+    ///
+    /// `init` may be called multiple times per thread, and the values returned may be discarded between tasks on any given thread.
+    /// Callers should avoid using this function as if it were a parallel version
+    /// of [`Iterator::fold`].
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use bevy_utils::Parallel;
+    /// use crate::{bevy_ecs::prelude::Component, bevy_ecs::system::Query};
+    /// #[derive(Component)]
+    /// struct T;
+    /// fn system(query: Query&lt;&amp;T&gt;){
+    ///     let mut queue: Parallel&lt;usize&gt; = Parallel::default();
+    ///     // queue.borrow_local_mut() will get or create a thread_local queue for each task/thread;
+    ///     query.par_iter().for_each_init(|| queue.borrow_local_mut(),|local_queue,item| {
+    ///         **local_queue += 1;
+    ///      });
+    ///     
+    ///     // collect value from every thread
+    ///     let entity_count: usize = queue.iter_mut().map(|v| *v).sum();
+    /// }
+    /// ```
+    ///
+    /// # Panics
+    /// If the [`ComputeTaskPool`] is not initialized. If using this from a query that is being
+    /// initialized and run from the ECS scheduler, this should never panic.
+    ///
+    /// [`ComputeTaskPool`]: bevy_tasks::ComputeTaskPool
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>for_each_init&lt;FN, INIT, T&gt;(<span class="self">self</span>, init: INIT, func: FN)
+    <span class="kw">where
+        </span>FN: Fn(<span class="kw-2">&amp;mut </span>T, QueryItem&lt;<span class="lifetime">'w</span>, D&gt;) + Send + Sync + Clone,
+        INIT: Fn() -&gt; T + Sync + Send + Clone,
+    {
+        <span class="kw">let </span>func = |<span class="kw-2">mut </span>init, item| {
+            func(<span class="kw-2">&amp;mut </span>init, item);
+            init
+        };
+        <span class="attr">#[cfg(any(target_arch = <span class="string">"wasm32"</span>, not(feature = <span class="string">"multi_threaded"</span>)))]
         </span>{
+            <span class="kw">let </span>init = init();
             <span class="comment">// SAFETY:
             // This method can only be called once per instance of QueryParIter,
             // which ensures that mutable queries cannot be executed multiple times at once.
@@ -311,25 +238,27 @@
             </span><span class="kw">unsafe </span>{
                 <span class="self">self</span>.state
                     .iter_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
-                    .for_each(func);
+                    .fold(init, func);
             }
         }
-        <span class="attr">#[cfg(all(not(target = <span class="string">"wasm32"</span>), feature = <span class="string">"multi-threaded"</span>))]
+        <span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi_threaded"</span>))]
         </span>{
             <span class="kw">let </span>thread_count = bevy_tasks::ComputeTaskPool::get().thread_num();
             <span class="kw">if </span>thread_count &lt;= <span class="number">1 </span>{
+                <span class="kw">let </span>init = init();
                 <span class="comment">// SAFETY: See the safety comment above.
                 </span><span class="kw">unsafe </span>{
                     <span class="self">self</span>.state
                         .iter_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
-                        .for_each(func);
+                        .fold(init, func);
                 }
             } <span class="kw">else </span>{
                 <span class="comment">// Need a batch size of at least 1.
                 </span><span class="kw">let </span>batch_size = <span class="self">self</span>.get_batch_size(thread_count).max(<span class="number">1</span>);
                 <span class="comment">// SAFETY: See the safety comment above.
                 </span><span class="kw">unsafe </span>{
-                    <span class="self">self</span>.state.par_for_each_unchecked_manual(
+                    <span class="self">self</span>.state.par_fold_init_unchecked_manual(
+                        init,
                         <span class="self">self</span>.world,
                         batch_size,
                         func,
@@ -341,42 +270,28 @@
         }
     }
 
-    <span class="attr">#[cfg(all(not(target = <span class="string">"wasm32"</span>), feature = <span class="string">"multi-threaded"</span>))]
+    <span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi_threaded"</span>))]
     </span><span class="kw">fn </span>get_batch_size(<span class="kw-2">&amp;</span><span class="self">self</span>, thread_count: usize) -&gt; usize {
-        <span class="kw">if </span><span class="self">self</span>.batching_strategy.batch_size_limits.is_empty() {
-            <span class="kw">return </span><span class="self">self</span>.batching_strategy.batch_size_limits.start;
-        }
-
-        <span class="macro">assert!</span>(
-            thread_count &gt; <span class="number">0</span>,
-            <span class="string">"Attempted to run parallel iteration over a query with an empty TaskPool"
-        </span>);
-        <span class="kw">let </span>max_size = <span class="kw">if </span>D::IS_DENSE &amp;&amp; F::IS_DENSE {
-            <span class="comment">// SAFETY: We only access table metadata.
-            </span><span class="kw">let </span>tables = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;</span><span class="self">self</span>.world.world_metadata().storages().tables };
-            <span class="self">self</span>.state
-                .matched_table_ids
-                .iter()
-                .map(|id| tables[<span class="kw-2">*</span>id].entity_count())
-                .max()
-                .unwrap_or(<span class="number">0</span>)
-        } <span class="kw">else </span>{
-            <span class="kw">let </span>archetypes = <span class="kw-2">&amp;</span><span class="self">self</span>.world.archetypes();
-            <span class="self">self</span>.state
-                .matched_archetype_ids
-                .iter()
-                .map(|id| archetypes[<span class="kw-2">*</span>id].len())
-                .max()
-                .unwrap_or(<span class="number">0</span>)
+        <span class="kw">let </span>max_items = || {
+            <span class="kw">let </span>id_iter = <span class="self">self</span>.state.matched_storage_ids.iter();
+            <span class="kw">if </span>D::IS_DENSE &amp;&amp; F::IS_DENSE {
+                <span class="comment">// SAFETY: We only access table metadata.
+                </span><span class="kw">let </span>tables = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;</span><span class="self">self</span>.world.world_metadata().storages().tables };
+                id_iter
+                    <span class="comment">// SAFETY: The if check ensures that matched_storage_ids stores TableIds
+                    </span>.map(|id| <span class="kw">unsafe </span>{ tables[id.table_id].entity_count() })
+                    .max()
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>archetypes = <span class="kw-2">&amp;</span><span class="self">self</span>.world.archetypes();
+                id_iter
+                    <span class="comment">// SAFETY: The if check ensures that matched_storage_ids stores ArchetypeIds
+                    </span>.map(|id| <span class="kw">unsafe </span>{ archetypes[id.archetype_id].len() })
+                    .max()
+            }
+            .unwrap_or(<span class="number">0</span>)
         };
-
-        <span class="kw">let </span>batches = thread_count * <span class="self">self</span>.batching_strategy.batches_per_thread;
-        <span class="comment">// Round up to the nearest batch size.
-        </span><span class="kw">let </span>batch_size = (max_size + batches - <span class="number">1</span>) / batches;
-        batch_size.clamp(
-            <span class="self">self</span>.batching_strategy.batch_size_limits.start,
-            <span class="self">self</span>.batching_strategy.batch_size_limits.end,
-        )
+        <span class="self">self</span>.batching_strategy
+            .calc_batch_size(max_items, thread_count)
     }
 }
 </code></pre></div></section></main></body></html>

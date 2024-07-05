@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/system/query.rs`."><title>query.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/system/query.rs`."><title>query.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1611,122 +1610,17 @@
 <a href="#1610" id="1610">1610</a>
 <a href="#1611" id="1611">1611</a>
 <a href="#1612" id="1612">1612</a>
-<a href="#1613" id="1613">1613</a>
-<a href="#1614" id="1614">1614</a>
-<a href="#1615" id="1615">1615</a>
-<a href="#1616" id="1616">1616</a>
-<a href="#1617" id="1617">1617</a>
-<a href="#1618" id="1618">1618</a>
-<a href="#1619" id="1619">1619</a>
-<a href="#1620" id="1620">1620</a>
-<a href="#1621" id="1621">1621</a>
-<a href="#1622" id="1622">1622</a>
-<a href="#1623" id="1623">1623</a>
-<a href="#1624" id="1624">1624</a>
-<a href="#1625" id="1625">1625</a>
-<a href="#1626" id="1626">1626</a>
-<a href="#1627" id="1627">1627</a>
-<a href="#1628" id="1628">1628</a>
-<a href="#1629" id="1629">1629</a>
-<a href="#1630" id="1630">1630</a>
-<a href="#1631" id="1631">1631</a>
-<a href="#1632" id="1632">1632</a>
-<a href="#1633" id="1633">1633</a>
-<a href="#1634" id="1634">1634</a>
-<a href="#1635" id="1635">1635</a>
-<a href="#1636" id="1636">1636</a>
-<a href="#1637" id="1637">1637</a>
-<a href="#1638" id="1638">1638</a>
-<a href="#1639" id="1639">1639</a>
-<a href="#1640" id="1640">1640</a>
-<a href="#1641" id="1641">1641</a>
-<a href="#1642" id="1642">1642</a>
-<a href="#1643" id="1643">1643</a>
-<a href="#1644" id="1644">1644</a>
-<a href="#1645" id="1645">1645</a>
-<a href="#1646" id="1646">1646</a>
-<a href="#1647" id="1647">1647</a>
-<a href="#1648" id="1648">1648</a>
-<a href="#1649" id="1649">1649</a>
-<a href="#1650" id="1650">1650</a>
-<a href="#1651" id="1651">1651</a>
-<a href="#1652" id="1652">1652</a>
-<a href="#1653" id="1653">1653</a>
-<a href="#1654" id="1654">1654</a>
-<a href="#1655" id="1655">1655</a>
-<a href="#1656" id="1656">1656</a>
-<a href="#1657" id="1657">1657</a>
-<a href="#1658" id="1658">1658</a>
-<a href="#1659" id="1659">1659</a>
-<a href="#1660" id="1660">1660</a>
-<a href="#1661" id="1661">1661</a>
-<a href="#1662" id="1662">1662</a>
-<a href="#1663" id="1663">1663</a>
-<a href="#1664" id="1664">1664</a>
-<a href="#1665" id="1665">1665</a>
-<a href="#1666" id="1666">1666</a>
-<a href="#1667" id="1667">1667</a>
-<a href="#1668" id="1668">1668</a>
-<a href="#1669" id="1669">1669</a>
-<a href="#1670" id="1670">1670</a>
-<a href="#1671" id="1671">1671</a>
-<a href="#1672" id="1672">1672</a>
-<a href="#1673" id="1673">1673</a>
-<a href="#1674" id="1674">1674</a>
-<a href="#1675" id="1675">1675</a>
-<a href="#1676" id="1676">1676</a>
-<a href="#1677" id="1677">1677</a>
-<a href="#1678" id="1678">1678</a>
-<a href="#1679" id="1679">1679</a>
-<a href="#1680" id="1680">1680</a>
-<a href="#1681" id="1681">1681</a>
-<a href="#1682" id="1682">1682</a>
-<a href="#1683" id="1683">1683</a>
-<a href="#1684" id="1684">1684</a>
-<a href="#1685" id="1685">1685</a>
-<a href="#1686" id="1686">1686</a>
-<a href="#1687" id="1687">1687</a>
-<a href="#1688" id="1688">1688</a>
-<a href="#1689" id="1689">1689</a>
-<a href="#1690" id="1690">1690</a>
-<a href="#1691" id="1691">1691</a>
-<a href="#1692" id="1692">1692</a>
-<a href="#1693" id="1693">1693</a>
-<a href="#1694" id="1694">1694</a>
-<a href="#1695" id="1695">1695</a>
-<a href="#1696" id="1696">1696</a>
-<a href="#1697" id="1697">1697</a>
-<a href="#1698" id="1698">1698</a>
-<a href="#1699" id="1699">1699</a>
-<a href="#1700" id="1700">1700</a>
-<a href="#1701" id="1701">1701</a>
-<a href="#1702" id="1702">1702</a>
-<a href="#1703" id="1703">1703</a>
-<a href="#1704" id="1704">1704</a>
-<a href="#1705" id="1705">1705</a>
-<a href="#1706" id="1706">1706</a>
-<a href="#1707" id="1707">1707</a>
-<a href="#1708" id="1708">1708</a>
-<a href="#1709" id="1709">1709</a>
-<a href="#1710" id="1710">1710</a>
-<a href="#1711" id="1711">1711</a>
-<a href="#1712" id="1712">1712</a>
-<a href="#1713" id="1713">1713</a>
-<a href="#1714" id="1714">1714</a>
-<a href="#1715" id="1715">1715</a>
-<a href="#1716" id="1716">1716</a>
-<a href="#1717" id="1717">1717</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
-    component::{Component, Tick},
+    batching::BatchingStrategy,
+    component::Tick,
     entity::Entity,
     query::{
-        BatchingStrategy, QueryCombinationIter, QueryData, QueryEntityError, QueryFilter,
-        QueryIter, QueryManyIter, QueryParIter, QuerySingleError, QueryState, ROQueryItem,
-        ReadOnlyQueryData,
+        QueryCombinationIter, QueryData, QueryEntityError, QueryFilter, QueryIter, QueryManyIter,
+        QueryParIter, QuerySingleError, QueryState, ROQueryItem, ReadOnlyQueryData,
     },
-    world::{unsafe_world_cell::UnsafeWorldCell, Mut},
+    world::unsafe_world_cell::UnsafeWorldCell,
 };
-<span class="kw">use </span>std::{any::TypeId, borrow::Borrow};
+<span class="kw">use </span>std::borrow::Borrow;
 
 <span class="doccomment">/// [System parameter] that provides selective access to the [`Component`] data stored in a [`World`].
 ///
@@ -1957,7 +1851,7 @@
 /// |Query methods|Effect|
 /// |:---:|---|
 /// |[`iter`]\[[`_mut`][`iter_mut`]]|Returns an iterator over all query items.|
-/// |[`for_each`]\[[`_mut`][`for_each_mut`]],&lt;br&gt;[`par_iter`]\[[`_mut`][`par_iter_mut`]]|Runs a specified function for each query item.|
+/// |[[`iter().for_each()`][`for_each`]\[[`iter_mut().for_each()`][`for_each`]],&lt;br&gt;[`par_iter`]\[[`_mut`][`par_iter_mut`]]|Runs a specified function for each query item.|
 /// |[`iter_many`]\[[`_mut`][`iter_many_mut`]]|Iterates or runs a specified function over query items generated by a list of entities.|
 /// |[`iter_combinations`]\[[`_mut`][`iter_combinations_mut`]]|Returns an iterator over all combinations of a specified number of query items.|
 /// |[`get`]\[[`_mut`][`get_mut`]]|Returns the query item for the specified entity.|
@@ -1993,7 +1887,7 @@
 /// |Query operation|Computational complexity|
 /// |:---:|:---:|
 /// |[`iter`]\[[`_mut`][`iter_mut`]]|O(n)|
-/// |[`for_each`]\[[`_mut`][`for_each_mut`]],&lt;br&gt;[`par_iter`]\[[`_mut`][`par_iter_mut`]]|O(n)|
+/// |[[`iter().for_each()`][`for_each`]\[[`iter_mut().for_each()`][`for_each`]],&lt;br&gt;[`par_iter`]\[[`_mut`][`par_iter_mut`]]|O(n)|
 /// |[`iter_many`]\[[`_mut`][`iter_many_mut`]]|O(k)|
 /// |[`iter_combinations`]\[[`_mut`][`iter_combinations_mut`]]|O(&lt;sub&gt;n&lt;/sub&gt;C&lt;sub&gt;r&lt;/sub&gt;)|
 /// |[`get`]\[[`_mut`][`get_mut`]]|O(1)|
@@ -2003,12 +1897,34 @@
 /// |Archetype based filtering ([`With`], [`Without`], [`Or`])|O(a)|
 /// |Change detection filtering ([`Added`], [`Changed`])|O(a + n)|
 ///
-/// `for_each` methods are seen to be generally faster than their `iter` version on worlds with high archetype fragmentation.
-/// As iterators are in general more flexible and better integrated with the rest of the Rust ecosystem,
-/// it is advised to use `iter` methods over `for_each`.
-/// It is strongly advised to only use `for_each` if it tangibly improves performance:
-/// be sure profile or benchmark both before and after the change.
+/// # `Iterator::for_each`
 ///
+/// `for_each` methods are seen to be generally faster than directly iterating through `iter` on worlds with high archetype
+/// fragmentation, and may enable additional optimizations like [autovectorization]. It is strongly advised to only use
+/// [`Iterator::for_each`] if it tangibly improves performance.  *Always* be sure profile or benchmark both before and
+/// after the change!
+///
+/// ```rust
+/// # use bevy_ecs::prelude::*;
+/// # #[derive(Component)]
+/// # struct ComponentA;
+/// # fn system(
+/// # query: Query&lt;&amp;ComponentA&gt;,
+/// # ) {
+/// // This might be result in better performance...
+/// query.iter().for_each(|component| {
+///     // do things with the component
+/// });
+/// // ...than this. Always be sure to benchmark to validate the difference!
+/// for component in query.iter() {
+///     // do things with the component
+/// }
+/// # }
+/// # bevy_ecs::system::assert_system_does_not_conflict(system);
+/// ```
+///
+/// [`Component`]: crate::component::Component
+/// [autovectorization]: https://en.wikipedia.org/wiki/Automatic_vectorization
 /// [`Added`]: crate::query::Added
 /// [`AnyOf`]: crate::query::AnyOf
 /// [binomial coefficient]: https://en.wikipedia.org/wiki/Binomial_coefficient
@@ -2016,8 +1932,7 @@
 /// [components]: crate::component::Component
 /// [entity identifiers]: Entity
 /// [`EntityRef`]: crate::world::EntityRef
-/// [`for_each`]: Self::for_each
-/// [`for_each_mut`]: Self::for_each_mut
+/// [`for_each`]: #iterator-for-each
 /// [`get`]: Self::get
 /// [`get_many`]: Self::get_many
 /// [`get_many_mut`]: Self::get_many_mut
@@ -2049,12 +1964,6 @@
     state: <span class="kw-2">&amp;</span><span class="lifetime">'state </span>QueryState&lt;D, F&gt;,
     last_run: Tick,
     this_run: Tick,
-    <span class="comment">// SAFETY: This is used to ensure that `get_component_mut::&lt;C&gt;` properly fails when a Query writes C
-    // and gets converted to a read-only query using `to_readonly`. Without checking this, `get_component_mut` relies on
-    // QueryState's archetype_component_access, which will continue allowing write access to C after being cast to
-    // the read-only variant. This whole situation is confusing and error prone. Ideally this is a temporary hack
-    // until we sort out a cleaner alternative.
-    </span>force_read_only_component_access: bool,
 }
 
 <span class="kw">impl</span>&lt;D: QueryData, F: QueryFilter&gt; std::fmt::Debug <span class="kw">for </span>Query&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, D, F&gt; {
@@ -2086,12 +1995,10 @@
         state: <span class="kw-2">&amp;</span><span class="lifetime">'s </span>QueryState&lt;D, F&gt;,
         last_run: Tick,
         this_run: Tick,
-        force_read_only_component_access: bool,
     ) -&gt; <span class="self">Self </span>{
         state.validate_world(world.id());
 
         <span class="self">Self </span>{
-            force_read_only_component_access,
             world,
             state,
             last_run,
@@ -2107,20 +2014,13 @@
     </span><span class="kw">pub fn </span>to_readonly(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Query&lt;<span class="lifetime">'_</span>, <span class="lifetime">'s</span>, D::ReadOnly, F&gt; {
         <span class="kw">let </span>new_state = <span class="self">self</span>.state.as_readonly();
         <span class="comment">// SAFETY: This is memory safe because it turns the query immutable.
-        </span><span class="kw">unsafe </span>{
-            Query::new(
-                <span class="self">self</span>.world,
-                new_state,
-                <span class="self">self</span>.last_run,
-                <span class="self">self</span>.this_run,
-                <span class="comment">// SAFETY: this must be set to true or `get_component_mut` will be unsound. See the comments
-                // on this field for more details
-                </span><span class="bool-val">true</span>,
-            )
-        }
+        </span><span class="kw">unsafe </span>{ Query::new(<span class="self">self</span>.world, new_state, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run) }
     }
 
     <span class="doccomment">/// Returns an [`Iterator`] over the read-only query items.
+    ///
+    /// This iterator is always guaranteed to return results from each matching entity once and only once.
+    /// Iteration order is not guaranteed.
     ///
     /// # Example
     ///
@@ -2142,8 +2042,7 @@
     ///
     /// # See also
     ///
-    /// - [`iter_mut`](Self::iter_mut) for mutable query items.
-    /// - [`for_each`](Self::for_each) for the closure based alternative.
+    /// [`iter_mut`](Self::iter_mut) for mutable query items.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>iter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; QueryIter&lt;<span class="lifetime">'_</span>, <span class="lifetime">'s</span>, D::ReadOnly, F&gt; {
         <span class="comment">// SAFETY:
@@ -2157,6 +2056,9 @@
     }
 
     <span class="doccomment">/// Returns an [`Iterator`] over the query items.
+    ///
+    /// This iterator is always guaranteed to return results from each matching entity once and only once.
+    /// Iteration order is not guaranteed.
     ///
     /// # Example
     ///
@@ -2178,8 +2080,7 @@
     ///
     /// # See also
     ///
-    /// - [`iter`](Self::iter) for read-only query items.
-    /// - [`for_each_mut`](Self::for_each_mut) for the closure based alternative.
+    /// [`iter`](Self::iter) for read-only query items.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>iter_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; QueryIter&lt;<span class="lifetime">'_</span>, <span class="lifetime">'s</span>, D, F&gt; {
         <span class="comment">// SAFETY: `self.world` has permission to access the required components.
@@ -2190,6 +2091,9 @@
     }
 
     <span class="doccomment">/// Returns a [`QueryCombinationIter`] over all combinations of `K` read-only query items without repetition.
+    ///
+    /// This iterator is always guaranteed to return results from each unique pair of matching entities.
+    /// Iteration order is not guaranteed.
     ///
     /// # Example
     ///
@@ -2226,6 +2130,9 @@
 
     <span class="doccomment">/// Returns a [`QueryCombinationIter`] over all combinations of `K` query items without repetition.
     ///
+    /// This iterator is always guaranteed to return results from each unique pair of matching entities.
+    /// Iteration order is not guaranteed.
+    ///
     /// # Example
     ///
     /// ```
@@ -2256,8 +2163,8 @@
 
     <span class="doccomment">/// Returns an [`Iterator`] over the read-only query items generated from an [`Entity`] list.
     ///
-    /// Items are returned in the order of the list of entities.
-    /// Entities that don't match the query are skipped.
+    /// Items are returned in the order of the list of entities, and may not be unique if the input
+    /// doesn't guarantee uniqueness. Entities that don't match the query are skipped.
     ///
     /// # Example
     ///
@@ -2313,8 +2220,8 @@
 
     <span class="doccomment">/// Returns an iterator over the query items generated from an [`Entity`] list.
     ///
-    /// Items are returned in the order of the list of entities.
-    /// Entities that don't match the query are skipped.
+    /// Items are returned in the order of the list of entities, and may not be unique if the input
+    /// doesnn't guarantee uniqueness. Entities that don't match the query are skipped.
     ///
     /// # Examples
     ///
@@ -2365,6 +2272,9 @@
 
     <span class="doccomment">/// Returns an [`Iterator`] over the query items.
     ///
+    /// This iterator is always guaranteed to return results from each matching entity once and only once.
+    /// Iteration order is not guaranteed.
+    ///
     /// # Safety
     ///
     /// This function makes it possible to violate Rust's aliasing guarantees.
@@ -2378,11 +2288,16 @@
         <span class="comment">// SAFETY:
         // - `self.world` has permission to access the required components.
         // - The caller ensures that this operation will not result in any aliased mutable accesses.
-        </span><span class="self">self</span>.state
-            .iter_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
+        </span><span class="kw">unsafe </span>{
+            <span class="self">self</span>.state
+                .iter_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
+        }
     }
 
     <span class="doccomment">/// Iterates over all possible combinations of `K` query items without repetition.
+    ///
+    /// This iterator is always guaranteed to return results from each unique pair of matching entities.
+    /// Iteration order is not guaranteed.
     ///
     /// # Safety
     ///
@@ -2399,11 +2314,16 @@
         <span class="comment">// SAFETY:
         // - `self.world` has permission to access the required components.
         // - The caller ensures that this operation will not result in any aliased mutable accesses.
-        </span><span class="self">self</span>.state
-            .iter_combinations_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
+        </span><span class="kw">unsafe </span>{
+            <span class="self">self</span>.state
+                .iter_combinations_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
+        }
     }
 
     <span class="doccomment">/// Returns an [`Iterator`] over the query items generated from an [`Entity`] list.
+    ///
+    /// Items are returned in the order of the list of entities, and may not be unique if the input
+    /// doesnn't guarantee uniqueness. Entities that don't match the query are skipped.
     ///
     /// # Safety
     ///
@@ -2424,94 +2344,23 @@
         <span class="comment">// SAFETY:
         // - `self.world` has permission to access the required components.
         // - The caller ensures that this operation will not result in any aliased mutable accesses.
-        </span><span class="self">self</span>.state
-            .iter_many_unchecked_manual(entities, <span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
-    }
-
-    <span class="doccomment">/// Runs `f` on each read-only query item.
-    ///
-    /// Shorthand for `query.iter().for_each(..)`.
-    ///
-    /// # Example
-    ///
-    /// Here, the `report_names_system` iterates over the `Player` component of every entity that contains it:
-    ///
-    /// ```
-    /// # use bevy_ecs::prelude::*;
-    /// #
-    /// # #[derive(Component)]
-    /// # struct Player { name: String }
-    /// #
-    /// fn report_names_system(query: Query&lt;&amp;Player&gt;) {
-    ///     query.for_each(|player| {
-    ///         println!("Say hello to {}!", player.name);
-    ///     });
-    /// }
-    /// # bevy_ecs::system::assert_is_system(report_names_system);
-    /// ```
-    ///
-    /// # See also
-    ///
-    /// - [`for_each_mut`](Self::for_each_mut) to operate on mutable query items.
-    /// - [`iter`](Self::iter) for the iterator based alternative.
-    </span><span class="attr">#[inline]
-    #[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Query::for_each was not idiomatic Rust and has been moved to query.iter().for_each()"
-    </span>)]
-    </span><span class="kw">pub fn </span>for_each&lt;<span class="lifetime">'this</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'this </span><span class="self">self</span>, f: <span class="kw">impl </span>FnMut(ROQueryItem&lt;<span class="lifetime">'this</span>, D&gt;)) {
-        <span class="comment">// SAFETY:
-        // - `self.world` has permission to access the required components.
-        // - The query is read-only, so it can be aliased even if it was originally mutable.
         </span><span class="kw">unsafe </span>{
-            <span class="self">self</span>.state
-                .as_readonly()
-                .iter_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
-                .for_each(f);
-        };
-    }
-
-    <span class="doccomment">/// Runs `f` on each query item.
-    ///
-    /// Shorthand for `query.iter_mut().for_each(..)`.
-    ///
-    /// # Example
-    ///
-    /// Here, the `gravity_system` updates the `Velocity` component of every entity that contains it:
-    ///
-    /// ```
-    /// # use bevy_ecs::prelude::*;
-    /// #
-    /// # #[derive(Component)]
-    /// # struct Velocity { x: f32, y: f32, z: f32 }
-    /// fn gravity_system(mut query: Query&lt;&amp;mut Velocity&gt;) {
-    ///     const DELTA: f32 = 1.0 / 60.0;
-    ///     query.for_each_mut(|mut velocity| {
-    ///         velocity.y -= 9.8 * DELTA;
-    ///     });
-    /// }
-    /// # bevy_ecs::system::assert_is_system(gravity_system);
-    /// ```
-    ///
-    /// # See also
-    ///
-    /// - [`for_each`](Self::for_each) to operate on read-only query items.
-    /// - [`iter_mut`](Self::iter_mut) for the iterator based alternative.
-    </span><span class="attr">#[inline]
-    #[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Query::for_each_mut was not idiomatic Rust and has been moved to query.iter_mut().for_each()"
-    </span>)]
-    </span><span class="kw">pub fn </span>for_each_mut&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>, f: <span class="kw">impl </span>FnMut(D::Item&lt;<span class="lifetime">'a</span>&gt;)) {
-        <span class="comment">// SAFETY: `self.world` has permission to access the required components.
-        </span><span class="kw">unsafe </span>{
-            <span class="self">self</span>.state
-                .iter_unchecked_manual(<span class="self">self</span>.world, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
-                .for_each(f);
-        };
+            <span class="self">self</span>.state.iter_many_unchecked_manual(
+                entities,
+                <span class="self">self</span>.world,
+                <span class="self">self</span>.last_run,
+                <span class="self">self</span>.this_run,
+            )
+        }
     }
 
     <span class="doccomment">/// Returns a parallel iterator over the query results for the given [`World`].
+    ///
+    /// This parallel iterator is always guaranteed to return results from each matching entity once and
+    /// only once.  Iteration order and thread assignment is not guaranteed.
+    ///
+    /// If the `multithreaded` feature is disabled, iterating with this operates identically to [`Iterator::for_each`]
+    /// on [`QueryIter`].
     ///
     /// This can only be called for read-only queries, see [`par_iter_mut`] for write-queries.
     ///
@@ -2532,6 +2381,12 @@
     }
 
     <span class="doccomment">/// Returns a parallel iterator over the query results for the given [`World`].
+    ///
+    /// This parallel iterator is always guaranteed to return results from each matching entity once and
+    /// only once.  Iteration order and thread assignment is not guaranteed.
+    ///
+    /// If the `multithreaded` feature is disabled, iterating with this operates identically to [`Iterator::for_each`]
+    /// on [`QueryIter`].
     ///
     /// This can only be called for mutable queries, see [`par_iter`] for read-only-queries.
     ///
@@ -2569,6 +2424,8 @@
     <span class="doccomment">/// Returns the read-only query item for the given [`Entity`].
     ///
     /// In case of a nonexisting entity or mismatched component, a [`QueryEntityError`] is returned instead.
+    ///
+    /// This is always guaranteed to run in `O(1)` time.
     ///
     /// # Example
     ///
@@ -2677,6 +2534,7 @@
     ///
     /// - [`get_many`](Self::get_many) for the non-panicking version.
     </span><span class="attr">#[inline]
+    #[track_caller]
     </span><span class="kw">pub fn </span>many&lt;<span class="kw">const </span>N: usize&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, entities: [Entity; N]) -&gt; [ROQueryItem&lt;<span class="lifetime">'_</span>, D&gt;; N] {
         <span class="kw">match </span><span class="self">self</span>.get_many(entities) {
             <span class="prelude-val">Ok</span>(items) =&gt; items,
@@ -2687,6 +2545,8 @@
     <span class="doccomment">/// Returns the query item for the given [`Entity`].
     ///
     /// In case of a nonexisting entity or mismatched component, a [`QueryEntityError`] is returned instead.
+    ///
+    /// This is always guaranteed to run in `O(1)` time.
     ///
     /// # Example
     ///
@@ -2791,6 +2651,7 @@
     /// - [`get_many_mut`](Self::get_many_mut) for the non panicking version.
     /// - [`many`](Self::many) to get read-only query items.
     </span><span class="attr">#[inline]
+    #[track_caller]
     </span><span class="kw">pub fn </span>many_mut&lt;<span class="kw">const </span>N: usize&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, entities: [Entity; N]) -&gt; [D::Item&lt;<span class="lifetime">'_</span>&gt;; N] {
         <span class="kw">match </span><span class="self">self</span>.get_many_mut(entities) {
             <span class="prelude-val">Ok</span>(items) =&gt; items,
@@ -2801,6 +2662,8 @@
     <span class="doccomment">/// Returns the query item for the given [`Entity`].
     ///
     /// In case of a nonexisting entity or mismatched component, a [`QueryEntityError`] is returned instead.
+    ///
+    /// This is always guaranteed to run in `O(1)` time.
     ///
     /// # Safety
     ///
@@ -2814,184 +2677,9 @@
     </span><span class="kw">pub unsafe fn </span>get_unchecked(<span class="kw-2">&amp;</span><span class="self">self</span>, entity: Entity) -&gt; <span class="prelude-ty">Result</span>&lt;D::Item&lt;<span class="lifetime">'_</span>&gt;, QueryEntityError&gt; {
         <span class="comment">// SEMI-SAFETY: system runs without conflicts with other systems.
         // same-system queries have runtime borrow checks when they conflict
-        </span><span class="self">self</span>.state
-            .get_unchecked_manual(<span class="self">self</span>.world, entity, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
-    }
-
-    <span class="doccomment">/// Returns a shared reference to the component `T` of the given [`Entity`].
-    ///
-    /// In case of a nonexisting entity or mismatched component, a [`QueryEntityError`] is returned instead.
-    ///
-    /// # Example
-    ///
-    /// Here, `get_component` is used to retrieve the `Character` component of the entity specified by the `SelectedCharacter` resource.
-    ///
-    /// ```
-    /// # use bevy_ecs::prelude::*;
-    /// #
-    /// # #[derive(Resource)]
-    /// # struct SelectedCharacter { entity: Entity }
-    /// # #[derive(Component)]
-    /// # struct Character { name: String }
-    /// #
-    /// fn print_selected_character_name_system(
-    ///        query: Query&lt;&amp;Character&gt;,
-    ///        selection: Res&lt;SelectedCharacter&gt;
-    /// )
-    /// {
-    ///     if let Ok(selected_character) = query.get_component::&lt;Character&gt;(selection.entity) {
-    ///         println!("{}", selected_character.name);
-    ///     }
-    /// }
-    /// # bevy_ecs::system::assert_is_system(print_selected_character_name_system);
-    /// ```
-    ///
-    /// # See also
-    ///
-    /// - [`component`](Self::component) a panicking version of this function.
-    /// - [`get_component_mut`](Self::get_component_mut) to get a mutable reference of a component.
-    </span><span class="attr">#[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Please use `get` and select for the exact component based on the structure of the exact query as required."
-    </span>)]
-    #[allow(deprecated)]
-    #[inline]
-    </span><span class="kw">pub fn </span>get_component&lt;T: Component&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        entity: Entity,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span>T, <span class="kw">crate</span>::query::QueryComponentError&gt; {
-        <span class="self">self</span>.state.get_component(<span class="self">self</span>.world, entity)
-    }
-
-    <span class="doccomment">/// Returns a mutable reference to the component `T` of the given entity.
-    ///
-    /// In case of a nonexisting entity, mismatched component or missing write access, a [`QueryComponentError`] is returned instead.
-    ///
-    /// # Example
-    ///
-    /// Here, `get_component_mut` is used to retrieve the `Health` component of the entity specified by the `PoisonedCharacter` resource.
-    ///
-    /// ```
-    /// # use bevy_ecs::prelude::*;
-    /// #
-    /// # #[derive(Resource)]
-    /// # struct PoisonedCharacter { character_id: Entity }
-    /// # #[derive(Component)]
-    /// # struct Health(u32);
-    /// #
-    /// fn poison_system(mut query: Query&lt;&amp;mut Health&gt;, poisoned: Res&lt;PoisonedCharacter&gt;) {
-    ///     if let Ok(mut health) = query.get_component_mut::&lt;Health&gt;(poisoned.character_id) {
-    ///         health.0 -= 1;
-    ///     }
-    /// }
-    /// # bevy_ecs::system::assert_is_system(poison_system);
-    /// ```
-    ///
-    /// # See also
-    ///
-    /// - [`component_mut`](Self::component_mut) a panicking version of this function.
-    /// - [`get_component`](Self::get_component) to get a shared reference of a component.
-    ///
-    /// [`QueryComponentError`]: crate::query::QueryComponentError
-    </span><span class="attr">#[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Please use `get_mut` and select for the exact component based on the structure of the exact query as required."
-    </span>)]
-    #[allow(deprecated)]
-    #[inline]
-    </span><span class="kw">pub fn </span>get_component_mut&lt;T: Component&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        entity: Entity,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Mut&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw">crate</span>::query::QueryComponentError&gt; {
-        <span class="comment">// SAFETY: unique access to query (preventing aliased access)
-        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.get_component_unchecked_mut(entity) }
-    }
-
-    <span class="doccomment">/// Returns a shared reference to the component `T` of the given [`Entity`].
-    ///
-    /// # Panics
-    ///
-    /// Panics in case of a nonexisting entity or mismatched component.
-    ///
-    /// # See also
-    ///
-    /// - [`get_component`](Self::get_component) a non-panicking version of this function.
-    /// - [`component_mut`](Self::component_mut) to get a mutable reference of a component.
-    </span><span class="attr">#[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Please use `get` and select for the exact component based on the structure of the exact query as required."
-    </span>)]
-    #[allow(deprecated)]
-    #[inline]
-    #[track_caller]
-    </span><span class="kw">pub fn </span>component&lt;T: Component&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, entity: Entity) -&gt; <span class="kw-2">&amp;</span>T {
-        <span class="self">self</span>.state.component(<span class="self">self</span>.world, entity)
-    }
-
-    <span class="doccomment">/// Returns a mutable reference to the component `T` of the given entity.
-    ///
-    /// # Panics
-    ///
-    /// Panics in case of a nonexisting entity, mismatched component or missing write access.
-    ///
-    /// # See also
-    ///
-    /// - [`get_component_mut`](Self::get_component_mut) a non-panicking version of this function.
-    /// - [`component`](Self::component) to get a shared reference of a component.
-    </span><span class="attr">#[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Please use `get_mut` and select for the exact component based on the structure of the exact query as required."
-    </span>)]
-    #[allow(deprecated)]
-    #[inline]
-    #[track_caller]
-    </span><span class="kw">pub fn </span>component_mut&lt;T: Component&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, entity: Entity) -&gt; Mut&lt;<span class="lifetime">'_</span>, T&gt; {
-        <span class="kw">match </span><span class="self">self</span>.get_component_mut(entity) {
-            <span class="prelude-val">Ok</span>(component) =&gt; component,
-            <span class="prelude-val">Err</span>(error) =&gt; {
-                <span class="macro">panic!</span>(
-                    <span class="string">"Cannot get component `{:?}` from {entity:?}: {error}"</span>,
-                    TypeId::of::&lt;T&gt;()
-                )
-            }
-        }
-    }
-
-    <span class="doccomment">/// Returns a mutable reference to the component `T` of the given entity.
-    ///
-    /// In case of a nonexisting entity or mismatched component, a [`QueryComponentError`] is returned instead.
-    ///
-    /// # Safety
-    ///
-    /// This function makes it possible to violate Rust's aliasing guarantees.
-    /// You must make sure this call does not result in multiple mutable references to the same component.
-    ///
-    /// # See also
-    ///
-    /// - [`get_component_mut`](Self::get_component_mut) for the safe version.
-    ///
-    /// [`QueryComponentError`]: crate::query::QueryComponentError
-    </span><span class="attr">#[deprecated(
-        since = <span class="string">"0.13.0"</span>,
-        note = <span class="string">"Please use `get_unchecked` and select for the exact component based on the structure of the exact query as required."
-    </span>)]
-    #[allow(deprecated)]
-    #[inline]
-    </span><span class="kw">pub unsafe fn </span>get_component_unchecked_mut&lt;T: Component&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        entity: Entity,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Mut&lt;<span class="lifetime">'_</span>, T&gt;, <span class="kw">crate</span>::query::QueryComponentError&gt; {
-        <span class="comment">// This check is required to ensure soundness in the case of `to_readonly().get_component_mut()`
-        // See the comments on the `force_read_only_component_access` field for more info.
-        </span><span class="kw">if </span><span class="self">self</span>.force_read_only_component_access {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw">crate</span>::query::QueryComponentError::MissingWriteAccess);
-        }
-
-        <span class="comment">// SAFETY: The above check ensures we are not a readonly query.
-        // It is the callers responsibility to ensure multiple mutable access is not provided.
         </span><span class="kw">unsafe </span>{
             <span class="self">self</span>.state
-                .get_component_unchecked_mut(<span class="self">self</span>.world, entity, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
+                .get_unchecked_manual(<span class="self">self</span>.world, entity, <span class="self">self</span>.last_run, <span class="self">self</span>.this_run)
         }
     }
 
@@ -3140,6 +2828,11 @@
 
     <span class="doccomment">/// Returns `true` if there are no query items.
     ///
+    /// This is equivalent to `self.iter().next().is_none()`, and thus the worst case runtime will be `O(n)`
+    /// where `n` is the number of *potential* matches. This can be notably expensive for queries that rely
+    /// on non-archetypal filters such as [`Added`] or [`Changed`] which must individually check each query
+    /// result for a match.
+    ///
     /// # Example
     ///
     /// Here, the score is increased only if an entity with a `Player` component is present in the world:
@@ -3158,6 +2851,9 @@
     /// }
     /// # bevy_ecs::system::assert_is_system(update_score_system);
     /// ```
+    ///
+    /// [`Added`]: crate::query::Added
+    /// [`Changed`]: crate::query::Changed
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="comment">// SAFETY:
@@ -3171,6 +2867,8 @@
     }
 
     <span class="doccomment">/// Returns `true` if the given [`Entity`] matches the query.
+    ///
+    /// This is always guaranteed to run in `O(1)` time.
     ///
     /// # Example
     ///
@@ -3255,14 +2953,19 @@
     /// ## Allowed Transmutes
     ///
     /// Besides removing parameters from the query, you can also
-    /// make limited changes to the types of paramters.
+    /// make limited changes to the types of parameters.
     ///
-    /// * Can always add/remove `Entity`
+    /// * Can always add/remove [`Entity`]
+    /// * Can always add/remove [`EntityLocation`]
+    /// * Can always add/remove [`&amp;Archetype`]
     /// * `Ref&lt;T&gt;` &lt;-&gt; `&amp;T`
     /// * `&amp;mut T` -&gt; `&amp;T`
     /// * `&amp;mut T` -&gt; `Ref&lt;T&gt;`
     /// * [`EntityMut`](crate::world::EntityMut) -&gt; [`EntityRef`](crate::world::EntityRef)
-    ///    
+    ///  
+    /// [`EntityLocation`]: crate::entity::EntityLocation
+    /// [`&amp;Archetype`]: crate::archetype::Archetype
+    </span><span class="attr">#[track_caller]
     </span><span class="kw">pub fn </span>transmute_lens&lt;NewD: QueryData&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; QueryLens&lt;<span class="lifetime">'_</span>, NewD&gt; {
         <span class="self">self</span>.transmute_lens_filtered::&lt;NewD, ()&gt;()
     }
@@ -3273,24 +2976,112 @@
     /// additional archetypal query terms like [`With`](crate::query::With) and [`Without`](crate::query::Without)
     /// will not necessarily be respected and non-archetypal terms like [`Added`](crate::query::Added) and
     /// [`Changed`](crate::query::Changed) will only be respected if they are in the type signature.
+    </span><span class="attr">#[track_caller]
     </span><span class="kw">pub fn </span>transmute_lens_filtered&lt;NewD: QueryData, NewF: QueryFilter&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
     ) -&gt; QueryLens&lt;<span class="lifetime">'_</span>, NewD, NewF&gt; {
-        <span class="comment">// SAFETY: There are no other active borrows of data from world
-        </span><span class="kw">let </span>world = <span class="kw">unsafe </span>{ <span class="self">self</span>.world.world() };
-        <span class="kw">let </span>state = <span class="self">self</span>.state.transmute_filtered::&lt;NewD, NewF&gt;(world);
+        <span class="kw">let </span>components = <span class="self">self</span>.world.components();
+        <span class="kw">let </span>state = <span class="self">self</span>.state.transmute_filtered::&lt;NewD, NewF&gt;(components);
         QueryLens {
             world: <span class="self">self</span>.world,
             state,
             last_run: <span class="self">self</span>.last_run,
             this_run: <span class="self">self</span>.this_run,
-            force_read_only_component_access: <span class="self">self</span>.force_read_only_component_access,
         }
     }
 
     <span class="doccomment">/// Gets a [`QueryLens`] with the same accesses as the existing query
     </span><span class="kw">pub fn </span>as_query_lens(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; QueryLens&lt;<span class="lifetime">'_</span>, D&gt; {
         <span class="self">self</span>.transmute_lens()
+    }
+
+    <span class="doccomment">/// Returns a [`QueryLens`] that can be used to get a query with the combined fetch.
+    ///
+    /// For example, this can take a `Query&lt;&amp;A&gt;` and a `Query&lt;&amp;B&gt;` and return a `Query&lt;(&amp;A, &amp;B)&gt;`.
+    /// The returned query will only return items with both `A` and `B`. Note that since filters
+    /// are dropped, non-archetypal filters like `Added` and `Changed` will not be respected.
+    /// To maintain or change filter terms see `Self::join_filtered`.
+    ///
+    /// ## Example
+    ///
+    /// ```rust
+    /// # use bevy_ecs::prelude::*;
+    /// # use bevy_ecs::system::QueryLens;
+    /// #
+    /// # #[derive(Component)]
+    /// # struct Transform;
+    /// #
+    /// # #[derive(Component)]
+    /// # struct Player;
+    /// #
+    /// # #[derive(Component)]
+    /// # struct Enemy;
+    /// #
+    /// # let mut world = World::default();
+    /// # world.spawn((Transform, Player));
+    /// # world.spawn((Transform, Enemy));
+    ///
+    /// fn system(
+    ///     mut transforms: Query&lt;&amp;Transform&gt;,
+    ///     mut players: Query&lt;&amp;Player&gt;,
+    ///     mut enemies: Query&lt;&amp;Enemy&gt;
+    /// ) {
+    ///     let mut players_transforms: QueryLens&lt;(&amp;Transform, &amp;Player)&gt; = transforms.join(&amp;mut players);
+    ///     for (transform, player) in &amp;players_transforms.query() {
+    ///         // do something with a and b
+    ///     }
+    ///
+    ///     let mut enemies_transforms: QueryLens&lt;(&amp;Transform, &amp;Enemy)&gt; = transforms.join(&amp;mut enemies);
+    ///     for (transform, enemy) in &amp;enemies_transforms.query() {
+    ///         // do something with a and b
+    ///     }
+    /// }
+    ///
+    /// # let mut schedule = Schedule::default();
+    /// # schedule.add_systems(system);
+    /// # schedule.run(&amp;mut world);
+    /// ```
+    /// ## Panics
+    ///
+    /// This will panic if `NewD` is not a subset of the union of the original fetch `Q` and `OtherD`.
+    ///
+    /// ## Allowed Transmutes
+    ///
+    /// Like `transmute_lens` the query terms can be changed with some restrictions.
+    /// See [`Self::transmute_lens`] for more details.
+    </span><span class="kw">pub fn </span>join&lt;OtherD: QueryData, NewD: QueryData&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        other: <span class="kw-2">&amp;mut </span>Query&lt;OtherD&gt;,
+    ) -&gt; QueryLens&lt;<span class="lifetime">'_</span>, NewD&gt; {
+        <span class="self">self</span>.join_filtered(other)
+    }
+
+    <span class="doccomment">/// Equivalent to [`Self::join`] but also includes a [`QueryFilter`] type.
+    ///
+    /// Note that the lens with iterate a subset of the original queries' tables
+    /// and archetypes. This means that additional archetypal query terms like
+    /// `With` and `Without` will not necessarily be respected and non-archetypal
+    /// terms like `Added` and `Changed` will only be respected if they are in
+    /// the type signature.
+    </span><span class="kw">pub fn </span>join_filtered&lt;
+        OtherD: QueryData,
+        OtherF: QueryFilter,
+        NewD: QueryData,
+        NewF: QueryFilter,
+    &gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        other: <span class="kw-2">&amp;mut </span>Query&lt;OtherD, OtherF&gt;,
+    ) -&gt; QueryLens&lt;<span class="lifetime">'_</span>, NewD, NewF&gt; {
+        <span class="kw">let </span>components = <span class="self">self</span>.world.components();
+        <span class="kw">let </span>state = <span class="self">self
+            </span>.state
+            .join_filtered::&lt;OtherD, OtherF, NewD, NewF&gt;(components, other.state);
+        QueryLens {
+            world: <span class="self">self</span>.world,
+            state,
+            last_run: <span class="self">self</span>.last_run,
+            this_run: <span class="self">self</span>.this_run,
+        }
     }
 }
 
@@ -3402,7 +3193,6 @@
     state: QueryState&lt;Q, F&gt;,
     last_run: Tick,
     this_run: Tick,
-    force_read_only_component_access: bool,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'w</span>, Q: QueryData, F: QueryFilter&gt; QueryLens&lt;<span class="lifetime">'w</span>, Q, F&gt; {
@@ -3413,7 +3203,6 @@
             state: <span class="kw-2">&amp;</span><span class="self">self</span>.state,
             last_run: <span class="self">self</span>.last_run,
             this_run: <span class="self">self</span>.this_run,
-            force_read_only_component_access: <span class="self">self</span>.force_read_only_component_access,
         }
     }
 }

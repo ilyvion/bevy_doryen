@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/system/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/system/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1752,10 +1751,6 @@
 <a href="#1751" id="1751">1751</a>
 <a href="#1752" id="1752">1752</a>
 <a href="#1753" id="1753">1753</a>
-<a href="#1754" id="1754">1754</a>
-<a href="#1755" id="1755">1755</a>
-<a href="#1756" id="1756">1756</a>
-<a href="#1757" id="1757">1757</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Tools for controlling behavior in an ECS application.
 //!
 //! Systems define how an ECS based application behaves.
@@ -1860,11 +1855,13 @@
 //! - [`()` (unit primitive type)](https://doc.rust-lang.org/stable/std/primitive.unit.html)
 
 </span><span class="kw">mod </span>adapter_system;
+<span class="kw">mod </span>builder;
 <span class="kw">mod </span>combinator;
 <span class="kw">mod </span>commands;
 <span class="kw">mod </span>exclusive_function_system;
 <span class="kw">mod </span>exclusive_system_param;
 <span class="kw">mod </span>function_system;
+<span class="kw">mod </span>observer_system;
 <span class="kw">mod </span>query;
 <span class="attr">#[allow(clippy::module_inception)]
 </span><span class="kw">mod </span>system;
@@ -1875,11 +1872,13 @@
 <span class="kw">use </span>std::{any::TypeId, borrow::Cow};
 
 <span class="kw">pub use </span>adapter_system::<span class="kw-2">*</span>;
+<span class="kw">pub use </span>builder::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>combinator::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>commands::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>exclusive_function_system::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>exclusive_system_param::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>function_system::<span class="kw-2">*</span>;
+<span class="kw">pub use </span>observer_system::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>query::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>system::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>system_name::<span class="kw-2">*</span>;
@@ -1905,6 +1904,10 @@
 </span><span class="comment">// This trait has to be generic because we have potentially overlapping impls, in particular
 // because Rust thinks a type could impl multiple different `FnMut` combinations
 // even though none can currently
+</span><span class="attr">#[diagnostic::on_unimplemented(
+    message = <span class="string">"`{Self}` is not a valid system with input `{In}` and output `{Out}`"</span>,
+    label = <span class="string">"invalid system"
+</span>)]
 </span><span class="kw">pub trait </span>IntoSystem&lt;In, Out, Marker&gt;: Sized {
     <span class="doccomment">/// The type of [`System`] that this instance converts into.
     </span><span class="kw">type </span>System: System&lt;In = In, Out = Out&gt;;
@@ -2159,65 +2162,6 @@
         schedule.run(world);
     }
 
-    <span class="attr">#[allow(deprecated)]
-    #[test]
-    </span><span class="kw">fn </span>query_system_gets() {
-        <span class="kw">fn </span>query_system(
-            <span class="kw-2">mut </span>ran: ResMut&lt;SystemRan&gt;,
-            entity_query: Query&lt;Entity, With&lt;A&gt;&gt;,
-            b_query: Query&lt;<span class="kw-2">&amp;</span>B&gt;,
-            a_c_query: Query&lt;(<span class="kw-2">&amp;</span>A, <span class="kw-2">&amp;</span>C)&gt;,
-            d_query: Query&lt;<span class="kw-2">&amp;</span>D&gt;,
-        ) {
-            <span class="kw">let </span>entities = entity_query.iter().collect::&lt;Vec&lt;Entity&gt;&gt;();
-            <span class="macro">assert!</span>(
-                b_query.get_component::&lt;B&gt;(entities[<span class="number">0</span>]).is_err(),
-                <span class="string">"entity 0 should not have B"
-            </span>);
-            <span class="macro">assert!</span>(
-                b_query.get_component::&lt;B&gt;(entities[<span class="number">1</span>]).is_ok(),
-                <span class="string">"entity 1 should have B"
-            </span>);
-            <span class="macro">assert!</span>(
-                b_query.get_component::&lt;A&gt;(entities[<span class="number">1</span>]).is_err(),
-                <span class="string">"entity 1 should have A, but b_query shouldn't have access to it"
-            </span>);
-            <span class="macro">assert!</span>(
-                b_query.get_component::&lt;D&gt;(entities[<span class="number">3</span>]).is_err(),
-                <span class="string">"entity 3 should have D, but it shouldn't be accessible from b_query"
-            </span>);
-            <span class="macro">assert!</span>(
-                b_query.get_component::&lt;C&gt;(entities[<span class="number">2</span>]).is_err(),
-                <span class="string">"entity 2 has C, but it shouldn't be accessible from b_query"
-            </span>);
-            <span class="macro">assert!</span>(
-                a_c_query.get_component::&lt;C&gt;(entities[<span class="number">2</span>]).is_ok(),
-                <span class="string">"entity 2 has C, and it should be accessible from a_c_query"
-            </span>);
-            <span class="macro">assert!</span>(
-                a_c_query.get_component::&lt;D&gt;(entities[<span class="number">3</span>]).is_err(),
-                <span class="string">"entity 3 should have D, but it shouldn't be accessible from b_query"
-            </span>);
-            <span class="macro">assert!</span>(
-                d_query.get_component::&lt;D&gt;(entities[<span class="number">3</span>]).is_ok(),
-                <span class="string">"entity 3 should have D"
-            </span>);
-
-            <span class="kw-2">*</span>ran = SystemRan::Yes;
-        }
-
-        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
-        world.insert_resource(SystemRan::No);
-        world.spawn(A);
-        world.spawn((A, B));
-        world.spawn((A, C));
-        world.spawn((A, D));
-
-        run_system(<span class="kw-2">&amp;mut </span>world, query_system);
-
-        <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>world.resource::&lt;SystemRan&gt;(), SystemRan::Yes);
-    }
-
     <span class="attr">#[test]
     </span><span class="kw">fn </span>get_many_is_ordered() {
         <span class="kw">use </span><span class="kw">crate</span>::system::Resource;
@@ -2366,9 +2310,69 @@
     }
 
     <span class="attr">#[test]
+    </span><span class="kw">fn </span>any_of_working() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;(<span class="kw-2">&amp;mut </span>A, <span class="kw-2">&amp;</span>B)&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>any_of_with_and_without_common() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;(<span class="kw-2">&amp;mut </span>D, <span class="kw-2">&amp;</span>C, AnyOf&lt;(<span class="kw-2">&amp;</span>A, <span class="kw-2">&amp;</span>B)&gt;)&gt;, <span class="kw">_</span>: Query&lt;<span class="kw-2">&amp;mut </span>D, Without&lt;C&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    #[should_panic = <span class="string">"&amp;bevy_ecs::system::tests::A conflicts with a previous access in this query."</span>]
+    </span><span class="kw">fn </span>any_of_with_mut_and_ref() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;(<span class="kw-2">&amp;mut </span>A, <span class="kw-2">&amp;</span>A)&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    #[should_panic = <span class="string">"&amp;mut bevy_ecs::system::tests::A conflicts with a previous access in this query."</span>]
+    </span><span class="kw">fn </span>any_of_with_ref_and_mut() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;(<span class="kw-2">&amp;</span>A, <span class="kw-2">&amp;mut </span>A)&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    #[should_panic = <span class="string">"&amp;bevy_ecs::system::tests::A conflicts with a previous access in this query."</span>]
+    </span><span class="kw">fn </span>any_of_with_mut_and_option() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;(<span class="kw-2">&amp;mut </span>A, <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>A&gt;)&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>any_of_with_entity_and_mut() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;(Entity, <span class="kw-2">&amp;mut </span>A)&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>any_of_with_empty_and_mut() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;((), <span class="kw-2">&amp;mut </span>A)&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
     #[should_panic = <span class="string">"error[B0001]"</span>]
     </span><span class="kw">fn </span>any_of_has_no_filter_with() {
         <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;(AnyOf&lt;(<span class="kw-2">&amp;</span>A, ())&gt;, <span class="kw-2">&amp;mut </span>B)&gt;, <span class="kw">_</span>: Query&lt;<span class="kw-2">&amp;mut </span>B, Without&lt;A&gt;&gt;) {}
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
+        run_system(<span class="kw-2">&amp;mut </span>world, sys);
+    }
+
+    <span class="attr">#[test]
+    #[should_panic = <span class="string">"&amp;mut bevy_ecs::system::tests::A conflicts with a previous access in this query."</span>]
+    </span><span class="kw">fn </span>any_of_with_conflicting() {
+        <span class="kw">fn </span>sys(<span class="kw">_</span>: Query&lt;AnyOf&lt;(<span class="kw-2">&amp;mut </span>A, <span class="kw-2">&amp;mut </span>A)&gt;&gt;) {}
         <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
         run_system(<span class="kw-2">&amp;mut </span>world, sys);
     }
@@ -2661,8 +2665,10 @@
         <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
 
         world.insert_resource(SystemRan::No);
-        <span class="kw">struct </span>NotSend1(std::rc::Rc&lt;i32&gt;);
-        <span class="kw">struct </span>NotSend2(std::rc::Rc&lt;i32&gt;);
+        <span class="attr">#[allow(dead_code)]
+        </span><span class="kw">struct </span>NotSend1(std::rc::Rc&lt;i32&gt;);
+        <span class="attr">#[allow(dead_code)]
+        </span><span class="kw">struct </span>NotSend2(std::rc::Rc&lt;i32&gt;);
         world.insert_non_send_resource(NotSend1(std::rc::Rc::new(<span class="number">0</span>)));
 
         <span class="kw">fn </span>sys(
@@ -2684,8 +2690,10 @@
         <span class="kw">let </span><span class="kw-2">mut </span>world = World::default();
 
         world.insert_resource(SystemRan::No);
-        <span class="kw">struct </span>NotSend1(std::rc::Rc&lt;i32&gt;);
-        <span class="kw">struct </span>NotSend2(std::rc::Rc&lt;i32&gt;);
+        <span class="attr">#[allow(dead_code)]
+        </span><span class="kw">struct </span>NotSend1(std::rc::Rc&lt;i32&gt;);
+        <span class="attr">#[allow(dead_code)]
+        </span><span class="kw">struct </span>NotSend2(std::rc::Rc&lt;i32&gt;);
 
         world.insert_non_send_resource(NotSend1(std::rc::Rc::new(<span class="number">1</span>)));
         world.insert_non_send_resource(NotSend2(std::rc::Rc::new(<span class="number">2</span>)));
@@ -3319,22 +3327,6 @@
         });
     }
 
-    <span class="attr">#[allow(deprecated)]
-    #[test]
-    </span><span class="kw">fn </span>readonly_query_get_mut_component_fails() {
-        <span class="kw">use </span><span class="kw">crate</span>::query::QueryComponentError;
-
-        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
-        <span class="kw">let </span>entity = world.spawn(W(<span class="number">42u32</span>)).id();
-        run_system(<span class="kw-2">&amp;mut </span>world, <span class="kw">move </span>|q: Query&lt;<span class="kw-2">&amp;mut </span>W&lt;u32&gt;&gt;| {
-            <span class="kw">let </span><span class="kw-2">mut </span>rq = q.to_readonly();
-            <span class="macro">assert_eq!</span>(
-                QueryComponentError::MissingWriteAccess,
-                rq.get_component_mut::&lt;W&lt;u32&gt;&gt;(entity).unwrap_err(),
-            );
-        });
-    }
-
     <span class="attr">#[test]
     #[should_panic = <span class="string">"Encountered a mismatched World."</span>]
     </span><span class="kw">fn </span>query_validates_world_id() {
@@ -3348,7 +3340,6 @@
                 <span class="kw-2">&amp;</span>qstate,
                 Tick::new(<span class="number">0</span>),
                 Tick::new(<span class="number">0</span>),
-                <span class="bool-val">false</span>,
             )
         };
         query.iter();

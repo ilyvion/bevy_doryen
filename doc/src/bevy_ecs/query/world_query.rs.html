@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/query/world_query.rs`."><title>world_query.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/query/world_query.rs`."><title>world_query.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -222,9 +221,18 @@
 <a href="#221" id="221">221</a>
 <a href="#222" id="222">222</a>
 <a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     archetype::Archetype,
-    component::{ComponentId, Tick},
+    component::{ComponentId, Components, Tick},
     entity::Entity,
     query::FilteredAccess,
     storage::{Table, TableRow},
@@ -281,7 +289,6 @@
     ///
     /// # Safety
     ///
-    /// - `world` must have permission to access any of the components specified in `Self::update_archetype_component_access`.
     /// - `state` must have been initialized (via [`WorldQuery::init_state`]) using the same `world` passed
     ///   in to this function.
     </span><span class="kw">unsafe fn </span>init_fetch&lt;<span class="lifetime">'w</span>&gt;(
@@ -345,6 +352,8 @@
     ) -&gt; <span class="self">Self</span>::Item&lt;<span class="lifetime">'w</span>&gt;;
 
     <span class="doccomment">/// Adds any component accesses used by this [`WorldQuery`] to `access`.
+    ///
+    /// Used to check which queries are disjoint and can run in parallel
     </span><span class="comment">// This does not have a default body of `{}` because 99% of cases need to add accesses
     // and forgetting to do so would be unsound.
     </span><span class="kw">fn </span>update_component_access(state: <span class="kw-2">&amp;</span><span class="self">Self</span>::State, access: <span class="kw-2">&amp;mut </span>FilteredAccess&lt;ComponentId&gt;);
@@ -352,24 +361,28 @@
     <span class="doccomment">/// Creates and initializes a [`State`](WorldQuery::State) for this [`WorldQuery`] type.
     </span><span class="kw">fn </span>init_state(world: <span class="kw-2">&amp;mut </span>World) -&gt; <span class="self">Self</span>::State;
 
-    <span class="doccomment">/// Attempts to initializes a [`State`](WorldQuery::State) for this [`WorldQuery`] type.
-    </span><span class="kw">fn </span>get_state(world: <span class="kw-2">&amp;</span>World) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::State&gt;;
+    <span class="doccomment">/// Attempts to initialize a [`State`](WorldQuery::State) for this [`WorldQuery`] type using read-only
+    /// access to [`Components`].
+    </span><span class="kw">fn </span>get_state(components: <span class="kw-2">&amp;</span>Components) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::State&gt;;
 
     <span class="doccomment">/// Returns `true` if this query matches a set of components. Otherwise, returns `false`.
+    ///
+    /// Used to check which [`Archetype`]s can be skipped by the query
+    /// (if none of the [`Component`](crate::component::Component)s match)
     </span><span class="kw">fn </span>matches_component_set(
         state: <span class="kw-2">&amp;</span><span class="self">Self</span>::State,
         set_contains_id: <span class="kw-2">&amp;</span><span class="kw">impl </span>Fn(ComponentId) -&gt; bool,
     ) -&gt; bool;
 }
 
-<span class="macro">macro_rules! </span>impl_tuple_world_query {
+<span class="macro">macro_rules!</span> impl_tuple_world_query {
     ($((<span class="macro-nonterminal">$name</span>: ident, <span class="macro-nonterminal">$state</span>: ident)),<span class="kw-2">*</span>) =&gt; {
 
         <span class="attr">#[allow(non_snake_case)]
         #[allow(clippy::unused_unit)]
         </span><span class="doccomment">/// SAFETY:
         /// `fetch` accesses are the conjunction of the subqueries' accesses
-        /// This is sound because `update_component_access` and `update_archetype_component_access` adds accesses according to the implementations of all the subqueries.
+        /// This is sound because `update_component_access` adds accesses according to the implementations of all the subqueries.
         /// `update_component_access` adds all `With` and `Without` filters from the subqueries.
         /// This is sound because `matches_component_set` always returns `false` if any the subqueries' implementations return `false`.
         </span><span class="kw">unsafe impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: WorldQuery),<span class="kw-2">*</span>&gt; WorldQuery <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
@@ -388,7 +401,8 @@
             #[allow(clippy::unused_unit)]
             </span><span class="kw">unsafe fn </span>init_fetch&lt;<span class="lifetime">'w</span>&gt;(_world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;, state: <span class="kw-2">&amp;</span><span class="self">Self</span>::State, _last_run: Tick, _this_run: Tick) -&gt; <span class="self">Self</span>::Fetch&lt;<span class="lifetime">'w</span>&gt; {
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) = state;
-                ($(<span class="macro-nonterminal">$name::init_fetch</span>(_world, <span class="macro-nonterminal">$name</span>, _last_run, _this_run),)<span class="kw-2">*</span>)
+                <span class="comment">// SAFETY: The invariants are uphold by the caller.
+                </span>($(<span class="kw">unsafe </span>{ <span class="macro-nonterminal">$name::init_fetch</span>(_world, <span class="macro-nonterminal">$name</span>, _last_run, _this_run) },)<span class="kw-2">*</span>)
             }
 
             <span class="kw">const </span>IS_DENSE: bool = <span class="bool-val">true </span>$(&amp;&amp; <span class="macro-nonterminal">$name::IS_DENSE</span>)<span class="kw-2">*</span>;
@@ -402,14 +416,16 @@
             ) {
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) = _fetch;
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$state</span>,)<span class="kw-2">*</span>) = _state;
-                $(<span class="macro-nonterminal">$name::set_archetype</span>(<span class="macro-nonterminal">$name</span>, <span class="macro-nonterminal">$state</span>, _archetype, _table);)*
+                <span class="comment">// SAFETY: The invariants are uphold by the caller.
+                </span>$(<span class="kw">unsafe </span>{ <span class="macro-nonterminal">$name::set_archetype</span>(<span class="macro-nonterminal">$name</span>, <span class="macro-nonterminal">$state</span>, _archetype, _table); })*
             }
 
             <span class="attr">#[inline]
             </span><span class="kw">unsafe fn </span>set_table&lt;<span class="lifetime">'w</span>&gt;(_fetch: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::Fetch&lt;<span class="lifetime">'w</span>&gt;, _state: <span class="kw-2">&amp;</span><span class="self">Self</span>::State, _table: <span class="kw-2">&amp;</span><span class="lifetime">'w </span>Table) {
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) = _fetch;
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$state</span>,)<span class="kw-2">*</span>) = _state;
-                $(<span class="macro-nonterminal">$name::set_table</span>(<span class="macro-nonterminal">$name</span>, <span class="macro-nonterminal">$state</span>, _table);)*
+                <span class="comment">// SAFETY: The invariants are uphold by the caller.
+                </span>$(<span class="kw">unsafe </span>{ <span class="macro-nonterminal">$name::set_table</span>(<span class="macro-nonterminal">$name</span>, <span class="macro-nonterminal">$state</span>, _table); })*
             }
 
             <span class="attr">#[inline(always)]
@@ -420,20 +436,21 @@
                 _table_row: TableRow
             ) -&gt; <span class="self">Self</span>::Item&lt;<span class="lifetime">'w</span>&gt; {
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) = _fetch;
-                ($(<span class="macro-nonterminal">$name::fetch</span>(<span class="macro-nonterminal">$name</span>, _entity, _table_row),)<span class="kw-2">*</span>)
+                <span class="comment">// SAFETY: The invariants are uphold by the caller.
+                </span>($(<span class="kw">unsafe </span>{ <span class="macro-nonterminal">$name::fetch</span>(<span class="macro-nonterminal">$name</span>, _entity, _table_row) },)<span class="kw-2">*</span>)
             }
 
             <span class="kw">fn </span>update_component_access(state: <span class="kw-2">&amp;</span><span class="self">Self</span>::State, _access: <span class="kw-2">&amp;mut </span>FilteredAccess&lt;ComponentId&gt;) {
                 <span class="kw">let </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) = state;
                 $(<span class="macro-nonterminal">$name::update_component_access</span>(<span class="macro-nonterminal">$name</span>, _access);)*
             }
-
-            <span class="kw">fn </span>init_state(_world: <span class="kw-2">&amp;mut </span>World) -&gt; <span class="self">Self</span>::State {
-                ($(<span class="macro-nonterminal">$name::init_state</span>(_world),)<span class="kw-2">*</span>)
+            <span class="attr">#[allow(unused_variables)]
+            </span><span class="kw">fn </span>init_state(world: <span class="kw-2">&amp;mut </span>World) -&gt; <span class="self">Self</span>::State {
+                ($(<span class="macro-nonterminal">$name::init_state</span>(world),)<span class="kw-2">*</span>)
             }
-
-            <span class="kw">fn </span>get_state(_world: <span class="kw-2">&amp;</span>World) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::State&gt; {
-                <span class="prelude-val">Some</span>(($(<span class="macro-nonterminal">$name::get_state</span>(_world)<span class="question-mark">?</span>,)<span class="kw-2">*</span>))
+            <span class="attr">#[allow(unused_variables)]
+            </span><span class="kw">fn </span>get_state(components: <span class="kw-2">&amp;</span>Components) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::State&gt; {
+                <span class="prelude-val">Some</span>(($(<span class="macro-nonterminal">$name::get_state</span>(components)<span class="question-mark">?</span>,)<span class="kw-2">*</span>))
             }
 
             <span class="kw">fn </span>matches_component_set(state: <span class="kw-2">&amp;</span><span class="self">Self</span>::State, _set_contains_id: <span class="kw-2">&amp;</span><span class="kw">impl </span>Fn(ComponentId) -&gt; bool) -&gt; bool {

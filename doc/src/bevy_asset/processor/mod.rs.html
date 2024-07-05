@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.13.0/src/processor/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.14.0/src/processor/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_asset/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1332,6 +1331,49 @@
 <a href="#1331" id="1331">1331</a>
 <a href="#1332" id="1332">1332</a>
 <a href="#1333" id="1333">1333</a>
+<a href="#1334" id="1334">1334</a>
+<a href="#1335" id="1335">1335</a>
+<a href="#1336" id="1336">1336</a>
+<a href="#1337" id="1337">1337</a>
+<a href="#1338" id="1338">1338</a>
+<a href="#1339" id="1339">1339</a>
+<a href="#1340" id="1340">1340</a>
+<a href="#1341" id="1341">1341</a>
+<a href="#1342" id="1342">1342</a>
+<a href="#1343" id="1343">1343</a>
+<a href="#1344" id="1344">1344</a>
+<a href="#1345" id="1345">1345</a>
+<a href="#1346" id="1346">1346</a>
+<a href="#1347" id="1347">1347</a>
+<a href="#1348" id="1348">1348</a>
+<a href="#1349" id="1349">1349</a>
+<a href="#1350" id="1350">1350</a>
+<a href="#1351" id="1351">1351</a>
+<a href="#1352" id="1352">1352</a>
+<a href="#1353" id="1353">1353</a>
+<a href="#1354" id="1354">1354</a>
+<a href="#1355" id="1355">1355</a>
+<a href="#1356" id="1356">1356</a>
+<a href="#1357" id="1357">1357</a>
+<a href="#1358" id="1358">1358</a>
+<a href="#1359" id="1359">1359</a>
+<a href="#1360" id="1360">1360</a>
+<a href="#1361" id="1361">1361</a>
+<a href="#1362" id="1362">1362</a>
+<a href="#1363" id="1363">1363</a>
+<a href="#1364" id="1364">1364</a>
+<a href="#1365" id="1365">1365</a>
+<a href="#1366" id="1366">1366</a>
+<a href="#1367" id="1367">1367</a>
+<a href="#1368" id="1368">1368</a>
+<a href="#1369" id="1369">1369</a>
+<a href="#1370" id="1370">1370</a>
+<a href="#1371" id="1371">1371</a>
+<a href="#1372" id="1372">1372</a>
+<a href="#1373" id="1373">1373</a>
+<a href="#1374" id="1374">1374</a>
+<a href="#1375" id="1375">1375</a>
+<a href="#1376" id="1376">1376</a>
 </pre></div><pre class="rust"><code><span class="kw">mod </span>log;
 <span class="kw">mod </span>process;
 
@@ -1340,8 +1382,9 @@
 
 <span class="kw">use crate</span>::{
     io::{
-        AssetReader, AssetReaderError, AssetSource, AssetSourceBuilders, AssetSourceEvent,
-        AssetSourceId, AssetSources, AssetWriter, AssetWriterError, MissingAssetSourceError,
+        AssetReaderError, AssetSource, AssetSourceBuilders, AssetSourceEvent, AssetSourceId,
+        AssetSources, AssetWriterError, ErasedAssetReader, ErasedAssetWriter,
+        MissingAssetSourceError,
     },
     meta::{
         get_asset_hash, get_full_asset_hash, AssetAction, AssetActionMinimal, AssetHash, AssetMeta,
@@ -1351,9 +1394,14 @@
     MissingAssetLoaderForExtensionError,
 };
 <span class="kw">use </span>bevy_ecs::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>bevy_log::{debug, error, trace, warn};
 <span class="kw">use </span>bevy_tasks::IoTaskPool;
-<span class="kw">use </span>bevy_utils::{BoxedFuture, HashMap, HashSet};
+<span class="kw">use </span>bevy_utils::tracing::{debug, error, trace, warn};
+<span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+</span><span class="kw">use </span>bevy_utils::{
+    tracing::{info_span, instrument::Instrument},
+    ConditionalSendFuture,
+};
+<span class="kw">use </span>bevy_utils::{HashMap, HashSet};
 <span class="kw">use </span>futures_io::ErrorKind;
 <span class="kw">use </span>futures_lite::{AsyncReadExt, AsyncWriteExt, StreamExt};
 <span class="kw">use </span>parking_lot::RwLock;
@@ -1363,6 +1411,10 @@
     sync::Arc,
 };
 <span class="kw">use </span>thiserror::Error;
+
+<span class="comment">// Needed for doc strings
+</span><span class="attr">#[allow(unused_imports)]
+</span><span class="kw">use </span><span class="kw">crate</span>::io::{AssetReader, AssetWriter};
 
 <span class="doccomment">/// A "background" asset processor that reads asset values from a source [`AssetSource`] (which corresponds to an [`AssetReader`] / [`AssetWriter`] pair),
 /// processes them in some way, and writes them to a destination [`AssetSource`].
@@ -1390,7 +1442,7 @@
     log: async_lock::RwLock&lt;<span class="prelude-ty">Option</span>&lt;ProcessorTransactionLog&gt;&gt;,
     processors: RwLock&lt;HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, Arc&lt;<span class="kw">dyn </span>ErasedProcessor&gt;&gt;&gt;,
     <span class="doccomment">/// Default processors for file extensions
-    </span>default_processors: RwLock&lt;HashMap&lt;String, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;&gt;,
+    </span>default_processors: RwLock&lt;HashMap&lt;Box&lt;str&gt;, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;&gt;,
     state: async_lock::RwLock&lt;ProcessorState&gt;,
     sources: AssetSources,
     initialized_sender: async_broadcast::Sender&lt;()&gt;,
@@ -1476,9 +1528,9 @@
 
     <span class="doccomment">/// Starts the processor in a background thread.
     </span><span class="kw">pub fn </span>start(_processor: Res&lt;<span class="self">Self</span>&gt;) {
-        <span class="attr">#[cfg(any(target_arch = <span class="string">"wasm32"</span>, not(feature = <span class="string">"multi-threaded"</span>)))]
+        <span class="attr">#[cfg(any(target_arch = <span class="string">"wasm32"</span>, not(feature = <span class="string">"multi_threaded"</span>)))]
         </span><span class="macro">error!</span>(<span class="string">"Cannot run AssetProcessor in single threaded mode (or WASM) yet."</span>);
-        <span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi-threaded"</span>))]
+        <span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi_threaded"</span>))]
         </span>{
             <span class="kw">let </span>processor = _processor.clone();
             std::thread::spawn(<span class="kw">move </span>|| {
@@ -1495,7 +1547,7 @@
     /// * Scan the unprocessed [`AssetReader`] and remove any final processed assets that are invalid or no longer exist.
     /// * For each asset in the unprocessed [`AssetReader`], kick off a new "process job", which will process the asset
     /// (if the latest version of the asset has not been processed).
-    </span><span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi-threaded"</span>))]
+    </span><span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi_threaded"</span>))]
     </span><span class="kw">pub fn </span>process_assets(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">let </span>start_time = std::time::Instant::now();
         <span class="macro">debug!</span>(<span class="string">"Processing Assets"</span>);
@@ -1646,9 +1698,9 @@
             <span class="string">"Folder {} was added. Attempting to re-process"</span>,
             AssetPath::from_path(<span class="kw-2">&amp;</span>path).with_source(source.id())
         );
-        <span class="attr">#[cfg(any(target_arch = <span class="string">"wasm32"</span>, not(feature = <span class="string">"multi-threaded"</span>)))]
+        <span class="attr">#[cfg(any(target_arch = <span class="string">"wasm32"</span>, not(feature = <span class="string">"multi_threaded"</span>)))]
         </span><span class="macro">error!</span>(<span class="string">"AddFolder event cannot be handled in single threaded mode (or WASM) yet."</span>);
-        <span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi-threaded"</span>))]
+        <span class="attr">#[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi_threaded"</span>))]
         </span>IoTaskPool::get().scope(|scope| {
             scope.spawn(<span class="kw">async move </span>{
                 <span class="self">self</span>.process_assets_internal(scope, source, path)
@@ -1732,7 +1784,7 @@
         infos.remove(<span class="kw-2">&amp;</span>asset_path).<span class="kw">await</span>;
     }
 
-    <span class="doccomment">/// Handles a renamed source asset by moving it's processed results to the new location and updating in-memory paths + metadata.
+    <span class="doccomment">/// Handles a renamed source asset by moving its processed results to the new location and updating in-memory paths + metadata.
     /// This will cause direct path dependencies to break.
     </span><span class="kw">async fn </span>handle_renamed_asset(<span class="kw-2">&amp;</span><span class="self">self</span>, source: <span class="kw-2">&amp;</span>AssetSource, old: PathBuf, new: PathBuf) {
         <span class="kw">let </span><span class="kw-2">mut </span>infos = <span class="self">self</span>.data.asset_infos.write().<span class="kw">await</span>;
@@ -1763,28 +1815,26 @@
     }
 
     <span class="attr">#[allow(unused)]
-    #[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi-threaded"</span>))]
-    </span><span class="kw">fn </span>process_assets_internal&lt;<span class="lifetime">'scope</span>&gt;(
+    #[cfg(all(not(target_arch = <span class="string">"wasm32"</span>), feature = <span class="string">"multi_threaded"</span>))]
+    </span><span class="kw">async fn </span>process_assets_internal&lt;<span class="lifetime">'scope</span>&gt;(
         <span class="kw-2">&amp;</span><span class="lifetime">'scope </span><span class="self">self</span>,
         scope: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span>bevy_tasks::Scope&lt;<span class="lifetime">'scope</span>, <span class="lifetime">'_</span>, ()&gt;,
         source: <span class="kw-2">&amp;</span><span class="lifetime">'scope </span>AssetSource,
         path: PathBuf,
-    ) -&gt; BoxedFuture&lt;<span class="lifetime">'scope</span>, <span class="prelude-ty">Result</span>&lt;(), AssetReaderError&gt;&gt; {
-        Box::pin(<span class="kw">async move </span>{
-            <span class="kw">if </span>source.reader().is_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">? </span>{
-                <span class="kw">let </span><span class="kw-2">mut </span>path_stream = source.reader().read_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">?</span>;
-                <span class="kw">while let </span><span class="prelude-val">Some</span>(path) = path_stream.next().<span class="kw">await </span>{
-                    <span class="self">self</span>.process_assets_internal(scope, source, path).<span class="kw">await</span><span class="question-mark">?</span>;
-                }
-            } <span class="kw">else </span>{
-                <span class="comment">// Files without extensions are skipped
-                </span><span class="kw">let </span>processor = <span class="self">self</span>.clone();
-                scope.spawn(<span class="kw">async move </span>{
-                    processor.process_asset(source, path).<span class="kw">await</span>;
-                });
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), AssetReaderError&gt; {
+        <span class="kw">if </span>source.reader().is_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">? </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>path_stream = source.reader().read_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="kw">while let </span><span class="prelude-val">Some</span>(path) = path_stream.next().<span class="kw">await </span>{
+                Box::pin(<span class="self">self</span>.process_assets_internal(scope, source, path)).<span class="kw">await</span><span class="question-mark">?</span>;
             }
-            <span class="prelude-val">Ok</span>(())
-        })
+        } <span class="kw">else </span>{
+            <span class="comment">// Files without extensions are skipped
+            </span><span class="kw">let </span>processor = <span class="self">self</span>.clone();
+            scope.spawn(<span class="kw">async move </span>{
+                processor.process_asset(source, path).<span class="kw">await</span>;
+            });
+        }
+        <span class="prelude-val">Ok</span>(())
     }
 
     <span class="kw">async fn </span>try_reprocessing_queued(<span class="kw-2">&amp;</span><span class="self">self</span>) {
@@ -1810,13 +1860,15 @@
     <span class="doccomment">/// Register a new asset processor.
     </span><span class="kw">pub fn </span>register_processor&lt;P: Process&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, processor: P) {
         <span class="kw">let </span><span class="kw-2">mut </span>process_plans = <span class="self">self</span>.data.processors.write();
+        <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+        </span><span class="kw">let </span>processor = InstrumentedAssetProcessor(processor);
         process_plans.insert(std::any::type_name::&lt;P&gt;(), Arc::new(processor));
     }
 
     <span class="doccomment">/// Set the default processor for the given `extension`. Make sure `P` is registered with [`AssetProcessor::register_processor`].
     </span><span class="kw">pub fn </span>set_default_processor&lt;P: Process&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, extension: <span class="kw-2">&amp;</span>str) {
         <span class="kw">let </span><span class="kw-2">mut </span>default_processors = <span class="self">self</span>.data.default_processors.write();
-        default_processors.insert(extension.to_string(), std::any::type_name::&lt;P&gt;());
+        default_processors.insert(extension.into(), std::any::type_name::&lt;P&gt;());
     }
 
     <span class="doccomment">/// Returns the default processor for the given `extension`, if it exists.
@@ -1843,34 +1895,36 @@
 
         <span class="doccomment">/// Retrieves asset paths recursively. If `clean_empty_folders_writer` is Some, it will be used to clean up empty
         /// folders when they are discovered.
-        </span><span class="kw">fn </span>get_asset_paths&lt;<span class="lifetime">'a</span>&gt;(
-            reader: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>AssetReader,
-            clean_empty_folders_writer: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>AssetWriter&gt;,
+        </span><span class="kw">async fn </span>get_asset_paths&lt;<span class="lifetime">'a</span>&gt;(
+            reader: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>ErasedAssetReader,
+            clean_empty_folders_writer: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>ErasedAssetWriter&gt;,
             path: PathBuf,
             paths: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Vec&lt;PathBuf&gt;,
-        ) -&gt; BoxedFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;bool, AssetReaderError&gt;&gt; {
-            Box::pin(<span class="kw">async move </span>{
-                <span class="kw">if </span>reader.is_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">? </span>{
-                    <span class="kw">let </span><span class="kw-2">mut </span>path_stream = reader.read_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">?</span>;
-                    <span class="kw">let </span><span class="kw-2">mut </span>contains_files = <span class="bool-val">false</span>;
-                    <span class="kw">while let </span><span class="prelude-val">Some</span>(child_path) = path_stream.next().<span class="kw">await </span>{
-                        contains_files =
-                            get_asset_paths(reader, clean_empty_folders_writer, child_path, paths)
-                                .<span class="kw">await</span><span class="question-mark">?
-                                </span>&amp;&amp; contains_files;
-                    }
-                    <span class="kw">if </span>!contains_files &amp;&amp; path.parent().is_some() {
-                        <span class="kw">if let </span><span class="prelude-val">Some</span>(writer) = clean_empty_folders_writer {
-                            <span class="comment">// it is ok for this to fail as it is just a cleanup job.
-                            </span><span class="kw">let _ </span>= writer.remove_empty_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span>;
-                        }
-                    }
-                    <span class="prelude-val">Ok</span>(contains_files)
-                } <span class="kw">else </span>{
-                    paths.push(path);
-                    <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;bool, AssetReaderError&gt; {
+            <span class="kw">if </span>reader.is_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">? </span>{
+                <span class="kw">let </span><span class="kw-2">mut </span>path_stream = reader.read_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span><span class="question-mark">?</span>;
+                <span class="kw">let </span><span class="kw-2">mut </span>contains_files = <span class="bool-val">false</span>;
+
+                <span class="kw">while let </span><span class="prelude-val">Some</span>(child_path) = path_stream.next().<span class="kw">await </span>{
+                    contains_files |= Box::pin(get_asset_paths(
+                        reader,
+                        clean_empty_folders_writer,
+                        child_path,
+                        paths,
+                    ))
+                    .<span class="kw">await</span><span class="question-mark">?</span>;
                 }
-            })
+                <span class="kw">if </span>!contains_files &amp;&amp; path.parent().is_some() {
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(writer) = clean_empty_folders_writer {
+                        <span class="comment">// it is ok for this to fail as it is just a cleanup job.
+                        </span><span class="kw">let _ </span>= writer.remove_empty_directory(<span class="kw-2">&amp;</span>path).<span class="kw">await</span>;
+                    }
+                }
+                <span class="prelude-val">Ok</span>(contains_files)
+            } <span class="kw">else </span>{
+                paths.push(path);
+                <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>)
+            }
         }
 
         <span class="kw">for </span>source <span class="kw">in </span><span class="self">self</span>.sources().iter_processed() {
@@ -2051,9 +2105,7 @@
                         (meta, <span class="prelude-val">Some</span>(processor))
                     }
                     AssetActionMinimal::Ignore =&gt; {
-                        <span class="kw">let </span>meta: Box&lt;<span class="kw">dyn </span>AssetMetaDyn&gt; =
-                            Box::new(AssetMeta::&lt;(), ()&gt;::deserialize(<span class="kw-2">&amp;</span>meta_bytes)<span class="question-mark">?</span>);
-                        (meta, <span class="prelude-val">None</span>)
+                        <span class="kw">return </span><span class="prelude-val">Ok</span>(ProcessResult::Ignored);
                     }
                 };
                 (meta, meta_bytes, processor)
@@ -2362,11 +2414,43 @@
     }
 }
 
+<span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+</span><span class="kw">struct </span>InstrumentedAssetProcessor&lt;T&gt;(T);
+
+<span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
+</span><span class="kw">impl</span>&lt;T: Process&gt; Process <span class="kw">for </span>InstrumentedAssetProcessor&lt;T&gt; {
+    <span class="kw">type </span>Settings = T::Settings;
+    <span class="kw">type </span>OutputLoader = T::OutputLoader;
+
+    <span class="kw">fn </span>process&lt;<span class="lifetime">'a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
+        context: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>ProcessContext,
+        meta: AssetMeta&lt;(), <span class="self">Self</span>&gt;,
+        writer: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="kw">crate</span>::io::Writer,
+    ) -&gt; <span class="kw">impl </span>ConditionalSendFuture&lt;
+        Output = <span class="prelude-ty">Result</span>&lt;&lt;<span class="self">Self</span>::OutputLoader <span class="kw">as </span><span class="kw">crate</span>::AssetLoader&gt;::Settings, ProcessError&gt;,
+    &gt; {
+        <span class="comment">// Change the processor type for the `AssetMeta`, which works because we share the `Settings` type.
+        </span><span class="kw">let </span>meta = AssetMeta {
+            meta_format_version: meta.meta_format_version,
+            processed_info: meta.processed_info,
+            asset: meta.asset,
+        };
+        <span class="kw">let </span>span = <span class="macro">info_span!</span>(
+            <span class="string">"asset processing"</span>,
+            processor = std::any::type_name::&lt;T&gt;(),
+            asset = context.path().to_string(),
+        );
+        <span class="self">self</span>.<span class="number">0</span>.process(context, meta, writer).instrument(span)
+    }
+}
+
 <span class="doccomment">/// The (successful) result of processing an asset
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub enum </span>ProcessResult {
     Processed(ProcessedInfo),
     SkippedNotChanged,
+    Ignored,
 }
 
 <span class="doccomment">/// The final status of processing an asset
@@ -2388,7 +2472,7 @@
     /// _This lock must be locked whenever a read or write to processed assets occurs_
     /// There are scenarios where processed assets (and their metadata) are being read and written in multiple places at once:
     /// * when the processor is running in parallel with an app
-    /// * when processing assets in parallel, the processor might read an asset's process_dependencies when processing new versions of those dependencies
+    /// * when processing assets in parallel, the processor might read an asset's `process_dependencies` when processing new versions of those dependencies
     ///     * this second scenario almost certainly isn't possible with the current implementation, but its worth protecting against
     /// This lock defends against those scenarios by ensuring readers don't read while processed files are being written. And it ensures
     /// Because this lock is shared across meta and asset bytes, readers can ensure they don't read "old" versions of metadata with "new" asset data.
@@ -2431,7 +2515,7 @@
     <span class="doccomment">/// The "current" in memory view of the asset space. During processing, if path does not exist in this, it should
     /// be considered non-existent.
     /// NOTE: YOU MUST USE `Self::get_or_insert` or `Self::insert` TO ADD ITEMS TO THIS COLLECTION TO ENSURE
-    /// non_existent_dependants DATA IS CONSUMED
+    /// `non_existent_dependants` DATA IS CONSUMED
     </span>infos: HashMap&lt;AssetPath&lt;<span class="lifetime">'static</span>&gt;, ProcessorAssetInfo&gt;,
     <span class="doccomment">/// Dependants for assets that don't exist. This exists to track "dangling" asset references due to deleted / missing files.
     /// If the dependant asset is added, it can "resolve" these dependencies and re-compute those assets.
@@ -2514,6 +2598,9 @@
                 // "block until first pass finished" mode
                 </span>info.update_status(ProcessStatus::Processed).<span class="kw">await</span>;
             }
+            <span class="prelude-val">Ok</span>(ProcessResult::Ignored) =&gt; {
+                <span class="macro">debug!</span>(<span class="string">"Skipping processing (ignored) \"{:?}\""</span>, asset_path);
+            }
             <span class="prelude-val">Err</span>(ProcessError::ExtensionRequired) =&gt; {
                 <span class="comment">// Skip assets without extensions
             </span>}
@@ -2530,10 +2617,8 @@
             <span class="prelude-val">Err</span>(err) =&gt; {
                 <span class="macro">error!</span>(<span class="string">"Failed to process asset {asset_path}: {err}"</span>);
                 <span class="comment">// if this failed because a dependency could not be loaded, make sure it is reprocessed if that dependency is reprocessed
-                </span><span class="kw">if let </span>ProcessError::AssetLoadError(AssetLoadError::AssetLoaderError {
-                    path: dependency,
-                    ..
-                }) = err
+                </span><span class="kw">if let </span>ProcessError::AssetLoadError(AssetLoadError::AssetLoaderError(dependency)) =
+                    err
                 {
                     <span class="kw">let </span>info = <span class="self">self</span>.get_mut(<span class="kw-2">&amp;</span>asset_path).expect(<span class="string">"info should exist"</span>);
                     info.processed_info = <span class="prelude-val">Some</span>(ProcessedInfo {
@@ -2541,7 +2626,7 @@
                         full_hash: AssetHash::default(),
                         process_dependencies: <span class="macro">vec!</span>[],
                     });
-                    <span class="self">self</span>.add_dependant(<span class="kw-2">&amp;</span>dependency, asset_path.to_owned());
+                    <span class="self">self</span>.add_dependant(dependency.path(), asset_path.to_owned());
                 }
 
                 <span class="kw">let </span>info = <span class="self">self</span>.get_mut(<span class="kw-2">&amp;</span>asset_path).expect(<span class="string">"info should exist"</span>);

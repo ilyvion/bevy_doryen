@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/schedule/schedule.rs`."><title>schedule.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/schedule/schedule.rs`."><title>schedule.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -2468,23 +2467,187 @@
 <a href="#2467" id="2467">2467</a>
 <a href="#2468" id="2468">2468</a>
 <a href="#2469" id="2469">2469</a>
+<a href="#2470" id="2470">2470</a>
+<a href="#2471" id="2471">2471</a>
+<a href="#2472" id="2472">2472</a>
+<a href="#2473" id="2473">2473</a>
+<a href="#2474" id="2474">2474</a>
+<a href="#2475" id="2475">2475</a>
+<a href="#2476" id="2476">2476</a>
+<a href="#2477" id="2477">2477</a>
+<a href="#2478" id="2478">2478</a>
+<a href="#2479" id="2479">2479</a>
+<a href="#2480" id="2480">2480</a>
+<a href="#2481" id="2481">2481</a>
+<a href="#2482" id="2482">2482</a>
+<a href="#2483" id="2483">2483</a>
+<a href="#2484" id="2484">2484</a>
+<a href="#2485" id="2485">2485</a>
+<a href="#2486" id="2486">2486</a>
+<a href="#2487" id="2487">2487</a>
+<a href="#2488" id="2488">2488</a>
+<a href="#2489" id="2489">2489</a>
+<a href="#2490" id="2490">2490</a>
+<a href="#2491" id="2491">2491</a>
+<a href="#2492" id="2492">2492</a>
+<a href="#2493" id="2493">2493</a>
+<a href="#2494" id="2494">2494</a>
+<a href="#2495" id="2495">2495</a>
+<a href="#2496" id="2496">2496</a>
+<a href="#2497" id="2497">2497</a>
+<a href="#2498" id="2498">2498</a>
+<a href="#2499" id="2499">2499</a>
+<a href="#2500" id="2500">2500</a>
+<a href="#2501" id="2501">2501</a>
+<a href="#2502" id="2502">2502</a>
+<a href="#2503" id="2503">2503</a>
+<a href="#2504" id="2504">2504</a>
+<a href="#2505" id="2505">2505</a>
+<a href="#2506" id="2506">2506</a>
+<a href="#2507" id="2507">2507</a>
+<a href="#2508" id="2508">2508</a>
+<a href="#2509" id="2509">2509</a>
+<a href="#2510" id="2510">2510</a>
+<a href="#2511" id="2511">2511</a>
+<a href="#2512" id="2512">2512</a>
+<a href="#2513" id="2513">2513</a>
+<a href="#2514" id="2514">2514</a>
+<a href="#2515" id="2515">2515</a>
+<a href="#2516" id="2516">2516</a>
+<a href="#2517" id="2517">2517</a>
+<a href="#2518" id="2518">2518</a>
+<a href="#2519" id="2519">2519</a>
+<a href="#2520" id="2520">2520</a>
+<a href="#2521" id="2521">2521</a>
+<a href="#2522" id="2522">2522</a>
+<a href="#2523" id="2523">2523</a>
+<a href="#2524" id="2524">2524</a>
+<a href="#2525" id="2525">2525</a>
+<a href="#2526" id="2526">2526</a>
+<a href="#2527" id="2527">2527</a>
+<a href="#2528" id="2528">2528</a>
+<a href="#2529" id="2529">2529</a>
+<a href="#2530" id="2530">2530</a>
+<a href="#2531" id="2531">2531</a>
+<a href="#2532" id="2532">2532</a>
+<a href="#2533" id="2533">2533</a>
+<a href="#2534" id="2534">2534</a>
+<a href="#2535" id="2535">2535</a>
+<a href="#2536" id="2536">2536</a>
+<a href="#2537" id="2537">2537</a>
+<a href="#2538" id="2538">2538</a>
+<a href="#2539" id="2539">2539</a>
+<a href="#2540" id="2540">2540</a>
+<a href="#2541" id="2541">2541</a>
+<a href="#2542" id="2542">2542</a>
+<a href="#2543" id="2543">2543</a>
+<a href="#2544" id="2544">2544</a>
+<a href="#2545" id="2545">2545</a>
+<a href="#2546" id="2546">2546</a>
+<a href="#2547" id="2547">2547</a>
+<a href="#2548" id="2548">2548</a>
+<a href="#2549" id="2549">2549</a>
+<a href="#2550" id="2550">2550</a>
+<a href="#2551" id="2551">2551</a>
+<a href="#2552" id="2552">2552</a>
+<a href="#2553" id="2553">2553</a>
+<a href="#2554" id="2554">2554</a>
+<a href="#2555" id="2555">2555</a>
+<a href="#2556" id="2556">2556</a>
+<a href="#2557" id="2557">2557</a>
+<a href="#2558" id="2558">2558</a>
+<a href="#2559" id="2559">2559</a>
+<a href="#2560" id="2560">2560</a>
+<a href="#2561" id="2561">2561</a>
+<a href="#2562" id="2562">2562</a>
+<a href="#2563" id="2563">2563</a>
+<a href="#2564" id="2564">2564</a>
+<a href="#2565" id="2565">2565</a>
+<a href="#2566" id="2566">2566</a>
+<a href="#2567" id="2567">2567</a>
+<a href="#2568" id="2568">2568</a>
+<a href="#2569" id="2569">2569</a>
+<a href="#2570" id="2570">2570</a>
+<a href="#2571" id="2571">2571</a>
+<a href="#2572" id="2572">2572</a>
+<a href="#2573" id="2573">2573</a>
+<a href="#2574" id="2574">2574</a>
+<a href="#2575" id="2575">2575</a>
+<a href="#2576" id="2576">2576</a>
+<a href="#2577" id="2577">2577</a>
+<a href="#2578" id="2578">2578</a>
+<a href="#2579" id="2579">2579</a>
+<a href="#2580" id="2580">2580</a>
+<a href="#2581" id="2581">2581</a>
+<a href="#2582" id="2582">2582</a>
+<a href="#2583" id="2583">2583</a>
+<a href="#2584" id="2584">2584</a>
+<a href="#2585" id="2585">2585</a>
+<a href="#2586" id="2586">2586</a>
+<a href="#2587" id="2587">2587</a>
+<a href="#2588" id="2588">2588</a>
+<a href="#2589" id="2589">2589</a>
+<a href="#2590" id="2590">2590</a>
+<a href="#2591" id="2591">2591</a>
+<a href="#2592" id="2592">2592</a>
+<a href="#2593" id="2593">2593</a>
+<a href="#2594" id="2594">2594</a>
+<a href="#2595" id="2595">2595</a>
+<a href="#2596" id="2596">2596</a>
+<a href="#2597" id="2597">2597</a>
+<a href="#2598" id="2598">2598</a>
+<a href="#2599" id="2599">2599</a>
+<a href="#2600" id="2600">2600</a>
+<a href="#2601" id="2601">2601</a>
+<a href="#2602" id="2602">2602</a>
+<a href="#2603" id="2603">2603</a>
+<a href="#2604" id="2604">2604</a>
+<a href="#2605" id="2605">2605</a>
+<a href="#2606" id="2606">2606</a>
+<a href="#2607" id="2607">2607</a>
+<a href="#2608" id="2608">2608</a>
+<a href="#2609" id="2609">2609</a>
+<a href="#2610" id="2610">2610</a>
+<a href="#2611" id="2611">2611</a>
+<a href="#2612" id="2612">2612</a>
+<a href="#2613" id="2613">2613</a>
+<a href="#2614" id="2614">2614</a>
+<a href="#2615" id="2615">2615</a>
+<a href="#2616" id="2616">2616</a>
+<a href="#2617" id="2617">2617</a>
+<a href="#2618" id="2618">2618</a>
+<a href="#2619" id="2619">2619</a>
+<a href="#2620" id="2620">2620</a>
+<a href="#2621" id="2621">2621</a>
+<a href="#2622" id="2622">2622</a>
+<a href="#2623" id="2623">2623</a>
+<a href="#2624" id="2624">2624</a>
+<a href="#2625" id="2625">2625</a>
+<a href="#2626" id="2626">2626</a>
+<a href="#2627" id="2627">2627</a>
+<a href="#2628" id="2628">2628</a>
+<a href="#2629" id="2629">2629</a>
+<a href="#2630" id="2630">2630</a>
+<a href="#2631" id="2631">2631</a>
+<a href="#2632" id="2632">2632</a>
+<a href="#2633" id="2633">2633</a>
+<a href="#2634" id="2634">2634</a>
+<a href="#2635" id="2635">2635</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
     collections::BTreeSet,
     fmt::{Debug, Write},
-    result::Result,
 };
 
 <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
 </span><span class="kw">use </span>bevy_utils::tracing::info_span;
 <span class="kw">use </span>bevy_utils::{default, tracing::info};
 <span class="kw">use </span>bevy_utils::{
-    petgraph::{algo::TarjanScc, prelude::<span class="kw-2">*</span>},
-    thiserror::Error,
     tracing::{error, warn},
     HashMap, HashSet,
 };
-
 <span class="kw">use </span>fixedbitset::FixedBitSet;
+<span class="kw">use </span>petgraph::{algo::TarjanScc, prelude::<span class="kw-2">*</span>};
+<span class="kw">use </span>thiserror::Error;
 
 <span class="kw">use crate</span>::{
     <span class="self">self </span><span class="kw">as </span>bevy_ecs,
@@ -2548,6 +2711,13 @@
     <span class="doccomment">/// Returns a mutable reference to the schedule associated with `label`, if it exists.
     </span><span class="kw">pub fn </span>get_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>, label: <span class="kw">impl </span>ScheduleLabel) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span>Schedule&gt; {
         <span class="self">self</span>.inner.get_mut(<span class="kw-2">&amp;</span>label.intern())
+    }
+
+    <span class="doccomment">/// Returns a mutable reference to the schedules associated with `label`, creating one if it doesn't already exist.
+    </span><span class="kw">pub fn </span>entry(<span class="kw-2">&amp;mut </span><span class="self">self</span>, label: <span class="kw">impl </span>ScheduleLabel) -&gt; <span class="kw-2">&amp;mut </span>Schedule {
+        <span class="self">self</span>.inner
+            .entry(label.intern())
+            .or_insert_with(|| Schedule::new(label))
     }
 
     <span class="doccomment">/// Returns an iterator over all schedules. Iteration order is undefined.
@@ -2618,6 +2788,51 @@
 
         <span class="macro">info!</span>(<span class="string">"{}"</span>, message);
     }
+
+    <span class="doccomment">/// Adds one or more systems to the [`Schedule`] matching the provided [`ScheduleLabel`].
+    </span><span class="kw">pub fn </span>add_systems&lt;M&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        schedule: <span class="kw">impl </span>ScheduleLabel,
+        systems: <span class="kw">impl </span>IntoSystemConfigs&lt;M&gt;,
+    ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.entry(schedule).add_systems(systems);
+
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Configures a collection of system sets in the provided schedule, adding any sets that do not exist.
+    </span><span class="attr">#[track_caller]
+    </span><span class="kw">pub fn </span>configure_sets(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        schedule: <span class="kw">impl </span>ScheduleLabel,
+        sets: <span class="kw">impl </span>IntoSystemSetConfigs,
+    ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.entry(schedule).configure_sets(sets);
+
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Suppress warnings and errors that would result from systems in these sets having ambiguities
+    /// (conflicting access but indeterminate order) with systems in `set`.
+    ///
+    /// When possible, do this directly in the `.add_systems(Update, a.ambiguous_with(b))` call.
+    /// However, sometimes two independent plugins `A` and `B` are reported as ambiguous, which you
+    /// can only suppress as the consumer of both.
+    </span><span class="attr">#[track_caller]
+    </span><span class="kw">pub fn </span>ignore_ambiguity&lt;M1, M2, S1, S2&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        schedule: <span class="kw">impl </span>ScheduleLabel,
+        a: S1,
+        b: S2,
+    ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self
+    </span><span class="kw">where
+        </span>S1: IntoSystemSet&lt;M1&gt;,
+        S2: IntoSystemSet&lt;M2&gt;,
+    {
+        <span class="self">self</span>.entry(schedule).ignore_ambiguity(a, b);
+
+        <span class="self">self
+    </span>}
 }
 
 <span class="kw">fn </span>make_executor(kind: ExecutorKind) -&gt; Box&lt;<span class="kw">dyn </span>SystemExecutor&gt; {
@@ -2631,7 +2846,7 @@
 <span class="doccomment">/// Chain systems into dependencies
 </span><span class="attr">#[derive(PartialEq)]
 </span><span class="kw">pub enum </span>Chain {
-    <span class="doccomment">/// Run nodes in order. If there are deferred parameters in preceeding systems a
+    <span class="doccomment">/// Run nodes in order. If there are deferred parameters in preceding systems a
     /// [`apply_deferred`] will be added on the edge.
     </span>Yes,
     <span class="doccomment">/// Run nodes in order. This will not add [`apply_deferred`] between nodes.
@@ -2803,15 +3018,18 @@
             .unwrap_or_else(|e| <span class="macro">panic!</span>(<span class="string">"Error when initializing schedule {:?}: {e}"</span>, <span class="self">self</span>.label));
 
         <span class="attr">#[cfg(not(feature = <span class="string">"bevy_debug_stepping"</span>))]
-        </span><span class="kw">let </span>skip_systems = <span class="prelude-val">None</span>;
+        </span><span class="self">self</span>.executor.run(<span class="kw-2">&amp;mut </span><span class="self">self</span>.executable, world, <span class="prelude-val">None</span>);
 
         <span class="attr">#[cfg(feature = <span class="string">"bevy_debug_stepping"</span>)]
-        </span><span class="kw">let </span>skip_systems = <span class="kw">match </span>world.get_resource_mut::&lt;Stepping&gt;() {
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="kw-2">mut </span>stepping) =&gt; stepping.skipped_systems(<span class="self">self</span>),
-        };
+        </span>{
+            <span class="kw">let </span>skip_systems = <span class="kw">match </span>world.get_resource_mut::&lt;Stepping&gt;() {
+                <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+                <span class="prelude-val">Some</span>(<span class="kw-2">mut </span>stepping) =&gt; stepping.skipped_systems(<span class="self">self</span>),
+            };
 
-        <span class="self">self</span>.executor.run(<span class="kw-2">&amp;mut </span><span class="self">self</span>.executable, skip_systems, world);
+            <span class="self">self</span>.executor
+                .run(<span class="kw-2">&amp;mut </span><span class="self">self</span>.executable, world, skip_systems.as_ref());
+        }
     }
 
     <span class="doccomment">/// Initializes any newly-added systems and conditions, rebuilds the executable schedule,
@@ -3001,23 +3219,36 @@
 }
 
 <span class="doccomment">/// Metadata for a [`Schedule`].
+///
+/// The order isn't optimized; calling `ScheduleGraph::build_schedule` will return a
+/// `SystemSchedule` where the order is optimized for execution.
 </span><span class="attr">#[derive(Default)]
 </span><span class="kw">pub struct </span>ScheduleGraph {
-    systems: Vec&lt;SystemNode&gt;,
-    system_conditions: Vec&lt;Vec&lt;BoxedCondition&gt;&gt;,
-    system_sets: Vec&lt;SystemSetNode&gt;,
-    system_set_conditions: Vec&lt;Vec&lt;BoxedCondition&gt;&gt;,
-    system_set_ids: HashMap&lt;InternedSystemSet, NodeId&gt;,
-    uninit: Vec&lt;(NodeId, usize)&gt;,
-    hierarchy: Dag,
-    dependency: Dag,
+    <span class="doccomment">/// List of systems in the schedule
+    </span>systems: Vec&lt;SystemNode&gt;,
+    <span class="doccomment">/// List of conditions for each system, in the same order as `systems`
+    </span>system_conditions: Vec&lt;Vec&lt;BoxedCondition&gt;&gt;,
+    <span class="doccomment">/// List of system sets in the schedule
+    </span>system_sets: Vec&lt;SystemSetNode&gt;,
+    <span class="doccomment">/// List of conditions for each system set, in the same order as `system_sets`
+    </span>system_set_conditions: Vec&lt;Vec&lt;BoxedCondition&gt;&gt;,
+    <span class="doccomment">/// Map from system set to node id
+    </span>system_set_ids: HashMap&lt;InternedSystemSet, NodeId&gt;,
+    <span class="doccomment">/// Systems that have not been initialized yet; for system sets, we store the index of the first uninitialized condition
+    /// (all the conditions after that index still need to be initialized)
+    </span>uninit: Vec&lt;(NodeId, usize)&gt;,
+    <span class="doccomment">/// Directed acyclic graph of the hierarchy (which systems/sets are children of which sets)
+    </span>hierarchy: Dag,
+    <span class="doccomment">/// Directed acyclic graph of the dependency (which systems/sets have to run before which other systems/sets)
+    </span>dependency: Dag,
     ambiguous_with: UnGraphMap&lt;NodeId, ()&gt;,
     ambiguous_with_all: HashSet&lt;NodeId&gt;,
     conflicting_systems: Vec&lt;(NodeId, NodeId, Vec&lt;ComponentId&gt;)&gt;,
     anonymous_sets: usize,
     changed: bool,
     settings: ScheduleBuildSettings,
-    no_sync_edges: BTreeSet&lt;(NodeId, NodeId)&gt;,
+    <span class="doccomment">/// Dependency edges that will **not** automatically insert an instance of `apply_deferred` on the edge.
+    </span>no_sync_edges: BTreeSet&lt;(NodeId, NodeId)&gt;,
     auto_sync_node_ids: HashMap&lt;u32, NodeId&gt;,
 }
 
@@ -3082,7 +3313,7 @@
             .unwrap()
     }
 
-    <span class="doccomment">/// Returns an iterator over all systems in this schedule.
+    <span class="doccomment">/// Returns an iterator over all systems in this schedule, along with the conditions for each system.
     </span><span class="kw">pub fn </span>systems(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
     ) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (NodeId, <span class="kw-2">&amp;</span><span class="kw">dyn </span>System&lt;In = (), Out = ()&gt;, <span class="kw-2">&amp;</span>[BoxedCondition])&gt; {
@@ -3096,7 +3327,8 @@
             })
     }
 
-    <span class="doccomment">/// Returns an iterator over all system sets in this schedule.
+    <span class="doccomment">/// Returns an iterator over all system sets in this schedule, along with the conditions for each
+    /// system set.
     </span><span class="kw">pub fn </span>system_sets(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = (NodeId, <span class="kw-2">&amp;</span><span class="kw">dyn </span>SystemSet, <span class="kw-2">&amp;</span>[BoxedCondition])&gt; {
         <span class="self">self</span>.system_set_ids.iter().map(|(<span class="kw">_</span>, <span class="kw-2">&amp;</span>node_id)| {
             <span class="kw">let </span>set_node = <span class="kw-2">&amp;</span><span class="self">self</span>.system_sets[node_id.index()];
@@ -3130,6 +3362,42 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.conflicting_systems
     }
 
+    <span class="kw">fn </span>process_config&lt;T: ProcessNodeConfig&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        config: NodeConfig&lt;T&gt;,
+        collect_nodes: bool,
+    ) -&gt; ProcessConfigsResult {
+        ProcessConfigsResult {
+            densely_chained: <span class="bool-val">true</span>,
+            nodes: collect_nodes
+                .then_some(T::process_config(<span class="self">self</span>, config))
+                .into_iter()
+                .collect(),
+        }
+    }
+
+    <span class="kw">fn </span>apply_collective_conditions&lt;T: ProcessNodeConfig&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        configs: <span class="kw-2">&amp;mut </span>[NodeConfigs&lt;T&gt;],
+        collective_conditions: Vec&lt;BoxedCondition&gt;,
+    ) {
+        <span class="kw">if </span>!collective_conditions.is_empty() {
+            <span class="kw">if let </span>[config] = configs {
+                <span class="kw">for </span>condition <span class="kw">in </span>collective_conditions {
+                    config.run_if_dyn(condition);
+                }
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>set = <span class="self">self</span>.create_anonymous_set();
+                <span class="kw">for </span>config <span class="kw">in </span>configs.iter_mut() {
+                    config.in_set_inner(set.intern());
+                }
+                <span class="kw">let </span><span class="kw-2">mut </span>set_config = SystemSetConfig::new(set.intern());
+                set_config.conditions.extend(collective_conditions);
+                <span class="self">self</span>.configure_set_inner(set_config).unwrap();
+            }
+        }
+    }
+
     <span class="doccomment">/// Adds the config nodes to the graph.
     ///
     /// `collect_nodes` controls whether the `NodeId`s of the processed config nodes are stored in the returned [`ProcessConfigsResult`].
@@ -3145,164 +3413,83 @@
         collect_nodes: bool,
     ) -&gt; ProcessConfigsResult {
         <span class="kw">match </span>configs {
-            NodeConfigs::NodeConfig(config) =&gt; {
-                <span class="kw">let </span>node_id = T::process_config(<span class="self">self</span>, config);
-                <span class="kw">if </span>collect_nodes {
-                    ProcessConfigsResult {
-                        densely_chained: <span class="bool-val">true</span>,
-                        nodes: <span class="macro">vec!</span>[node_id],
-                    }
-                } <span class="kw">else </span>{
-                    ProcessConfigsResult {
-                        densely_chained: <span class="bool-val">true</span>,
-                        nodes: Vec::new(),
-                    }
-                }
-            }
+            NodeConfigs::NodeConfig(config) =&gt; <span class="self">self</span>.process_config(config, collect_nodes),
             NodeConfigs::Configs {
                 <span class="kw-2">mut </span>configs,
                 collective_conditions,
                 chained,
             } =&gt; {
-                <span class="kw">let </span>more_than_one_entry = configs.len() &gt; <span class="number">1</span>;
-                <span class="kw">if </span>!collective_conditions.is_empty() {
-                    <span class="kw">if </span>more_than_one_entry {
-                        <span class="kw">let </span>set = <span class="self">self</span>.create_anonymous_set();
-                        <span class="kw">for </span>config <span class="kw">in </span><span class="kw-2">&amp;mut </span>configs {
-                            config.in_set_inner(set.intern());
-                        }
-                        <span class="kw">let </span><span class="kw-2">mut </span>set_config = SystemSetConfig::new(set.intern());
-                        set_config.conditions.extend(collective_conditions);
-                        <span class="self">self</span>.configure_set_inner(set_config).unwrap();
-                    } <span class="kw">else </span>{
-                        <span class="kw">for </span>condition <span class="kw">in </span>collective_conditions {
-                            configs[<span class="number">0</span>].run_if_dyn(condition);
-                        }
-                    }
-                }
-                <span class="kw">let </span><span class="kw-2">mut </span>config_iter = configs.into_iter();
-                <span class="kw">let </span><span class="kw-2">mut </span>nodes_in_scope = Vec::new();
-                <span class="kw">let </span><span class="kw-2">mut </span>densely_chained = <span class="bool-val">true</span>;
-                <span class="kw">if </span>chained == Chain::Yes || chained == Chain::YesIgnoreDeferred {
-                    <span class="kw">let </span><span class="prelude-val">Some</span>(prev) = config_iter.next() <span class="kw">else </span>{
-                        <span class="kw">return </span>ProcessConfigsResult {
-                            nodes: Vec::new(),
-                            densely_chained: <span class="bool-val">true</span>,
-                        };
+                <span class="self">self</span>.apply_collective_conditions(<span class="kw-2">&amp;mut </span>configs, collective_conditions);
+
+                <span class="kw">let </span>ignore_deferred = <span class="macro">matches!</span>(chained, Chain::YesIgnoreDeferred);
+                <span class="kw">let </span>chained = <span class="macro">matches!</span>(chained, Chain::Yes | Chain::YesIgnoreDeferred);
+
+                <span class="comment">// Densely chained if
+                // * chained and all configs in the chain are densely chained, or
+                // * unchained with a single densely chained config
+                </span><span class="kw">let </span><span class="kw-2">mut </span>densely_chained = chained || configs.len() == <span class="number">1</span>;
+                <span class="kw">let </span><span class="kw-2">mut </span>configs = configs.into_iter();
+                <span class="kw">let </span><span class="kw-2">mut </span>nodes = Vec::new();
+
+                <span class="kw">let </span><span class="prelude-val">Some</span>(first) = configs.next() <span class="kw">else </span>{
+                    <span class="kw">return </span>ProcessConfigsResult {
+                        nodes: Vec::new(),
+                        densely_chained,
                     };
-                    <span class="kw">let </span><span class="kw-2">mut </span>previous_result = <span class="self">self</span>.process_configs(prev, <span class="bool-val">true</span>);
-                    densely_chained = previous_result.densely_chained;
-                    <span class="kw">for </span>current <span class="kw">in </span>config_iter {
-                        <span class="kw">let </span>current_result = <span class="self">self</span>.process_configs(current, <span class="bool-val">true</span>);
-                        densely_chained = densely_chained &amp;&amp; current_result.densely_chained;
-                        <span class="kw">match </span>(
-                            previous_result.densely_chained,
-                            current_result.densely_chained,
-                        ) {
-                            <span class="comment">// Both groups are "densely" chained, so we can simplify the graph by only
-                            // chaining the last in the previous list to the first in the current list
-                            </span>(<span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; {
-                                <span class="kw">let </span>last_in_prev = previous_result.nodes.last().unwrap();
-                                <span class="kw">let </span>first_in_current = current_result.nodes.first().unwrap();
-                                <span class="self">self</span>.dependency.graph.add_edge(
-                                    <span class="kw-2">*</span>last_in_prev,
-                                    <span class="kw-2">*</span>first_in_current,
-                                    (),
-                                );
+                };
+                <span class="kw">let </span><span class="kw-2">mut </span>previous_result = <span class="self">self</span>.process_configs(first, collect_nodes || chained);
+                densely_chained &amp;= previous_result.densely_chained;
 
-                                <span class="kw">if </span>chained == Chain::YesIgnoreDeferred {
-                                    <span class="self">self</span>.no_sync_edges
-                                        .insert((<span class="kw-2">*</span>last_in_prev, <span class="kw-2">*</span>first_in_current));
-                                }
-                            }
-                            <span class="comment">// The previous group is "densely" chained, so we can simplify the graph by only
-                            // chaining the last item from the previous list to every item in the current list
-                            </span>(<span class="bool-val">true</span>, <span class="bool-val">false</span>) =&gt; {
-                                <span class="kw">let </span>last_in_prev = previous_result.nodes.last().unwrap();
-                                <span class="kw">for </span>current_node <span class="kw">in </span><span class="kw-2">&amp;</span>current_result.nodes {
-                                    <span class="self">self</span>.dependency.graph.add_edge(
-                                        <span class="kw-2">*</span>last_in_prev,
-                                        <span class="kw-2">*</span>current_node,
-                                        (),
-                                    );
+                <span class="kw">for </span>current <span class="kw">in </span>configs {
+                    <span class="kw">let </span>current_result = <span class="self">self</span>.process_configs(current, collect_nodes || chained);
+                    densely_chained &amp;= current_result.densely_chained;
 
-                                    <span class="kw">if </span>chained == Chain::YesIgnoreDeferred {
-                                        <span class="self">self</span>.no_sync_edges.insert((<span class="kw-2">*</span>last_in_prev, <span class="kw-2">*</span>current_node));
-                                    }
-                                }
-                            }
-                            <span class="comment">// The current list is currently "densely" chained, so we can simplify the graph by
-                            // only chaining every item in the previous list to the first item in the current list
-                            </span>(<span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; {
-                                <span class="kw">let </span>first_in_current = current_result.nodes.first().unwrap();
-                                <span class="kw">for </span>previous_node <span class="kw">in </span><span class="kw-2">&amp;</span>previous_result.nodes {
-                                    <span class="self">self</span>.dependency.graph.add_edge(
-                                        <span class="kw-2">*</span>previous_node,
-                                        <span class="kw-2">*</span>first_in_current,
-                                        (),
-                                    );
+                    <span class="kw">if </span>chained {
+                        <span class="comment">// if the current result is densely chained, we only need to chain the first node
+                        </span><span class="kw">let </span>current_nodes = <span class="kw">if </span>current_result.densely_chained {
+                            <span class="kw-2">&amp;</span>current_result.nodes[..<span class="number">1</span>]
+                        } <span class="kw">else </span>{
+                            <span class="kw-2">&amp;</span>current_result.nodes
+                        };
+                        <span class="comment">// if the previous result was densely chained, we only need to chain the last node
+                        </span><span class="kw">let </span>previous_nodes = <span class="kw">if </span>previous_result.densely_chained {
+                            <span class="kw-2">&amp;</span>previous_result.nodes[previous_result.nodes.len() - <span class="number">1</span>..]
+                        } <span class="kw">else </span>{
+                            <span class="kw-2">&amp;</span>previous_result.nodes
+                        };
 
-                                    <span class="kw">if </span>chained == Chain::YesIgnoreDeferred {
-                                        <span class="self">self</span>.no_sync_edges
-                                            .insert((<span class="kw-2">*</span>previous_node, <span class="kw-2">*</span>first_in_current));
-                                    }
-                                }
-                            }
-                            <span class="comment">// Neither of the lists are "densely" chained, so we must chain every item in the first
-                            // list to every item in the second list
-                            </span>(<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; {
-                                <span class="kw">for </span>previous_node <span class="kw">in </span><span class="kw-2">&amp;</span>previous_result.nodes {
-                                    <span class="kw">for </span>current_node <span class="kw">in </span><span class="kw-2">&amp;</span>current_result.nodes {
-                                        <span class="self">self</span>.dependency.graph.add_edge(
-                                            <span class="kw-2">*</span>previous_node,
-                                            <span class="kw-2">*</span>current_node,
-                                            (),
-                                        );
+                        <span class="kw">for </span>previous_node <span class="kw">in </span>previous_nodes {
+                            <span class="kw">for </span>current_node <span class="kw">in </span>current_nodes {
+                                <span class="self">self</span>.dependency
+                                    .graph
+                                    .add_edge(<span class="kw-2">*</span>previous_node, <span class="kw-2">*</span>current_node, ());
 
-                                        <span class="kw">if </span>chained == Chain::YesIgnoreDeferred {
-                                            <span class="self">self</span>.no_sync_edges
-                                                .insert((<span class="kw-2">*</span>previous_node, <span class="kw-2">*</span>current_node));
-                                        }
-                                    }
+                                <span class="kw">if </span>ignore_deferred {
+                                    <span class="self">self</span>.no_sync_edges.insert((<span class="kw-2">*</span>previous_node, <span class="kw-2">*</span>current_node));
                                 }
                             }
                         }
-
-                        <span class="kw">if </span>collect_nodes {
-                            nodes_in_scope.append(<span class="kw-2">&amp;mut </span>previous_result.nodes);
-                        }
-
-                        previous_result = current_result;
+                    }
+                    <span class="kw">if </span>collect_nodes {
+                        nodes.append(<span class="kw-2">&amp;mut </span>previous_result.nodes);
                     }
 
-                    <span class="comment">// ensure the last config's nodes are added
-                    </span><span class="kw">if </span>collect_nodes {
-                        nodes_in_scope.append(<span class="kw-2">&amp;mut </span>previous_result.nodes);
-                    }
-                } <span class="kw">else </span>{
-                    <span class="kw">for </span>config <span class="kw">in </span>config_iter {
-                        <span class="kw">let </span>result = <span class="self">self</span>.process_configs(config, collect_nodes);
-                        densely_chained = densely_chained &amp;&amp; result.densely_chained;
-                        <span class="kw">if </span>collect_nodes {
-                            nodes_in_scope.extend(result.nodes);
-                        }
-                    }
-
-                    <span class="comment">// an "unchained" SystemConfig is only densely chained if it has exactly one densely chained entry
-                    </span><span class="kw">if </span>more_than_one_entry {
-                        densely_chained = <span class="bool-val">false</span>;
-                    }
+                    previous_result = current_result;
+                }
+                <span class="kw">if </span>collect_nodes {
+                    nodes.append(<span class="kw-2">&amp;mut </span>previous_result.nodes);
                 }
 
                 ProcessConfigsResult {
-                    nodes: nodes_in_scope,
+                    nodes,
                     densely_chained,
                 }
             }
         }
     }
 
-    <span class="kw">fn </span>add_system_inner(<span class="kw-2">&amp;mut </span><span class="self">self</span>, config: SystemConfig) -&gt; <span class="prelude-ty">Result</span>&lt;NodeId, ScheduleBuildError&gt; {
+    <span class="doccomment">/// Add a [`SystemConfig`] to the graph, including its dependencies and conditions.
+    </span><span class="kw">fn </span>add_system_inner(<span class="kw-2">&amp;mut </span><span class="self">self</span>, config: SystemConfig) -&gt; <span class="prelude-ty">Result</span>&lt;NodeId, ScheduleBuildError&gt; {
         <span class="kw">let </span>id = NodeId::System(<span class="self">self</span>.systems.len());
 
         <span class="comment">// graph updates are immediate
@@ -3321,7 +3508,8 @@
         <span class="self">self</span>.process_configs(sets.into_configs(), <span class="bool-val">false</span>);
     }
 
-    <span class="kw">fn </span>configure_set_inner(<span class="kw-2">&amp;mut </span><span class="self">self</span>, set: SystemSetConfig) -&gt; <span class="prelude-ty">Result</span>&lt;NodeId, ScheduleBuildError&gt; {
+    <span class="doccomment">/// Add a single `SystemSetConfig` to the graph, including its dependencies and conditions.
+    </span><span class="kw">fn </span>configure_set_inner(<span class="kw-2">&amp;mut </span><span class="self">self</span>, set: SystemSetConfig) -&gt; <span class="prelude-ty">Result</span>&lt;NodeId, ScheduleBuildError&gt; {
         <span class="kw">let </span>SystemSetConfig {
             node: set,
             graph_info,
@@ -3352,7 +3540,13 @@
         id
     }
 
-    <span class="kw">fn </span>check_set(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>NodeId, set: InternedSystemSet) -&gt; <span class="prelude-ty">Result</span>&lt;(), ScheduleBuildError&gt; {
+    <span class="doccomment">/// Checks that a system set isn't included in itself.
+    /// If not present, add the set to the graph.
+    </span><span class="kw">fn </span>check_hierarchy_set(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        id: <span class="kw-2">&amp;</span>NodeId,
+        set: InternedSystemSet,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ScheduleBuildError&gt; {
         <span class="kw">match </span><span class="self">self</span>.system_set_ids.get(<span class="kw-2">&amp;</span>set) {
             <span class="prelude-val">Some</span>(set_id) =&gt; {
                 <span class="kw">if </span>id == set_id {
@@ -3373,19 +3567,23 @@
         AnonymousSet::new(id)
     }
 
-    <span class="kw">fn </span>check_sets(
+    <span class="doccomment">/// Check that no set is included in itself.
+    /// Add all the sets from the [`GraphInfo`]'s hierarchy to the graph.
+    </span><span class="kw">fn </span>check_hierarchy_sets(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         id: <span class="kw-2">&amp;</span>NodeId,
         graph_info: <span class="kw-2">&amp;</span>GraphInfo,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ScheduleBuildError&gt; {
-        <span class="kw">for </span><span class="kw-2">&amp;</span>set <span class="kw">in </span><span class="kw-2">&amp;</span>graph_info.sets {
-            <span class="self">self</span>.check_set(id, set)<span class="question-mark">?</span>;
+        <span class="kw">for </span><span class="kw-2">&amp;</span>set <span class="kw">in </span><span class="kw-2">&amp;</span>graph_info.hierarchy {
+            <span class="self">self</span>.check_hierarchy_set(id, set)<span class="question-mark">?</span>;
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn </span>check_edges(
+    <span class="doccomment">/// Checks that no system set is dependent on itself.
+    /// Add all the sets from the [`GraphInfo`]'s dependencies to the graph.
+    </span><span class="kw">fn </span>check_edges(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         id: <span class="kw-2">&amp;</span>NodeId,
         graph_info: <span class="kw-2">&amp;</span>GraphInfo,
@@ -3414,17 +3612,18 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn </span>update_graphs(
+    <span class="doccomment">/// Update the internal graphs (hierarchy, dependency, ambiguity) by adding a single [`GraphInfo`]
+    </span><span class="kw">fn </span>update_graphs(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         id: NodeId,
         graph_info: GraphInfo,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;(), ScheduleBuildError&gt; {
-        <span class="self">self</span>.check_sets(<span class="kw-2">&amp;</span>id, <span class="kw-2">&amp;</span>graph_info)<span class="question-mark">?</span>;
+        <span class="self">self</span>.check_hierarchy_sets(<span class="kw-2">&amp;</span>id, <span class="kw-2">&amp;</span>graph_info)<span class="question-mark">?</span>;
         <span class="self">self</span>.check_edges(<span class="kw-2">&amp;</span>id, <span class="kw-2">&amp;</span>graph_info)<span class="question-mark">?</span>;
         <span class="self">self</span>.changed = <span class="bool-val">true</span>;
 
         <span class="kw">let </span>GraphInfo {
-            sets,
+            hierarchy: sets,
             dependencies,
             ambiguous_with,
             ..
@@ -3652,7 +3851,10 @@
             .unwrap()
     }
 
-    <span class="kw">fn </span>map_sets_to_systems(
+    <span class="doccomment">/// Return a map from system set `NodeId` to a list of system `NodeId`s that are included in the set.
+    /// Also return a map from system set `NodeId` to a `FixedBitSet` of system `NodeId`s that are included in the set,
+    /// where the bitset order is the same as `self.systems`
+    </span><span class="kw">fn </span>map_sets_to_systems(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         hierarchy_topsort: <span class="kw-2">&amp;</span>[NodeId],
         hierarchy_graph: <span class="kw-2">&amp;</span>GraphMap&lt;NodeId, (), Directed&gt;,
@@ -3852,7 +4054,7 @@
         <span class="kw">let </span>hg_node_count = <span class="self">self</span>.hierarchy.graph.node_count();
 
         <span class="comment">// get the number of dependencies and the immediate dependents of each system
-        // (needed by multi-threaded executor to run systems in the correct order)
+        // (needed by multi_threaded executor to run systems in the correct order)
         </span><span class="kw">let </span><span class="kw-2">mut </span>system_dependencies = Vec::with_capacity(sys_count);
         <span class="kw">let </span><span class="kw-2">mut </span>system_dependents = Vec::with_capacity(sys_count);
         <span class="kw">for </span><span class="kw-2">&amp;</span>sys_id <span class="kw">in </span><span class="kw-2">&amp;</span>dg_system_ids {
@@ -3912,7 +4114,8 @@
         }
     }
 
-    <span class="kw">fn </span>update_schedule(
+    <span class="doccomment">/// Updates the `SystemSchedule` from the `ScheduleGraph`.
+    </span><span class="kw">fn </span>update_schedule(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         schedule: <span class="kw-2">&amp;mut </span>SystemSchedule,
         components: <span class="kw-2">&amp;</span>Components,
@@ -3963,7 +4166,7 @@
 
 <span class="doccomment">/// Values returned by [`ScheduleGraph::process_configs`]
 </span><span class="kw">struct </span>ProcessConfigsResult {
-    <span class="doccomment">/// All nodes contained inside this process_configs call's [`NodeConfigs`] hierarchy,
+    <span class="doccomment">/// All nodes contained inside this `process_configs` call's [`NodeConfigs`] hierarchy,
     /// if `ancestor_chained` is true
     </span>nodes: Vec&lt;NodeId&gt;,
     <span class="doccomment">/// True if and only if all nodes are "densely chained", meaning that all nested nodes
@@ -4469,15 +4672,20 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>bevy_ecs_macros::ScheduleLabel;
+
     <span class="kw">use crate</span>::{
         <span class="self">self </span><span class="kw">as </span>bevy_ecs,
         prelude::{Res, Resource},
         schedule::{
-            IntoSystemConfigs, IntoSystemSetConfigs, Schedule, ScheduleBuildSettings, SystemSet,
+            tests::ResMut, IntoSystemConfigs, IntoSystemSetConfigs, Schedule,
+            ScheduleBuildSettings, SystemSet,
         },
         system::Commands,
         world::World,
     };
+
+    <span class="kw">use </span><span class="kw">super</span>::Schedules;
 
     <span class="attr">#[derive(Resource)]
     </span><span class="kw">struct </span>Resource1;
@@ -4935,6 +5143,129 @@
                 );
             });
         }
+    }
+
+    <span class="attr">#[derive(ScheduleLabel, Hash, Debug, Clone, PartialEq, Eq)]
+    </span><span class="kw">struct </span>TestSchedule;
+
+    <span class="attr">#[derive(Resource)]
+    </span><span class="kw">struct </span>CheckSystemRan(usize);
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>add_systems_to_existing_schedule() {
+        <span class="kw">let </span><span class="kw-2">mut </span>schedules = Schedules::default();
+        <span class="kw">let </span>schedule = Schedule::new(TestSchedule);
+
+        schedules.insert(schedule);
+        schedules.add_systems(TestSchedule, |<span class="kw-2">mut </span>ran: ResMut&lt;CheckSystemRan&gt;| ran.<span class="number">0 </span>+= <span class="number">1</span>);
+
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+
+        world.insert_resource(CheckSystemRan(<span class="number">0</span>));
+        world.insert_resource(schedules);
+        world.run_schedule(TestSchedule);
+
+        <span class="kw">let </span>value = world
+            .get_resource::&lt;CheckSystemRan&gt;()
+            .expect(<span class="string">"CheckSystemRan Resource Should Exist"</span>);
+        <span class="macro">assert_eq!</span>(value.<span class="number">0</span>, <span class="number">1</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>add_systems_to_non_existing_schedule() {
+        <span class="kw">let </span><span class="kw-2">mut </span>schedules = Schedules::default();
+
+        schedules.add_systems(TestSchedule, |<span class="kw-2">mut </span>ran: ResMut&lt;CheckSystemRan&gt;| ran.<span class="number">0 </span>+= <span class="number">1</span>);
+
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+
+        world.insert_resource(CheckSystemRan(<span class="number">0</span>));
+        world.insert_resource(schedules);
+        world.run_schedule(TestSchedule);
+
+        <span class="kw">let </span>value = world
+            .get_resource::&lt;CheckSystemRan&gt;()
+            .expect(<span class="string">"CheckSystemRan Resource Should Exist"</span>);
+        <span class="macro">assert_eq!</span>(value.<span class="number">0</span>, <span class="number">1</span>);
+    }
+
+    <span class="attr">#[derive(SystemSet, Debug, Hash, Clone, PartialEq, Eq)]
+    </span><span class="kw">enum </span>TestSet {
+        First,
+        Second,
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>configure_set_on_existing_schedule() {
+        <span class="kw">let </span><span class="kw-2">mut </span>schedules = Schedules::default();
+        <span class="kw">let </span>schedule = Schedule::new(TestSchedule);
+
+        schedules.insert(schedule);
+
+        schedules.configure_sets(TestSchedule, (TestSet::First, TestSet::Second).chain());
+        schedules.add_systems(
+            TestSchedule,
+            (|<span class="kw-2">mut </span>ran: ResMut&lt;CheckSystemRan&gt;| {
+                <span class="macro">assert_eq!</span>(ran.<span class="number">0</span>, <span class="number">0</span>);
+                ran.<span class="number">0 </span>+= <span class="number">1</span>;
+            })
+            .in_set(TestSet::First),
+        );
+
+        schedules.add_systems(
+            TestSchedule,
+            (|<span class="kw-2">mut </span>ran: ResMut&lt;CheckSystemRan&gt;| {
+                <span class="macro">assert_eq!</span>(ran.<span class="number">0</span>, <span class="number">1</span>);
+                ran.<span class="number">0 </span>+= <span class="number">1</span>;
+            })
+            .in_set(TestSet::Second),
+        );
+
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+
+        world.insert_resource(CheckSystemRan(<span class="number">0</span>));
+        world.insert_resource(schedules);
+        world.run_schedule(TestSchedule);
+
+        <span class="kw">let </span>value = world
+            .get_resource::&lt;CheckSystemRan&gt;()
+            .expect(<span class="string">"CheckSystemRan Resource Should Exist"</span>);
+        <span class="macro">assert_eq!</span>(value.<span class="number">0</span>, <span class="number">2</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>configure_set_on_new_schedule() {
+        <span class="kw">let </span><span class="kw-2">mut </span>schedules = Schedules::default();
+
+        schedules.configure_sets(TestSchedule, (TestSet::First, TestSet::Second).chain());
+        schedules.add_systems(
+            TestSchedule,
+            (|<span class="kw-2">mut </span>ran: ResMut&lt;CheckSystemRan&gt;| {
+                <span class="macro">assert_eq!</span>(ran.<span class="number">0</span>, <span class="number">0</span>);
+                ran.<span class="number">0 </span>+= <span class="number">1</span>;
+            })
+            .in_set(TestSet::First),
+        );
+
+        schedules.add_systems(
+            TestSchedule,
+            (|<span class="kw-2">mut </span>ran: ResMut&lt;CheckSystemRan&gt;| {
+                <span class="macro">assert_eq!</span>(ran.<span class="number">0</span>, <span class="number">1</span>);
+                ran.<span class="number">0 </span>+= <span class="number">1</span>;
+            })
+            .in_set(TestSet::Second),
+        );
+
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+
+        world.insert_resource(CheckSystemRan(<span class="number">0</span>));
+        world.insert_resource(schedules);
+        world.run_schedule(TestSchedule);
+
+        <span class="kw">let </span>value = world
+            .get_resource::&lt;CheckSystemRan&gt;()
+            .expect(<span class="string">"CheckSystemRan Resource Should Exist"</span>);
+        <span class="macro">assert_eq!</span>(value.<span class="number">0</span>, <span class="number">2</span>);
     }
 }
 </code></pre></div></section></main></body></html>

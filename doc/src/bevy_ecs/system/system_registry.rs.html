@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/system/system_registry.rs`."><title>system_registry.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/system/system_registry.rs`."><title>system_registry.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -573,9 +572,59 @@
 <a href="#572" id="572">572</a>
 <a href="#573" id="573">573</a>
 <a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::entity::Entity;
-<span class="kw">use </span><span class="kw">crate</span>::system::{BoxedSystem, Command, IntoSystem};
-<span class="kw">use </span><span class="kw">crate</span>::world::World;
+<span class="kw">use </span><span class="kw">crate</span>::system::{BoxedSystem, IntoSystem};
+<span class="kw">use </span><span class="kw">crate</span>::world::{Command, World};
 <span class="kw">use crate</span>::{<span class="self">self </span><span class="kw">as </span>bevy_ecs};
 <span class="kw">use </span>bevy_ecs_macros::Component;
 <span class="kw">use </span>thiserror::Error;
@@ -613,8 +662,35 @@
 ///
 /// These are opaque identifiers, keyed to a specific [`World`],
 /// and are created via [`World::register_system`].
-</span><span class="attr">#[derive(Eq)]
-</span><span class="kw">pub struct </span>SystemId&lt;I = (), O = ()&gt;(Entity, std::marker::PhantomData&lt;<span class="kw">fn</span>(I) -&gt; O&gt;);
+</span><span class="kw">pub struct </span>SystemId&lt;I = (), O = ()&gt; {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) entity: Entity,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) marker: std::marker::PhantomData&lt;<span class="kw">fn</span>(I) -&gt; O&gt;,
+}
+
+<span class="kw">impl</span>&lt;I, O&gt; SystemId&lt;I, O&gt; {
+    <span class="doccomment">/// Transforms a [`SystemId`] into the [`Entity`] that holds the one-shot system's state.
+    ///
+    /// It's trivial to convert [`SystemId`] into an [`Entity`] since a one-shot system
+    /// is really an entity with associated handler function.
+    ///
+    /// For example, this is useful if you want to assign a name label to a system.
+    </span><span class="kw">pub fn </span>entity(<span class="self">self</span>) -&gt; Entity {
+        <span class="self">self</span>.entity
+    }
+
+    <span class="doccomment">/// Create [`SystemId`] from an [`Entity`]. Useful when you only have entity handles to avoid
+    /// adding extra components that have a [`SystemId`] everywhere. To run a system with this ID
+    ///  - The entity must be a system
+    ///  - The `I` + `O` types must be correct
+    </span><span class="kw">pub fn </span>from_entity(entity: Entity) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            entity,
+            marker: std::marker::PhantomData,
+        }
+    }
+}
+
+<span class="kw">impl</span>&lt;I, O&gt; Eq <span class="kw">for </span>SystemId&lt;I, O&gt; {}
 
 <span class="comment">// A manual impl is used because the trait bounds should ignore the `I` and `O` phantom parameters.
 </span><span class="kw">impl</span>&lt;I, O&gt; Copy <span class="kw">for </span>SystemId&lt;I, O&gt; {}
@@ -629,22 +705,22 @@
 <span class="comment">// A manual impl is used because the trait bounds should ignore the `I` and `O` phantom parameters.
 </span><span class="kw">impl</span>&lt;I, O&gt; PartialEq <span class="kw">for </span>SystemId&lt;I, O&gt; {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
-        <span class="self">self</span>.<span class="number">0 </span>== other.<span class="number">0 </span>&amp;&amp; <span class="self">self</span>.<span class="number">1 </span>== other.<span class="number">1
-    </span>}
+        <span class="self">self</span>.entity == other.entity &amp;&amp; <span class="self">self</span>.marker == other.marker
+    }
 }
 
 <span class="comment">// A manual impl is used because the trait bounds should ignore the `I` and `O` phantom parameters.
 </span><span class="kw">impl</span>&lt;I, O&gt; std::hash::Hash <span class="kw">for </span>SystemId&lt;I, O&gt; {
     <span class="kw">fn </span>hash&lt;H: std::hash::Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
-        <span class="self">self</span>.<span class="number">0</span>.hash(state);
+        <span class="self">self</span>.entity.hash(state);
     }
 }
 
 <span class="kw">impl</span>&lt;I, O&gt; std::fmt::Debug <span class="kw">for </span>SystemId&lt;I, O&gt; {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         f.debug_tuple(<span class="string">"SystemId"</span>)
-            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
-            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">1</span>)
+            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.entity)
+            .field(<span class="kw-2">&amp;</span><span class="self">self</span>.entity)
             .finish()
     }
 }
@@ -658,7 +734,7 @@
     /// because the [`SystemId`] that is returned can be used anywhere in the [`World`] to run the associated system.
     /// This allows for running systems in a pushed-based fashion.
     /// Using a [`Schedule`](crate::schedule::Schedule) is still preferred for most cases
-    /// due to its better performance and abillity to run non-conflicting systems simultaneously.
+    /// due to its better performance and ability to run non-conflicting systems simultaneously.
     </span><span class="kw">pub fn </span>register_system&lt;I: <span class="lifetime">'static</span>, O: <span class="lifetime">'static</span>, M, S: IntoSystem&lt;I, O, M&gt; + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         system: S,
@@ -674,14 +750,15 @@
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         system: BoxedSystem&lt;I, O&gt;,
     ) -&gt; SystemId&lt;I, O&gt; {
-        SystemId(
-            <span class="self">self</span>.spawn(RegisteredSystem {
-                initialized: <span class="bool-val">false</span>,
-                system,
-            })
-            .id(),
-            std::marker::PhantomData,
-        )
+        SystemId {
+            entity: <span class="self">self
+                </span>.spawn(RegisteredSystem {
+                    initialized: <span class="bool-val">false</span>,
+                    system,
+                })
+                .id(),
+            marker: std::marker::PhantomData,
+        }
     }
 
     <span class="doccomment">/// Removes a registered system and returns the system, if it exists.
@@ -694,7 +771,7 @@
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         id: SystemId&lt;I, O&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RemovedSystem&lt;I, O&gt;, RegisteredSystemError&lt;I, O&gt;&gt; {
-        <span class="kw">match </span><span class="self">self</span>.get_entity_mut(id.<span class="number">0</span>) {
+        <span class="kw">match </span><span class="self">self</span>.get_entity_mut(id.entity) {
             <span class="prelude-val">Some</span>(<span class="kw-2">mut </span>entity) =&gt; {
                 <span class="kw">let </span>registered_system = entity
                     .take::&lt;RegisteredSystem&lt;I, O&gt;&gt;()
@@ -727,12 +804,9 @@
     ///
     /// ```
     /// # use bevy_ecs::prelude::*;
-    /// #[derive(Resource, Default)]
-    /// struct Counter(u8);
-    ///
-    /// fn increment(mut counter: Local&lt;Counter&gt;) {
-    ///    counter.0 += 1;
-    ///    println!("{}", counter.0);
+    /// fn increment(mut counter: Local&lt;u8&gt;) {
+    ///    *counter += 1;
+    ///    println!("{}", *counter);
     /// }
     ///
     /// let mut world = World::default();
@@ -818,20 +892,17 @@
     ///
     /// ```
     /// # use bevy_ecs::prelude::*;
-    /// #[derive(Resource, Default)]
-    /// struct Counter(u8);
-    ///
-    /// fn increment(In(increment_by): In&lt;u8&gt;, mut counter: Local&lt;Counter&gt;) {
-    ///    counter.0 += increment_by;
-    ///    println!("{}", counter.0);
+    /// fn increment(In(increment_by): In&lt;u8&gt;, mut counter: Local&lt;u8&gt;) -&gt; u8 {
+    ///   *counter += increment_by;
+    ///   *counter
     /// }
     ///
     /// let mut world = World::default();
     /// let counter_one = world.register_system(increment);
     /// let counter_two = world.register_system(increment);
-    /// world.run_system_with_input(counter_one, 1); // -&gt; 1
-    /// world.run_system_with_input(counter_one, 20); // -&gt; 21
-    /// world.run_system_with_input(counter_two, 30); // -&gt; 51
+    /// assert_eq!(world.run_system_with_input(counter_one, 1).unwrap(), 1);
+    /// assert_eq!(world.run_system_with_input(counter_one, 20).unwrap(), 21);
+    /// assert_eq!(world.run_system_with_input(counter_two, 30).unwrap(), 30);
     /// ```
     ///
     /// See [`World::run_system`] for more examples.
@@ -842,7 +913,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;O, RegisteredSystemError&lt;I, O&gt;&gt; {
         <span class="comment">// lookup
         </span><span class="kw">let </span><span class="kw-2">mut </span>entity = <span class="self">self
-            </span>.get_entity_mut(id.<span class="number">0</span>)
+            </span>.get_entity_mut(id.entity)
             .ok_or(RegisteredSystemError::SystemIdNotRegistered(id))<span class="question-mark">?</span>;
 
         <span class="comment">// take ownership of system trait object
@@ -859,10 +930,9 @@
             initialized = <span class="bool-val">true</span>;
         }
         <span class="kw">let </span>result = system.run(input, <span class="self">self</span>);
-        system.apply_deferred(<span class="self">self</span>);
 
         <span class="comment">// return ownership of system trait object (if entity still exists)
-        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>entity) = <span class="self">self</span>.get_entity_mut(id.<span class="number">0</span>) {
+        </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>entity) = <span class="self">self</span>.get_entity_mut(id.entity) {
             entity.insert::&lt;RegisteredSystem&lt;I, O&gt;&gt;(RegisteredSystem {
                 initialized,
                 system,
@@ -921,6 +991,35 @@
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>apply(<span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World) {
         <span class="kw">let _ </span>= world.run_system_with_input(<span class="self">self</span>.system_id, <span class="self">self</span>.input);
+    }
+}
+
+<span class="doccomment">/// The [`Command`] type for registering one shot systems from [Commands](crate::system::Commands).
+///
+/// This command needs an already boxed system to register, and an already spawned entity
+</span><span class="kw">pub struct </span>RegisterSystem&lt;I: <span class="lifetime">'static</span>, O: <span class="lifetime">'static</span>&gt; {
+    system: BoxedSystem&lt;I, O&gt;,
+    entity: Entity,
+}
+
+<span class="kw">impl</span>&lt;I: <span class="lifetime">'static</span>, O: <span class="lifetime">'static</span>&gt; RegisterSystem&lt;I, O&gt; {
+    <span class="doccomment">/// Creates a new [Command] struct, which can be added to [Commands](crate::system::Commands)
+    </span><span class="kw">pub fn </span>new&lt;M, S: IntoSystem&lt;I, O, M&gt; + <span class="lifetime">'static</span>&gt;(system: S, entity: Entity) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            system: Box::new(IntoSystem::into_system(system)),
+            entity,
+        }
+    }
+}
+
+<span class="kw">impl</span>&lt;I: <span class="lifetime">'static </span>+ Send, O: <span class="lifetime">'static </span>+ Send&gt; Command <span class="kw">for </span>RegisterSystem&lt;I, O&gt; {
+    <span class="kw">fn </span>apply(<span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World) {
+        <span class="kw">let _ </span>= world.get_entity_mut(<span class="self">self</span>.entity).map(|<span class="kw-2">mut </span>entity| {
+            entity.insert(RegisteredSystem {
+                initialized: <span class="bool-val">false</span>,
+                system: <span class="self">self</span>.system,
+            });
+        });
     }
 }
 

@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.13.0/src/tuple.rs`."><title>tuple.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.14.0/src/tuple.rs`."><title>tuple.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_reflect/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -681,13 +680,63 @@
 <a href="#680" id="680">680</a>
 <a href="#681" id="681">681</a>
 <a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>bevy_reflect_derive::impl_type_path;
 <span class="kw">use </span>bevy_utils::all_tuples;
 
 <span class="kw">use crate</span>::{
-    <span class="self">self </span><span class="kw">as </span>bevy_reflect, utility::GenericTypePathCell, FromReflect, GetTypeRegistration, Reflect,
-    ReflectMut, ReflectOwned, ReflectRef, TypeInfo, TypePath, TypeRegistration, Typed,
-    UnnamedField,
+    <span class="self">self </span><span class="kw">as </span>bevy_reflect, utility::GenericTypePathCell, ApplyError, FromReflect,
+    GetTypeRegistration, Reflect, ReflectMut, ReflectOwned, ReflectRef, TypeInfo, TypePath,
+    TypeRegistration, TypeRegistry, Typed, UnnamedField,
 };
 <span class="kw">use crate</span>::{ReflectKind, TypePathTable};
 <span class="kw">use </span>std::any::{Any, TypeId};
@@ -758,7 +807,7 @@
 
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
         <span class="kw">let </span>value = <span class="self">self</span>.tuple.field(<span class="self">self</span>.index);
-        <span class="self">self</span>.index += <span class="number">1</span>;
+        <span class="self">self</span>.index += value.is_some() <span class="kw">as </span>usize;
         value
     }
 
@@ -1052,6 +1101,10 @@
         Box::new(<span class="self">self</span>.clone_dynamic())
     }
 
+    <span class="kw">fn </span>try_apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Result</span>&lt;(), ApplyError&gt; {
+        tuple_try_apply(<span class="self">self</span>, value)
+    }
+
     <span class="kw">fn </span>reflect_partial_eq(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
         tuple_partial_eq(<span class="self">self</span>, value)
     }
@@ -1077,15 +1130,33 @@
 /// This function panics if `b` is not a tuple.
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>tuple_apply&lt;T: Tuple&gt;(a: <span class="kw-2">&amp;mut </span>T, b: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) {
+    <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = tuple_try_apply(a, b) {
+        <span class="macro">panic!</span>(<span class="string">"{err}"</span>);
+    }
+}
+
+<span class="doccomment">/// Tries to apply the elements of `b` to the corresponding elements of `a` and
+/// returns a Result.
+///
+/// # Errors
+///
+/// This function returns an [`ApplyError::MismatchedKinds`] if `b` is not a tuple or if
+/// applying elements to each other fails.
+</span><span class="attr">#[inline]
+</span><span class="kw">pub fn </span>tuple_try_apply&lt;T: Tuple&gt;(a: <span class="kw-2">&amp;mut </span>T, b: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Result</span>&lt;(), ApplyError&gt; {
     <span class="kw">if let </span>ReflectRef::Tuple(tuple) = b.reflect_ref() {
         <span class="kw">for </span>(i, value) <span class="kw">in </span>tuple.iter_fields().enumerate() {
             <span class="kw">if let </span><span class="prelude-val">Some</span>(v) = a.field_mut(i) {
-                v.apply(value);
+                v.try_apply(value)<span class="question-mark">?</span>;
             }
         }
     } <span class="kw">else </span>{
-        <span class="macro">panic!</span>(<span class="string">"Attempted to apply non-Tuple type to Tuple type."</span>);
+        <span class="kw">return </span><span class="prelude-val">Err</span>(ApplyError::MismatchedKinds {
+            from_kind: b.reflect_kind(),
+            to_kind: ReflectKind::Tuple,
+        });
     }
+    <span class="prelude-val">Ok</span>(())
 }
 
 <span class="doccomment">/// Compares a [`Tuple`] with a [`Reflect`] value.
@@ -1142,9 +1213,9 @@
     debug.finish()
 }
 
-<span class="macro">macro_rules! </span>impl_reflect_tuple {
+<span class="macro">macro_rules!</span> impl_reflect_tuple {
     {$(<span class="macro-nonterminal">$index</span>:tt : <span class="macro-nonterminal">$name</span>:tt),<span class="kw-2">*</span>} =&gt; {
-        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath),<span class="kw-2">*</span>&gt; Tuple <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
+        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath + GetTypeRegistration),<span class="kw-2">*</span>&gt; Tuple <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
             <span class="attr">#[inline]
             </span><span class="kw">fn </span>field(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect&gt; {
                 <span class="kw">match </span>index {
@@ -1195,7 +1266,7 @@
             }
         }
 
-        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath),<span class="kw-2">*</span>&gt; Reflect <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
+        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath + GetTypeRegistration),<span class="kw-2">*</span>&gt; Reflect <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
             <span class="kw">fn </span>get_represented_type_info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>TypeInfo&gt; {
                 <span class="prelude-val">Some</span>(&lt;<span class="self">Self </span><span class="kw">as </span>Typed&gt;::type_info())
             }
@@ -1228,6 +1299,10 @@
                 <span class="kw">crate</span>::tuple_apply(<span class="self">self</span>, value);
             }
 
+            <span class="kw">fn </span>try_apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Result</span>&lt;(), ApplyError&gt; {
+                <span class="kw">crate</span>::tuple_try_apply(<span class="self">self</span>, value)
+            }
+
             <span class="kw">fn </span>set(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Box&lt;<span class="kw">dyn </span>Reflect&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>Reflect&gt;&gt; {
                 <span class="kw-2">*</span><span class="self">self </span>= value.take()<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(())
@@ -1258,7 +1333,7 @@
             }
         }
 
-        <span class="kw">impl </span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath),<span class="kw-2">*</span>&gt; Typed <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
+        <span class="kw">impl </span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath + GetTypeRegistration),<span class="kw-2">*</span>&gt; Typed <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
             <span class="kw">fn </span>type_info() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>TypeInfo {
                 <span class="kw">static </span>CELL: <span class="macro-nonterminal">$crate::utility::GenericTypeInfoCell </span>= <span class="macro-nonterminal">$crate::utility::GenericTypeInfoCell::new</span>();
                 CELL.get_or_insert::&lt;<span class="self">Self</span>, <span class="kw">_</span>&gt;(|| {
@@ -1271,14 +1346,17 @@
             }
         }
 
-
-        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath),<span class="kw-2">*</span>&gt; GetTypeRegistration <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
+        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: Reflect + TypePath + GetTypeRegistration),<span class="kw-2">*</span>&gt; GetTypeRegistration <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>) {
             <span class="kw">fn </span>get_type_registration() -&gt; TypeRegistration {
                 TypeRegistration::of::&lt;($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>)&gt;()
             }
+
+            <span class="kw">fn </span>register_type_dependencies(_registry: <span class="kw-2">&amp;mut </span>TypeRegistry) {
+                $(_registry.register::&lt;<span class="macro-nonterminal">$name</span>&gt;();)*
+            }
         }
 
-        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: FromReflect + TypePath),<span class="kw-2">*</span>&gt; FromReflect <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>)
+        <span class="kw">impl</span>&lt;$(<span class="macro-nonterminal">$name</span>: FromReflect + TypePath + GetTypeRegistration),<span class="kw-2">*</span>&gt; FromReflect <span class="kw">for </span>($(<span class="macro-nonterminal">$name</span>,)<span class="kw-2">*</span>)
         {
             <span class="kw">fn </span>from_reflect(reflect: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
                 <span class="kw">if let </span>ReflectRef::Tuple(_ref_tuple) = reflect.reflect_ref() {
@@ -1297,21 +1375,21 @@
     }
 }
 
-<span class="macro">impl_reflect_tuple! </span>{}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I, <span class="number">9</span>: J}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I, <span class="number">9</span>: J, <span class="number">10</span>: K}
-<span class="macro">impl_reflect_tuple! </span>{<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I, <span class="number">9</span>: J, <span class="number">10</span>: K, <span class="number">11</span>: L}
+<span class="macro">impl_reflect_tuple!</span> {}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I, <span class="number">9</span>: J}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I, <span class="number">9</span>: J, <span class="number">10</span>: K}
+<span class="macro">impl_reflect_tuple!</span> {<span class="number">0</span>: A, <span class="number">1</span>: B, <span class="number">2</span>: C, <span class="number">3</span>: D, <span class="number">4</span>: E, <span class="number">5</span>: F, <span class="number">6</span>: G, <span class="number">7</span>: H, <span class="number">8</span>: I, <span class="number">9</span>: J, <span class="number">10</span>: K, <span class="number">11</span>: L}
 
-<span class="macro">macro_rules! </span>impl_type_path_tuple {
+<span class="macro">macro_rules!</span> impl_type_path_tuple {
     () =&gt; {
         <span class="kw">impl </span>TypePath <span class="kw">for </span>() {
             <span class="kw">fn </span>type_path() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
@@ -1363,4 +1441,25 @@
 }
 
 <span class="macro">all_tuples!</span>(impl_type_path_tuple, <span class="number">0</span>, <span class="number">12</span>, P);
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span><span class="kw">super</span>::Tuple;
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>next_index_increment() {
+        <span class="kw">let </span><span class="kw-2">mut </span>iter = (<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>).iter_fields();
+        <span class="kw">let </span>size = iter.len();
+        iter.index = size - <span class="number">1</span>;
+        <span class="kw">let </span>prev_index = iter.index;
+        <span class="macro">assert!</span>(iter.next().is_some());
+        <span class="macro">assert_eq!</span>(prev_index, iter.index - <span class="number">1</span>);
+
+        <span class="comment">// When None we should no longer increase index
+        </span><span class="macro">assert!</span>(iter.next().is_none());
+        <span class="macro">assert_eq!</span>(size, iter.index);
+        <span class="macro">assert!</span>(iter.next().is_none());
+        <span class="macro">assert_eq!</span>(size, iter.index);
+    }
+}
 </code></pre></div></section></main></body></html>

@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.13.0/src/reflect.rs`."><title>reflect.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.14.0/src/reflect.rs`."><title>reflect.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_asset/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -297,6 +296,9 @@
 <a href="#296" id="296">296</a>
 <a href="#297" id="297">297</a>
 <a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::any::{Any, TypeId};
 
 <span class="kw">use </span>bevy_ecs::world::{unsafe_world_cell::UnsafeWorldCell, World};
@@ -345,6 +347,7 @@
     }
 
     <span class="doccomment">/// Equivalent of [`Assets::get_mut`]
+    </span><span class="attr">#[allow(unsafe_code)]
     </span><span class="kw">pub fn </span>get_mut&lt;<span class="lifetime">'w</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         world: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>World,
@@ -381,6 +384,7 @@
     /// violating Rust's aliasing rules. To avoid this:
     /// * Only call this method if you know that the [`UnsafeWorldCell`] may be used to access the corresponding `Assets&lt;T&gt;`
     /// * Don't call this method more than once in the same scope.
+    </span><span class="attr">#[allow(unsafe_code)]
     </span><span class="kw">pub unsafe fn </span>get_unchecked_mut&lt;<span class="lifetime">'w</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;,
@@ -434,6 +438,7 @@
             get_unchecked_mut: |world, handle| {
                 <span class="comment">// SAFETY: `get_unchecked_mut` must be called with `UnsafeWorldCell` having access to `Assets&lt;A&gt;`,
                 // and must ensure to only have at most one reference to it live at all times.
+                </span><span class="attr">#[allow(unsafe_code)]
                 </span><span class="kw">let </span>assets = <span class="kw">unsafe </span>{ world.get_resource_mut::&lt;Assets&lt;A&gt;&gt;().unwrap().into_inner() };
                 <span class="kw">let </span>asset = assets.get_mut(<span class="kw-2">&amp;</span>handle.typed_debug_checked());
                 asset.map(|asset| asset <span class="kw">as </span><span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Reflect)
@@ -448,7 +453,7 @@
                 <span class="kw">let </span><span class="kw-2">mut </span>assets = world.resource_mut::&lt;Assets&lt;A&gt;&gt;();
                 <span class="kw">let </span>value: A = FromReflect::from_reflect(value)
                     .expect(<span class="string">"could not call `FromReflect::from_reflect` in `ReflectAsset::set`"</span>);
-                assets.insert(handle.typed_debug_checked(), value);
+                assets.insert(<span class="kw-2">&amp;</span>handle.typed_debug_checked(), value);
             },
             len: |world| {
                 <span class="kw">let </span>assets = world.resource::&lt;Assets&lt;A&gt;&gt;();
@@ -460,7 +465,7 @@
             },
             remove: |world, handle| {
                 <span class="kw">let </span><span class="kw-2">mut </span>assets = world.resource_mut::&lt;Assets&lt;A&gt;&gt;();
-                <span class="kw">let </span>value = assets.remove(handle.typed_debug_checked());
+                <span class="kw">let </span>value = assets.remove(<span class="kw-2">&amp;</span>handle.typed_debug_checked());
                 value.map(|value| Box::new(value) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>Reflect&gt;)
             },
         }
@@ -553,7 +558,7 @@
             .register_asset_reflect::&lt;AssetType&gt;();
 
         <span class="kw">let </span>reflect_asset = {
-            <span class="kw">let </span>type_registry = app.world.resource::&lt;AppTypeRegistry&gt;();
+            <span class="kw">let </span>type_registry = app.world().resource::&lt;AppTypeRegistry&gt;();
             <span class="kw">let </span>type_registry = type_registry.read();
 
             type_registry
@@ -566,9 +571,9 @@
             field: <span class="string">"test"</span>.into(),
         };
 
-        <span class="kw">let </span>handle = reflect_asset.add(<span class="kw-2">&amp;mut </span>app.world, <span class="kw-2">&amp;</span>value);
+        <span class="kw">let </span>handle = reflect_asset.add(app.world_mut(), <span class="kw-2">&amp;</span>value);
         <span class="kw">let </span>ReflectMut::Struct(strukt) = reflect_asset
-            .get_mut(<span class="kw-2">&amp;mut </span>app.world, handle)
+            .get_mut(app.world_mut(), handle)
             .unwrap()
             .reflect_mut()
         <span class="kw">else </span>{
@@ -579,20 +584,20 @@
             .unwrap()
             .apply(<span class="kw-2">&amp;</span>String::from(<span class="string">"edited"</span>));
 
-        <span class="macro">assert_eq!</span>(reflect_asset.len(<span class="kw-2">&amp;</span>app.world), <span class="number">1</span>);
-        <span class="kw">let </span>ids: Vec&lt;<span class="kw">_</span>&gt; = reflect_asset.ids(<span class="kw-2">&amp;</span>app.world).collect();
+        <span class="macro">assert_eq!</span>(reflect_asset.len(app.world()), <span class="number">1</span>);
+        <span class="kw">let </span>ids: Vec&lt;<span class="kw">_</span>&gt; = reflect_asset.ids(app.world()).collect();
         <span class="macro">assert_eq!</span>(ids.len(), <span class="number">1</span>);
 
         <span class="kw">let </span>fetched_handle = UntypedHandle::Weak(ids[<span class="number">0</span>]);
         <span class="kw">let </span>asset = reflect_asset
-            .get(<span class="kw-2">&amp;</span>app.world, fetched_handle.clone_weak())
+            .get(app.world(), fetched_handle.clone_weak())
             .unwrap();
         <span class="macro">assert_eq!</span>(asset.downcast_ref::&lt;AssetType&gt;().unwrap().field, <span class="string">"edited"</span>);
 
         reflect_asset
-            .remove(<span class="kw-2">&amp;mut </span>app.world, fetched_handle)
+            .remove(app.world_mut(), fetched_handle)
             .unwrap();
-        <span class="macro">assert_eq!</span>(reflect_asset.len(<span class="kw-2">&amp;</span>app.world), <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(reflect_asset.len(app.world()), <span class="number">0</span>);
     }
 }
 </code></pre></div></section></main></body></html>

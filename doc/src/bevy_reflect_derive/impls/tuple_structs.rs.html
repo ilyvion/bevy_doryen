@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect_derive-0.13.0/src/impls/tuple_structs.rs`."><title>tuple_structs.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect_derive-0.14.0/src/impls/tuple_structs.rs`."><title>tuple_structs.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect_derive" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_reflect_derive/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -183,35 +182,6 @@
 <a href="#182" id="182">182</a>
 <a href="#183" id="183">183</a>
 <a href="#184" id="184">184</a>
-<a href="#185" id="185">185</a>
-<a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a>
-<a href="#200" id="200">200</a>
-<a href="#201" id="201">201</a>
-<a href="#202" id="202">202</a>
-<a href="#203" id="203">203</a>
-<a href="#204" id="204">204</a>
-<a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
-<a href="#209" id="209">209</a>
-<a href="#210" id="210">210</a>
-<a href="#211" id="211">211</a>
-<a href="#212" id="212">212</a>
-<a href="#213" id="213">213</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::impls::{impl_type_path, impl_typed};
 <span class="kw">use </span><span class="kw">crate</span>::ReflectStruct;
 <span class="kw">use </span>bevy_macro_utils::fq_std::{FQAny, FQBox, FQDefault, FQOption, FQResult};
@@ -229,7 +199,6 @@
         .active_fields()
         .map(|field| Member::Unnamed(Index::from(field.declaration_index)))
         .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
-    <span class="kw">let </span>field_types = reflect_struct.active_types();
     <span class="kw">let </span>field_count = field_idents.len();
     <span class="kw">let </span>field_indices = (<span class="number">0</span>..field_count).collect::&lt;Vec&lt;usize&gt;&gt;();
 
@@ -246,53 +215,17 @@
         .attrs()
         .get_partial_eq_impl(bevy_reflect_path)
         .unwrap_or_else(|| {
-            <span class="macro">quote! </span>{
+            <span class="macro">quote!</span> {
                 <span class="kw">fn </span>reflect_partial_eq(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>#bevy_reflect_path::Reflect) -&gt; #FQOption&lt;bool&gt; {
                     #bevy_reflect_path::tuple_struct_partial_eq(<span class="self">self</span>, value)
                 }
             }
         });
 
-    <span class="attr">#[cfg(feature = <span class="string">"documentation"</span>)]
-    </span><span class="kw">let </span>field_generator = {
-        <span class="kw">let </span>docs = reflect_struct
-            .active_fields()
-            .map(|field| ToTokens::to_token_stream(<span class="kw-2">&amp;</span>field.doc));
-        <span class="macro">quote! </span>{
-            #(#bevy_reflect_path::UnnamedField::new::&lt;#field_types&gt;(#field_idents).with_docs(#docs) ,)*
-        }
-    };
-
-    <span class="attr">#[cfg(not(feature = <span class="string">"documentation"</span>))]
-    </span><span class="kw">let </span>field_generator = {
-        <span class="macro">quote! </span>{
-            #(#bevy_reflect_path::UnnamedField::new::&lt;#field_types&gt;(#field_idents) ,)*
-        }
-    };
-
-    <span class="attr">#[cfg(feature = <span class="string">"documentation"</span>)]
-    </span><span class="kw">let </span>info_generator = {
-        <span class="kw">let </span>doc = reflect_struct.meta().doc();
-        <span class="macro">quote! </span>{
-           #bevy_reflect_path::TupleStructInfo::new::&lt;<span class="self">Self</span>&gt;(<span class="kw-2">&amp;</span>fields).with_docs(#doc)
-        }
-    };
-
-    <span class="attr">#[cfg(not(feature = <span class="string">"documentation"</span>))]
-    </span><span class="kw">let </span>info_generator = {
-        <span class="macro">quote! </span>{
-            #bevy_reflect_path::TupleStructInfo::new::&lt;<span class="self">Self</span>&gt;(<span class="kw-2">&amp;</span>fields)
-        }
-    };
-
     <span class="kw">let </span>typed_impl = impl_typed(
         reflect_struct.meta(),
         <span class="kw-2">&amp;</span>where_clause_options,
-        <span class="macro">quote! </span>{
-            <span class="kw">let </span>fields = [#field_generator];
-            <span class="kw">let </span>info = #info_generator;
-            #bevy_reflect_path::TypeInfo::TupleStruct(info)
-        },
+        reflect_struct.to_info_tokens(<span class="bool-val">true</span>),
     );
 
     <span class="kw">let </span>type_path_impl = impl_type_path(reflect_struct.meta());
@@ -305,7 +238,7 @@
 
     <span class="kw">let </span>where_reflect_clause = where_clause_options.extend_where_clause(where_clause);
 
-    <span class="macro">quote! </span>{
+    <span class="macro">quote!</span> {
         #get_type_registration_impl
 
         #typed_impl
@@ -326,12 +259,12 @@
                     <span class="kw">_ </span>=&gt; #FQOption::None,
                 }
             }
-
-            <span class="kw">fn </span>field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+            <span class="attr">#[inline]
+            </span><span class="kw">fn </span>field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
                 #field_count
             }
-
-            <span class="kw">fn </span>iter_fields(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #bevy_reflect_path::TupleStructFieldIter {
+            <span class="attr">#[inline]
+            </span><span class="kw">fn </span>iter_fields(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #bevy_reflect_path::TupleStructFieldIter {
                 #bevy_reflect_path::TupleStructFieldIter::new(<span class="self">self</span>)
             }
 
@@ -391,29 +324,37 @@
             }
 
             <span class="attr">#[inline]
-            </span><span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>#bevy_reflect_path::Reflect) {
+            </span><span class="kw">fn </span>try_apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>#bevy_reflect_path::Reflect) -&gt; #FQResult&lt;(), #bevy_reflect_path::ApplyError&gt; {
                 <span class="kw">if let </span>#bevy_reflect_path::ReflectRef::TupleStruct(struct_value) = #bevy_reflect_path::Reflect::reflect_ref(value) {
                     <span class="kw">for </span>(i, value) <span class="kw">in </span>::core::iter::Iterator::enumerate(#bevy_reflect_path::TupleStruct::iter_fields(struct_value)) {
-                        #bevy_reflect_path::TupleStruct::field_mut(<span class="self">self</span>, i).map(|v| v.apply(value));
+                        <span class="kw">if let </span>#FQOption::Some(v) = #bevy_reflect_path::TupleStruct::field_mut(<span class="self">self</span>, i) {
+                            #bevy_reflect_path::Reflect::try_apply(v, value)<span class="question-mark">?</span>;
+                        }
                     }
                 } <span class="kw">else </span>{
-                    <span class="macro">panic!</span>(<span class="string">"Attempted to apply non-TupleStruct type to TupleStruct type."</span>);
+                    <span class="kw">return </span>#FQResult::Err(
+                        #bevy_reflect_path::ApplyError::MismatchedKinds {
+                            from_kind: #bevy_reflect_path::Reflect::reflect_kind(value),
+                            to_kind: #bevy_reflect_path::ReflectKind::TupleStruct,
+                        }
+                    );
                 }
+               #FQResult::Ok(())
             }
-
-            <span class="kw">fn </span>reflect_kind(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #bevy_reflect_path::ReflectKind {
+            <span class="attr">#[inline]
+            </span><span class="kw">fn </span>reflect_kind(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #bevy_reflect_path::ReflectKind {
                 #bevy_reflect_path::ReflectKind::TupleStruct
             }
-
-            <span class="kw">fn </span>reflect_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #bevy_reflect_path::ReflectRef {
+            <span class="attr">#[inline]
+            </span><span class="kw">fn </span>reflect_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #bevy_reflect_path::ReflectRef {
                 #bevy_reflect_path::ReflectRef::TupleStruct(<span class="self">self</span>)
             }
-
-            <span class="kw">fn </span>reflect_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; #bevy_reflect_path::ReflectMut {
+            <span class="attr">#[inline]
+            </span><span class="kw">fn </span>reflect_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; #bevy_reflect_path::ReflectMut {
                 #bevy_reflect_path::ReflectMut::TupleStruct(<span class="self">self</span>)
             }
-
-            <span class="kw">fn </span>reflect_owned(<span class="self">self</span>: #FQBox&lt;<span class="self">Self</span>&gt;) -&gt; #bevy_reflect_path::ReflectOwned {
+            <span class="attr">#[inline]
+            </span><span class="kw">fn </span>reflect_owned(<span class="self">self</span>: #FQBox&lt;<span class="self">Self</span>&gt;) -&gt; #bevy_reflect_path::ReflectOwned {
                 #bevy_reflect_path::ReflectOwned::TupleStruct(<span class="self">self</span>)
             }
 

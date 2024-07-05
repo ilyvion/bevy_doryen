@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/system/function_system.rs`."><title>function_system.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/system/function_system.rs`."><title>function_system.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -732,6 +731,60 @@
 <a href="#731" id="731">731</a>
 <a href="#732" id="732">732</a>
 <a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
+<a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     archetype::{ArchetypeComponentId, ArchetypeGeneration},
     component::{ComponentId, Tick},
@@ -739,7 +792,7 @@
     query::{Access, FilteredAccessSet},
     schedule::{InternedSystemSet, SystemSet},
     system::{check_system_change_tick, ReadOnlySystemParam, System, SystemParam, SystemParamItem},
-    world::{unsafe_world_cell::UnsafeWorldCell, World, WorldId},
+    world::{unsafe_world_cell::UnsafeWorldCell, DeferredWorld, World, WorldId},
 };
 
 <span class="kw">use </span>bevy_utils::all_tuples;
@@ -748,7 +801,7 @@
 <span class="attr">#[cfg(feature = <span class="string">"trace"</span>)]
 </span><span class="kw">use </span>bevy_utils::tracing::{info_span, Span};
 
-<span class="kw">use super</span>::{In, IntoSystem, ReadOnlySystem};
+<span class="kw">use super</span>::{In, IntoSystem, ReadOnlySystem, SystemBuilder};
 
 <span class="doccomment">/// The metadata of a [`System`].
 </span><span class="attr">#[derive(Clone)]
@@ -936,6 +989,16 @@
         }
     }
 
+    <span class="comment">// Create a [`SystemState`] from a [`SystemBuilder`]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_builder(builder: SystemBuilder&lt;Param&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            meta: builder.meta,
+            param_state: builder.state,
+            world_id: builder.world.id(),
+            archetype_generation: ArchetypeGeneration::initial(),
+        }
+    }
+
     <span class="doccomment">/// Gets the metadata for this instance.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>meta(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>SystemMeta {
@@ -1018,12 +1081,15 @@
     /// This method only accesses world metadata.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>update_archetypes_unsafe_world_cell(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: UnsafeWorldCell) {
+        <span class="macro">assert_eq!</span>(<span class="self">self</span>.world_id, world.id(), <span class="string">"Encountered a mismatched World. A System cannot be used with Worlds other than the one it was initialized with."</span>);
+
         <span class="kw">let </span>archetypes = world.archetypes();
         <span class="kw">let </span>old_generation =
             std::mem::replace(<span class="kw-2">&amp;mut </span><span class="self">self</span>.archetype_generation, archetypes.generation());
 
         <span class="kw">for </span>archetype <span class="kw">in </span><span class="kw-2">&amp;</span>archetypes[old_generation..] {
-            Param::new_archetype(<span class="kw-2">&amp;mut </span><span class="self">self</span>.param_state, archetype, <span class="kw-2">&amp;mut </span><span class="self">self</span>.meta);
+            <span class="comment">// SAFETY: The assertion above ensures that the param_state was initialized from `world`.
+            </span><span class="kw">unsafe </span>{ Param::new_archetype(<span class="kw-2">&amp;mut </span><span class="self">self</span>.param_state, archetype, <span class="kw-2">&amp;mut </span><span class="self">self</span>.meta) };
         }
     }
 
@@ -1077,7 +1143,8 @@
         world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;,
     ) -&gt; SystemParamItem&lt;<span class="lifetime">'w</span>, <span class="lifetime">'s</span>, Param&gt; {
         <span class="kw">let </span>change_tick = world.increment_change_tick();
-        <span class="self">self</span>.fetch(world, change_tick)
+        <span class="comment">// SAFETY: The invariants are uphold by the caller.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.fetch(world, change_tick) }
     }
 
     <span class="doccomment">/// # Safety
@@ -1090,7 +1157,9 @@
         world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;,
         change_tick: Tick,
     ) -&gt; SystemParamItem&lt;<span class="lifetime">'w</span>, <span class="lifetime">'s</span>, Param&gt; {
-        <span class="kw">let </span>param = Param::get_param(<span class="kw-2">&amp;mut </span><span class="self">self</span>.param_state, <span class="kw-2">&amp;</span><span class="self">self</span>.meta, world, change_tick);
+        <span class="comment">// SAFETY: The invariants are uphold by the caller.
+        </span><span class="kw">let </span>param =
+            <span class="kw">unsafe </span>{ Param::get_param(<span class="kw-2">&amp;mut </span><span class="self">self</span>.param_state, <span class="kw-2">&amp;</span><span class="self">self</span>.meta, world, change_tick) };
         <span class="self">self</span>.meta.last_run = change_tick;
         param
     }
@@ -1117,12 +1186,29 @@
     </span>F: SystemParamFunction&lt;Marker&gt;,
 {
     func: F,
-    param_state: <span class="prelude-ty">Option</span>&lt;&lt;F::Param <span class="kw">as </span>SystemParam&gt;::State&gt;,
-    system_meta: SystemMeta,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) param_state: <span class="prelude-ty">Option</span>&lt;&lt;F::Param <span class="kw">as </span>SystemParam&gt;::State&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) system_meta: SystemMeta,
     world_id: <span class="prelude-ty">Option</span>&lt;WorldId&gt;,
     archetype_generation: ArchetypeGeneration,
     <span class="comment">// NOTE: PhantomData&lt;fn()-&gt; T&gt; gives this safe Send/Sync impls
     </span>marker: PhantomData&lt;<span class="kw">fn</span>() -&gt; Marker&gt;,
+}
+
+<span class="kw">impl</span>&lt;Marker, F&gt; FunctionSystem&lt;Marker, F&gt;
+<span class="kw">where
+    </span>F: SystemParamFunction&lt;Marker&gt;,
+{
+    <span class="comment">// Create a [`FunctionSystem`] from a [`SystemBuilder`]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_builder(builder: SystemBuilder&lt;F::Param&gt;, func: F) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            func,
+            param_state: <span class="prelude-val">Some</span>(builder.state),
+            system_meta: builder.meta,
+            world_id: <span class="prelude-val">Some</span>(builder.world.id()),
+            archetype_generation: ArchetypeGeneration::initial(),
+            marker: PhantomData,
+        }
+    }
 }
 
 <span class="comment">// De-initializes the cloned system.
@@ -1224,12 +1310,14 @@
         //   if the world does not match.
         // - All world accesses used by `F::Param` have been registered, so the caller
         //   will ensure that there are no data access conflicts.
-        </span><span class="kw">let </span>params = F::Param::get_param(
-            <span class="self">self</span>.param_state.as_mut().expect(<span class="self">Self</span>::PARAM_MESSAGE),
-            <span class="kw-2">&amp;</span><span class="self">self</span>.system_meta,
-            world,
-            change_tick,
-        );
+        </span><span class="kw">let </span>params = <span class="kw">unsafe </span>{
+            F::Param::get_param(
+                <span class="self">self</span>.param_state.as_mut().expect(<span class="self">Self</span>::PARAM_MESSAGE),
+                <span class="kw-2">&amp;</span><span class="self">self</span>.system_meta,
+                world,
+                change_tick,
+            )
+        };
         <span class="kw">let </span>out = <span class="self">self</span>.func.run(input, params);
         <span class="self">self</span>.system_meta.last_run = change_tick;
         out
@@ -1242,10 +1330,24 @@
     }
 
     <span class="attr">#[inline]
+    </span><span class="kw">fn </span>queue_deferred(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: DeferredWorld) {
+        <span class="kw">let </span>param_state = <span class="self">self</span>.param_state.as_mut().expect(<span class="self">Self</span>::PARAM_MESSAGE);
+        F::Param::queue(param_state, <span class="kw-2">&amp;</span><span class="self">self</span>.system_meta, world);
+    }
+
+    <span class="attr">#[inline]
     </span><span class="kw">fn </span>initialize(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World) {
-        <span class="self">self</span>.world_id = <span class="prelude-val">Some</span>(world.id());
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(id) = <span class="self">self</span>.world_id {
+            <span class="macro">assert_eq!</span>(
+                id,
+                world.id(),
+                <span class="string">"System built with a different world than the one it was added to."</span>,
+            );
+        } <span class="kw">else </span>{
+            <span class="self">self</span>.world_id = <span class="prelude-val">Some</span>(world.id());
+            <span class="self">self</span>.param_state = <span class="prelude-val">Some</span>(F::Param::init_state(world, <span class="kw-2">&amp;mut </span><span class="self">self</span>.system_meta));
+        }
         <span class="self">self</span>.system_meta.last_run = world.change_tick().relative_to(Tick::MAX);
-        <span class="self">self</span>.param_state = <span class="prelude-val">Some</span>(F::Param::init_state(world, <span class="kw-2">&amp;mut </span><span class="self">self</span>.system_meta));
     }
 
     <span class="kw">fn </span>update_archetype_component_access(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: UnsafeWorldCell) {
@@ -1256,7 +1358,8 @@
 
         <span class="kw">for </span>archetype <span class="kw">in </span><span class="kw-2">&amp;</span>archetypes[old_generation..] {
             <span class="kw">let </span>param_state = <span class="self">self</span>.param_state.as_mut().unwrap();
-            F::Param::new_archetype(param_state, archetype, <span class="kw-2">&amp;mut </span><span class="self">self</span>.system_meta);
+            <span class="comment">// SAFETY: The assertion above ensures that the param_state was initialized from `world`.
+            </span><span class="kw">unsafe </span>{ F::Param::new_archetype(param_state, archetype, <span class="kw-2">&amp;mut </span><span class="self">self</span>.system_meta) };
         }
     }
 
@@ -1270,7 +1373,7 @@
     }
 
     <span class="kw">fn </span>default_system_sets(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;InternedSystemSet&gt; {
-        <span class="kw">let </span>set = <span class="kw">crate</span>::schedule::SystemTypeSet::&lt;F&gt;::new();
+        <span class="kw">let </span>set = <span class="kw">crate</span>::schedule::SystemTypeSet::&lt;<span class="self">Self</span>&gt;::new();
         <span class="macro">vec!</span>[set.intern()]
     }
 
@@ -1351,6 +1454,10 @@
 /// ```
 /// [`PipeSystem`]: crate::system::PipeSystem
 /// [`ParamSet`]: crate::system::ParamSet
+</span><span class="attr">#[diagnostic::on_unimplemented(
+    message = <span class="string">"`{Self}` is not a valid system"</span>,
+    label = <span class="string">"invalid system"
+</span>)]
 </span><span class="kw">pub trait </span>SystemParamFunction&lt;Marker&gt;: Send + Sync + <span class="lifetime">'static </span>{
     <span class="doccomment">/// The input type to this system. See [`System::In`].
     </span><span class="kw">type </span>In;
@@ -1365,7 +1472,7 @@
     </span><span class="kw">fn </span>run(<span class="kw-2">&amp;mut </span><span class="self">self</span>, input: <span class="self">Self</span>::In, param_value: SystemParamItem&lt;<span class="self">Self</span>::Param&gt;) -&gt; <span class="self">Self</span>::Out;
 }
 
-<span class="macro">macro_rules! </span>impl_system_function {
+<span class="macro">macro_rules!</span> impl_system_function {
     ($(<span class="macro-nonterminal">$param</span>: ident),<span class="kw-2">*</span>) =&gt; {
         <span class="attr">#[allow(non_snake_case)]
         </span><span class="kw">impl</span>&lt;Out, Func: Send + Sync + <span class="lifetime">'static</span>, $(<span class="macro-nonterminal">$param</span>: SystemParam),<span class="kw-2">*</span>&gt; SystemParamFunction&lt;<span class="kw">fn</span>($(<span class="macro-nonterminal">$param</span>,)<span class="kw-2">*</span>) -&gt; Out&gt; <span class="kw">for </span>Func

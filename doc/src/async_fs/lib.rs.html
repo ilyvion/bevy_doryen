@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-fs-2.1.1/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="async_fs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/smol-rs/smol/master/assets/images/logo_fullsize_transparent.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><a class="sub-logo-container" href="../../async_fs/index.html"><img src="https://raw.githubusercontent.com/smol-rs/smol/master/assets/images/logo_fullsize_transparent.png" alt="async_fs"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/async-fs-2.1.2/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="async_fs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://raw.githubusercontent.com/smol-rs/smol/master/assets/images/logo_fullsize_transparent.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../async_fs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1817,6 +1816,42 @@
 <a href="#1816" id="1816">1816</a>
 <a href="#1817" id="1817">1817</a>
 <a href="#1818" id="1818">1818</a>
+<a href="#1819" id="1819">1819</a>
+<a href="#1820" id="1820">1820</a>
+<a href="#1821" id="1821">1821</a>
+<a href="#1822" id="1822">1822</a>
+<a href="#1823" id="1823">1823</a>
+<a href="#1824" id="1824">1824</a>
+<a href="#1825" id="1825">1825</a>
+<a href="#1826" id="1826">1826</a>
+<a href="#1827" id="1827">1827</a>
+<a href="#1828" id="1828">1828</a>
+<a href="#1829" id="1829">1829</a>
+<a href="#1830" id="1830">1830</a>
+<a href="#1831" id="1831">1831</a>
+<a href="#1832" id="1832">1832</a>
+<a href="#1833" id="1833">1833</a>
+<a href="#1834" id="1834">1834</a>
+<a href="#1835" id="1835">1835</a>
+<a href="#1836" id="1836">1836</a>
+<a href="#1837" id="1837">1837</a>
+<a href="#1838" id="1838">1838</a>
+<a href="#1839" id="1839">1839</a>
+<a href="#1840" id="1840">1840</a>
+<a href="#1841" id="1841">1841</a>
+<a href="#1842" id="1842">1842</a>
+<a href="#1843" id="1843">1843</a>
+<a href="#1844" id="1844">1844</a>
+<a href="#1845" id="1845">1845</a>
+<a href="#1846" id="1846">1846</a>
+<a href="#1847" id="1847">1847</a>
+<a href="#1848" id="1848">1848</a>
+<a href="#1849" id="1849">1849</a>
+<a href="#1850" id="1850">1850</a>
+<a href="#1851" id="1851">1851</a>
+<a href="#1852" id="1852">1852</a>
+<a href="#1853" id="1853">1853</a>
+<a href="#1854" id="1854">1854</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Async filesystem primitives.
 //!
 //! This crate is an async version of [`std::fs`].
@@ -1933,48 +1968,84 @@
     unblock(<span class="kw">move </span>|| std::fs::copy(<span class="kw-2">&amp;</span>src, <span class="kw-2">&amp;</span>dst)).<span class="kw">await
 </span>}
 
-<span class="doccomment">/// Creates a directory.
+<span class="doccomment">/// Creates a new, empty directory at the provided path
 ///
-/// Note that this function will only create the final directory in `path`. If you want to create
-/// all of its missing parent directories too, use [`create_dir_all()`] instead.
+/// # Platform-specific behavior
+///
+/// This function currently corresponds to the `mkdir` function on Unix
+/// and the `CreateDirectory` function on Windows.
+/// Note that, this [may change in the future][changes].
+///
+/// [changes]: io#platform-specific-behavior
+///
+/// **NOTE**: If a parent of the given path doesn't exist, this function will
+/// return an error. To create a directory and all its missing parents at the
+/// same time, use the [`create_dir_all`] function.
 ///
 /// # Errors
 ///
-/// An error will be returned in the following situations:
+/// This function will return an error in the following situations, but is not
+/// limited to just these cases:
 ///
-/// * `path` already points to an existing file or directory.
-/// * A parent directory in `path` does not exist.
-/// * The current process lacks permissions to create the directory.
-/// * Some other I/O error occurred.
+/// * User lacks permissions to create directory at `path`.
+/// * A parent of the given path doesn't exist. (To create a directory and all
+///   its missing parents at the same time, use the [`create_dir_all`]
+///   function.)
+/// * `path` already exists.
 ///
 /// # Examples
 ///
 /// ```no_run
-/// # futures_lite::future::block_on(async {
-/// async_fs::create_dir("./some/directory").await?;
-/// # std::io::Result::Ok(()) });
+/// use std::fs;
+///
+/// fn main() -&gt; std::io::Result&lt;()&gt; {
+///     fs::create_dir("/some/dir")?;
+///     Ok(())
+/// }
 /// ```
 </span><span class="kw">pub async fn </span>create_dir&lt;P: AsRef&lt;Path&gt;&gt;(path: P) -&gt; io::Result&lt;()&gt; {
     <span class="kw">let </span>path = path.as_ref().to_owned();
     unblock(<span class="kw">move </span>|| std::fs::create_dir(path)).<span class="kw">await
 </span>}
 
-<span class="doccomment">/// Creates a directory and its parent directories if they are missing.
+<span class="doccomment">/// Recursively create a directory and all of its parent components if they
+/// are missing.
+///
+/// # Platform-specific behavior
+///
+/// This function currently corresponds to the `mkdir` function on Unix
+/// and the `CreateDirectory` function on Windows.
+/// Note that, this [may change in the future][changes].
+///
+/// [changes]: io#platform-specific-behavior
 ///
 /// # Errors
 ///
-/// An error will be returned in the following situations:
+/// This function will return an error in the following situations, but is not
+/// limited to just these cases:
 ///
-/// * `path` already points to an existing file or directory.
-/// * The current process lacks permissions to create the directory or its missing parents.
-/// * Some other I/O error occurred.
+/// * If any directory in the path specified by `path`
+/// does not already exist and it could not be created otherwise. The specific
+/// error conditions for when a directory is being created (after it is
+/// determined to not exist) are outlined by [`fs::create_dir`].
+///
+/// Notable exception is made for situations where any of the directories
+/// specified in the `path` could not be created as it was being created concurrently.
+/// Such cases are considered to be successful. That is, calling `create_dir_all`
+/// concurrently from multiple threads or processes is guaranteed not to fail
+/// due to a race condition with itself.
+///
+/// [`fs::create_dir`]: create_dir
 ///
 /// # Examples
 ///
 /// ```no_run
-/// # futures_lite::future::block_on(async {
-/// async_fs::create_dir_all("./some/directory").await?;
-/// # std::io::Result::Ok(()) });
+/// use std::fs;
+///
+/// fn main() -&gt; std::io::Result&lt;()&gt; {
+///     fs::create_dir_all("/some/dir")?;
+///     Ok(())
+/// }
 /// ```
 </span><span class="kw">pub async fn </span>create_dir_all&lt;P: AsRef&lt;Path&gt;&gt;(path: P) -&gt; io::Result&lt;()&gt; {
     <span class="kw">let </span>path = path.as_ref().to_owned();

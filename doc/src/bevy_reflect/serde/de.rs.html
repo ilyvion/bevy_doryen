@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.13.0/src/serde/de.rs`."><title>de.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.14.0/src/serde/de.rs`."><title>de.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_reflect/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1602,12 +1601,44 @@
 <a href="#1601" id="1601">1601</a>
 <a href="#1602" id="1602">1602</a>
 <a href="#1603" id="1603">1603</a>
+<a href="#1604" id="1604">1604</a>
+<a href="#1605" id="1605">1605</a>
+<a href="#1606" id="1606">1606</a>
+<a href="#1607" id="1607">1607</a>
+<a href="#1608" id="1608">1608</a>
+<a href="#1609" id="1609">1609</a>
+<a href="#1610" id="1610">1610</a>
+<a href="#1611" id="1611">1611</a>
+<a href="#1612" id="1612">1612</a>
+<a href="#1613" id="1613">1613</a>
+<a href="#1614" id="1614">1614</a>
+<a href="#1615" id="1615">1615</a>
+<a href="#1616" id="1616">1616</a>
+<a href="#1617" id="1617">1617</a>
+<a href="#1618" id="1618">1618</a>
+<a href="#1619" id="1619">1619</a>
+<a href="#1620" id="1620">1620</a>
+<a href="#1621" id="1621">1621</a>
+<a href="#1622" id="1622">1622</a>
+<a href="#1623" id="1623">1623</a>
+<a href="#1624" id="1624">1624</a>
+<a href="#1625" id="1625">1625</a>
+<a href="#1626" id="1626">1626</a>
+<a href="#1627" id="1627">1627</a>
+<a href="#1628" id="1628">1628</a>
+<a href="#1629" id="1629">1629</a>
+<a href="#1630" id="1630">1630</a>
+<a href="#1631" id="1631">1631</a>
+<a href="#1632" id="1632">1632</a>
+<a href="#1633" id="1633">1633</a>
+<a href="#1634" id="1634">1634</a>
+<a href="#1635" id="1635">1635</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::serde::SerializationData;
 <span class="kw">use crate</span>::{
     ArrayInfo, DynamicArray, DynamicEnum, DynamicList, DynamicMap, DynamicStruct, DynamicTuple,
     DynamicTupleStruct, DynamicVariant, EnumInfo, ListInfo, Map, MapInfo, NamedField, Reflect,
     ReflectDeserialize, StructInfo, StructVariantInfo, TupleInfo, TupleStructInfo,
-    TupleVariantInfo, TypeInfo, TypeRegistration, TypeRegistry, UnnamedField, VariantInfo,
+    TupleVariantInfo, TypeInfo, TypeRegistration, TypeRegistry, VariantInfo,
 };
 <span class="kw">use </span>erased_serde::Deserializer;
 <span class="kw">use </span>serde::de::{
@@ -1627,7 +1658,6 @@
 }
 
 <span class="kw">trait </span>StructLikeInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str;
     <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>NamedField&gt;;
     <span class="kw">fn </span>field_at(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>NamedField&gt;;
     <span class="kw">fn </span>get_field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize;
@@ -1635,8 +1665,6 @@
 }
 
 <span class="kw">trait </span>TupleLikeInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str;
-    <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UnnamedField&gt;;
     <span class="kw">fn </span>get_field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize;
 }
 
@@ -1649,10 +1677,6 @@
 }
 
 <span class="kw">impl </span>StructLikeInfo <span class="kw">for </span>StructInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.type_path()
-    }
-
     <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>NamedField&gt; {
         <span class="self">self</span>.field(name)
     }
@@ -1688,10 +1712,6 @@
 }
 
 <span class="kw">impl </span>StructLikeInfo <span class="kw">for </span>StructVariantInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.name()
-    }
-
     <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>NamedField&gt; {
         <span class="self">self</span>.field(name)
     }
@@ -1727,14 +1747,6 @@
 }
 
 <span class="kw">impl </span>TupleLikeInfo <span class="kw">for </span>TupleInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.type_path()
-    }
-
-    <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UnnamedField&gt; {
-        <span class="self">self</span>.field_at(index)
-    }
-
     <span class="kw">fn </span>get_field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.field_len()
     }
@@ -1758,14 +1770,6 @@
 }
 
 <span class="kw">impl </span>TupleLikeInfo <span class="kw">for </span>TupleStructInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.type_path()
-    }
-
-    <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UnnamedField&gt; {
-        <span class="self">self</span>.field_at(index)
-    }
-
     <span class="kw">fn </span>get_field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.field_len()
     }
@@ -1789,14 +1793,6 @@
 }
 
 <span class="kw">impl </span>TupleLikeInfo <span class="kw">for </span>TupleVariantInfo {
-    <span class="kw">fn </span>get_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.name()
-    }
-
-    <span class="kw">fn </span>get_field(<span class="kw-2">&amp;</span><span class="self">self</span>, index: usize) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>UnnamedField&gt; {
-        <span class="self">self</span>.field_at(index)
-    }
-
     <span class="kw">fn </span>get_field_len(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.field_len()
     }
@@ -1879,68 +1875,6 @@
     }
 }
 
-<span class="kw">struct </span>U32Visitor;
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>U32Visitor {
-    <span class="kw">type </span>Value = u32;
-
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>Formatter) -&gt; fmt::Result {
-        formatter.write_str(<span class="string">"u32"</span>)
-    }
-
-    <span class="kw">fn </span>visit_u32&lt;E&gt;(<span class="self">self</span>, v: u32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, E&gt;
-    <span class="kw">where
-        </span>E: Error,
-    {
-        <span class="prelude-val">Ok</span>(v)
-    }
-}
-
-<span class="doccomment">/// A general purpose deserializer for reflected types.
-///
-/// This will return a [`Box&lt;dyn Reflect&gt;`] containing the deserialized data.
-/// For non-value types, this `Box` will contain the dynamic equivalent. For example, a
-/// deserialized struct will return a [`DynamicStruct`] and a `Vec` will return a
-/// [`DynamicList`]. For value types, this `Box` will contain the actual value.
-/// For example, an `f32` will contain the actual `f32` type.
-///
-/// This means that converting to any concrete instance will require the use of
-/// [`FromReflect`], or downcasting for value types.
-///
-/// Because the type isn't known ahead of time, the serialized data must take the form of
-/// a map containing the following entries (in order):
-/// 1. `type`: The _full_ [type path]
-/// 2. `value`: The serialized value of the reflected type
-///
-/// If the type is already known and the [`TypeInfo`] for it can be retrieved,
-/// [`TypedReflectDeserializer`] may be used instead to avoid requiring these entries.
-///
-/// [`Box&lt;dyn Reflect&gt;`]: crate::Reflect
-/// [`FromReflect`]: crate::FromReflect
-/// [type path]: crate::TypePath::type_path
-</span><span class="kw">pub struct </span>UntypedReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
-    registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry,
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; UntypedReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">pub fn </span>new(registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{ registry }
-    }
-}
-
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'de</span>&gt; DeserializeSeed&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>UntypedReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">type </span>Value = Box&lt;<span class="kw">dyn </span>Reflect&gt;;
-
-    <span class="kw">fn </span>deserialize&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
-    <span class="kw">where
-        </span>D: serde::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
-    {
-        deserializer.deserialize_map(UntypedReflectDeserializerVisitor {
-            registry: <span class="self">self</span>.registry,
-        })
-    }
-}
-
 <span class="doccomment">/// A deserializer for type registrations.
 ///
 /// This will return a [`&amp;TypeRegistration`] corresponding to the given type.
@@ -1989,53 +1923,217 @@
     }
 }
 
-<span class="kw">struct </span>UntypedReflectDeserializerVisitor&lt;<span class="lifetime">'a</span>&gt; {
+<span class="doccomment">/// A general purpose deserializer for reflected types.
+///
+/// This is the deserializer counterpart to [`ReflectSerializer`].
+///
+/// See [`TypedReflectDeserializer`] for a deserializer that expects a known type.
+///
+/// # Input
+///
+/// This deserializer expects a map with a single entry,
+/// where the key is the _full_ [type path] of the reflected type
+/// and the value is the serialized data.
+///
+/// # Output
+///
+/// This deserializer will return a [`Box&lt;dyn Reflect&gt;`] containing the deserialized data.
+///
+/// For value types (i.e. [`ReflectKind::Value`]) or types that register [`ReflectDeserialize`] type data,
+/// this `Box` will contain the expected type.
+/// For example, deserializing an `i32` will return a `Box&lt;i32&gt;` (as a `Box&lt;dyn Reflect&gt;`).
+///
+/// Otherwise, this `Box` will contain the dynamic equivalent.
+/// For example, a deserialized struct might return a [`Box&lt;DynamicStruct&gt;`]
+/// and a deserialized `Vec` might return a [`Box&lt;DynamicList&gt;`].
+///
+/// This means that if the actual type is needed, these dynamic representations will need to
+/// be converted to the concrete type using [`FromReflect`] or [`ReflectFromReflect`].
+///
+/// # Example
+///
+/// ```
+/// # use serde::de::DeserializeSeed;
+/// # use bevy_reflect::prelude::*;
+/// # use bevy_reflect::{DynamicStruct, TypeRegistry, serde::ReflectDeserializer};
+/// #[derive(Reflect, PartialEq, Debug)]
+/// #[type_path = "my_crate"]
+/// struct MyStruct {
+///   value: i32
+/// }
+///
+/// let mut registry = TypeRegistry::default();
+/// registry.register::&lt;MyStruct&gt;();
+///
+/// let input = r#"{
+///   "my_crate::MyStruct": (
+///     value: 123
+///   )
+/// }"#;
+///
+/// let mut deserializer = ron::Deserializer::from_str(input).unwrap();
+/// let reflect_deserializer = ReflectDeserializer::new(&amp;registry);
+///
+/// let output: Box&lt;dyn Reflect&gt; = reflect_deserializer.deserialize(&amp;mut deserializer).unwrap();
+///
+/// // Since `MyStruct` is not a value type and does not register `ReflectDeserialize`,
+/// // we know that its deserialized representation will be a `DynamicStruct`.
+/// assert!(output.is::&lt;DynamicStruct&gt;());
+/// assert!(output.represents::&lt;MyStruct&gt;());
+///
+/// // We can convert back to `MyStruct` using `FromReflect`.
+/// let value: MyStruct = &lt;MyStruct as FromReflect&gt;::from_reflect(&amp;*output).unwrap();
+/// assert_eq!(value, MyStruct { value: 123 });
+///
+/// // We can also do this dynamically with `ReflectFromReflect`.
+/// let type_id = output.get_represented_type_info().unwrap().type_id();
+/// let reflect_from_reflect = registry.get_type_data::&lt;ReflectFromReflect&gt;(type_id).unwrap();
+/// let value: Box&lt;dyn Reflect&gt; = reflect_from_reflect.from_reflect(&amp;*output).unwrap();
+/// assert!(value.is::&lt;MyStruct&gt;());
+/// assert_eq!(value.take::&lt;MyStruct&gt;().unwrap(), MyStruct { value: 123 });
+/// ```
+///
+/// [`ReflectSerializer`]: crate::serde::ReflectSerializer
+/// [type path]: crate::TypePath::type_path
+/// [`Box&lt;dyn Reflect&gt;`]: crate::Reflect
+/// [`ReflectKind::Value`]: crate::ReflectKind::Value
+/// [`ReflectDeserialize`]: crate::ReflectDeserialize
+/// [`Box&lt;DynamicStruct&gt;`]: crate::DynamicStruct
+/// [`Box&lt;DynamicList&gt;`]: crate::DynamicList
+/// [`FromReflect`]: crate::FromReflect
+/// [`ReflectFromReflect`]: crate::ReflectFromReflect
+</span><span class="kw">pub struct </span>ReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
     registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>UntypedReflectDeserializerVisitor&lt;<span class="lifetime">'a</span>&gt; {
-    <span class="kw">type </span>Value = Box&lt;<span class="kw">dyn </span>Reflect&gt;;
-
-    <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>Formatter) -&gt; fmt::Result {
-        formatter.write_str(<span class="string">"map containing `type` and `value` entries for the reflected value"</span>)
-    }
-
-    <span class="kw">fn </span>visit_map&lt;A&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>map: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt;
-    <span class="kw">where
-        </span>A: MapAccess&lt;<span class="lifetime">'de</span>&gt;,
-    {
-        <span class="kw">let </span>registration = map
-            .next_key_seed(TypeRegistrationDeserializer::new(<span class="self">self</span>.registry))<span class="question-mark">?
-            </span>.ok_or_else(|| Error::invalid_length(<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="string">"a single entry"</span>))<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>value = map.next_value_seed(TypedReflectDeserializer {
-            registration,
-            registry: <span class="self">self</span>.registry,
-        })<span class="question-mark">?</span>;
-
-        <span class="kw">if </span>map.next_key::&lt;IgnoredAny&gt;()<span class="question-mark">?</span>.is_some() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::invalid_length(<span class="number">2</span>, <span class="kw-2">&amp;</span><span class="string">"a single entry"</span>));
-        }
-
-        <span class="prelude-val">Ok</span>(value)
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; ReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">pub fn </span>new(registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ registry }
     }
 }
 
-<span class="doccomment">/// A deserializer for reflected types whose [`TypeInfo`] is known.
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'de</span>&gt; DeserializeSeed&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>ReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
+    <span class="kw">type </span>Value = Box&lt;<span class="kw">dyn </span>Reflect&gt;;
+
+    <span class="kw">fn </span>deserialize&lt;D&gt;(<span class="self">self</span>, deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, D::Error&gt;
+    <span class="kw">where
+        </span>D: serde::Deserializer&lt;<span class="lifetime">'de</span>&gt;,
+    {
+        <span class="kw">struct </span>UntypedReflectDeserializerVisitor&lt;<span class="lifetime">'a</span>&gt; {
+            registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry,
+        }
+
+        <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'de</span>&gt; Visitor&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>UntypedReflectDeserializerVisitor&lt;<span class="lifetime">'a</span>&gt; {
+            <span class="kw">type </span>Value = Box&lt;<span class="kw">dyn </span>Reflect&gt;;
+
+            <span class="kw">fn </span>expecting(<span class="kw-2">&amp;</span><span class="self">self</span>, formatter: <span class="kw-2">&amp;mut </span>Formatter) -&gt; fmt::Result {
+                formatter
+                    .write_str(<span class="string">"map containing `type` and `value` entries for the reflected value"</span>)
+            }
+
+            <span class="kw">fn </span>visit_map&lt;A&gt;(<span class="self">self</span>, <span class="kw-2">mut </span>map: A) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Value, A::Error&gt;
+            <span class="kw">where
+                </span>A: MapAccess&lt;<span class="lifetime">'de</span>&gt;,
+            {
+                <span class="kw">let </span>registration = map
+                    .next_key_seed(TypeRegistrationDeserializer::new(<span class="self">self</span>.registry))<span class="question-mark">?
+                    </span>.ok_or_else(|| Error::invalid_length(<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="string">"a single entry"</span>))<span class="question-mark">?</span>;
+
+                <span class="kw">let </span>value = map.next_value_seed(TypedReflectDeserializer {
+                    registration,
+                    registry: <span class="self">self</span>.registry,
+                })<span class="question-mark">?</span>;
+
+                <span class="kw">if </span>map.next_key::&lt;IgnoredAny&gt;()<span class="question-mark">?</span>.is_some() {
+                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::invalid_length(<span class="number">2</span>, <span class="kw-2">&amp;</span><span class="string">"a single entry"</span>));
+                }
+
+                <span class="prelude-val">Ok</span>(value)
+            }
+        }
+
+        deserializer.deserialize_map(UntypedReflectDeserializerVisitor {
+            registry: <span class="self">self</span>.registry,
+        })
+    }
+}
+
+<span class="doccomment">/// A deserializer for reflected types whose [`TypeRegistration`] is known.
 ///
-/// This will return a [`Box&lt;dyn Reflect&gt;`] containing the deserialized data.
-/// For non-value types, this `Box` will contain the dynamic equivalent. For example, a
-/// deserialized struct will return a [`DynamicStruct`] and a `Vec` will return a
-/// [`DynamicList`]. For value types, this `Box` will contain the actual value.
-/// For example, an `f32` will contain the actual `f32` type.
+/// This is the deserializer counterpart to [`TypedReflectSerializer`].
 ///
-/// This means that converting to any concrete instance will require the use of
-/// [`FromReflect`], or downcasting for value types.
+/// See [`ReflectDeserializer`] for a deserializer that expects an unknown type.
 ///
-/// If the type is not known ahead of time, use [`UntypedReflectDeserializer`] instead.
+/// # Input
 ///
+/// Since the type is already known, the input is just the serialized data.
+///
+/// # Output
+///
+/// This deserializer will return a [`Box&lt;dyn Reflect&gt;`] containing the deserialized data.
+///
+/// For value types (i.e. [`ReflectKind::Value`]) or types that register [`ReflectDeserialize`] type data,
+/// this `Box` will contain the expected type.
+/// For example, deserializing an `i32` will return a `Box&lt;i32&gt;` (as a `Box&lt;dyn Reflect&gt;`).
+///
+/// Otherwise, this `Box` will contain the dynamic equivalent.
+/// For example, a deserialized struct might return a [`Box&lt;DynamicStruct&gt;`]
+/// and a deserialized `Vec` might return a [`Box&lt;DynamicList&gt;`].
+///
+/// This means that if the actual type is needed, these dynamic representations will need to
+/// be converted to the concrete type using [`FromReflect`] or [`ReflectFromReflect`].
+///
+/// # Example
+///
+/// ```
+/// # use std::any::TypeId;
+/// # use serde::de::DeserializeSeed;
+/// # use bevy_reflect::prelude::*;
+/// # use bevy_reflect::{DynamicStruct, TypeRegistry, serde::TypedReflectDeserializer};
+/// #[derive(Reflect, PartialEq, Debug)]
+/// struct MyStruct {
+///   value: i32
+/// }
+///
+/// let mut registry = TypeRegistry::default();
+/// registry.register::&lt;MyStruct&gt;();
+///
+/// let input = r#"(
+///   value: 123
+/// )"#;
+///
+/// let registration = registry.get(TypeId::of::&lt;MyStruct&gt;()).unwrap();
+///
+/// let mut deserializer = ron::Deserializer::from_str(input).unwrap();
+/// let reflect_deserializer = TypedReflectDeserializer::new(registration, &amp;registry);
+///
+/// let output: Box&lt;dyn Reflect&gt; = reflect_deserializer.deserialize(&amp;mut deserializer).unwrap();
+///
+/// // Since `MyStruct` is not a value type and does not register `ReflectDeserialize`,
+/// // we know that its deserialized representation will be a `DynamicStruct`.
+/// assert!(output.is::&lt;DynamicStruct&gt;());
+/// assert!(output.represents::&lt;MyStruct&gt;());
+///
+/// // We can convert back to `MyStruct` using `FromReflect`.
+/// let value: MyStruct = &lt;MyStruct as FromReflect&gt;::from_reflect(&amp;*output).unwrap();
+/// assert_eq!(value, MyStruct { value: 123 });
+///
+/// // We can also do this dynamically with `ReflectFromReflect`.
+/// let type_id = output.get_represented_type_info().unwrap().type_id();
+/// let reflect_from_reflect = registry.get_type_data::&lt;ReflectFromReflect&gt;(type_id).unwrap();
+/// let value: Box&lt;dyn Reflect&gt; = reflect_from_reflect.from_reflect(&amp;*output).unwrap();
+/// assert!(value.is::&lt;MyStruct&gt;());
+/// assert_eq!(value.take::&lt;MyStruct&gt;().unwrap(), MyStruct { value: 123 });
+/// ```
+///
+/// [`TypedReflectSerializer`]: crate::serde::TypedReflectSerializer
 /// [`Box&lt;dyn Reflect&gt;`]: crate::Reflect
+/// [`ReflectKind::Value`]: crate::ReflectKind::Value
+/// [`ReflectDeserialize`]: crate::ReflectDeserialize
+/// [`Box&lt;DynamicStruct&gt;`]: crate::DynamicStruct
+/// [`Box&lt;DynamicList&gt;`]: crate::DynamicList
 /// [`FromReflect`]: crate::FromReflect
+/// [`ReflectFromReflect`]: crate::ReflectFromReflect
 </span><span class="kw">pub struct </span>TypedReflectDeserializer&lt;<span class="lifetime">'a</span>&gt; {
     registration: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistration,
     registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry,
@@ -2409,8 +2507,12 @@
                 )<span class="question-mark">?
                 </span>.into(),
         };
-
-        dynamic_enum.set_variant(variant_info.name(), value);
+        <span class="kw">let </span>variant_name = variant_info.name();
+        <span class="kw">let </span>variant_index = <span class="self">self
+            </span>.enum_info
+            .index_of(variant_name)
+            .expect(<span class="string">"variant should exist"</span>);
+        dynamic_enum.set_variant_with_index(variant_index, variant_name, value);
         <span class="prelude-val">Ok</span>(dynamic_enum)
     }
 }
@@ -2714,7 +2816,7 @@
     <span class="kw">use </span>bevy_utils::HashMap;
 
     <span class="kw">use crate as </span>bevy_reflect;
-    <span class="kw">use </span><span class="kw">crate</span>::serde::{TypedReflectDeserializer, UntypedReflectDeserializer};
+    <span class="kw">use </span><span class="kw">crate</span>::serde::{ReflectDeserializer, ReflectSerializer, TypedReflectDeserializer};
     <span class="kw">use crate</span>::{DynamicEnum, FromReflect, Reflect, ReflectDeserialize, TypeRegistry};
 
     <span class="attr">#[derive(Reflect, Debug, PartialEq)]
@@ -2772,7 +2874,7 @@
     #[reflect(Deserialize)]
     </span><span class="kw">struct </span>CustomDeserialize {
         value: usize,
-        <span class="attr">#[serde(rename = <span class="string">"renamed"</span>)]
+        <span class="attr">#[serde(alias = <span class="string">"renamed"</span>)]
         </span>inner_struct: SomeDeserializableStruct,
     }
 
@@ -2822,12 +2924,11 @@
         registry
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>should_deserialize() {
+    <span class="kw">fn </span>get_my_struct() -&gt; MyStruct {
         <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
         map.insert(<span class="number">64</span>, <span class="number">32</span>);
 
-        <span class="kw">let </span>expected = MyStruct {
+        MyStruct {
             primitive_value: <span class="number">123</span>,
             option_value: <span class="prelude-val">Some</span>(String::from(<span class="string">"Hello world!"</span>)),
             option_value_complex: <span class="prelude-val">Some</span>(SomeStruct { foo: <span class="number">123 </span>}),
@@ -2854,7 +2955,13 @@
                 value: <span class="number">100</span>,
                 inner_struct: SomeDeserializableStruct { foo: <span class="number">101 </span>},
             },
-        };
+        }
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>should_deserialize() {
+        <span class="kw">let </span>expected = get_my_struct();
+        <span class="kw">let </span>registry = get_registry();
 
         <span class="kw">let </span>input = <span class="string">r#"{
             "bevy_reflect::serde::de::tests::MyStruct": (
@@ -2899,8 +3006,7 @@
             ),
         }"#</span>;
 
-        <span class="kw">let </span>registry = get_registry();
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>ron_deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>dynamic_output = reflect_deserializer
             .deserialize(<span class="kw-2">&amp;mut </span>ron_deserializer)
@@ -2917,7 +3023,7 @@
         }"#</span>;
 
         <span class="kw">let </span>registry = get_registry();
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>ron_deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>dynamic_output = reflect_deserializer
             .deserialize(<span class="kw-2">&amp;mut </span>ron_deserializer)
@@ -2984,7 +3090,7 @@
             ),
         }"#</span>;
 
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>ron_deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>dynamic_output = reflect_deserializer
             .deserialize(<span class="kw-2">&amp;mut </span>ron_deserializer)
@@ -3006,7 +3112,7 @@
             ),
         }"#</span>;
 
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>ron_deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>dynamic_output = reflect_deserializer
             .deserialize(<span class="kw-2">&amp;mut </span>ron_deserializer)
@@ -3036,7 +3142,7 @@
         </span><span class="kw">let </span>input = <span class="string">r#"{
     "bevy_reflect::serde::de::tests::MyEnum": Unit,
 }"#</span>;
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>output = reflect_deserializer.deserialize(<span class="kw-2">&amp;mut </span>deserializer).unwrap();
 
@@ -3047,7 +3153,7 @@
         </span><span class="kw">let </span>input = <span class="string">r#"{
     "bevy_reflect::serde::de::tests::MyEnum": NewType(123),
 }"#</span>;
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>output = reflect_deserializer.deserialize(<span class="kw-2">&amp;mut </span>deserializer).unwrap();
 
@@ -3058,7 +3164,7 @@
         </span><span class="kw">let </span>input = <span class="string">r#"{
     "bevy_reflect::serde::de::tests::MyEnum": Tuple(1.23, 3.21),
 }"#</span>;
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>output = reflect_deserializer.deserialize(<span class="kw-2">&amp;mut </span>deserializer).unwrap();
 
@@ -3071,7 +3177,7 @@
         value: "I &lt;3 Enums",
     ),
 }"#</span>;
-        <span class="kw">let </span>reflect_deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span><span class="kw-2">mut </span>deserializer = ron::de::Deserializer::from_str(input).unwrap();
         <span class="kw">let </span>output = reflect_deserializer.deserialize(<span class="kw-2">&amp;mut </span>deserializer).unwrap();
 
@@ -3081,40 +3187,28 @@
         <span class="macro">assert!</span>(expected.reflect_partial_eq(output.as_ref()).unwrap());
     }
 
+    <span class="comment">// Regression test for https://github.com/bevyengine/bevy/issues/12462
+    </span><span class="attr">#[test]
+    </span><span class="kw">fn </span>should_reserialize() {
+        <span class="kw">let </span>registry = get_registry();
+        <span class="kw">let </span>input1 = get_my_struct();
+
+        <span class="kw">let </span>serializer1 = ReflectSerializer::new(<span class="kw-2">&amp;</span>input1, <span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>serialized1 = ron::ser::to_string(<span class="kw-2">&amp;</span>serializer1).unwrap();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>deserializer = ron::de::Deserializer::from_str(<span class="kw-2">&amp;</span>serialized1).unwrap();
+        <span class="kw">let </span>reflect_deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>input2 = reflect_deserializer.deserialize(<span class="kw-2">&amp;mut </span>deserializer).unwrap();
+
+        <span class="kw">let </span>serializer2 = ReflectSerializer::new(<span class="kw-2">&amp;*</span>input2, <span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>serialized2 = ron::ser::to_string(<span class="kw-2">&amp;</span>serializer2).unwrap();
+
+        <span class="macro">assert_eq!</span>(serialized1, serialized2);
+    }
+
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_deserialize_non_self_describing_binary() {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
-        map.insert(<span class="number">64</span>, <span class="number">32</span>);
-
-        <span class="kw">let </span>expected = MyStruct {
-            primitive_value: <span class="number">123</span>,
-            option_value: <span class="prelude-val">Some</span>(String::from(<span class="string">"Hello world!"</span>)),
-            option_value_complex: <span class="prelude-val">Some</span>(SomeStruct { foo: <span class="number">123 </span>}),
-            tuple_value: (PI, <span class="number">1337</span>),
-            list_value: <span class="macro">vec!</span>[-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            array_value: [-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            map_value: map,
-            struct_value: SomeStruct { foo: <span class="number">999999999 </span>},
-            tuple_struct_value: SomeTupleStruct(String::from(<span class="string">"Tuple Struct"</span>)),
-            unit_struct: SomeUnitStruct,
-            unit_enum: SomeEnum::Unit,
-            newtype_enum: SomeEnum::NewType(<span class="number">123</span>),
-            tuple_enum: SomeEnum::Tuple(<span class="number">1.23</span>, <span class="number">3.21</span>),
-            struct_enum: SomeEnum::Struct {
-                foo: String::from(<span class="string">"Struct variant value"</span>),
-            },
-            ignored_struct: SomeIgnoredStruct { ignored: <span class="number">0 </span>},
-            ignored_tuple_struct: SomeIgnoredTupleStruct(<span class="number">0</span>),
-            ignored_struct_variant: SomeIgnoredEnum::Struct {
-                foo: String::default(),
-            },
-            ignored_tuple_variant: SomeIgnoredEnum::Tuple(<span class="number">0.0</span>, <span class="number">0.0</span>),
-            custom_deserialize: CustomDeserialize {
-                value: <span class="number">100</span>,
-                inner_struct: SomeDeserializableStruct { foo: <span class="number">101 </span>},
-            },
-        };
-
+        <span class="kw">let </span>expected = get_my_struct();
         <span class="kw">let </span>registry = get_registry();
 
         <span class="kw">let </span>input = <span class="macro">vec!</span>[
@@ -3133,7 +3227,7 @@
             <span class="number">0</span>,
         ];
 
-        <span class="kw">let </span>deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
 
         <span class="kw">let </span>dynamic_output = bincode::DefaultOptions::new()
             .with_fixint_encoding()
@@ -3146,38 +3240,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_deserialize_self_describing_binary() {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
-        map.insert(<span class="number">64</span>, <span class="number">32</span>);
-
-        <span class="kw">let </span>expected = MyStruct {
-            primitive_value: <span class="number">123</span>,
-            option_value: <span class="prelude-val">Some</span>(String::from(<span class="string">"Hello world!"</span>)),
-            option_value_complex: <span class="prelude-val">Some</span>(SomeStruct { foo: <span class="number">123 </span>}),
-            tuple_value: (PI, <span class="number">1337</span>),
-            list_value: <span class="macro">vec!</span>[-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            array_value: [-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            map_value: map,
-            struct_value: SomeStruct { foo: <span class="number">999999999 </span>},
-            tuple_struct_value: SomeTupleStruct(String::from(<span class="string">"Tuple Struct"</span>)),
-            unit_struct: SomeUnitStruct,
-            unit_enum: SomeEnum::Unit,
-            newtype_enum: SomeEnum::NewType(<span class="number">123</span>),
-            tuple_enum: SomeEnum::Tuple(<span class="number">1.23</span>, <span class="number">3.21</span>),
-            struct_enum: SomeEnum::Struct {
-                foo: String::from(<span class="string">"Struct variant value"</span>),
-            },
-            ignored_struct: SomeIgnoredStruct { ignored: <span class="number">0 </span>},
-            ignored_tuple_struct: SomeIgnoredTupleStruct(<span class="number">0</span>),
-            ignored_struct_variant: SomeIgnoredEnum::Struct {
-                foo: String::default(),
-            },
-            ignored_tuple_variant: SomeIgnoredEnum::Tuple(<span class="number">0.0</span>, <span class="number">0.0</span>),
-            custom_deserialize: CustomDeserialize {
-                value: <span class="number">100</span>,
-                inner_struct: SomeDeserializableStruct { foo: <span class="number">101 </span>},
-            },
-        };
-
+        <span class="kw">let </span>expected = get_my_struct();
         <span class="kw">let </span>registry = get_registry();
 
         <span class="kw">let </span>input = <span class="macro">vec!</span>[
@@ -3196,7 +3259,7 @@
 
         <span class="kw">let </span><span class="kw-2">mut </span>reader = std::io::BufReader::new(input.as_slice());
 
-        <span class="kw">let </span>deserializer = UntypedReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
+        <span class="kw">let </span>deserializer = ReflectDeserializer::new(<span class="kw-2">&amp;</span>registry);
         <span class="kw">let </span>dynamic_output = deserializer
             .deserialize(<span class="kw-2">&amp;mut </span>rmp_serde::Deserializer::new(<span class="kw-2">&amp;mut </span>reader))
             .unwrap();

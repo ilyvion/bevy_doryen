@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.13.0/src/serde/ser.rs`."><title>ser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.14.0/src/serde/ser.rs`."><title>ser.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_reflect/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -921,6 +920,19 @@
 <a href="#920" id="920">920</a>
 <a href="#921" id="921">921</a>
 <a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     Array, Enum, List, Map, Reflect, ReflectRef, ReflectSerialize, Struct, Tuple, TupleStruct,
     TypeInfo, TypeRegistry, VariantInfo, VariantType,
@@ -955,12 +967,19 @@
     reflect_value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Reflect,
     type_registry: <span class="kw-2">&amp;</span>TypeRegistry,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Serializable&lt;<span class="lifetime">'a</span>&gt;, E&gt; {
+    <span class="kw">let </span>info = reflect_value.get_represented_type_info().ok_or_else(|| {
+        Error::custom(<span class="macro">format_args!</span>(
+            <span class="string">"Type '{}' does not represent any type"</span>,
+            reflect_value.reflect_type_path(),
+        ))
+    })<span class="question-mark">?</span>;
+
     <span class="kw">let </span>reflect_serialize = type_registry
-        .get_type_data::&lt;ReflectSerialize&gt;(reflect_value.type_id())
+        .get_type_data::&lt;ReflectSerialize&gt;(info.type_id())
         .ok_or_else(|| {
             Error::custom(<span class="macro">format_args!</span>(
                 <span class="string">"Type '{}' did not register ReflectSerialize"</span>,
-                reflect_value.reflect_type_path()
+                info.type_path(),
             ))
         })<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(reflect_serialize.get_serializable(reflect_value))
@@ -968,10 +987,39 @@
 
 <span class="doccomment">/// A general purpose serializer for reflected types.
 ///
-/// The serialized data will take the form of a map containing the following entries:
-/// 1. `type`: The _full_ [type path]
-/// 2. `value`: The serialized value of the reflected type
+/// This is the serializer counterpart to [`ReflectDeserializer`].
 ///
+/// See [`TypedReflectSerializer`] for a serializer that serializes a known type.
+///
+/// # Output
+///
+/// This serializer will output a map with a single entry,
+/// where the key is the _full_ [type path] of the reflected type
+/// and the value is the serialized data.
+///
+/// # Example
+///
+/// ```
+/// # use bevy_reflect::prelude::*;
+/// # use bevy_reflect::{TypeRegistry, serde::ReflectSerializer};
+/// #[derive(Reflect, PartialEq, Debug)]
+/// #[type_path = "my_crate"]
+/// struct MyStruct {
+///   value: i32
+/// }
+///
+/// let mut registry = TypeRegistry::default();
+/// registry.register::&lt;MyStruct&gt;();
+///
+/// let input = MyStruct { value: 123 };
+///
+/// let reflect_serializer = ReflectSerializer::new(&amp;input, &amp;registry);
+/// let output = ron::to_string(&amp;reflect_serializer).unwrap();
+///
+/// assert_eq!(output, r#"{"my_crate::MyStruct":(value:123)}"#);
+/// ```
+///
+/// [`ReflectDeserializer`]: crate::serde::ReflectDeserializer
 /// [type path]: crate::TypePath::type_path
 </span><span class="kw">pub struct </span>ReflectSerializer&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">pub </span>value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Reflect,
@@ -1013,8 +1061,44 @@
     }
 }
 
-<span class="doccomment">/// A serializer for reflected types whose type is known and does not require
-/// serialization to include other metadata about it.
+<span class="doccomment">/// A serializer for reflected types whose type will be known during deserialization.
+///
+/// This is the serializer counterpart to [`TypedReflectDeserializer`].
+///
+/// See [`ReflectSerializer`] for a serializer that serializes an unknown type.
+///
+/// # Output
+///
+/// Since the type is expected to be known during deserialization,
+/// this serializer will not output any additional type information,
+/// such as the [type path].
+///
+/// Instead, it will output just the serialized data.
+///
+/// # Example
+///
+/// ```
+/// # use bevy_reflect::prelude::*;
+/// # use bevy_reflect::{TypeRegistry, serde::TypedReflectSerializer};
+/// #[derive(Reflect, PartialEq, Debug)]
+/// #[type_path = "my_crate"]
+/// struct MyStruct {
+///   value: i32
+/// }
+///
+/// let mut registry = TypeRegistry::default();
+/// registry.register::&lt;MyStruct&gt;();
+///
+/// let input = MyStruct { value: 123 };
+///
+/// let reflect_serializer = TypedReflectSerializer::new(&amp;input, &amp;registry);
+/// let output = ron::to_string(&amp;reflect_serializer).unwrap();
+///
+/// assert_eq!(output, r#"(value:123)"#);
+/// ```
+///
+/// [`TypedReflectDeserializer`]: crate::serde::TypedReflectDeserializer
+/// [type path]: crate::TypePath::type_path
 </span><span class="kw">pub struct </span>TypedReflectSerializer&lt;<span class="lifetime">'a</span>&gt; {
     <span class="kw">pub </span>value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Reflect,
     <span class="kw">pub </span>registry: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>TypeRegistry,
@@ -1490,12 +1574,10 @@
         registry
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>should_serialize() {
+    <span class="kw">fn </span>get_my_struct() -&gt; MyStruct {
         <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
         map.insert(<span class="number">64</span>, <span class="number">32</span>);
-
-        <span class="kw">let </span>input = MyStruct {
+        MyStruct {
             primitive_value: <span class="number">123</span>,
             option_value: <span class="prelude-val">Some</span>(String::from(<span class="string">"Hello world!"</span>)),
             option_value_complex: <span class="prelude-val">Some</span>(SomeStruct { foo: <span class="number">123 </span>}),
@@ -1522,9 +1604,14 @@
                 value: <span class="number">100</span>,
                 inner_struct: SomeSerializableStruct { foo: <span class="number">101 </span>},
             },
-        };
+        }
+    }
 
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>should_serialize() {
+        <span class="kw">let </span>input = get_my_struct();
         <span class="kw">let </span>registry = get_registry();
+
         <span class="kw">let </span>serializer = ReflectSerializer::new(<span class="kw-2">&amp;</span>input, <span class="kw-2">&amp;</span>registry);
 
         <span class="kw">let </span>config = PrettyConfig::default()
@@ -1692,38 +1779,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_serialize_non_self_describing_binary() {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
-        map.insert(<span class="number">64</span>, <span class="number">32</span>);
-
-        <span class="kw">let </span>input = MyStruct {
-            primitive_value: <span class="number">123</span>,
-            option_value: <span class="prelude-val">Some</span>(String::from(<span class="string">"Hello world!"</span>)),
-            option_value_complex: <span class="prelude-val">Some</span>(SomeStruct { foo: <span class="number">123 </span>}),
-            tuple_value: (PI, <span class="number">1337</span>),
-            list_value: <span class="macro">vec!</span>[-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            array_value: [-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            map_value: map,
-            struct_value: SomeStruct { foo: <span class="number">999999999 </span>},
-            tuple_struct_value: SomeTupleStruct(String::from(<span class="string">"Tuple Struct"</span>)),
-            unit_struct: SomeUnitStruct,
-            unit_enum: SomeEnum::Unit,
-            newtype_enum: SomeEnum::NewType(<span class="number">123</span>),
-            tuple_enum: SomeEnum::Tuple(<span class="number">1.23</span>, <span class="number">3.21</span>),
-            struct_enum: SomeEnum::Struct {
-                foo: String::from(<span class="string">"Struct variant value"</span>),
-            },
-            ignored_struct: SomeIgnoredStruct { ignored: <span class="number">123 </span>},
-            ignored_tuple_struct: SomeIgnoredTupleStruct(<span class="number">123</span>),
-            ignored_struct_variant: SomeIgnoredEnum::Struct {
-                foo: String::from(<span class="string">"Struct Variant"</span>),
-            },
-            ignored_tuple_variant: SomeIgnoredEnum::Tuple(<span class="number">1.23</span>, <span class="number">3.45</span>),
-            custom_serialize: CustomSerialize {
-                value: <span class="number">100</span>,
-                inner_struct: SomeSerializableStruct { foo: <span class="number">101 </span>},
-            },
-        };
-
+        <span class="kw">let </span>input = get_my_struct();
         <span class="kw">let </span>registry = get_registry();
 
         <span class="kw">let </span>serializer = ReflectSerializer::new(<span class="kw-2">&amp;</span>input, <span class="kw-2">&amp;</span>registry);
@@ -1750,38 +1806,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>should_serialize_self_describing_binary() {
-        <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
-        map.insert(<span class="number">64</span>, <span class="number">32</span>);
-
-        <span class="kw">let </span>input = MyStruct {
-            primitive_value: <span class="number">123</span>,
-            option_value: <span class="prelude-val">Some</span>(String::from(<span class="string">"Hello world!"</span>)),
-            option_value_complex: <span class="prelude-val">Some</span>(SomeStruct { foo: <span class="number">123 </span>}),
-            tuple_value: (PI, <span class="number">1337</span>),
-            list_value: <span class="macro">vec!</span>[-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            array_value: [-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],
-            map_value: map,
-            struct_value: SomeStruct { foo: <span class="number">999999999 </span>},
-            tuple_struct_value: SomeTupleStruct(String::from(<span class="string">"Tuple Struct"</span>)),
-            unit_struct: SomeUnitStruct,
-            unit_enum: SomeEnum::Unit,
-            newtype_enum: SomeEnum::NewType(<span class="number">123</span>),
-            tuple_enum: SomeEnum::Tuple(<span class="number">1.23</span>, <span class="number">3.21</span>),
-            struct_enum: SomeEnum::Struct {
-                foo: String::from(<span class="string">"Struct variant value"</span>),
-            },
-            ignored_struct: SomeIgnoredStruct { ignored: <span class="number">123 </span>},
-            ignored_tuple_struct: SomeIgnoredTupleStruct(<span class="number">123</span>),
-            ignored_struct_variant: SomeIgnoredEnum::Struct {
-                foo: String::from(<span class="string">"Struct Variant"</span>),
-            },
-            ignored_tuple_variant: SomeIgnoredEnum::Tuple(<span class="number">1.23</span>, <span class="number">3.45</span>),
-            custom_serialize: CustomSerialize {
-                value: <span class="number">100</span>,
-                inner_struct: SomeSerializableStruct { foo: <span class="number">101 </span>},
-            },
-        };
-
+        <span class="kw">let </span>input = get_my_struct();
         <span class="kw">let </span>registry = get_registry();
 
         <span class="kw">let </span>serializer = ReflectSerializer::new(<span class="kw-2">&amp;</span>input, <span class="kw-2">&amp;</span>registry);

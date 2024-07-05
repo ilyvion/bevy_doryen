@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/bundle.rs`."><title>bundle.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/bundle.rs`."><title>bundle.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -928,26 +927,359 @@
 <a href="#927" id="927">927</a>
 <a href="#928" id="928">928</a>
 <a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
+<a href="#936" id="936">936</a>
+<a href="#937" id="937">937</a>
+<a href="#938" id="938">938</a>
+<a href="#939" id="939">939</a>
+<a href="#940" id="940">940</a>
+<a href="#941" id="941">941</a>
+<a href="#942" id="942">942</a>
+<a href="#943" id="943">943</a>
+<a href="#944" id="944">944</a>
+<a href="#945" id="945">945</a>
+<a href="#946" id="946">946</a>
+<a href="#947" id="947">947</a>
+<a href="#948" id="948">948</a>
+<a href="#949" id="949">949</a>
+<a href="#950" id="950">950</a>
+<a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
+<a href="#957" id="957">957</a>
+<a href="#958" id="958">958</a>
+<a href="#959" id="959">959</a>
+<a href="#960" id="960">960</a>
+<a href="#961" id="961">961</a>
+<a href="#962" id="962">962</a>
+<a href="#963" id="963">963</a>
+<a href="#964" id="964">964</a>
+<a href="#965" id="965">965</a>
+<a href="#966" id="966">966</a>
+<a href="#967" id="967">967</a>
+<a href="#968" id="968">968</a>
+<a href="#969" id="969">969</a>
+<a href="#970" id="970">970</a>
+<a href="#971" id="971">971</a>
+<a href="#972" id="972">972</a>
+<a href="#973" id="973">973</a>
+<a href="#974" id="974">974</a>
+<a href="#975" id="975">975</a>
+<a href="#976" id="976">976</a>
+<a href="#977" id="977">977</a>
+<a href="#978" id="978">978</a>
+<a href="#979" id="979">979</a>
+<a href="#980" id="980">980</a>
+<a href="#981" id="981">981</a>
+<a href="#982" id="982">982</a>
+<a href="#983" id="983">983</a>
+<a href="#984" id="984">984</a>
+<a href="#985" id="985">985</a>
+<a href="#986" id="986">986</a>
+<a href="#987" id="987">987</a>
+<a href="#988" id="988">988</a>
+<a href="#989" id="989">989</a>
+<a href="#990" id="990">990</a>
+<a href="#991" id="991">991</a>
+<a href="#992" id="992">992</a>
+<a href="#993" id="993">993</a>
+<a href="#994" id="994">994</a>
+<a href="#995" id="995">995</a>
+<a href="#996" id="996">996</a>
+<a href="#997" id="997">997</a>
+<a href="#998" id="998">998</a>
+<a href="#999" id="999">999</a>
+<a href="#1000" id="1000">1000</a>
+<a href="#1001" id="1001">1001</a>
+<a href="#1002" id="1002">1002</a>
+<a href="#1003" id="1003">1003</a>
+<a href="#1004" id="1004">1004</a>
+<a href="#1005" id="1005">1005</a>
+<a href="#1006" id="1006">1006</a>
+<a href="#1007" id="1007">1007</a>
+<a href="#1008" id="1008">1008</a>
+<a href="#1009" id="1009">1009</a>
+<a href="#1010" id="1010">1010</a>
+<a href="#1011" id="1011">1011</a>
+<a href="#1012" id="1012">1012</a>
+<a href="#1013" id="1013">1013</a>
+<a href="#1014" id="1014">1014</a>
+<a href="#1015" id="1015">1015</a>
+<a href="#1016" id="1016">1016</a>
+<a href="#1017" id="1017">1017</a>
+<a href="#1018" id="1018">1018</a>
+<a href="#1019" id="1019">1019</a>
+<a href="#1020" id="1020">1020</a>
+<a href="#1021" id="1021">1021</a>
+<a href="#1022" id="1022">1022</a>
+<a href="#1023" id="1023">1023</a>
+<a href="#1024" id="1024">1024</a>
+<a href="#1025" id="1025">1025</a>
+<a href="#1026" id="1026">1026</a>
+<a href="#1027" id="1027">1027</a>
+<a href="#1028" id="1028">1028</a>
+<a href="#1029" id="1029">1029</a>
+<a href="#1030" id="1030">1030</a>
+<a href="#1031" id="1031">1031</a>
+<a href="#1032" id="1032">1032</a>
+<a href="#1033" id="1033">1033</a>
+<a href="#1034" id="1034">1034</a>
+<a href="#1035" id="1035">1035</a>
+<a href="#1036" id="1036">1036</a>
+<a href="#1037" id="1037">1037</a>
+<a href="#1038" id="1038">1038</a>
+<a href="#1039" id="1039">1039</a>
+<a href="#1040" id="1040">1040</a>
+<a href="#1041" id="1041">1041</a>
+<a href="#1042" id="1042">1042</a>
+<a href="#1043" id="1043">1043</a>
+<a href="#1044" id="1044">1044</a>
+<a href="#1045" id="1045">1045</a>
+<a href="#1046" id="1046">1046</a>
+<a href="#1047" id="1047">1047</a>
+<a href="#1048" id="1048">1048</a>
+<a href="#1049" id="1049">1049</a>
+<a href="#1050" id="1050">1050</a>
+<a href="#1051" id="1051">1051</a>
+<a href="#1052" id="1052">1052</a>
+<a href="#1053" id="1053">1053</a>
+<a href="#1054" id="1054">1054</a>
+<a href="#1055" id="1055">1055</a>
+<a href="#1056" id="1056">1056</a>
+<a href="#1057" id="1057">1057</a>
+<a href="#1058" id="1058">1058</a>
+<a href="#1059" id="1059">1059</a>
+<a href="#1060" id="1060">1060</a>
+<a href="#1061" id="1061">1061</a>
+<a href="#1062" id="1062">1062</a>
+<a href="#1063" id="1063">1063</a>
+<a href="#1064" id="1064">1064</a>
+<a href="#1065" id="1065">1065</a>
+<a href="#1066" id="1066">1066</a>
+<a href="#1067" id="1067">1067</a>
+<a href="#1068" id="1068">1068</a>
+<a href="#1069" id="1069">1069</a>
+<a href="#1070" id="1070">1070</a>
+<a href="#1071" id="1071">1071</a>
+<a href="#1072" id="1072">1072</a>
+<a href="#1073" id="1073">1073</a>
+<a href="#1074" id="1074">1074</a>
+<a href="#1075" id="1075">1075</a>
+<a href="#1076" id="1076">1076</a>
+<a href="#1077" id="1077">1077</a>
+<a href="#1078" id="1078">1078</a>
+<a href="#1079" id="1079">1079</a>
+<a href="#1080" id="1080">1080</a>
+<a href="#1081" id="1081">1081</a>
+<a href="#1082" id="1082">1082</a>
+<a href="#1083" id="1083">1083</a>
+<a href="#1084" id="1084">1084</a>
+<a href="#1085" id="1085">1085</a>
+<a href="#1086" id="1086">1086</a>
+<a href="#1087" id="1087">1087</a>
+<a href="#1088" id="1088">1088</a>
+<a href="#1089" id="1089">1089</a>
+<a href="#1090" id="1090">1090</a>
+<a href="#1091" id="1091">1091</a>
+<a href="#1092" id="1092">1092</a>
+<a href="#1093" id="1093">1093</a>
+<a href="#1094" id="1094">1094</a>
+<a href="#1095" id="1095">1095</a>
+<a href="#1096" id="1096">1096</a>
+<a href="#1097" id="1097">1097</a>
+<a href="#1098" id="1098">1098</a>
+<a href="#1099" id="1099">1099</a>
+<a href="#1100" id="1100">1100</a>
+<a href="#1101" id="1101">1101</a>
+<a href="#1102" id="1102">1102</a>
+<a href="#1103" id="1103">1103</a>
+<a href="#1104" id="1104">1104</a>
+<a href="#1105" id="1105">1105</a>
+<a href="#1106" id="1106">1106</a>
+<a href="#1107" id="1107">1107</a>
+<a href="#1108" id="1108">1108</a>
+<a href="#1109" id="1109">1109</a>
+<a href="#1110" id="1110">1110</a>
+<a href="#1111" id="1111">1111</a>
+<a href="#1112" id="1112">1112</a>
+<a href="#1113" id="1113">1113</a>
+<a href="#1114" id="1114">1114</a>
+<a href="#1115" id="1115">1115</a>
+<a href="#1116" id="1116">1116</a>
+<a href="#1117" id="1117">1117</a>
+<a href="#1118" id="1118">1118</a>
+<a href="#1119" id="1119">1119</a>
+<a href="#1120" id="1120">1120</a>
+<a href="#1121" id="1121">1121</a>
+<a href="#1122" id="1122">1122</a>
+<a href="#1123" id="1123">1123</a>
+<a href="#1124" id="1124">1124</a>
+<a href="#1125" id="1125">1125</a>
+<a href="#1126" id="1126">1126</a>
+<a href="#1127" id="1127">1127</a>
+<a href="#1128" id="1128">1128</a>
+<a href="#1129" id="1129">1129</a>
+<a href="#1130" id="1130">1130</a>
+<a href="#1131" id="1131">1131</a>
+<a href="#1132" id="1132">1132</a>
+<a href="#1133" id="1133">1133</a>
+<a href="#1134" id="1134">1134</a>
+<a href="#1135" id="1135">1135</a>
+<a href="#1136" id="1136">1136</a>
+<a href="#1137" id="1137">1137</a>
+<a href="#1138" id="1138">1138</a>
+<a href="#1139" id="1139">1139</a>
+<a href="#1140" id="1140">1140</a>
+<a href="#1141" id="1141">1141</a>
+<a href="#1142" id="1142">1142</a>
+<a href="#1143" id="1143">1143</a>
+<a href="#1144" id="1144">1144</a>
+<a href="#1145" id="1145">1145</a>
+<a href="#1146" id="1146">1146</a>
+<a href="#1147" id="1147">1147</a>
+<a href="#1148" id="1148">1148</a>
+<a href="#1149" id="1149">1149</a>
+<a href="#1150" id="1150">1150</a>
+<a href="#1151" id="1151">1151</a>
+<a href="#1152" id="1152">1152</a>
+<a href="#1153" id="1153">1153</a>
+<a href="#1154" id="1154">1154</a>
+<a href="#1155" id="1155">1155</a>
+<a href="#1156" id="1156">1156</a>
+<a href="#1157" id="1157">1157</a>
+<a href="#1158" id="1158">1158</a>
+<a href="#1159" id="1159">1159</a>
+<a href="#1160" id="1160">1160</a>
+<a href="#1161" id="1161">1161</a>
+<a href="#1162" id="1162">1162</a>
+<a href="#1163" id="1163">1163</a>
+<a href="#1164" id="1164">1164</a>
+<a href="#1165" id="1165">1165</a>
+<a href="#1166" id="1166">1166</a>
+<a href="#1167" id="1167">1167</a>
+<a href="#1168" id="1168">1168</a>
+<a href="#1169" id="1169">1169</a>
+<a href="#1170" id="1170">1170</a>
+<a href="#1171" id="1171">1171</a>
+<a href="#1172" id="1172">1172</a>
+<a href="#1173" id="1173">1173</a>
+<a href="#1174" id="1174">1174</a>
+<a href="#1175" id="1175">1175</a>
+<a href="#1176" id="1176">1176</a>
+<a href="#1177" id="1177">1177</a>
+<a href="#1178" id="1178">1178</a>
+<a href="#1179" id="1179">1179</a>
+<a href="#1180" id="1180">1180</a>
+<a href="#1181" id="1181">1181</a>
+<a href="#1182" id="1182">1182</a>
+<a href="#1183" id="1183">1183</a>
+<a href="#1184" id="1184">1184</a>
+<a href="#1185" id="1185">1185</a>
+<a href="#1186" id="1186">1186</a>
+<a href="#1187" id="1187">1187</a>
+<a href="#1188" id="1188">1188</a>
+<a href="#1189" id="1189">1189</a>
+<a href="#1190" id="1190">1190</a>
+<a href="#1191" id="1191">1191</a>
+<a href="#1192" id="1192">1192</a>
+<a href="#1193" id="1193">1193</a>
+<a href="#1194" id="1194">1194</a>
+<a href="#1195" id="1195">1195</a>
+<a href="#1196" id="1196">1196</a>
+<a href="#1197" id="1197">1197</a>
+<a href="#1198" id="1198">1198</a>
+<a href="#1199" id="1199">1199</a>
+<a href="#1200" id="1200">1200</a>
+<a href="#1201" id="1201">1201</a>
+<a href="#1202" id="1202">1202</a>
+<a href="#1203" id="1203">1203</a>
+<a href="#1204" id="1204">1204</a>
+<a href="#1205" id="1205">1205</a>
+<a href="#1206" id="1206">1206</a>
+<a href="#1207" id="1207">1207</a>
+<a href="#1208" id="1208">1208</a>
+<a href="#1209" id="1209">1209</a>
+<a href="#1210" id="1210">1210</a>
+<a href="#1211" id="1211">1211</a>
+<a href="#1212" id="1212">1212</a>
+<a href="#1213" id="1213">1213</a>
+<a href="#1214" id="1214">1214</a>
+<a href="#1215" id="1215">1215</a>
+<a href="#1216" id="1216">1216</a>
+<a href="#1217" id="1217">1217</a>
+<a href="#1218" id="1218">1218</a>
+<a href="#1219" id="1219">1219</a>
+<a href="#1220" id="1220">1220</a>
+<a href="#1221" id="1221">1221</a>
+<a href="#1222" id="1222">1222</a>
+<a href="#1223" id="1223">1223</a>
+<a href="#1224" id="1224">1224</a>
+<a href="#1225" id="1225">1225</a>
+<a href="#1226" id="1226">1226</a>
+<a href="#1227" id="1227">1227</a>
+<a href="#1228" id="1228">1228</a>
+<a href="#1229" id="1229">1229</a>
+<a href="#1230" id="1230">1230</a>
+<a href="#1231" id="1231">1231</a>
+<a href="#1232" id="1232">1232</a>
+<a href="#1233" id="1233">1233</a>
+<a href="#1234" id="1234">1234</a>
+<a href="#1235" id="1235">1235</a>
+<a href="#1236" id="1236">1236</a>
+<a href="#1237" id="1237">1237</a>
+<a href="#1238" id="1238">1238</a>
+<a href="#1239" id="1239">1239</a>
+<a href="#1240" id="1240">1240</a>
+<a href="#1241" id="1241">1241</a>
+<a href="#1242" id="1242">1242</a>
+<a href="#1243" id="1243">1243</a>
+<a href="#1244" id="1244">1244</a>
+<a href="#1245" id="1245">1245</a>
+<a href="#1246" id="1246">1246</a>
+<a href="#1247" id="1247">1247</a>
+<a href="#1248" id="1248">1248</a>
+<a href="#1249" id="1249">1249</a>
+<a href="#1250" id="1250">1250</a>
+<a href="#1251" id="1251">1251</a>
+<a href="#1252" id="1252">1252</a>
+<a href="#1253" id="1253">1253</a>
+<a href="#1254" id="1254">1254</a>
+<a href="#1255" id="1255">1255</a>
+<a href="#1256" id="1256">1256</a>
+<a href="#1257" id="1257">1257</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Types for handling [`Bundle`]s.
 //!
 //! This module contains the [`Bundle`] trait and some other helper types.
 
-</span><span class="kw">pub use </span>bevy_ecs_macros::Bundle;
-<span class="kw">use </span>bevy_utils::{HashMap, HashSet, TypeIdMap};
+</span><span class="kw">use </span>std::any::TypeId;
+
+<span class="kw">pub use </span>bevy_ecs_macros::Bundle;
 
 <span class="kw">use crate</span>::{
     archetype::{
-        Archetype, ArchetypeId, Archetypes, BundleComponentStatus, ComponentStatus,
+        AddBundle, Archetype, ArchetypeId, Archetypes, BundleComponentStatus, ComponentStatus,
         SpawnBundleStatus,
     },
-    component::{Component, ComponentId, ComponentStorage, Components, StorageType, Tick},
+    component::{Component, ComponentId, Components, StorageType, Tick},
     entity::{Entities, Entity, EntityLocation},
+    observer::Observers,
+    prelude::World,
     query::DebugCheckedUnwrap,
     storage::{SparseSetIndex, SparseSets, Storages, Table, TableRow},
+    world::{unsafe_world_cell::UnsafeWorldCell, ON_ADD, ON_INSERT},
 };
-<span class="kw">use </span>bevy_ptr::OwningPtr;
-<span class="kw">use </span>bevy_utils::all_tuples;
-<span class="kw">use </span>std::any::TypeId;
+
+<span class="kw">use </span>bevy_ptr::{ConstNonNull, OwningPtr};
+<span class="kw">use </span>bevy_utils::{all_tuples, HashMap, HashSet, TypeIdMap};
+<span class="kw">use </span>std::ptr::NonNull;
 
 <span class="doccomment">/// The `Bundle` trait enables insertion and removal of [`Component`]s from an entity.
 ///
@@ -1068,6 +1400,11 @@
 // bundle, in the _exact_ order that [`DynamicBundle::get_components`] is called.
 // - [`Bundle::from_components`] must call `func` exactly once for each [`ComponentId`] returned by
 //   [`Bundle::component_ids`].
+</span><span class="attr">#[diagnostic::on_unimplemented(
+    message = <span class="string">"`{Self}` is not a `Bundle`"</span>,
+    label = <span class="string">"invalid `Bundle`"</span>,
+    note = <span class="string">"consider annotating `{Self}` with `#[derive(Component)]` or `#[derive(Bundle)]`"
+</span>)]
 </span><span class="kw">pub unsafe trait </span>Bundle: DynamicBundle + Send + Sync + <span class="lifetime">'static </span>{
     <span class="doccomment">/// Gets this [`Bundle`]'s component ids, in the order of this bundle's [`Component`]s
     </span><span class="attr">#[doc(hidden)]
@@ -1076,6 +1413,9 @@
         storages: <span class="kw-2">&amp;mut </span>Storages,
         ids: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(ComponentId),
     );
+
+    <span class="doccomment">/// Gets this [`Bundle`]'s component ids. This will be [`None`] if the component has not been registered.
+    </span><span class="kw">fn </span>get_component_ids(components: <span class="kw-2">&amp;</span>Components, ids: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(<span class="prelude-ty">Option</span>&lt;ComponentId&gt;));
 
     <span class="doccomment">/// Calls `func`, which should return data for each component in the bundle, in the order of
     /// this bundle's [`Component`]s
@@ -1105,7 +1445,7 @@
 
 <span class="comment">// SAFETY:
 // - `Bundle::component_ids` calls `ids` for C's component id (and nothing else)
-// - `Bundle::get_components` is called exactly once for C and passes the component's storage type based on it's associated constant.
+// - `Bundle::get_components` is called exactly once for C and passes the component's storage type based on its associated constant.
 // - `Bundle::from_components` calls `func` exactly once for C, which is the exact value returned by `Bundle::component_ids`.
 </span><span class="kw">unsafe impl</span>&lt;C: Component&gt; Bundle <span class="kw">for </span>C {
     <span class="kw">fn </span>component_ids(
@@ -1122,19 +1462,24 @@
         </span>F: <span class="kw">for</span>&lt;<span class="lifetime">'a</span>&gt; FnMut(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T) -&gt; OwningPtr&lt;<span class="lifetime">'a</span>&gt;,
         <span class="self">Self</span>: Sized,
     {
+        <span class="kw">let </span>ptr = func(ctx);
         <span class="comment">// Safety: The id given in `component_ids` is for `Self`
-        </span>func(ctx).read()
+        </span><span class="kw">unsafe </span>{ ptr.read() }
+    }
+
+    <span class="kw">fn </span>get_component_ids(components: <span class="kw-2">&amp;</span>Components, ids: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(<span class="prelude-ty">Option</span>&lt;ComponentId&gt;)) {
+        ids(components.get_id(TypeId::of::&lt;C&gt;()));
     }
 }
 
 <span class="kw">impl</span>&lt;C: Component&gt; DynamicBundle <span class="kw">for </span>C {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>get_components(<span class="self">self</span>, func: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(StorageType, OwningPtr&lt;<span class="lifetime">'_</span>&gt;)) {
-        OwningPtr::make(<span class="self">self</span>, |ptr| func(C::Storage::STORAGE_TYPE, ptr));
+        OwningPtr::make(<span class="self">self</span>, |ptr| func(C::STORAGE_TYPE, ptr));
     }
 }
 
-<span class="macro">macro_rules! </span>tuple_impl {
+<span class="macro">macro_rules!</span> tuple_impl {
     ($(<span class="macro-nonterminal">$name</span>: ident),<span class="kw-2">*</span>) =&gt; {
         <span class="comment">// SAFETY:
         // - `Bundle::component_ids` calls `ids` for each component type in the
@@ -1148,15 +1493,21 @@
                 $(&lt;<span class="macro-nonterminal">$name </span><span class="kw">as </span>Bundle&gt;::component_ids(components, storages, ids);)*
             }
 
+            <span class="attr">#[allow(unused_variables)]
+            </span><span class="kw">fn </span>get_component_ids(components: <span class="kw-2">&amp;</span>Components, ids: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(<span class="prelude-ty">Option</span>&lt;ComponentId&gt;)){
+                $(&lt;<span class="macro-nonterminal">$name </span><span class="kw">as </span>Bundle&gt;::get_component_ids(components, ids);)*
+            }
+
             <span class="attr">#[allow(unused_variables, unused_mut)]
             #[allow(clippy::unused_unit)]
             </span><span class="kw">unsafe fn </span>from_components&lt;T, F&gt;(ctx: <span class="kw-2">&amp;mut </span>T, func: <span class="kw-2">&amp;mut </span>F) -&gt; <span class="self">Self
             </span><span class="kw">where
                 </span>F: FnMut(<span class="kw-2">&amp;mut </span>T) -&gt; OwningPtr&lt;<span class="lifetime">'_</span>&gt;
             {
-                <span class="comment">// Rust guarantees that tuple calls are evaluated 'left to right'.
+                <span class="attr">#[allow(unused_unsafe)]
+                </span><span class="comment">// SAFETY: Rust guarantees that tuple calls are evaluated 'left to right'.
                 // https://doc.rust-lang.org/reference/expressions.html#evaluation-order-of-operands
-                </span>($(&lt;<span class="macro-nonterminal">$name </span><span class="kw">as </span>Bundle&gt;::from_components(ctx, func),)<span class="kw-2">*</span>)
+                </span><span class="kw">unsafe </span>{ ($(&lt;<span class="macro-nonterminal">$name </span><span class="kw">as </span>Bundle&gt;::from_components(ctx, func),)<span class="kw-2">*</span>) }
             }
         }
 
@@ -1274,86 +1625,10 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.component_ids
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_bundle_inserter&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="self">self</span>,
-        entities: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Entities,
-        archetypes: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Archetypes,
-        components: <span class="kw-2">&amp;</span>Components,
-        storages: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Storages,
-        archetype_id: ArchetypeId,
-        change_tick: Tick,
-    ) -&gt; BundleInserter&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
-        <span class="kw">let </span>new_archetype_id =
-            <span class="self">self</span>.add_bundle_to_archetype(archetypes, storages, components, archetype_id);
-        <span class="kw">let </span>archetypes_ptr = archetypes.archetypes.as_mut_ptr();
-        <span class="kw">if </span>new_archetype_id == archetype_id {
-            <span class="kw">let </span>archetype = <span class="kw-2">&amp;mut </span>archetypes[archetype_id];
-            <span class="kw">let </span>table_id = archetype.table_id();
-            BundleInserter {
-                bundle_info: <span class="self">self</span>,
-                archetype,
-                entities,
-                sparse_sets: <span class="kw-2">&amp;mut </span>storages.sparse_sets,
-                table: <span class="kw-2">&amp;mut </span>storages.tables[table_id],
-                archetypes_ptr,
-                change_tick,
-                result: InsertBundleResult::SameArchetype,
-            }
-        } <span class="kw">else </span>{
-            <span class="kw">let </span>(archetype, new_archetype) = archetypes.get_2_mut(archetype_id, new_archetype_id);
-            <span class="kw">let </span>table_id = archetype.table_id();
-            <span class="kw">if </span>table_id == new_archetype.table_id() {
-                BundleInserter {
-                    bundle_info: <span class="self">self</span>,
-                    archetype,
-                    archetypes_ptr,
-                    entities,
-                    sparse_sets: <span class="kw-2">&amp;mut </span>storages.sparse_sets,
-                    table: <span class="kw-2">&amp;mut </span>storages.tables[table_id],
-                    change_tick,
-                    result: InsertBundleResult::NewArchetypeSameTable { new_archetype },
-                }
-            } <span class="kw">else </span>{
-                <span class="kw">let </span>(table, new_table) = storages
-                    .tables
-                    .get_2_mut(table_id, new_archetype.table_id());
-                BundleInserter {
-                    bundle_info: <span class="self">self</span>,
-                    archetype,
-                    sparse_sets: <span class="kw-2">&amp;mut </span>storages.sparse_sets,
-                    entities,
-                    archetypes_ptr,
-                    table,
-                    change_tick,
-                    result: InsertBundleResult::NewArchetypeNewTable {
-                        new_archetype,
-                        new_table,
-                    },
-                }
-            }
-        }
-    }
-
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>get_bundle_spawner&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">'b </span><span class="self">self</span>,
-        entities: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Entities,
-        archetypes: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Archetypes,
-        components: <span class="kw-2">&amp;</span>Components,
-        storages: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Storages,
-        change_tick: Tick,
-    ) -&gt; BundleSpawner&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
-        <span class="kw">let </span>new_archetype_id =
-            <span class="self">self</span>.add_bundle_to_archetype(archetypes, storages, components, ArchetypeId::EMPTY);
-        <span class="kw">let </span>archetype = <span class="kw-2">&amp;mut </span>archetypes[new_archetype_id];
-        <span class="kw">let </span>table = <span class="kw-2">&amp;mut </span>storages.tables[archetype.table_id()];
-        BundleSpawner {
-            archetype,
-            bundle_info: <span class="self">self</span>,
-            table,
-            entities,
-            sparse_sets: <span class="kw-2">&amp;mut </span>storages.sparse_sets,
-            change_tick,
-        }
+    <span class="doccomment">/// Returns an iterator over the [ID](ComponentId) of each component stored in this bundle.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>iter_components(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = ComponentId&gt; + <span class="lifetime">'_ </span>{
+        <span class="self">self</span>.component_ids.iter().cloned()
     }
 
     <span class="doccomment">/// This writes components from a given [`Bundle`] to the given entity.
@@ -1364,10 +1639,10 @@
     /// in the [`Bundle`], with respect to the entity's original archetype (prior to the bundle being added)
     /// For example, if the original archetype already has `ComponentA` and `T` also has `ComponentA`, the status
     /// should be `Mutated`. If the original archetype does not have `ComponentA`, the status should be `Added`.
-    /// When "inserting" a bundle into an existing entity, [`AddBundle`](crate::archetype::AddBundle)
+    /// When "inserting" a bundle into an existing entity, [`AddBundle`]
     /// should be used, which will report `Added` vs `Mutated` status based on the current archetype's structure.
     /// When spawning a bundle, [`SpawnBundleStatus`] can be used instead, which removes the need
-    /// to look up the [`AddBundle`](crate::archetype::AddBundle) in the archetype graph, which requires
+    /// to look up the [`AddBundle`] in the archetype graph, which requires
     /// ownership of the entity's current archetype.
     ///
     /// `table` must be the "new" table for `entity`. `table_row` must have space allocated for the
@@ -1396,7 +1671,8 @@
                         // the target table contains the component.
                         </span><span class="kw">unsafe </span>{ table.get_column_mut(component_id).debug_checked_unwrap() };
                     <span class="comment">// SAFETY: bundle_component is a valid index for this bundle
-                    </span><span class="kw">match </span>bundle_component_status.get_status(bundle_component) {
+                    </span><span class="kw">let </span>status = <span class="kw">unsafe </span>{ bundle_component_status.get_status(bundle_component) };
+                    <span class="kw">match </span>status {
                         ComponentStatus::Added =&gt; {
                             column.initialize(table_row, component_ptr, change_tick);
                         }
@@ -1420,11 +1696,14 @@
     <span class="doccomment">/// Adds a bundle to the given archetype and returns the resulting archetype. This could be the
     /// same [`ArchetypeId`], in the event that adding the given bundle does not result in an
     /// [`Archetype`] change. Results are cached in the [`Archetype`] graph to avoid redundant work.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>add_bundle_to_archetype(
+    /// # Safety
+    /// `components` must be the same components as passed in [`Self::new`]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>add_bundle_to_archetype(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         archetypes: <span class="kw-2">&amp;mut </span>Archetypes,
         storages: <span class="kw-2">&amp;mut </span>Storages,
         components: <span class="kw-2">&amp;</span>Components,
+        observers: <span class="kw-2">&amp;</span>Observers,
         archetype_id: ArchetypeId,
     ) -&gt; ArchetypeId {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(add_bundle_id) = archetypes[archetype_id].edges().get_add_bundle(<span class="self">self</span>.id) {
@@ -1433,6 +1712,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>new_table_components = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>new_sparse_set_components = Vec::new();
         <span class="kw">let </span><span class="kw-2">mut </span>bundle_status = Vec::with_capacity(<span class="self">self</span>.component_ids.len());
+        <span class="kw">let </span><span class="kw-2">mut </span>added = Vec::new();
 
         <span class="kw">let </span>current_archetype = <span class="kw-2">&amp;mut </span>archetypes[archetype_id];
         <span class="kw">for </span>component_id <span class="kw">in </span><span class="self">self</span>.component_ids.iter().cloned() {
@@ -1440,6 +1720,7 @@
                 bundle_status.push(ComponentStatus::Mutated);
             } <span class="kw">else </span>{
                 bundle_status.push(ComponentStatus::Added);
+                added.push(component_id);
                 <span class="comment">// SAFETY: component_id exists
                 </span><span class="kw">let </span>component_info = <span class="kw">unsafe </span>{ components.get_info_unchecked(component_id) };
                 <span class="kw">match </span>component_info.storage_type() {
@@ -1452,7 +1733,7 @@
         <span class="kw">if </span>new_table_components.is_empty() &amp;&amp; new_sparse_set_components.is_empty() {
             <span class="kw">let </span>edges = current_archetype.edges_mut();
             <span class="comment">// the archetype does not change when we add this bundle
-            </span>edges.insert_add_bundle(<span class="self">self</span>.id, archetype_id, bundle_status);
+            </span>edges.insert_add_bundle(<span class="self">self</span>.id, archetype_id, bundle_status, added);
             archetype_id
         } <span class="kw">else </span>{
             <span class="kw">let </span>table_id;
@@ -1488,80 +1769,196 @@
                     new_sparse_set_components
                 };
             };
-            <span class="kw">let </span>new_archetype_id =
-                archetypes.get_id_or_insert(table_id, table_components, sparse_set_components);
+            <span class="comment">// SAFETY: ids in self must be valid
+            </span><span class="kw">let </span>new_archetype_id = archetypes.get_id_or_insert(
+                components,
+                observers,
+                table_id,
+                table_components,
+                sparse_set_components,
+            );
             <span class="comment">// add an edge from the old archetype to the new archetype
             </span>archetypes[archetype_id].edges_mut().insert_add_bundle(
                 <span class="self">self</span>.id,
                 new_archetype_id,
                 bundle_status,
+                added,
             );
             new_archetype_id
         }
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>BundleInserter&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) archetype: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Archetype,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) entities: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Entities,
-    bundle_info: <span class="kw-2">&amp;</span><span class="lifetime">'b </span>BundleInfo,
-    table: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Table,
-    sparse_sets: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>SparseSets,
-    result: InsertBundleResult&lt;<span class="lifetime">'a</span>&gt;,
-    archetypes_ptr: <span class="kw-2">*mut </span>Archetype,
+<span class="comment">// SAFETY: We have exclusive world access so our pointers can't be invalidated externally
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>BundleInserter&lt;<span class="lifetime">'w</span>&gt; {
+    world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;,
+    bundle_info: ConstNonNull&lt;BundleInfo&gt;,
+    add_bundle: ConstNonNull&lt;AddBundle&gt;,
+    table: NonNull&lt;Table&gt;,
+    archetype: NonNull&lt;Archetype&gt;,
+    result: InsertBundleResult,
     change_tick: Tick,
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>InsertBundleResult&lt;<span class="lifetime">'a</span>&gt; {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum </span>InsertBundleResult {
     SameArchetype,
     NewArchetypeSameTable {
-        new_archetype: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Archetype,
+        new_archetype: NonNull&lt;Archetype&gt;,
     },
     NewArchetypeNewTable {
-        new_archetype: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Archetype,
-        new_table: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Table,
+        new_archetype: NonNull&lt;Archetype&gt;,
+        new_table: NonNull&lt;Table&gt;,
     },
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; BundleInserter&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>&gt; BundleInserter&lt;<span class="lifetime">'w</span>&gt; {
+    <span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new&lt;T: Bundle&gt;(
+        world: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>World,
+        archetype_id: ArchetypeId,
+        change_tick: Tick,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>bundle_id = world
+            .bundles
+            .init_info::&lt;T&gt;(<span class="kw-2">&amp;mut </span>world.components, <span class="kw-2">&amp;mut </span>world.storages);
+        <span class="comment">// SAFETY: We just ensured this bundle exists
+        </span><span class="kw">unsafe </span>{ <span class="self">Self</span>::new_with_id(world, archetype_id, bundle_id, change_tick) }
+    }
+
+    <span class="doccomment">/// Creates a new [`BundleInserter`].
+    ///
+    /// # Safety
+    /// - Caller must ensure that `bundle_id` exists in `world.bundles`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>new_with_id(
+        world: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>World,
+        archetype_id: ArchetypeId,
+        bundle_id: BundleId,
+        change_tick: Tick,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="comment">// SAFETY: We will not make any accesses to the command queue, component or resource data of this world
+        </span><span class="kw">let </span>bundle_info = world.bundles.get_unchecked(bundle_id);
+        <span class="kw">let </span>bundle_id = bundle_info.id();
+        <span class="kw">let </span>new_archetype_id = bundle_info.add_bundle_to_archetype(
+            <span class="kw-2">&amp;mut </span>world.archetypes,
+            <span class="kw-2">&amp;mut </span>world.storages,
+            <span class="kw-2">&amp;</span>world.components,
+            <span class="kw-2">&amp;</span>world.observers,
+            archetype_id,
+        );
+        <span class="kw">if </span>new_archetype_id == archetype_id {
+            <span class="kw">let </span>archetype = <span class="kw-2">&amp;mut </span>world.archetypes[archetype_id];
+            <span class="comment">// SAFETY: The edge is assured to be initialized when we called add_bundle_to_archetype
+            </span><span class="kw">let </span>add_bundle = <span class="kw">unsafe </span>{
+                archetype
+                    .edges()
+                    .get_add_bundle_internal(bundle_id)
+                    .debug_checked_unwrap()
+            };
+            <span class="kw">let </span>table_id = archetype.table_id();
+            <span class="kw">let </span>table = <span class="kw-2">&amp;mut </span>world.storages.tables[table_id];
+            <span class="self">Self </span>{
+                add_bundle: add_bundle.into(),
+                archetype: archetype.into(),
+                bundle_info: bundle_info.into(),
+                table: table.into(),
+                result: InsertBundleResult::SameArchetype,
+                change_tick,
+                world: world.as_unsafe_world_cell(),
+            }
+        } <span class="kw">else </span>{
+            <span class="kw">let </span>(archetype, new_archetype) =
+                world.archetypes.get_2_mut(archetype_id, new_archetype_id);
+            <span class="comment">// SAFETY: The edge is assured to be initialized when we called add_bundle_to_archetype
+            </span><span class="kw">let </span>add_bundle = <span class="kw">unsafe </span>{
+                archetype
+                    .edges()
+                    .get_add_bundle_internal(bundle_id)
+                    .debug_checked_unwrap()
+            };
+            <span class="kw">let </span>table_id = archetype.table_id();
+            <span class="kw">let </span>new_table_id = new_archetype.table_id();
+            <span class="kw">if </span>table_id == new_table_id {
+                <span class="kw">let </span>table = <span class="kw-2">&amp;mut </span>world.storages.tables[table_id];
+                <span class="self">Self </span>{
+                    add_bundle: add_bundle.into(),
+                    archetype: archetype.into(),
+                    bundle_info: bundle_info.into(),
+                    table: table.into(),
+                    result: InsertBundleResult::NewArchetypeSameTable {
+                        new_archetype: new_archetype.into(),
+                    },
+                    change_tick,
+                    world: world.as_unsafe_world_cell(),
+                }
+            } <span class="kw">else </span>{
+                <span class="kw">let </span>(table, new_table) = world.storages.tables.get_2_mut(table_id, new_table_id);
+                <span class="self">Self </span>{
+                    add_bundle: add_bundle.into(),
+                    archetype: archetype.into(),
+                    bundle_info: bundle_info.into(),
+                    table: table.into(),
+                    result: InsertBundleResult::NewArchetypeNewTable {
+                        new_archetype: new_archetype.into(),
+                        new_table: new_table.into(),
+                    },
+                    change_tick,
+                    world: world.as_unsafe_world_cell(),
+                }
+            }
+        }
+    }
+
     <span class="doccomment">/// # Safety
-    /// `entity` must currently exist in the source archetype for this inserter. `archetype_row`
+    /// `entity` must currently exist in the source archetype for this inserter. `location`
     /// must be `entity`'s location in the archetype. `T` must match this [`BundleInfo`]'s type
     </span><span class="attr">#[inline]
-    </span><span class="kw">pub unsafe fn </span>insert&lt;T: DynamicBundle&gt;(
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>insert&lt;T: DynamicBundle&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         entity: Entity,
         location: EntityLocation,
         bundle: T,
     ) -&gt; EntityLocation {
-        <span class="kw">match </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.result {
+        <span class="kw">let </span>bundle_info = <span class="self">self</span>.bundle_info.as_ref();
+        <span class="kw">let </span>add_bundle = <span class="self">self</span>.add_bundle.as_ref();
+        <span class="kw">let </span>table = <span class="self">self</span>.table.as_mut();
+        <span class="kw">let </span>archetype = <span class="self">self</span>.archetype.as_mut();
+
+        <span class="kw">let </span>(new_archetype, new_location) = <span class="kw">match </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.result {
             InsertBundleResult::SameArchetype =&gt; {
-                <span class="comment">// PERF: this could be looked up during Inserter construction and stored (but borrowing makes this nasty)
-                // SAFETY: The edge is assured to be initialized when creating the BundleInserter
-                </span><span class="kw">let </span>add_bundle = <span class="kw">unsafe </span>{
-                    <span class="self">self</span>.archetype
-                        .edges()
-                        .get_add_bundle_internal(<span class="self">self</span>.bundle_info.id)
-                        .debug_checked_unwrap()
+                <span class="comment">// SAFETY: Mutable references do not alias and will be dropped after this block
+                </span><span class="kw">let </span>sparse_sets = {
+                    <span class="kw">let </span>world = <span class="self">self</span>.world.world_mut();
+                    <span class="kw-2">&amp;mut </span>world.storages.sparse_sets
                 };
-                <span class="self">self</span>.bundle_info.write_components(
-                    <span class="self">self</span>.table,
-                    <span class="self">self</span>.sparse_sets,
+
+                bundle_info.write_components(
+                    table,
+                    sparse_sets,
                     add_bundle,
                     entity,
                     location.table_row,
                     <span class="self">self</span>.change_tick,
                     bundle,
                 );
-                location
+
+                (archetype, location)
             }
             InsertBundleResult::NewArchetypeSameTable { new_archetype } =&gt; {
-                <span class="kw">let </span>result = <span class="self">self</span>.archetype.swap_remove(location.archetype_row);
+                <span class="kw">let </span>new_archetype = new_archetype.as_mut();
+
+                <span class="comment">// SAFETY: Mutable references do not alias and will be dropped after this block
+                </span><span class="kw">let </span>(sparse_sets, entities) = {
+                    <span class="kw">let </span>world = <span class="self">self</span>.world.world_mut();
+                    (<span class="kw-2">&amp;mut </span>world.storages.sparse_sets, <span class="kw-2">&amp;mut </span>world.entities)
+                };
+
+                <span class="kw">let </span>result = archetype.swap_remove(location.archetype_row);
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(swapped_entity) = result.swapped_entity {
                     <span class="kw">let </span>swapped_location =
                         <span class="comment">// SAFETY: If the swap was successful, swapped_entity must be valid.
-                        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.entities.get(swapped_entity).debug_checked_unwrap() };
-                    <span class="self">self</span>.entities.set(
+                        </span><span class="kw">unsafe </span>{ entities.get(swapped_entity).debug_checked_unwrap() };
+                    entities.set(
                         swapped_entity.index(),
                         EntityLocation {
                             archetype_id: swapped_location.archetype_id,
@@ -1572,37 +1969,42 @@
                     );
                 }
                 <span class="kw">let </span>new_location = new_archetype.allocate(entity, result.table_row);
-                <span class="self">self</span>.entities.set(entity.index(), new_location);
-
-                <span class="comment">// PERF: this could be looked up during Inserter construction and stored (but borrowing makes this nasty)
-                // SAFETY: The edge is assured to be initialized when creating the BundleInserter
-                </span><span class="kw">let </span>add_bundle = <span class="kw">unsafe </span>{
-                    <span class="self">self</span>.archetype
-                        .edges()
-                        .get_add_bundle_internal(<span class="self">self</span>.bundle_info.id)
-                        .debug_checked_unwrap()
-                };
-                <span class="self">self</span>.bundle_info.write_components(
-                    <span class="self">self</span>.table,
-                    <span class="self">self</span>.sparse_sets,
+                entities.set(entity.index(), new_location);
+                bundle_info.write_components(
+                    table,
+                    sparse_sets,
                     add_bundle,
                     entity,
                     result.table_row,
                     <span class="self">self</span>.change_tick,
                     bundle,
                 );
-                new_location
+
+                (new_archetype, new_location)
             }
             InsertBundleResult::NewArchetypeNewTable {
                 new_archetype,
                 new_table,
             } =&gt; {
-                <span class="kw">let </span>result = <span class="self">self</span>.archetype.swap_remove(location.archetype_row);
+                <span class="kw">let </span>new_table = new_table.as_mut();
+                <span class="kw">let </span>new_archetype = new_archetype.as_mut();
+
+                <span class="comment">// SAFETY: Mutable references do not alias and will be dropped after this block
+                </span><span class="kw">let </span>(archetypes_ptr, sparse_sets, entities) = {
+                    <span class="kw">let </span>world = <span class="self">self</span>.world.world_mut();
+                    <span class="kw">let </span>archetype_ptr: <span class="kw-2">*mut </span>Archetype = world.archetypes.archetypes.as_mut_ptr();
+                    (
+                        archetype_ptr,
+                        <span class="kw-2">&amp;mut </span>world.storages.sparse_sets,
+                        <span class="kw-2">&amp;mut </span>world.entities,
+                    )
+                };
+                <span class="kw">let </span>result = archetype.swap_remove(location.archetype_row);
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(swapped_entity) = result.swapped_entity {
                     <span class="kw">let </span>swapped_location =
                         <span class="comment">// SAFETY: If the swap was successful, swapped_entity must be valid.
-                        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.entities.get(swapped_entity).debug_checked_unwrap() };
-                    <span class="self">self</span>.entities.set(
+                        </span><span class="kw">unsafe </span>{ entities.get(swapped_entity).debug_checked_unwrap() };
+                    entities.set(
                         swapped_entity.index(),
                         EntityLocation {
                             archetype_id: swapped_location.archetype_id,
@@ -1614,30 +2016,17 @@
                 }
                 <span class="comment">// PERF: store "non bundle" components in edge, then just move those to avoid
                 // redundant copies
-                </span><span class="kw">let </span>move_result = <span class="self">self
-                    </span>.table
-                    .move_to_superset_unchecked(result.table_row, new_table);
+                </span><span class="kw">let </span>move_result = table.move_to_superset_unchecked(result.table_row, new_table);
                 <span class="kw">let </span>new_location = new_archetype.allocate(entity, move_result.new_row);
-                <span class="self">self</span>.entities.set(entity.index(), new_location);
+                entities.set(entity.index(), new_location);
 
                 <span class="comment">// if an entity was moved into this entity's table spot, update its table row
                 </span><span class="kw">if let </span><span class="prelude-val">Some</span>(swapped_entity) = move_result.swapped_entity {
                     <span class="kw">let </span>swapped_location =
                         <span class="comment">// SAFETY: If the swap was successful, swapped_entity must be valid.
-                        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.entities.get(swapped_entity).debug_checked_unwrap() };
-                    <span class="kw">let </span>swapped_archetype = <span class="kw">if </span><span class="self">self</span>.archetype.id() == swapped_location.archetype_id
-                    {
-                        <span class="kw-2">&amp;mut *</span><span class="self">self</span>.archetype
-                    } <span class="kw">else if </span>new_archetype.id() == swapped_location.archetype_id {
-                        new_archetype
-                    } <span class="kw">else </span>{
-                        <span class="comment">// SAFETY: the only two borrowed archetypes are above and we just did collision checks
-                        </span><span class="kw-2">&amp;mut *</span><span class="self">self
-                            </span>.archetypes_ptr
-                            .add(swapped_location.archetype_id.index())
-                    };
+                        </span><span class="kw">unsafe </span>{ entities.get(swapped_entity).debug_checked_unwrap() };
 
-                    <span class="self">self</span>.entities.set(
+                    entities.set(
                         swapped_entity.index(),
                         EntityLocation {
                             archetype_id: swapped_location.archetype_id,
@@ -1646,47 +2035,117 @@
                             table_row: result.table_row,
                         },
                     );
-                    swapped_archetype
-                        .set_entity_table_row(swapped_location.archetype_row, result.table_row);
+
+                    <span class="kw">if </span>archetype.id() == swapped_location.archetype_id {
+                        archetype
+                            .set_entity_table_row(swapped_location.archetype_row, result.table_row);
+                    } <span class="kw">else if </span>new_archetype.id() == swapped_location.archetype_id {
+                        new_archetype
+                            .set_entity_table_row(swapped_location.archetype_row, result.table_row);
+                    } <span class="kw">else </span>{
+                        <span class="comment">// SAFETY: the only two borrowed archetypes are above and we just did collision checks
+                        </span>(<span class="kw-2">*</span>archetypes_ptr.add(swapped_location.archetype_id.index()))
+                            .set_entity_table_row(swapped_location.archetype_row, result.table_row);
+                    }
                 }
 
-                <span class="comment">// PERF: this could be looked up during Inserter construction and stored (but borrowing makes this nasty)
-                // SAFETY: The edge is assured to be initialized when creating the BundleInserter
-                </span><span class="kw">let </span>add_bundle = <span class="kw">unsafe </span>{
-                    <span class="self">self</span>.archetype
-                        .edges()
-                        .get_add_bundle_internal(<span class="self">self</span>.bundle_info.id)
-                        .debug_checked_unwrap()
-                };
-                <span class="self">self</span>.bundle_info.write_components(
+                bundle_info.write_components(
                     new_table,
-                    <span class="self">self</span>.sparse_sets,
+                    sparse_sets,
                     add_bundle,
                     entity,
                     move_result.new_row,
                     <span class="self">self</span>.change_tick,
                     bundle,
                 );
-                new_location
+
+                (new_archetype, new_location)
+            }
+        };
+
+        <span class="kw">let </span>new_archetype = <span class="kw-2">&amp;*</span>new_archetype;
+        <span class="comment">// SAFETY: We have no outstanding mutable references to world as they were dropped
+        </span><span class="kw">let </span><span class="kw-2">mut </span>deferred_world = <span class="kw">unsafe </span>{ <span class="self">self</span>.world.into_deferred() };
+
+        <span class="comment">// SAFETY: All components in the bundle are guaranteed to exist in the World
+        // as they must be initialized before creating the BundleInfo.
+        </span><span class="kw">unsafe </span>{
+            deferred_world.trigger_on_add(new_archetype, entity, add_bundle.added.iter().cloned());
+            <span class="kw">if </span>new_archetype.has_add_observer() {
+                deferred_world.trigger_observers(ON_ADD, entity, add_bundle.added.iter().cloned());
+            }
+            deferred_world.trigger_on_insert(new_archetype, entity, bundle_info.iter_components());
+            <span class="kw">if </span>new_archetype.has_insert_observer() {
+                deferred_world.trigger_observers(ON_INSERT, entity, bundle_info.iter_components());
             }
         }
+
+        new_location
+    }
+
+    <span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>entities(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>Entities {
+        <span class="comment">// SAFETY: No outstanding references to self.world, changes to entities cannot invalidate our internal pointers
+        </span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.world_mut().entities }
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>BundleSpawner&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) archetype: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Archetype,
-    <span class="kw">pub</span>(<span class="kw">crate</span>) entities: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Entities,
-    bundle_info: <span class="kw-2">&amp;</span><span class="lifetime">'b </span>BundleInfo,
-    table: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Table,
-    sparse_sets: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>SparseSets,
+<span class="comment">// SAFETY: We have exclusive world access so our pointers can't be invalidated externally
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>BundleSpawner&lt;<span class="lifetime">'w</span>&gt; {
+    world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;,
+    bundle_info: ConstNonNull&lt;BundleInfo&gt;,
+    table: NonNull&lt;Table&gt;,
+    archetype: NonNull&lt;Archetype&gt;,
     change_tick: Tick,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; BundleSpawner&lt;<span class="lifetime">'a</span>, <span class="lifetime">'b</span>&gt; {
-    <span class="kw">pub fn </span>reserve_storage(<span class="kw-2">&amp;mut </span><span class="self">self</span>, additional: usize) {
-        <span class="self">self</span>.archetype.reserve(additional);
-        <span class="self">self</span>.table.reserve(additional);
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>&gt; BundleSpawner&lt;<span class="lifetime">'w</span>&gt; {
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>new&lt;T: Bundle&gt;(world: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>World, change_tick: Tick) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>bundle_id = world
+            .bundles
+            .init_info::&lt;T&gt;(<span class="kw-2">&amp;mut </span>world.components, <span class="kw-2">&amp;mut </span>world.storages);
+        <span class="comment">// SAFETY: we initialized this bundle_id in `init_info`
+        </span><span class="kw">unsafe </span>{ <span class="self">Self</span>::new_with_id(world, bundle_id, change_tick) }
     }
+
+    <span class="doccomment">/// Creates a new [`BundleSpawner`].
+    ///
+    /// # Safety
+    /// Caller must ensure that `bundle_id` exists in `world.bundles`
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>new_with_id(
+        world: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>World,
+        bundle_id: BundleId,
+        change_tick: Tick,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>bundle_info = world.bundles.get_unchecked(bundle_id);
+        <span class="kw">let </span>new_archetype_id = bundle_info.add_bundle_to_archetype(
+            <span class="kw-2">&amp;mut </span>world.archetypes,
+            <span class="kw-2">&amp;mut </span>world.storages,
+            <span class="kw-2">&amp;</span>world.components,
+            <span class="kw-2">&amp;</span>world.observers,
+            ArchetypeId::EMPTY,
+        );
+        <span class="kw">let </span>archetype = <span class="kw-2">&amp;mut </span>world.archetypes[new_archetype_id];
+        <span class="kw">let </span>table = <span class="kw-2">&amp;mut </span>world.storages.tables[archetype.table_id()];
+        <span class="self">Self </span>{
+            bundle_info: bundle_info.into(),
+            table: table.into(),
+            archetype: archetype.into(),
+            change_tick,
+            world: world.as_unsafe_world_cell(),
+        }
+    }
+
+    <span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>reserve_storage(<span class="kw-2">&amp;mut </span><span class="self">self</span>, additional: usize) {
+        <span class="comment">// SAFETY: There are no outstanding world references
+        </span><span class="kw">let </span>(archetype, table) = <span class="kw">unsafe </span>{ (<span class="self">self</span>.archetype.as_mut(), <span class="self">self</span>.table.as_mut()) };
+        archetype.reserve(additional);
+        table.reserve(additional);
+    }
+
     <span class="doccomment">/// # Safety
     /// `entity` must be allocated (but non-existent), `T` must match this [`BundleInfo`]'s type
     </span><span class="attr">#[inline]
@@ -1695,18 +2154,48 @@
         entity: Entity,
         bundle: T,
     ) -&gt; EntityLocation {
-        <span class="kw">let </span>table_row = <span class="self">self</span>.table.allocate(entity);
-        <span class="kw">let </span>location = <span class="self">self</span>.archetype.allocate(entity, table_row);
-        <span class="self">self</span>.bundle_info.write_components(
-            <span class="self">self</span>.table,
-            <span class="self">self</span>.sparse_sets,
-            <span class="kw-2">&amp;</span>SpawnBundleStatus,
-            entity,
-            table_row,
-            <span class="self">self</span>.change_tick,
-            bundle,
-        );
-        <span class="self">self</span>.entities.set(entity.index(), location);
+        <span class="comment">// SAFETY: We do not make any structural changes to the archetype graph through self.world so these pointers always remain valid
+        </span><span class="kw">let </span>bundle_info = <span class="self">self</span>.bundle_info.as_ref();
+        <span class="kw">let </span>location = {
+            <span class="kw">let </span>table = <span class="self">self</span>.table.as_mut();
+            <span class="kw">let </span>archetype = <span class="self">self</span>.archetype.as_mut();
+
+            <span class="comment">// SAFETY: Mutable references do not alias and will be dropped after this block
+            </span><span class="kw">let </span>(sparse_sets, entities) = {
+                <span class="kw">let </span>world = <span class="self">self</span>.world.world_mut();
+                (<span class="kw-2">&amp;mut </span>world.storages.sparse_sets, <span class="kw-2">&amp;mut </span>world.entities)
+            };
+            <span class="kw">let </span>table_row = table.allocate(entity);
+            <span class="kw">let </span>location = archetype.allocate(entity, table_row);
+            bundle_info.write_components(
+                table,
+                sparse_sets,
+                <span class="kw-2">&amp;</span>SpawnBundleStatus,
+                entity,
+                table_row,
+                <span class="self">self</span>.change_tick,
+                bundle,
+            );
+            entities.set(entity.index(), location);
+            location
+        };
+
+        <span class="comment">// SAFETY: We have no outstanding mutable references to world as they were dropped
+        </span><span class="kw">let </span><span class="kw-2">mut </span>deferred_world = <span class="kw">unsafe </span>{ <span class="self">self</span>.world.into_deferred() };
+        <span class="comment">// SAFETY: `DeferredWorld` cannot provide mutable access to `Archetypes`.
+        </span><span class="kw">let </span>archetype = <span class="self">self</span>.archetype.as_ref();
+        <span class="comment">// SAFETY: All components in the bundle are guaranteed to exist in the World
+        // as they must be initialized before creating the BundleInfo.
+        </span><span class="kw">unsafe </span>{
+            deferred_world.trigger_on_add(archetype, entity, bundle_info.iter_components());
+            <span class="kw">if </span>archetype.has_add_observer() {
+                deferred_world.trigger_observers(ON_ADD, entity, bundle_info.iter_components());
+            }
+            deferred_world.trigger_on_insert(archetype, entity, bundle_info.iter_components());
+            <span class="kw">if </span>archetype.has_insert_observer() {
+                deferred_world.trigger_observers(ON_INSERT, entity, bundle_info.iter_components());
+            }
+        };
 
         location
     }
@@ -1715,10 +2204,26 @@
     /// `T` must match this [`BundleInfo`]'s type
     </span><span class="attr">#[inline]
     </span><span class="kw">pub unsafe fn </span>spawn&lt;T: Bundle&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bundle: T) -&gt; Entity {
-        <span class="kw">let </span>entity = <span class="self">self</span>.entities.alloc();
+        <span class="kw">let </span>entity = <span class="self">self</span>.entities().alloc();
         <span class="comment">// SAFETY: entity is allocated (but non-existent), `T` matches this BundleInfo's type
-        </span><span class="self">self</span>.spawn_non_existent(entity, bundle);
+        </span><span class="kw">unsafe </span>{
+            <span class="self">self</span>.spawn_non_existent(entity, bundle);
+        }
         entity
+    }
+
+    <span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>entities(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>Entities {
+        <span class="comment">// SAFETY: No outstanding references to self.world, changes to entities cannot invalidate our internal pointers
+        </span><span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.world_mut().entities }
+    }
+
+    <span class="doccomment">/// # Safety:
+    /// - `Self` must be dropped after running this function as it may invalidate internal pointers.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>flush_commands(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="comment">// SAFETY: pointers on self can be invalidated,
+        </span><span class="self">self</span>.world.world_mut().flush();
     }
 }
 
@@ -1729,9 +2234,11 @@
     <span class="doccomment">/// Cache static [`BundleId`]
     </span>bundle_ids: TypeIdMap&lt;BundleId&gt;,
     <span class="doccomment">/// Cache dynamic [`BundleId`] with multiple components
-    </span>dynamic_bundle_ids: HashMap&lt;Vec&lt;ComponentId&gt;, (BundleId, Vec&lt;StorageType&gt;)&gt;,
+    </span>dynamic_bundle_ids: HashMap&lt;Box&lt;[ComponentId]&gt;, BundleId&gt;,
+    dynamic_bundle_storages: HashMap&lt;BundleId, Vec&lt;StorageType&gt;&gt;,
     <span class="doccomment">/// Cache optimized dynamic [`BundleId`] with single component
-    </span>dynamic_component_bundle_ids: HashMap&lt;ComponentId, (BundleId, StorageType)&gt;,
+    </span>dynamic_component_bundle_ids: HashMap&lt;ComponentId, BundleId&gt;,
+    dynamic_component_storages: HashMap&lt;BundleId, StorageType&gt;,
 }
 
 <span class="kw">impl </span>Bundles {
@@ -1751,27 +2258,47 @@
     }
 
     <span class="doccomment">/// Initializes a new [`BundleInfo`] for a statically known type.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>init_info&lt;<span class="lifetime">'a</span>, T: Bundle&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>,
+    ///
+    /// Also initializes all the components in the bundle.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>init_info&lt;T: Bundle&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         components: <span class="kw-2">&amp;mut </span>Components,
         storages: <span class="kw-2">&amp;mut </span>Storages,
-    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span>BundleInfo {
+    ) -&gt; BundleId {
         <span class="kw">let </span>bundle_infos = <span class="kw-2">&amp;mut </span><span class="self">self</span>.bundle_infos;
-        <span class="kw">let </span>id = <span class="self">self</span>.bundle_ids.entry(TypeId::of::&lt;T&gt;()).or_insert_with(|| {
+        <span class="kw">let </span>id = <span class="kw-2">*</span><span class="self">self</span>.bundle_ids.entry(TypeId::of::&lt;T&gt;()).or_insert_with(|| {
             <span class="kw">let </span><span class="kw-2">mut </span>component_ids = Vec::new();
             T::component_ids(components, storages, <span class="kw-2">&amp;mut </span>|id| component_ids.push(id));
             <span class="kw">let </span>id = BundleId(bundle_infos.len());
             <span class="kw">let </span>bundle_info =
-                <span class="comment">// SAFETY: T::component_id ensures its:
-                // - info was created
+                <span class="comment">// SAFETY: T::component_id ensures:
+                // - its info was created
                 // - appropriate storage for it has been initialized.
-                // - was created in the same order as the components in T
+                // - it was created in the same order as the components in T
                 </span><span class="kw">unsafe </span>{ BundleInfo::new(std::any::type_name::&lt;T&gt;(), components, component_ids, id) };
             bundle_infos.push(bundle_info);
             id
         });
-        <span class="comment">// SAFETY: index either exists, or was initialized
-        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.bundle_infos.get_unchecked(id.<span class="number">0</span>) }
+        id
+    }
+
+    <span class="doccomment">/// # Safety
+    /// A `BundleInfo` with the given `BundleId` must have been initialized for this instance of `Bundles`.
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get_unchecked(<span class="kw-2">&amp;</span><span class="self">self</span>, id: BundleId) -&gt; <span class="kw-2">&amp;</span>BundleInfo {
+        <span class="self">self</span>.bundle_infos.get_unchecked(id.<span class="number">0</span>)
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get_storage_unchecked(<span class="kw-2">&amp;</span><span class="self">self</span>, id: BundleId) -&gt; StorageType {
+        <span class="kw-2">*</span><span class="self">self
+            </span>.dynamic_component_storages
+            .get(<span class="kw-2">&amp;</span>id)
+            .debug_checked_unwrap()
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe fn </span>get_storages_unchecked(<span class="kw-2">&amp;mut </span><span class="self">self</span>, id: BundleId) -&gt; <span class="kw-2">&amp;mut </span>Vec&lt;StorageType&gt; {
+        <span class="self">self</span>.dynamic_bundle_storages
+            .get_mut(<span class="kw-2">&amp;</span>id)
+            .debug_checked_unwrap()
     }
 
     <span class="doccomment">/// Initializes a new [`BundleInfo`] for a dynamic [`Bundle`].
@@ -1784,25 +2311,22 @@
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         components: <span class="kw-2">&amp;</span>Components,
         component_ids: <span class="kw-2">&amp;</span>[ComponentId],
-    ) -&gt; (<span class="kw-2">&amp;</span>BundleInfo, <span class="kw-2">&amp;</span>Vec&lt;StorageType&gt;) {
+    ) -&gt; BundleId {
         <span class="kw">let </span>bundle_infos = <span class="kw-2">&amp;mut </span><span class="self">self</span>.bundle_infos;
 
         <span class="comment">// Use `raw_entry_mut` to avoid cloning `component_ids` to access `Entry`
-        </span><span class="kw">let </span>(<span class="kw">_</span>, (bundle_id, storage_types)) = <span class="self">self
+        </span><span class="kw">let </span>(<span class="kw">_</span>, bundle_id) = <span class="self">self
             </span>.dynamic_bundle_ids
             .raw_entry_mut()
             .from_key(component_ids)
             .or_insert_with(|| {
-                (
-                    Vec::from(component_ids),
-                    initialize_dynamic_bundle(bundle_infos, components, Vec::from(component_ids)),
-                )
+                <span class="kw">let </span>(id, storages) =
+                    initialize_dynamic_bundle(bundle_infos, components, Vec::from(component_ids));
+                <span class="self">self</span>.dynamic_bundle_storages
+                    .insert_unique_unchecked(id, storages);
+                (component_ids.into(), id)
             });
-
-        <span class="comment">// SAFETY: index either exists, or was initialized
-        </span><span class="kw">let </span>bundle_info = <span class="kw">unsafe </span>{ bundle_infos.get_unchecked(bundle_id.<span class="number">0</span>) };
-
-        (bundle_info, storage_types)
+        <span class="kw-2">*</span>bundle_id
     }
 
     <span class="doccomment">/// Initializes a new [`BundleInfo`] for a dynamic [`Bundle`] with single component.
@@ -1814,22 +2338,18 @@
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         components: <span class="kw-2">&amp;</span>Components,
         component_id: ComponentId,
-    ) -&gt; (<span class="kw-2">&amp;</span>BundleInfo, StorageType) {
+    ) -&gt; BundleId {
         <span class="kw">let </span>bundle_infos = <span class="kw-2">&amp;mut </span><span class="self">self</span>.bundle_infos;
-        <span class="kw">let </span>(bundle_id, storage_types) = <span class="self">self
+        <span class="kw">let </span>bundle_id = <span class="self">self
             </span>.dynamic_component_bundle_ids
             .entry(component_id)
             .or_insert_with(|| {
                 <span class="kw">let </span>(id, storage_type) =
                     initialize_dynamic_bundle(bundle_infos, components, <span class="macro">vec!</span>[component_id]);
-                <span class="comment">// SAFETY: `storage_type` guaranteed to have length 1
-                </span>(id, storage_type[<span class="number">0</span>])
+                <span class="self">self</span>.dynamic_component_storages.insert(id, storage_type[<span class="number">0</span>]);
+                id
             });
-
-        <span class="comment">// SAFETY: index either exists, or was initialized
-        </span><span class="kw">let </span>bundle_info = <span class="kw">unsafe </span>{ bundle_infos.get_unchecked(bundle_id.<span class="number">0</span>) };
-
-        (bundle_info, <span class="kw-2">*</span>storage_types)
+        <span class="kw-2">*</span>bundle_id
     }
 }
 
@@ -1856,5 +2376,140 @@
     bundle_infos.push(bundle_info);
 
     (id, storage_types)
+}
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use crate as </span>bevy_ecs;
+    <span class="kw">use </span><span class="kw">crate</span>::prelude::<span class="kw-2">*</span>;
+
+    <span class="attr">#[derive(Component)]
+    </span><span class="kw">struct </span>A;
+
+    <span class="attr">#[derive(Component)]
+    </span><span class="kw">struct </span>B;
+
+    <span class="attr">#[derive(Component)]
+    </span><span class="kw">struct </span>C;
+
+    <span class="attr">#[derive(Component)]
+    </span><span class="kw">struct </span>D;
+
+    <span class="attr">#[derive(Resource, Default)]
+    </span><span class="kw">struct </span>R(usize);
+
+    <span class="kw">impl </span>R {
+        <span class="attr">#[track_caller]
+        </span><span class="kw">fn </span>assert_order(<span class="kw-2">&amp;mut </span><span class="self">self</span>, count: usize) {
+            <span class="macro">assert_eq!</span>(count, <span class="self">self</span>.<span class="number">0</span>);
+            <span class="self">self</span>.<span class="number">0 </span>+= <span class="number">1</span>;
+        }
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>component_hook_order_spawn_despawn() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        world.init_resource::&lt;R&gt;();
+        world
+            .register_component_hooks::&lt;A&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">0</span>);
+            })
+            .on_insert(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| world.resource_mut::&lt;R&gt;().assert_order(<span class="number">1</span>))
+            .on_remove(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| world.resource_mut::&lt;R&gt;().assert_order(<span class="number">2</span>));
+
+        <span class="kw">let </span>entity = world.spawn(A).id();
+        world.despawn(entity);
+        <span class="macro">assert_eq!</span>(<span class="number">3</span>, world.resource::&lt;R&gt;().<span class="number">0</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>component_hook_order_insert_remove() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        world.init_resource::&lt;R&gt;();
+        world
+            .register_component_hooks::&lt;A&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">0</span>);
+            })
+            .on_insert(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">1</span>);
+            })
+            .on_remove(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">2</span>);
+            });
+
+        <span class="kw">let </span><span class="kw-2">mut </span>entity = world.spawn_empty();
+        entity.insert(A);
+        entity.remove::&lt;A&gt;();
+        entity.flush();
+        <span class="macro">assert_eq!</span>(<span class="number">3</span>, world.resource::&lt;R&gt;().<span class="number">0</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>component_hook_order_recursive() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        world.init_resource::&lt;R&gt;();
+        world
+            .register_component_hooks::&lt;A&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, entity, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">0</span>);
+                world.commands().entity(entity).insert(B);
+            })
+            .on_remove(|<span class="kw-2">mut </span>world, entity, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">2</span>);
+                world.commands().entity(entity).remove::&lt;B&gt;();
+            });
+
+        world
+            .register_component_hooks::&lt;B&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, entity, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">1</span>);
+                world.commands().entity(entity).remove::&lt;A&gt;();
+            })
+            .on_remove(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">3</span>);
+            });
+
+        <span class="kw">let </span>entity = world.spawn(A).flush();
+        <span class="kw">let </span>entity = world.get_entity(entity).unwrap();
+        <span class="macro">assert!</span>(!entity.contains::&lt;A&gt;());
+        <span class="macro">assert!</span>(!entity.contains::&lt;B&gt;());
+        <span class="macro">assert_eq!</span>(<span class="number">4</span>, world.resource::&lt;R&gt;().<span class="number">0</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>component_hook_order_recursive_multiple() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        world.init_resource::&lt;R&gt;();
+        world
+            .register_component_hooks::&lt;A&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, entity, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">0</span>);
+                world.commands().entity(entity).insert(B).insert(C);
+            });
+
+        world
+            .register_component_hooks::&lt;B&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, entity, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">1</span>);
+                world.commands().entity(entity).insert(D);
+            });
+
+        world
+            .register_component_hooks::&lt;C&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">3</span>);
+            });
+
+        world
+            .register_component_hooks::&lt;D&gt;()
+            .on_add(|<span class="kw-2">mut </span>world, <span class="kw">_</span>, <span class="kw">_</span>| {
+                world.resource_mut::&lt;R&gt;().assert_order(<span class="number">2</span>);
+            });
+
+        world.spawn(A).flush();
+        <span class="macro">assert_eq!</span>(<span class="number">4</span>, world.resource::&lt;R&gt;().<span class="number">0</span>);
+    }
 }
 </code></pre></div></section></main></body></html>

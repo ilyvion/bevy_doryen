@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.13.0/src/loader.rs`."><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.14.0/src/loader.rs`."><title>loader.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_asset/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -586,84 +585,16 @@
 <a href="#585" id="585">585</a>
 <a href="#586" id="586">586</a>
 <a href="#587" id="587">587</a>
-<a href="#588" id="588">588</a>
-<a href="#589" id="589">589</a>
-<a href="#590" id="590">590</a>
-<a href="#591" id="591">591</a>
-<a href="#592" id="592">592</a>
-<a href="#593" id="593">593</a>
-<a href="#594" id="594">594</a>
-<a href="#595" id="595">595</a>
-<a href="#596" id="596">596</a>
-<a href="#597" id="597">597</a>
-<a href="#598" id="598">598</a>
-<a href="#599" id="599">599</a>
-<a href="#600" id="600">600</a>
-<a href="#601" id="601">601</a>
-<a href="#602" id="602">602</a>
-<a href="#603" id="603">603</a>
-<a href="#604" id="604">604</a>
-<a href="#605" id="605">605</a>
-<a href="#606" id="606">606</a>
-<a href="#607" id="607">607</a>
-<a href="#608" id="608">608</a>
-<a href="#609" id="609">609</a>
-<a href="#610" id="610">610</a>
-<a href="#611" id="611">611</a>
-<a href="#612" id="612">612</a>
-<a href="#613" id="613">613</a>
-<a href="#614" id="614">614</a>
-<a href="#615" id="615">615</a>
-<a href="#616" id="616">616</a>
-<a href="#617" id="617">617</a>
-<a href="#618" id="618">618</a>
-<a href="#619" id="619">619</a>
-<a href="#620" id="620">620</a>
-<a href="#621" id="621">621</a>
-<a href="#622" id="622">622</a>
-<a href="#623" id="623">623</a>
-<a href="#624" id="624">624</a>
-<a href="#625" id="625">625</a>
-<a href="#626" id="626">626</a>
-<a href="#627" id="627">627</a>
-<a href="#628" id="628">628</a>
-<a href="#629" id="629">629</a>
-<a href="#630" id="630">630</a>
-<a href="#631" id="631">631</a>
-<a href="#632" id="632">632</a>
-<a href="#633" id="633">633</a>
-<a href="#634" id="634">634</a>
-<a href="#635" id="635">635</a>
-<a href="#636" id="636">636</a>
-<a href="#637" id="637">637</a>
-<a href="#638" id="638">638</a>
-<a href="#639" id="639">639</a>
-<a href="#640" id="640">640</a>
-<a href="#641" id="641">641</a>
-<a href="#642" id="642">642</a>
-<a href="#643" id="643">643</a>
-<a href="#644" id="644">644</a>
-<a href="#645" id="645">645</a>
-<a href="#646" id="646">646</a>
-<a href="#647" id="647">647</a>
-<a href="#648" id="648">648</a>
-<a href="#649" id="649">649</a>
-<a href="#650" id="650">650</a>
-<a href="#651" id="651">651</a>
-<a href="#652" id="652">652</a>
-<a href="#653" id="653">653</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     io::{AssetReaderError, MissingAssetSourceError, MissingProcessedAssetReaderError, Reader},
-    meta::{
-        loader_settings_meta_transform, AssetHash, AssetMeta, AssetMetaDyn, ProcessedInfoMinimal,
-        Settings,
-    },
+    loader_builders::NestedLoader,
+    meta::{AssetHash, AssetMeta, AssetMetaDyn, ProcessedInfoMinimal, Settings},
     path::AssetPath,
-    Asset, AssetLoadError, AssetServer, AssetServerMode, Assets, Handle, LoadedUntypedAsset,
-    UntypedAssetId, UntypedHandle,
+    Asset, AssetLoadError, AssetServer, AssetServerMode, Assets, Handle, UntypedAssetId,
+    UntypedHandle,
 };
 <span class="kw">use </span>bevy_ecs::world::World;
-<span class="kw">use </span>bevy_utils::{BoxedFuture, CowArc, HashMap, HashSet};
+<span class="kw">use </span>bevy_utils::{BoxedFuture, ConditionalSendFuture, CowArc, HashMap, HashSet};
 <span class="kw">use </span>downcast_rs::{impl_downcast, Downcast};
 <span class="kw">use </span>futures_lite::AsyncReadExt;
 <span class="kw">use </span>ron::error::SpannedError;
@@ -689,7 +620,7 @@
         reader: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Reader,
         settings: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">Self</span>::Settings,
         load_context: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>LoadContext,
-    ) -&gt; BoxedFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Asset, <span class="self">Self</span>::Error&gt;&gt;;
+    ) -&gt; <span class="kw">impl </span>ConditionalSendFuture&lt;Output = <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Asset, <span class="self">Self</span>::Error&gt;&gt;;
 
     <span class="doccomment">/// Returns a list of extensions supported by this [`AssetLoader`], without the preceding dot.
     /// Note that users of this [`AssetLoader`] may choose to load files with a non-matching extension.
@@ -819,6 +750,29 @@
             meta,
         }
     }
+
+    <span class="doccomment">/// Cast (and take ownership) of the [`Asset`] value of the given type.
+    </span><span class="kw">pub fn </span>take(<span class="self">self</span>) -&gt; A {
+        <span class="self">self</span>.value
+    }
+
+    <span class="doccomment">/// Retrieves a reference to the internal [`Asset`] type.
+    </span><span class="kw">pub fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>A {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.value
+    }
+
+    <span class="doccomment">/// Returns the [`ErasedLoadedAsset`] for the given label, if it exists.
+    </span><span class="kw">pub fn </span>get_labeled(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        label: <span class="kw">impl </span>Into&lt;CowArc&lt;<span class="lifetime">'static</span>, str&gt;&gt;,
+    ) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>ErasedLoadedAsset&gt; {
+        <span class="self">self</span>.labeled_assets.get(<span class="kw-2">&amp;</span>label.into()).map(|a| <span class="kw-2">&amp;</span>a.asset)
+    }
+
+    <span class="doccomment">/// Iterate over all labels for "labeled assets" in the loaded asset
+    </span><span class="kw">pub fn </span>iter_labels(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.labeled_assets.keys().map(|s| <span class="kw-2">&amp;**</span>s)
+    }
 }
 
 <span class="kw">impl</span>&lt;A: Asset&gt; From&lt;A&gt; <span class="kw">for </span>LoadedAsset&lt;A&gt; {
@@ -882,6 +836,25 @@
     </span><span class="kw">pub fn </span>iter_labels(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.labeled_assets.keys().map(|s| <span class="kw-2">&amp;**</span>s)
     }
+
+    <span class="doccomment">/// Cast this loaded asset as the given type. If the type does not match,
+    /// the original type-erased asset is returned.
+    </span><span class="attr">#[allow(clippy::result_large_err)]
+    </span><span class="kw">pub fn </span>downcast&lt;A: Asset&gt;(<span class="kw-2">mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;LoadedAsset&lt;A&gt;, ErasedLoadedAsset&gt; {
+        <span class="kw">match </span><span class="self">self</span>.value.downcast::&lt;A&gt;() {
+            <span class="prelude-val">Ok</span>(value) =&gt; <span class="prelude-val">Ok</span>(LoadedAsset {
+                value: <span class="kw-2">*</span>value,
+                dependencies: <span class="self">self</span>.dependencies,
+                loader_dependencies: <span class="self">self</span>.loader_dependencies,
+                labeled_assets: <span class="self">self</span>.labeled_assets,
+                meta: <span class="self">self</span>.meta,
+            }),
+            <span class="prelude-val">Err</span>(value) =&gt; {
+                <span class="self">self</span>.value = value;
+                <span class="prelude-val">Err</span>(<span class="self">self</span>)
+            }
+        }
+    }
 }
 
 <span class="doccomment">/// A type erased container for an [`Asset`] value that is capable of inserting the [`Asset`] into a [`World`]'s [`Assets`] collection.
@@ -911,7 +884,7 @@
 }
 
 <span class="doccomment">/// An error that occurs while deserializing [`AssetMeta`].
-</span><span class="attr">#[derive(Error, Debug, Clone)]
+</span><span class="attr">#[derive(Error, Debug, Clone, PartialEq, Eq)]
 </span><span class="kw">pub enum </span>DeserializeMetaError {
     <span class="attr">#[error(<span class="string">"Failed to deserialize asset meta: {0:?}"</span>)]
     </span>DeserializeSettings(<span class="attr">#[from] </span>SpannedError),
@@ -922,14 +895,14 @@
 <span class="doccomment">/// A context that provides access to assets in [`AssetLoader`]s, tracks dependencies, and collects asset load state.
 /// Any asset state accessed by [`LoadContext`] will be tracked and stored for use in dependency events and asset preprocessing.
 </span><span class="kw">pub struct </span>LoadContext&lt;<span class="lifetime">'a</span>&gt; {
-    asset_server: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>AssetServer,
-    should_load_dependencies: bool,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) asset_server: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>AssetServer,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) should_load_dependencies: bool,
     populate_hashes: bool,
     asset_path: AssetPath&lt;<span class="lifetime">'static</span>&gt;,
-    dependencies: HashSet&lt;UntypedAssetId&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) dependencies: HashSet&lt;UntypedAssetId&gt;,
     <span class="doccomment">/// Direct dependencies used by this loader.
-    </span>loader_dependencies: HashMap&lt;AssetPath&lt;<span class="lifetime">'static</span>&gt;, AssetHash&gt;,
-    labeled_assets: HashMap&lt;CowArc&lt;<span class="lifetime">'static</span>, str&gt;, LabeledAsset&gt;,
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) loader_dependencies: HashMap&lt;AssetPath&lt;<span class="lifetime">'static</span>&gt;, AssetHash&gt;,
+    <span class="kw">pub</span>(<span class="kw">crate</span>) labeled_assets: HashMap&lt;CowArc&lt;<span class="lifetime">'static</span>, str&gt;, LabeledAsset&gt;,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; LoadContext&lt;<span class="lifetime">'a</span>&gt; {
@@ -1115,57 +1088,6 @@
         <span class="prelude-val">Ok</span>(bytes)
     }
 
-    <span class="doccomment">/// Retrieves a handle for the asset at the given path and adds that path as a dependency of the asset.
-    /// If the current context is a normal [`AssetServer::load`], an actual asset load will be kicked off immediately, which ensures the load happens
-    /// as soon as possible.
-    /// "Normal loads" kicked from within a normal Bevy App will generally configure the context to kick off loads immediately.  
-    /// If the current context is configured to not load dependencies automatically (ex: [`AssetProcessor`](crate::processor::AssetProcessor)),
-    /// a load will not be kicked off automatically. It is then the calling context's responsibility to begin a load if necessary.
-    </span><span class="kw">pub fn </span>load&lt;<span class="lifetime">'b</span>, A: Asset&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, path: <span class="kw">impl </span>Into&lt;AssetPath&lt;<span class="lifetime">'b</span>&gt;&gt;) -&gt; Handle&lt;A&gt; {
-        <span class="kw">let </span>path = path.into().to_owned();
-        <span class="kw">let </span>handle = <span class="kw">if </span><span class="self">self</span>.should_load_dependencies {
-            <span class="self">self</span>.asset_server.load(path)
-        } <span class="kw">else </span>{
-            <span class="self">self</span>.asset_server.get_or_create_path_handle(path, <span class="prelude-val">None</span>)
-        };
-        <span class="self">self</span>.dependencies.insert(handle.id().untyped());
-        handle
-    }
-
-    <span class="doccomment">/// Retrieves a handle for the asset at the given path and adds that path as a dependency of the asset without knowing its type.
-    </span><span class="kw">pub fn </span>load_untyped&lt;<span class="lifetime">'b</span>&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        path: <span class="kw">impl </span>Into&lt;AssetPath&lt;<span class="lifetime">'b</span>&gt;&gt;,
-    ) -&gt; Handle&lt;LoadedUntypedAsset&gt; {
-        <span class="kw">let </span>path = path.into().to_owned();
-        <span class="kw">let </span>handle = <span class="kw">if </span><span class="self">self</span>.should_load_dependencies {
-            <span class="self">self</span>.asset_server.load_untyped(path)
-        } <span class="kw">else </span>{
-            <span class="self">self</span>.asset_server.get_or_create_path_handle(path, <span class="prelude-val">None</span>)
-        };
-        <span class="self">self</span>.dependencies.insert(handle.id().untyped());
-        handle
-    }
-
-    <span class="doccomment">/// Loads the [`Asset`] of type `A` at the given `path` with the given [`AssetLoader::Settings`] settings `S`. This is a "deferred"
-    /// load. If the settings type `S` does not match the settings expected by `A`'s asset loader, an error will be printed to the log
-    /// and the asset load will fail.  
-    </span><span class="kw">pub fn </span>load_with_settings&lt;<span class="lifetime">'b</span>, A: Asset, S: Settings + Default&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        path: <span class="kw">impl </span>Into&lt;AssetPath&lt;<span class="lifetime">'b</span>&gt;&gt;,
-        settings: <span class="kw">impl </span>Fn(<span class="kw-2">&amp;mut </span>S) + Send + Sync + <span class="lifetime">'static</span>,
-    ) -&gt; Handle&lt;A&gt; {
-        <span class="kw">let </span>path = path.into();
-        <span class="kw">let </span>handle = <span class="kw">if </span><span class="self">self</span>.should_load_dependencies {
-            <span class="self">self</span>.asset_server.load_with_settings(path.clone(), settings)
-        } <span class="kw">else </span>{
-            <span class="self">self</span>.asset_server
-                .get_or_create_path_handle(path, <span class="prelude-val">Some</span>(loader_settings_meta_transform(settings)))
-        };
-        <span class="self">self</span>.dependencies.insert(handle.id().untyped());
-        handle
-    }
-
     <span class="doccomment">/// Returns a handle to an asset of type `A` with the label `label`. This [`LoadContext`] must produce an asset of the
     /// given type and the given label or the dependencies of this asset will never be considered "fully loaded". However you
     /// can call this method before _or_ after adding the labeled asset.
@@ -1179,88 +1101,19 @@
         handle
     }
 
-    <span class="doccomment">/// Loads the asset at the given `path` directly. This is an async function that will wait until the asset is fully loaded before
-    /// returning. Use this if you need the _value_ of another asset in order to load the current asset. For example, if you are
-    /// deriving a new asset from the referenced asset, or you are building a collection of assets. This will add the `path` as a
-    /// "load dependency".
-    ///
-    /// If the current loader is used in a [`Process`] "asset preprocessor", such as a [`LoadTransformAndSave`] preprocessor,
-    /// changing a "load dependency" will result in re-processing of the asset.
-    ///
-    /// [`Process`]: crate::processor::Process
-    /// [`LoadTransformAndSave`]: crate::processor::LoadTransformAndSave
-    </span><span class="kw">pub async fn </span>load_direct&lt;<span class="lifetime">'b</span>&gt;(
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async fn </span>load_direct_internal(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        path: <span class="kw">impl </span>Into&lt;AssetPath&lt;<span class="lifetime">'b</span>&gt;&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;ErasedLoadedAsset, LoadDirectError&gt; {
-        <span class="kw">let </span>path = path.into().into_owned();
-        <span class="kw">let </span>to_error = |e: AssetLoadError| -&gt; LoadDirectError {
-            LoadDirectError {
-                dependency: path.clone(),
-                error: e,
-            }
-        };
-        <span class="kw">let </span>loaded_asset = {
-            <span class="kw">let </span>(meta, loader, <span class="kw-2">mut </span>reader) = <span class="self">self
-                </span>.asset_server
-                .get_meta_loader_and_reader(<span class="kw-2">&amp;</span>path, <span class="prelude-val">None</span>)
-                .<span class="kw">await
-                </span>.map_err(to_error)<span class="question-mark">?</span>;
-            <span class="self">self</span>.asset_server
-                .load_with_meta_loader_and_reader(
-                    <span class="kw-2">&amp;</span>path,
-                    meta,
-                    <span class="kw-2">&amp;*</span>loader,
-                    <span class="kw-2">&amp;mut *</span>reader,
-                    <span class="bool-val">false</span>,
-                    <span class="self">self</span>.populate_hashes,
-                )
-                .<span class="kw">await
-                </span>.map_err(to_error)<span class="question-mark">?
-        </span>};
-        <span class="kw">let </span>info = loaded_asset
-            .meta
-            .as_ref()
-            .and_then(|m| m.processed_info().as_ref());
-        <span class="kw">let </span>hash = info.map(|i| i.full_hash).unwrap_or(Default::default());
-        <span class="self">self</span>.loader_dependencies.insert(path, hash);
-        <span class="prelude-val">Ok</span>(loaded_asset)
-    }
-
-    <span class="doccomment">/// Loads the asset at the given `path` directly from the provided `reader`. This is an async function that will wait until the asset is fully loaded before
-    /// returning. Use this if you need the _value_ of another asset in order to load the current asset, and that value comes from your [`Reader`].
-    /// For example, if you are deriving a new asset from the referenced asset, or you are building a collection of assets. This will add the `path` as a
-    /// "load dependency".
-    ///
-    /// If the current loader is used in a [`Process`] "asset preprocessor", such as a [`LoadTransformAndSave`] preprocessor,
-    /// changing a "load dependency" will result in re-processing of the asset.
-    ///
-    /// [`Process`]: crate::processor::Process
-    /// [`LoadTransformAndSave`]: crate::processor::LoadTransformAndSave
-    </span><span class="kw">pub async fn </span>load_direct_with_reader&lt;<span class="lifetime">'b</span>&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        path: AssetPath&lt;<span class="lifetime">'static</span>&gt;,
+        meta: Box&lt;<span class="kw">dyn </span>AssetMetaDyn&gt;,
+        loader: <span class="kw-2">&amp;</span><span class="kw">dyn </span>ErasedAssetLoader,
         reader: <span class="kw-2">&amp;mut </span>Reader&lt;<span class="lifetime">'_</span>&gt;,
-        path: <span class="kw">impl </span>Into&lt;AssetPath&lt;<span class="lifetime">'b</span>&gt;&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;ErasedLoadedAsset, LoadDirectError&gt; {
-        <span class="kw">let </span>path = path.into().into_owned();
-
-        <span class="kw">let </span>loader = <span class="self">self
-            </span>.asset_server
-            .get_path_asset_loader(<span class="kw-2">&amp;</span>path)
-            .<span class="kw">await
-            </span>.map_err(|error| LoadDirectError {
-                dependency: path.clone(),
-                error: error.into(),
-            })<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>meta = loader.default_meta();
-
         <span class="kw">let </span>loaded_asset = <span class="self">self
             </span>.asset_server
             .load_with_meta_loader_and_reader(
                 <span class="kw-2">&amp;</span>path,
                 meta,
-                <span class="kw-2">&amp;*</span>loader,
+                loader,
                 reader,
                 <span class="bool-val">false</span>,
                 <span class="self">self</span>.populate_hashes,
@@ -1270,17 +1123,31 @@
                 dependency: path.clone(),
                 error,
             })<span class="question-mark">?</span>;
-
         <span class="kw">let </span>info = loaded_asset
             .meta
             .as_ref()
             .and_then(|m| m.processed_info().as_ref());
-
-        <span class="kw">let </span>hash = info.map(|i| i.full_hash).unwrap_or_default();
-
+        <span class="kw">let </span>hash = info.map(|i| i.full_hash).unwrap_or(Default::default());
         <span class="self">self</span>.loader_dependencies.insert(path, hash);
-
         <span class="prelude-val">Ok</span>(loaded_asset)
+    }
+
+    <span class="doccomment">/// Create a builder for loading nested assets in this context.
+    </span><span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>loader(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; NestedLoader&lt;<span class="lifetime">'a</span>, <span class="lifetime">'_</span>&gt; {
+        NestedLoader::new(<span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// Retrieves a handle for the asset at the given path and adds that path as a dependency of the asset.
+    /// If the current context is a normal [`AssetServer::load`], an actual asset load will be kicked off immediately, which ensures the load happens
+    /// as soon as possible.
+    /// "Normal loads" kicked from within a normal Bevy App will generally configure the context to kick off loads immediately.
+    /// If the current context is configured to not load dependencies automatically (ex: [`AssetProcessor`](crate::processor::AssetProcessor)),
+    /// a load will not be kicked off automatically. It is then the calling context's responsibility to begin a load if necessary.
+    ///
+    /// If you need to override asset settings, asset type, or load directly, please see [`LoadContext::loader`].
+    </span><span class="kw">pub fn </span>load&lt;<span class="lifetime">'b</span>, A: Asset&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, path: <span class="kw">impl </span>Into&lt;AssetPath&lt;<span class="lifetime">'b</span>&gt;&gt;) -&gt; Handle&lt;A&gt; {
+        <span class="self">self</span>.loader().load(path)
     }
 }
 

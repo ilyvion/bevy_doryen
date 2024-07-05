@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/toml_edit-0.21.1/src/parser/key.rs`."><title>key.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="toml_edit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/toml_edit-0.22.14/src/parser/key.rs`."><title>key.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="toml_edit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../toml_edit/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -113,13 +112,38 @@
 <a href="#112" id="112">112</a>
 <a href="#113" id="113">113</a>
 <a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::ops::RangeInclusive;
 
 <span class="kw">use </span>winnow::combinator::peek;
-<span class="kw">use </span>winnow::combinator::separated1;
+<span class="kw">use </span>winnow::combinator::separated;
+<span class="kw">use </span>winnow::combinator::trace;
 <span class="kw">use </span>winnow::token::any;
 <span class="kw">use </span>winnow::token::take_while;
-<span class="kw">use </span>winnow::trace::trace;
 
 <span class="kw">use </span><span class="kw">crate</span>::key::Key;
 <span class="kw">use </span><span class="kw">crate</span>::parser::error::CustomError;
@@ -133,13 +157,14 @@
 <span class="comment">// key = simple-key / dotted-key
 // dotted-key = simple-key 1*( dot-sep simple-key )
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>key(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;Vec&lt;Key&gt;&gt; {
-    trace(
+    <span class="kw">let </span><span class="kw-2">mut </span>key_path = trace(
         <span class="string">"dotted-key"</span>,
-        separated1(
+        separated(
+            <span class="number">1</span>..,
             (ws.span(), simple_key, ws.span()).map(|(pre, (raw, key), suffix)| {
                 Key::new(key)
                     .with_repr_unchecked(Repr::new_unchecked(raw))
-                    .with_decor(Decor::new(
+                    .with_dotted_decor(Decor::new(
                         RawString::with_span(pre),
                         RawString::with_span(suffix),
                     ))
@@ -153,7 +178,31 @@
             <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, CustomError&gt;(k)
         }),
     )
-    .parse_next(input)
+    .parse_next(input)<span class="question-mark">?</span>;
+
+    <span class="kw">let </span><span class="kw-2">mut </span>leaf_decor = Decor::new(<span class="string">""</span>, <span class="string">""</span>);
+    {
+        <span class="kw">let </span>first_dotted_decor = key_path
+            .first_mut()
+            .expect(<span class="string">"always at least one key"</span>)
+            .dotted_decor_mut();
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(prefix) = first_dotted_decor.prefix().cloned() {
+            leaf_decor.set_prefix(prefix);
+            first_dotted_decor.set_prefix(<span class="string">""</span>);
+        }
+    }
+    <span class="kw">let </span>last_key = <span class="kw-2">&amp;mut </span>key_path.last_mut().expect(<span class="string">"always at least one key"</span>);
+    {
+        <span class="kw">let </span>last_dotted_decor = last_key.dotted_decor_mut();
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(suffix) = last_dotted_decor.suffix().cloned() {
+            leaf_decor.set_suffix(suffix);
+            last_dotted_decor.set_suffix(<span class="string">""</span>);
+        }
+    }
+
+    <span class="kw-2">*</span>last_key.leaf_decor_mut() = leaf_decor;
+
+    <span class="prelude-val">Ok</span>(key_path)
 }
 
 <span class="comment">// simple-key = quoted-key / unquoted-key
@@ -161,7 +210,7 @@
 </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>simple_key(input: <span class="kw-2">&amp;mut </span>Input&lt;<span class="lifetime">'_</span>&gt;) -&gt; PResult&lt;(RawString, InternalString)&gt; {
     trace(
         <span class="string">"simple-key"</span>,
-        <span class="macro">dispatch! </span>{peek(any);
+        <span class="macro">dispatch!</span> {peek(any);
             <span class="kw">crate</span>::parser::strings::QUOTATION_MARK =&gt; basic_string
                 .map(|s: std::borrow::Cow&lt;<span class="lifetime">'_</span>, str&gt;| s.as_ref().into()),
             <span class="kw">crate</span>::parser::strings::APOSTROPHE =&gt; literal_string.map(|s: <span class="kw-2">&amp;</span>str| s.into()),

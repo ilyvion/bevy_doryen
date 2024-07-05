@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/reflect/resource.rs`."><title>resource.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/reflect/resource.rs`."><title>resource.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -209,6 +208,17 @@
 <a href="#208" id="208">208</a>
 <a href="#209" id="209">209</a>
 <a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Definitions for [`Resource`] reflection.
 //!
 //! # Architecture
@@ -218,9 +228,11 @@
 </span><span class="kw">use crate</span>::{
     change_detection::Mut,
     system::Resource,
-    world::{unsafe_world_cell::UnsafeWorldCell, FromWorld, World},
+    world::{unsafe_world_cell::UnsafeWorldCell, World},
 };
-<span class="kw">use </span>bevy_reflect::{FromType, Reflect};
+<span class="kw">use </span>bevy_reflect::{FromReflect, FromType, Reflect, TypeRegistry};
+
+<span class="kw">use </span><span class="kw">super</span>::from_reflect_with_fallback;
 
 <span class="doccomment">/// A struct used to operate on reflected [`Resource`] of a type.
 ///
@@ -239,7 +251,7 @@
 /// &gt; will not need.
 /// &gt; Usually a [`ReflectResource`] is created for a type by deriving [`Reflect`]
 /// &gt; and adding the `#[reflect(Resource)]` attribute.
-/// &gt; After adding the component to the [`TypeRegistry`][bevy_reflect::TypeRegistry],
+/// &gt; After adding the component to the [`TypeRegistry`],
 /// &gt; its [`ReflectResource`] can then be retrieved when needed.
 ///
 /// Creating a custom [`ReflectResource`] may be useful if you need to create new resource types at
@@ -252,11 +264,11 @@
 </span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>ReflectResourceFns {
     <span class="doccomment">/// Function pointer implementing [`ReflectResource::insert()`].
-    </span><span class="kw">pub </span>insert: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>World, <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect),
+    </span><span class="kw">pub </span>insert: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>World, <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect, <span class="kw-2">&amp;</span>TypeRegistry),
     <span class="doccomment">/// Function pointer implementing [`ReflectResource::apply()`].
     </span><span class="kw">pub </span>apply: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>World, <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect),
     <span class="doccomment">/// Function pointer implementing [`ReflectResource::apply_or_insert()`].
-    </span><span class="kw">pub </span>apply_or_insert: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>World, <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect),
+    </span><span class="kw">pub </span>apply_or_insert: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>World, <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect, <span class="kw-2">&amp;</span>TypeRegistry),
     <span class="doccomment">/// Function pointer implementing [`ReflectResource::remove()`].
     </span><span class="kw">pub </span>remove: <span class="kw">fn</span>(<span class="kw-2">&amp;mut </span>World),
     <span class="doccomment">/// Function pointer implementing [`ReflectResource::reflect()`].
@@ -267,7 +279,7 @@
     /// The function may only be called with an [`UnsafeWorldCell`] that can be used to mutably access the relevant resource.
     </span><span class="kw">pub </span>reflect_unchecked_mut: <span class="kw">unsafe fn</span>(UnsafeWorldCell&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'_</span>, <span class="kw">dyn </span>Reflect&gt;&gt;,
     <span class="doccomment">/// Function pointer implementing [`ReflectResource::copy()`].
-    </span><span class="kw">pub </span>copy: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>World, <span class="kw-2">&amp;mut </span>World),
+    </span><span class="kw">pub </span>copy: <span class="kw">fn</span>(<span class="kw-2">&amp;</span>World, <span class="kw-2">&amp;mut </span>World, <span class="kw-2">&amp;</span>TypeRegistry),
 }
 
 <span class="kw">impl </span>ReflectResourceFns {
@@ -276,15 +288,15 @@
     ///
     /// This is useful if you want to start with the default implementation before overriding some
     /// of the functions to create a custom implementation.
-    </span><span class="kw">pub fn </span>new&lt;T: Resource + Reflect + FromWorld&gt;() -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new&lt;T: Resource + FromReflect&gt;() -&gt; <span class="self">Self </span>{
         &lt;ReflectResource <span class="kw">as </span>FromType&lt;T&gt;&gt;::from_type().<span class="number">0
     </span>}
 }
 
 <span class="kw">impl </span>ReflectResource {
     <span class="doccomment">/// Insert a reflected [`Resource`] into the world like [`insert()`](World::insert_resource).
-    </span><span class="kw">pub fn </span>insert(<span class="kw-2">&amp;</span><span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World, resource: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) {
-        (<span class="self">self</span>.<span class="number">0</span>.insert)(world, resource);
+    </span><span class="kw">pub fn </span>insert(<span class="kw-2">&amp;</span><span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World, resource: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect, registry: <span class="kw-2">&amp;</span>TypeRegistry) {
+        (<span class="self">self</span>.<span class="number">0</span>.insert)(world, resource, registry);
     }
 
     <span class="doccomment">/// Uses reflection to set the value of this [`Resource`] type in the world to the given value.
@@ -297,8 +309,13 @@
     }
 
     <span class="doccomment">/// Uses reflection to set the value of this [`Resource`] type in the world to the given value or insert a new one if it does not exist.
-    </span><span class="kw">pub fn </span>apply_or_insert(<span class="kw-2">&amp;</span><span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World, resource: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) {
-        (<span class="self">self</span>.<span class="number">0</span>.apply_or_insert)(world, resource);
+    </span><span class="kw">pub fn </span>apply_or_insert(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        world: <span class="kw-2">&amp;mut </span>World,
+        resource: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect,
+        registry: <span class="kw-2">&amp;</span>TypeRegistry,
+    ) {
+        (<span class="self">self</span>.<span class="number">0</span>.apply_or_insert)(world, resource, registry);
     }
 
     <span class="doccomment">/// Removes this [`Resource`] type from the world. Does nothing if it doesn't exist.
@@ -327,7 +344,7 @@
         world: UnsafeWorldCell&lt;<span class="lifetime">'w</span>&gt;,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'w</span>, <span class="kw">dyn </span>Reflect&gt;&gt; {
         <span class="comment">// SAFETY: caller promises to uphold uniqueness guarantees
-        </span>(<span class="self">self</span>.<span class="number">0</span>.reflect_unchecked_mut)(world)
+        </span><span class="kw">unsafe </span>{ (<span class="self">self</span>.<span class="number">0</span>.reflect_unchecked_mut)(world) }
     }
 
     <span class="doccomment">/// Gets the value of this [`Resource`] type from `source_world` and [applies](Self::apply()) it to the value of this [`Resource`] type in `destination_world`.
@@ -335,8 +352,13 @@
     /// # Panics
     ///
     /// Panics if there is no [`Resource`] of the given type.
-    </span><span class="kw">pub fn </span>copy(<span class="kw-2">&amp;</span><span class="self">self</span>, source_world: <span class="kw-2">&amp;</span>World, destination_world: <span class="kw-2">&amp;mut </span>World) {
-        (<span class="self">self</span>.<span class="number">0</span>.copy)(source_world, destination_world);
+    </span><span class="kw">pub fn </span>copy(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        source_world: <span class="kw-2">&amp;</span>World,
+        destination_world: <span class="kw-2">&amp;mut </span>World,
+        registry: <span class="kw-2">&amp;</span>TypeRegistry,
+    ) {
+        (<span class="self">self</span>.<span class="number">0</span>.copy)(source_world, destination_world, registry);
     }
 
     <span class="doccomment">/// Create a custom implementation of [`ReflectResource`].
@@ -375,45 +397,44 @@
     </span>}
 }
 
-<span class="kw">impl</span>&lt;C: Resource + Reflect + FromWorld&gt; FromType&lt;C&gt; <span class="kw">for </span>ReflectResource {
+<span class="kw">impl</span>&lt;R: Resource + FromReflect&gt; FromType&lt;R&gt; <span class="kw">for </span>ReflectResource {
     <span class="kw">fn </span>from_type() -&gt; <span class="self">Self </span>{
         ReflectResource(ReflectResourceFns {
-            insert: |world, reflected_resource| {
-                <span class="kw">let </span><span class="kw-2">mut </span>resource = C::from_world(world);
-                resource.apply(reflected_resource);
+            insert: |world, reflected_resource, registry| {
+                <span class="kw">let </span>resource = from_reflect_with_fallback::&lt;R&gt;(reflected_resource, world, registry);
                 world.insert_resource(resource);
             },
             apply: |world, reflected_resource| {
-                <span class="kw">let </span><span class="kw-2">mut </span>resource = world.resource_mut::&lt;C&gt;();
+                <span class="kw">let </span><span class="kw-2">mut </span>resource = world.resource_mut::&lt;R&gt;();
                 resource.apply(reflected_resource);
             },
-            apply_or_insert: |world, reflected_resource| {
-                <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>resource) = world.get_resource_mut::&lt;C&gt;() {
+            apply_or_insert: |world, reflected_resource, registry| {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>resource) = world.get_resource_mut::&lt;R&gt;() {
                     resource.apply(reflected_resource);
                 } <span class="kw">else </span>{
-                    <span class="kw">let </span><span class="kw-2">mut </span>resource = C::from_world(world);
-                    resource.apply(reflected_resource);
+                    <span class="kw">let </span>resource =
+                        from_reflect_with_fallback::&lt;R&gt;(reflected_resource, world, registry);
                     world.insert_resource(resource);
                 }
             },
             remove: |world| {
-                world.remove_resource::&lt;C&gt;();
+                world.remove_resource::&lt;R&gt;();
             },
-            reflect: |world| world.get_resource::&lt;C&gt;().map(|res| res <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect),
+            reflect: |world| world.get_resource::&lt;R&gt;().map(|res| res <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect),
             reflect_unchecked_mut: |world| {
                 <span class="comment">// SAFETY: all usages of `reflect_unchecked_mut` guarantee that there is either a single mutable
                 // reference or multiple immutable ones alive at any given point
                 </span><span class="kw">unsafe </span>{
-                    world.get_resource_mut::&lt;C&gt;().map(|res| Mut {
+                    world.get_resource_mut::&lt;R&gt;().map(|res| Mut {
                         value: res.value <span class="kw">as </span><span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Reflect,
                         ticks: res.ticks,
                     })
                 }
             },
-            copy: |source_world, destination_world| {
-                <span class="kw">let </span>source_resource = source_world.resource::&lt;C&gt;();
-                <span class="kw">let </span><span class="kw-2">mut </span>destination_resource = C::from_world(destination_world);
-                destination_resource.apply(source_resource);
+            copy: |source_world, destination_world, registry| {
+                <span class="kw">let </span>source_resource = source_world.resource::&lt;R&gt;();
+                <span class="kw">let </span>destination_resource =
+                    from_reflect_with_fallback::&lt;R&gt;(source_resource, destination_world, registry);
                 destination_world.insert_resource(destination_resource);
             },
         })

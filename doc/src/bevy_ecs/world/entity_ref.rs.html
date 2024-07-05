@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/world/entity_ref.rs`."><title>entity_ref.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/world/entity_ref.rs`."><title>entity_ref.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -2746,23 +2745,330 @@
 <a href="#2745" id="2745">2745</a>
 <a href="#2746" id="2746">2746</a>
 <a href="#2747" id="2747">2747</a>
+<a href="#2748" id="2748">2748</a>
+<a href="#2749" id="2749">2749</a>
+<a href="#2750" id="2750">2750</a>
+<a href="#2751" id="2751">2751</a>
+<a href="#2752" id="2752">2752</a>
+<a href="#2753" id="2753">2753</a>
+<a href="#2754" id="2754">2754</a>
+<a href="#2755" id="2755">2755</a>
+<a href="#2756" id="2756">2756</a>
+<a href="#2757" id="2757">2757</a>
+<a href="#2758" id="2758">2758</a>
+<a href="#2759" id="2759">2759</a>
+<a href="#2760" id="2760">2760</a>
+<a href="#2761" id="2761">2761</a>
+<a href="#2762" id="2762">2762</a>
+<a href="#2763" id="2763">2763</a>
+<a href="#2764" id="2764">2764</a>
+<a href="#2765" id="2765">2765</a>
+<a href="#2766" id="2766">2766</a>
+<a href="#2767" id="2767">2767</a>
+<a href="#2768" id="2768">2768</a>
+<a href="#2769" id="2769">2769</a>
+<a href="#2770" id="2770">2770</a>
+<a href="#2771" id="2771">2771</a>
+<a href="#2772" id="2772">2772</a>
+<a href="#2773" id="2773">2773</a>
+<a href="#2774" id="2774">2774</a>
+<a href="#2775" id="2775">2775</a>
+<a href="#2776" id="2776">2776</a>
+<a href="#2777" id="2777">2777</a>
+<a href="#2778" id="2778">2778</a>
+<a href="#2779" id="2779">2779</a>
+<a href="#2780" id="2780">2780</a>
+<a href="#2781" id="2781">2781</a>
+<a href="#2782" id="2782">2782</a>
+<a href="#2783" id="2783">2783</a>
+<a href="#2784" id="2784">2784</a>
+<a href="#2785" id="2785">2785</a>
+<a href="#2786" id="2786">2786</a>
+<a href="#2787" id="2787">2787</a>
+<a href="#2788" id="2788">2788</a>
+<a href="#2789" id="2789">2789</a>
+<a href="#2790" id="2790">2790</a>
+<a href="#2791" id="2791">2791</a>
+<a href="#2792" id="2792">2792</a>
+<a href="#2793" id="2793">2793</a>
+<a href="#2794" id="2794">2794</a>
+<a href="#2795" id="2795">2795</a>
+<a href="#2796" id="2796">2796</a>
+<a href="#2797" id="2797">2797</a>
+<a href="#2798" id="2798">2798</a>
+<a href="#2799" id="2799">2799</a>
+<a href="#2800" id="2800">2800</a>
+<a href="#2801" id="2801">2801</a>
+<a href="#2802" id="2802">2802</a>
+<a href="#2803" id="2803">2803</a>
+<a href="#2804" id="2804">2804</a>
+<a href="#2805" id="2805">2805</a>
+<a href="#2806" id="2806">2806</a>
+<a href="#2807" id="2807">2807</a>
+<a href="#2808" id="2808">2808</a>
+<a href="#2809" id="2809">2809</a>
+<a href="#2810" id="2810">2810</a>
+<a href="#2811" id="2811">2811</a>
+<a href="#2812" id="2812">2812</a>
+<a href="#2813" id="2813">2813</a>
+<a href="#2814" id="2814">2814</a>
+<a href="#2815" id="2815">2815</a>
+<a href="#2816" id="2816">2816</a>
+<a href="#2817" id="2817">2817</a>
+<a href="#2818" id="2818">2818</a>
+<a href="#2819" id="2819">2819</a>
+<a href="#2820" id="2820">2820</a>
+<a href="#2821" id="2821">2821</a>
+<a href="#2822" id="2822">2822</a>
+<a href="#2823" id="2823">2823</a>
+<a href="#2824" id="2824">2824</a>
+<a href="#2825" id="2825">2825</a>
+<a href="#2826" id="2826">2826</a>
+<a href="#2827" id="2827">2827</a>
+<a href="#2828" id="2828">2828</a>
+<a href="#2829" id="2829">2829</a>
+<a href="#2830" id="2830">2830</a>
+<a href="#2831" id="2831">2831</a>
+<a href="#2832" id="2832">2832</a>
+<a href="#2833" id="2833">2833</a>
+<a href="#2834" id="2834">2834</a>
+<a href="#2835" id="2835">2835</a>
+<a href="#2836" id="2836">2836</a>
+<a href="#2837" id="2837">2837</a>
+<a href="#2838" id="2838">2838</a>
+<a href="#2839" id="2839">2839</a>
+<a href="#2840" id="2840">2840</a>
+<a href="#2841" id="2841">2841</a>
+<a href="#2842" id="2842">2842</a>
+<a href="#2843" id="2843">2843</a>
+<a href="#2844" id="2844">2844</a>
+<a href="#2845" id="2845">2845</a>
+<a href="#2846" id="2846">2846</a>
+<a href="#2847" id="2847">2847</a>
+<a href="#2848" id="2848">2848</a>
+<a href="#2849" id="2849">2849</a>
+<a href="#2850" id="2850">2850</a>
+<a href="#2851" id="2851">2851</a>
+<a href="#2852" id="2852">2852</a>
+<a href="#2853" id="2853">2853</a>
+<a href="#2854" id="2854">2854</a>
+<a href="#2855" id="2855">2855</a>
+<a href="#2856" id="2856">2856</a>
+<a href="#2857" id="2857">2857</a>
+<a href="#2858" id="2858">2858</a>
+<a href="#2859" id="2859">2859</a>
+<a href="#2860" id="2860">2860</a>
+<a href="#2861" id="2861">2861</a>
+<a href="#2862" id="2862">2862</a>
+<a href="#2863" id="2863">2863</a>
+<a href="#2864" id="2864">2864</a>
+<a href="#2865" id="2865">2865</a>
+<a href="#2866" id="2866">2866</a>
+<a href="#2867" id="2867">2867</a>
+<a href="#2868" id="2868">2868</a>
+<a href="#2869" id="2869">2869</a>
+<a href="#2870" id="2870">2870</a>
+<a href="#2871" id="2871">2871</a>
+<a href="#2872" id="2872">2872</a>
+<a href="#2873" id="2873">2873</a>
+<a href="#2874" id="2874">2874</a>
+<a href="#2875" id="2875">2875</a>
+<a href="#2876" id="2876">2876</a>
+<a href="#2877" id="2877">2877</a>
+<a href="#2878" id="2878">2878</a>
+<a href="#2879" id="2879">2879</a>
+<a href="#2880" id="2880">2880</a>
+<a href="#2881" id="2881">2881</a>
+<a href="#2882" id="2882">2882</a>
+<a href="#2883" id="2883">2883</a>
+<a href="#2884" id="2884">2884</a>
+<a href="#2885" id="2885">2885</a>
+<a href="#2886" id="2886">2886</a>
+<a href="#2887" id="2887">2887</a>
+<a href="#2888" id="2888">2888</a>
+<a href="#2889" id="2889">2889</a>
+<a href="#2890" id="2890">2890</a>
+<a href="#2891" id="2891">2891</a>
+<a href="#2892" id="2892">2892</a>
+<a href="#2893" id="2893">2893</a>
+<a href="#2894" id="2894">2894</a>
+<a href="#2895" id="2895">2895</a>
+<a href="#2896" id="2896">2896</a>
+<a href="#2897" id="2897">2897</a>
+<a href="#2898" id="2898">2898</a>
+<a href="#2899" id="2899">2899</a>
+<a href="#2900" id="2900">2900</a>
+<a href="#2901" id="2901">2901</a>
+<a href="#2902" id="2902">2902</a>
+<a href="#2903" id="2903">2903</a>
+<a href="#2904" id="2904">2904</a>
+<a href="#2905" id="2905">2905</a>
+<a href="#2906" id="2906">2906</a>
+<a href="#2907" id="2907">2907</a>
+<a href="#2908" id="2908">2908</a>
+<a href="#2909" id="2909">2909</a>
+<a href="#2910" id="2910">2910</a>
+<a href="#2911" id="2911">2911</a>
+<a href="#2912" id="2912">2912</a>
+<a href="#2913" id="2913">2913</a>
+<a href="#2914" id="2914">2914</a>
+<a href="#2915" id="2915">2915</a>
+<a href="#2916" id="2916">2916</a>
+<a href="#2917" id="2917">2917</a>
+<a href="#2918" id="2918">2918</a>
+<a href="#2919" id="2919">2919</a>
+<a href="#2920" id="2920">2920</a>
+<a href="#2921" id="2921">2921</a>
+<a href="#2922" id="2922">2922</a>
+<a href="#2923" id="2923">2923</a>
+<a href="#2924" id="2924">2924</a>
+<a href="#2925" id="2925">2925</a>
+<a href="#2926" id="2926">2926</a>
+<a href="#2927" id="2927">2927</a>
+<a href="#2928" id="2928">2928</a>
+<a href="#2929" id="2929">2929</a>
+<a href="#2930" id="2930">2930</a>
+<a href="#2931" id="2931">2931</a>
+<a href="#2932" id="2932">2932</a>
+<a href="#2933" id="2933">2933</a>
+<a href="#2934" id="2934">2934</a>
+<a href="#2935" id="2935">2935</a>
+<a href="#2936" id="2936">2936</a>
+<a href="#2937" id="2937">2937</a>
+<a href="#2938" id="2938">2938</a>
+<a href="#2939" id="2939">2939</a>
+<a href="#2940" id="2940">2940</a>
+<a href="#2941" id="2941">2941</a>
+<a href="#2942" id="2942">2942</a>
+<a href="#2943" id="2943">2943</a>
+<a href="#2944" id="2944">2944</a>
+<a href="#2945" id="2945">2945</a>
+<a href="#2946" id="2946">2946</a>
+<a href="#2947" id="2947">2947</a>
+<a href="#2948" id="2948">2948</a>
+<a href="#2949" id="2949">2949</a>
+<a href="#2950" id="2950">2950</a>
+<a href="#2951" id="2951">2951</a>
+<a href="#2952" id="2952">2952</a>
+<a href="#2953" id="2953">2953</a>
+<a href="#2954" id="2954">2954</a>
+<a href="#2955" id="2955">2955</a>
+<a href="#2956" id="2956">2956</a>
+<a href="#2957" id="2957">2957</a>
+<a href="#2958" id="2958">2958</a>
+<a href="#2959" id="2959">2959</a>
+<a href="#2960" id="2960">2960</a>
+<a href="#2961" id="2961">2961</a>
+<a href="#2962" id="2962">2962</a>
+<a href="#2963" id="2963">2963</a>
+<a href="#2964" id="2964">2964</a>
+<a href="#2965" id="2965">2965</a>
+<a href="#2966" id="2966">2966</a>
+<a href="#2967" id="2967">2967</a>
+<a href="#2968" id="2968">2968</a>
+<a href="#2969" id="2969">2969</a>
+<a href="#2970" id="2970">2970</a>
+<a href="#2971" id="2971">2971</a>
+<a href="#2972" id="2972">2972</a>
+<a href="#2973" id="2973">2973</a>
+<a href="#2974" id="2974">2974</a>
+<a href="#2975" id="2975">2975</a>
+<a href="#2976" id="2976">2976</a>
+<a href="#2977" id="2977">2977</a>
+<a href="#2978" id="2978">2978</a>
+<a href="#2979" id="2979">2979</a>
+<a href="#2980" id="2980">2980</a>
+<a href="#2981" id="2981">2981</a>
+<a href="#2982" id="2982">2982</a>
+<a href="#2983" id="2983">2983</a>
+<a href="#2984" id="2984">2984</a>
+<a href="#2985" id="2985">2985</a>
+<a href="#2986" id="2986">2986</a>
+<a href="#2987" id="2987">2987</a>
+<a href="#2988" id="2988">2988</a>
+<a href="#2989" id="2989">2989</a>
+<a href="#2990" id="2990">2990</a>
+<a href="#2991" id="2991">2991</a>
+<a href="#2992" id="2992">2992</a>
+<a href="#2993" id="2993">2993</a>
+<a href="#2994" id="2994">2994</a>
+<a href="#2995" id="2995">2995</a>
+<a href="#2996" id="2996">2996</a>
+<a href="#2997" id="2997">2997</a>
+<a href="#2998" id="2998">2998</a>
+<a href="#2999" id="2999">2999</a>
+<a href="#3000" id="3000">3000</a>
+<a href="#3001" id="3001">3001</a>
+<a href="#3002" id="3002">3002</a>
+<a href="#3003" id="3003">3003</a>
+<a href="#3004" id="3004">3004</a>
+<a href="#3005" id="3005">3005</a>
+<a href="#3006" id="3006">3006</a>
+<a href="#3007" id="3007">3007</a>
+<a href="#3008" id="3008">3008</a>
+<a href="#3009" id="3009">3009</a>
+<a href="#3010" id="3010">3010</a>
+<a href="#3011" id="3011">3011</a>
+<a href="#3012" id="3012">3012</a>
+<a href="#3013" id="3013">3013</a>
+<a href="#3014" id="3014">3014</a>
+<a href="#3015" id="3015">3015</a>
+<a href="#3016" id="3016">3016</a>
+<a href="#3017" id="3017">3017</a>
+<a href="#3018" id="3018">3018</a>
+<a href="#3019" id="3019">3019</a>
+<a href="#3020" id="3020">3020</a>
+<a href="#3021" id="3021">3021</a>
+<a href="#3022" id="3022">3022</a>
+<a href="#3023" id="3023">3023</a>
+<a href="#3024" id="3024">3024</a>
+<a href="#3025" id="3025">3025</a>
+<a href="#3026" id="3026">3026</a>
+<a href="#3027" id="3027">3027</a>
+<a href="#3028" id="3028">3028</a>
+<a href="#3029" id="3029">3029</a>
+<a href="#3030" id="3030">3030</a>
+<a href="#3031" id="3031">3031</a>
+<a href="#3032" id="3032">3032</a>
+<a href="#3033" id="3033">3033</a>
+<a href="#3034" id="3034">3034</a>
+<a href="#3035" id="3035">3035</a>
+<a href="#3036" id="3036">3036</a>
+<a href="#3037" id="3037">3037</a>
+<a href="#3038" id="3038">3038</a>
+<a href="#3039" id="3039">3039</a>
+<a href="#3040" id="3040">3040</a>
+<a href="#3041" id="3041">3041</a>
+<a href="#3042" id="3042">3042</a>
+<a href="#3043" id="3043">3043</a>
+<a href="#3044" id="3044">3044</a>
+<a href="#3045" id="3045">3045</a>
+<a href="#3046" id="3046">3046</a>
+<a href="#3047" id="3047">3047</a>
+<a href="#3048" id="3048">3048</a>
+<a href="#3049" id="3049">3049</a>
+<a href="#3050" id="3050">3050</a>
+<a href="#3051" id="3051">3051</a>
+<a href="#3052" id="3052">3052</a>
 </pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
     archetype::{Archetype, ArchetypeId, Archetypes},
-    bundle::{Bundle, BundleInfo, BundleInserter, DynamicBundle},
+    bundle::{Bundle, BundleId, BundleInfo, BundleInserter, DynamicBundle},
     change_detection::MutUntyped,
     component::{Component, ComponentId, ComponentTicks, Components, StorageType},
     entity::{Entities, Entity, EntityLocation},
-    query::{Access, DebugCheckedUnwrap},
+    event::Event,
+    observer::{Observer, Observers},
+    query::Access,
     removal_detection::RemovedComponentEvents,
     storage::Storages,
-    world::{Mut, World},
+    system::IntoObserverSystem,
+    world::{DeferredWorld, Mut, World},
 };
 <span class="kw">use </span>bevy_ptr::{OwningPtr, Ptr};
-<span class="kw">use </span>bevy_utils::tracing::debug;
 <span class="kw">use </span>std::{any::TypeId, marker::PhantomData};
 <span class="kw">use </span>thiserror::Error;
 
-<span class="kw">use super</span>::{unsafe_world_cell::UnsafeEntityCell, Ref};
+<span class="kw">use super</span>::{unsafe_world_cell::UnsafeEntityCell, Ref, ON_REMOVE};
 
 <span class="doccomment">/// A read-only reference to a particular [`Entity`] and all of its components.
 ///
@@ -3097,6 +3403,16 @@
         <span class="self">self</span>.as_readonly().get()
     }
 
+    <span class="doccomment">/// Consumes `self` and gets access to the component of type `T` with the
+    /// world `'w` lifetime for the current entity.
+    ///
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_borrow&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'w </span>T&gt; {
+        <span class="comment">// SAFETY: consuming `self` implies exclusive access
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get() }
+    }
+
     <span class="doccomment">/// Gets access to the component of type `T` for the current entity,
     /// including change detection information as a [`Ref`].
     ///
@@ -3106,11 +3422,31 @@
         <span class="self">self</span>.as_readonly().get_ref()
     }
 
+    <span class="doccomment">/// Consumes `self` and gets access to the component of type `T` with world
+    /// `'w` lifetime for the current entity, including change detection information
+    /// as a [`Ref&lt;'w&gt;`].
+    ///
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_ref&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Ref&lt;<span class="lifetime">'w</span>, T&gt;&gt; {
+        <span class="comment">// SAFETY: consuming `self` implies exclusive access
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get_ref() }
+    }
+
     <span class="doccomment">/// Gets mutable access to the component of type `T` for the current entity.
     /// Returns `None` if the entity does not have a component of type `T`.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>get_mut&lt;T: Component&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'_</span>, T&gt;&gt; {
         <span class="comment">// SAFETY: &amp;mut self implies exclusive access for duration of returned value
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get_mut() }
+    }
+
+    <span class="doccomment">/// Consumes self and gets mutable access to the component of type `T`
+    /// with the world `'w` lifetime for the current entity.
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_mut&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'w</span>, T&gt;&gt; {
+        <span class="comment">// SAFETY: consuming `self` implies exclusive access
         </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get_mut() }
     }
 
@@ -3145,6 +3481,19 @@
         <span class="self">self</span>.as_readonly().get_by_id(component_id)
     }
 
+    <span class="doccomment">/// Consumes `self` and gets the component of the given [`ComponentId`] with
+    /// world `'w` lifetime from the entity.
+    ///
+    /// **You should prefer to use the typed API [`EntityWorldMut::into_borrow`] where possible and only
+    /// use this in cases where the actual component types are not known at
+    /// compile time.**
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_borrow_by_id(<span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;<span class="lifetime">'w</span>&gt;&gt; {
+        <span class="comment">// SAFETY:
+        // consuming `self` ensures that no references exist to this entity's components.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get_by_id(component_id) }
+    }
+
     <span class="doccomment">/// Gets a [`MutUntyped`] of the component of the given [`ComponentId`] from the entity.
     ///
     /// **You should prefer to use the typed API [`EntityMut::get_mut`] where possible and only
@@ -3159,6 +3508,25 @@
         // - `&amp;mut self` ensures that no references exist to this entity's components.
         // - `as_unsafe_world_cell` gives mutable permission for all components on this entity
         </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get_mut_by_id(component_id) }
+    }
+
+    <span class="doccomment">/// Consumes `self` and gets a [`MutUntyped&lt;'w&gt;`] of the component of the given [`ComponentId`]
+    /// with world `'w` lifetime from the entity.
+    ///
+    /// **You should prefer to use the typed API [`EntityMut::into_mut`] where possible and only
+    /// use this in cases where the actual component types are not known at
+    /// compile time.**
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_mut_by_id(<span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;MutUntyped&lt;<span class="lifetime">'w</span>&gt;&gt; {
+        <span class="comment">// SAFETY:
+        // consuming `self` ensures that no references exist to this entity's components.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.get_mut_by_id(component_id) }
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'w</span>&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>EntityMut&lt;<span class="lifetime">'_</span>&gt;&gt; <span class="kw">for </span>EntityMut&lt;<span class="lifetime">'w</span>&gt; {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'w </span><span class="kw-2">mut </span>EntityMut&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="self">Self </span>{
+        value.reborrow()
     }
 }
 
@@ -3332,6 +3700,15 @@
         EntityRef::from(<span class="self">self</span>).get()
     }
 
+    <span class="doccomment">/// Consumes `self` and gets access to the component of type `T` with
+    /// the world `'w` lifetime for the current entity.
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_borrow&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'w </span>T&gt; {
+        <span class="comment">// SAFETY: consuming `self` implies exclusive access
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.into_unsafe_entity_cell().get() }
+    }
+
     <span class="doccomment">/// Gets access to the component of type `T` for the current entity,
     /// including change detection information as a [`Ref`].
     ///
@@ -3341,12 +3718,31 @@
         EntityRef::from(<span class="self">self</span>).get_ref()
     }
 
+    <span class="doccomment">/// Consumes `self` and gets access to the component of type `T`
+    /// with the world `'w` lifetime for the current entity,
+    /// including change detection information as a [`Ref`].
+    ///
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_ref&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Ref&lt;<span class="lifetime">'w</span>, T&gt;&gt; {
+        EntityRef::from(<span class="self">self</span>).get_ref()
+    }
+
     <span class="doccomment">/// Gets mutable access to the component of type `T` for the current entity.
     /// Returns `None` if the entity does not have a component of type `T`.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>get_mut&lt;T: Component&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'_</span>, T&gt;&gt; {
         <span class="comment">// SAFETY: &amp;mut self implies exclusive access for duration of returned value
         </span><span class="kw">unsafe </span>{ <span class="self">self</span>.as_unsafe_entity_cell().get_mut() }
+    }
+
+    <span class="doccomment">/// Consumes `self` and gets mutable access to the component of type `T`
+    /// with the world `'w` lifetime for the current entity.
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_mut&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'w</span>, T&gt;&gt; {
+        <span class="comment">// SAFETY: consuming `self` implies exclusive access
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.into_unsafe_entity_cell().get_mut() }
     }
 
     <span class="doccomment">/// Retrieves the change ticks for the given component. This can be useful for implementing change
@@ -3380,6 +3776,18 @@
         EntityRef::from(<span class="self">self</span>).get_by_id(component_id)
     }
 
+    <span class="doccomment">/// Consumes `self` and gets the component of the given [`ComponentId`] with
+    /// with world `'w` lifetime from the entity.
+    ///
+    /// **You should prefer to use the typed API [`EntityWorldMut::into_borrow`] where
+    /// possible and only use this in cases where the actual component types are not
+    /// known at compile time.**
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_borrow_by_id(<span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;<span class="lifetime">'w</span>&gt;&gt; {
+        <span class="comment">// SAFETY: consuming `self` implies exclusive access
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.into_unsafe_entity_cell().get_by_id(component_id) }
+    }
+
     <span class="doccomment">/// Gets a [`MutUntyped`] of the component of the given [`ComponentId`] from the entity.
     ///
     /// **You should prefer to use the typed API [`EntityWorldMut::get_mut`] where possible and only
@@ -3396,28 +3804,28 @@
         </span><span class="kw">unsafe </span>{ <span class="self">self</span>.as_unsafe_entity_cell().get_mut_by_id(component_id) }
     }
 
+    <span class="doccomment">/// Consumes `self` and gets a [`MutUntyped&lt;'w&gt;`] of the component with the world `'w` lifetime
+    /// of the given [`ComponentId`] from the entity.
+    ///
+    /// **You should prefer to use the typed API [`EntityWorldMut::into_mut`] where possible and only
+    /// use this in cases where the actual component types are not known at
+    /// compile time.**
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_mut_by_id(<span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;MutUntyped&lt;<span class="lifetime">'w</span>&gt;&gt; {
+        <span class="comment">// SAFETY:
+        // consuming `self` ensures that no references exist to this entity's components.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.into_unsafe_entity_cell().get_mut_by_id(component_id) }
+    }
+
     <span class="doccomment">/// Adds a [`Bundle`] of components to the entity.
     ///
     /// This will overwrite any previous value(s) of the same component type.
     </span><span class="kw">pub fn </span>insert&lt;T: Bundle&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bundle: T) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="kw">let </span>change_tick = <span class="self">self</span>.world.change_tick();
-        <span class="kw">let </span>bundle_info = <span class="self">self
-            </span>.world
-            .bundles
-            .init_info::&lt;T&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components, <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages);
-        <span class="kw">let </span><span class="kw-2">mut </span>bundle_inserter = bundle_info.get_bundle_inserter(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.entities,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.archetypes,
-            <span class="kw-2">&amp;</span><span class="self">self</span>.world.components,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages,
-            <span class="self">self</span>.location.archetype_id,
-            change_tick,
-        );
+        <span class="kw">let </span><span class="kw-2">mut </span>bundle_inserter =
+            BundleInserter::new::&lt;T&gt;(<span class="self">self</span>.world, <span class="self">self</span>.location.archetype_id, change_tick);
         <span class="comment">// SAFETY: location matches current entity. `T` matches `bundle_info`
-        </span><span class="kw">unsafe </span>{
-            <span class="self">self</span>.location = bundle_inserter.insert(<span class="self">self</span>.entity, <span class="self">self</span>.location, bundle);
-        }
-
+        </span><span class="self">self</span>.location = <span class="kw">unsafe </span>{ bundle_inserter.insert(<span class="self">self</span>.entity, <span class="self">self</span>.location, bundle) };
         <span class="self">self
     </span>}
 
@@ -3437,17 +3845,16 @@
         component: OwningPtr&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="kw">let </span>change_tick = <span class="self">self</span>.world.change_tick();
+        <span class="kw">let </span>bundle_id = <span class="self">self
+            </span>.world
+            .bundles
+            .init_component_info(<span class="kw-2">&amp;</span><span class="self">self</span>.world.components, component_id);
+        <span class="kw">let </span>storage_type = <span class="self">self</span>.world.bundles.get_storage_unchecked(bundle_id);
 
-        <span class="kw">let </span>bundles = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.bundles;
-        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
-
-        <span class="kw">let </span>(bundle_info, storage_type) = bundles.init_component_info(components, component_id);
-        <span class="kw">let </span>bundle_inserter = bundle_info.get_bundle_inserter(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.entities,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.archetypes,
-            <span class="kw-2">&amp;</span><span class="self">self</span>.world.components,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages,
+        <span class="kw">let </span>bundle_inserter = BundleInserter::new_with_id(
+            <span class="self">self</span>.world,
             <span class="self">self</span>.location.archetype_id,
+            bundle_id,
             change_tick,
         );
 
@@ -3456,9 +3863,8 @@
             <span class="self">self</span>.entity,
             <span class="self">self</span>.location,
             <span class="prelude-val">Some</span>(component).into_iter(),
-            <span class="prelude-val">Some</span>(storage_type).into_iter(),
+            <span class="prelude-val">Some</span>(storage_type).iter().cloned(),
         );
-
         <span class="self">self
     </span>}
 
@@ -3480,17 +3886,16 @@
         iter_components: I,
     ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="kw">let </span>change_tick = <span class="self">self</span>.world.change_tick();
-
-        <span class="kw">let </span>bundles = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.bundles;
-        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
-
-        <span class="kw">let </span>(bundle_info, storage_types) = bundles.init_dynamic_info(components, component_ids);
-        <span class="kw">let </span>bundle_inserter = bundle_info.get_bundle_inserter(
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.entities,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.archetypes,
-            <span class="kw-2">&amp;</span><span class="self">self</span>.world.components,
-            <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages,
+        <span class="kw">let </span>bundle_id = <span class="self">self
+            </span>.world
+            .bundles
+            .init_dynamic_info(<span class="kw-2">&amp;</span><span class="self">self</span>.world.components, component_ids);
+        <span class="kw">let </span><span class="kw-2">mut </span>storage_types =
+            std::mem::take(<span class="self">self</span>.world.bundles.get_storages_unchecked(bundle_id));
+        <span class="kw">let </span>bundle_inserter = BundleInserter::new_with_id(
+            <span class="self">self</span>.world,
             <span class="self">self</span>.location.archetype_id,
+            bundle_id,
             change_tick,
         );
 
@@ -3499,9 +3904,9 @@
             <span class="self">self</span>.entity,
             <span class="self">self</span>.location,
             iter_components,
-            storage_types.iter().cloned(),
+            (<span class="kw-2">*</span>storage_types).iter().cloned(),
         );
-
+        <span class="kw-2">*</span><span class="self">self</span>.world.bundles.get_storages_unchecked(bundle_id) = std::mem::take(<span class="kw-2">&amp;mut </span>storage_types);
         <span class="self">self
     </span>}
 
@@ -3512,21 +3917,21 @@
     </span><span class="comment">// TODO: BundleRemover?
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>take&lt;T: Bundle&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
-        <span class="kw">let </span>archetypes = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.archetypes;
-        <span class="kw">let </span>storages = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages;
-        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
-        <span class="kw">let </span>entities = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.entities;
-        <span class="kw">let </span>removed_components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.removed_components;
-
-        <span class="kw">let </span>bundle_info = <span class="self">self</span>.world.bundles.init_info::&lt;T&gt;(components, storages);
+        <span class="kw">let </span>world = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world;
+        <span class="kw">let </span>storages = <span class="kw-2">&amp;mut </span>world.storages;
+        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span>world.components;
+        <span class="kw">let </span>bundle_id = world.bundles.init_info::&lt;T&gt;(components, storages);
+        <span class="comment">// SAFETY: We just ensured this bundle exists
+        </span><span class="kw">let </span>bundle_info = <span class="kw">unsafe </span>{ world.bundles.get_unchecked(bundle_id) };
         <span class="kw">let </span>old_location = <span class="self">self</span>.location;
         <span class="comment">// SAFETY: `archetype_id` exists because it is referenced in the old `EntityLocation` which is valid,
         // components exist in `bundle_info` because `Bundles::init_info` initializes a `BundleInfo` containing all components of the bundle type `T`
         </span><span class="kw">let </span>new_archetype_id = <span class="kw">unsafe </span>{
             remove_bundle_from_archetype(
-                archetypes,
+                <span class="kw-2">&amp;mut </span>world.archetypes,
                 storages,
                 components,
+                <span class="kw-2">&amp;</span>world.observers,
                 old_location.archetype_id,
                 bundle_info,
                 <span class="bool-val">false</span>,
@@ -3537,8 +3942,36 @@
             <span class="kw">return </span><span class="prelude-val">None</span>;
         }
 
-        <span class="kw">let </span><span class="kw-2">mut </span>bundle_components = bundle_info.components().iter().cloned();
         <span class="kw">let </span>entity = <span class="self">self</span>.entity;
+        <span class="comment">// SAFETY: Archetypes and Bundles cannot be mutably aliased through DeferredWorld
+        </span><span class="kw">let </span>(old_archetype, bundle_info, <span class="kw-2">mut </span>deferred_world) = <span class="kw">unsafe </span>{
+            <span class="kw">let </span>bundle_info: <span class="kw-2">*const </span>BundleInfo = bundle_info;
+            <span class="kw">let </span>world = world.as_unsafe_world_cell();
+            (
+                <span class="kw-2">&amp;</span>world.archetypes()[old_location.archetype_id],
+                <span class="kw-2">&amp;*</span>bundle_info,
+                world.into_deferred(),
+            )
+        };
+
+        <span class="comment">// SAFETY: all bundle components exist in World
+        </span><span class="kw">unsafe </span>{
+            trigger_on_remove_hooks_and_observers(
+                <span class="kw-2">&amp;mut </span>deferred_world,
+                old_archetype,
+                entity,
+                bundle_info,
+            );
+        }
+
+        <span class="kw">let </span>archetypes = <span class="kw-2">&amp;mut </span>world.archetypes;
+        <span class="kw">let </span>storages = <span class="kw-2">&amp;mut </span>world.storages;
+        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span>world.components;
+        <span class="kw">let </span>entities = <span class="kw-2">&amp;mut </span>world.entities;
+        <span class="kw">let </span>removed_components = <span class="kw-2">&amp;mut </span>world.removed_components;
+
+        <span class="kw">let </span>entity = <span class="self">self</span>.entity;
+        <span class="kw">let </span><span class="kw-2">mut </span>bundle_components = bundle_info.iter_components();
         <span class="comment">// SAFETY: bundle components are iterated in order, which guarantees that the component type
         // matches
         </span><span class="kw">let </span>result = <span class="kw">unsafe </span>{
@@ -3572,11 +4005,12 @@
                 new_archetype_id,
             );
         }
-
         <span class="prelude-val">Some</span>(result)
     }
 
-    <span class="doccomment">/// Safety: `new_archetype_id` must have the same or a subset of the components
+    <span class="doccomment">/// # Safety
+    ///
+    /// `new_archetype_id` must have the same or a subset of the components
     /// in `old_archetype_id`. Probably more safety stuff too, audit a call to
     /// this fn as if the code here was written inline
     ///
@@ -3622,15 +4056,16 @@
                 .tables
                 .get_2_mut(old_table_id, new_archetype.table_id());
 
-            <span class="comment">// SAFETY: old_table_row exists
-            </span><span class="kw">let </span>move_result = <span class="kw">if </span>DROP {
-                old_table.move_to_and_drop_missing_unchecked(old_table_row, new_table)
+            <span class="kw">let </span>move_result = <span class="kw">if </span>DROP {
+                <span class="comment">// SAFETY: old_table_row exists
+                </span><span class="kw">unsafe </span>{ old_table.move_to_and_drop_missing_unchecked(old_table_row, new_table) }
             } <span class="kw">else </span>{
-                old_table.move_to_and_forget_missing_unchecked(old_table_row, new_table)
+                <span class="comment">// SAFETY: old_table_row exists
+                </span><span class="kw">unsafe </span>{ old_table.move_to_and_forget_missing_unchecked(old_table_row, new_table) }
             };
 
             <span class="comment">// SAFETY: move_result.new_row is a valid position in new_archetype's table
-            </span><span class="kw">let </span>new_location = new_archetype.allocate(entity, move_result.new_row);
+            </span><span class="kw">let </span>new_location = <span class="kw">unsafe </span>{ new_archetype.allocate(entity, move_result.new_row) };
 
             <span class="comment">// if an entity was moved into this entity's table row, update its table row
             </span><span class="kw">if let </span><span class="prelude-val">Some</span>(swapped_entity) = move_result.swapped_entity {
@@ -3654,50 +4089,72 @@
 
         <span class="kw-2">*</span>self_location = new_location;
         <span class="comment">// SAFETY: The entity is valid and has been moved to the new location already.
-        </span>entities.set(entity.index(), new_location);
+        </span><span class="kw">unsafe </span>{
+            entities.set(entity.index(), new_location);
+        }
     }
 
-    <span class="doccomment">/// Remove the components of `bundle_info` from `entity`, where `self_location` and `old_location`
-    /// are the location of this entity, and `self_location` is updated to the new location.
+    <span class="doccomment">/// Remove the components of `bundle` from `entity`.
     ///
-    /// SAFETY: `old_location` must be valid and the components in `bundle_info` must exist.
+    /// SAFETY:
+    /// - A `BundleInfo` with the corresponding `BundleId` must have been initialized.
     </span><span class="attr">#[allow(clippy::too_many_arguments)]
-    </span><span class="kw">unsafe fn </span>remove_bundle_info(
-        entity: Entity,
-        self_location: <span class="kw-2">&amp;mut </span>EntityLocation,
-        old_location: EntityLocation,
-        bundle_info: <span class="kw-2">&amp;</span>BundleInfo,
-        archetypes: <span class="kw-2">&amp;mut </span>Archetypes,
-        storages: <span class="kw-2">&amp;mut </span>Storages,
-        components: <span class="kw-2">&amp;</span>Components,
-        entities: <span class="kw-2">&amp;mut </span>Entities,
-        removed_components: <span class="kw-2">&amp;mut </span>RemovedComponentEvents,
-    ) {
-        <span class="comment">// SAFETY: `archetype_id` exists because it is referenced in `old_location` which is valid
-        // and components in `bundle_info` must exist due to this functions safety invariants.
+    </span><span class="kw">unsafe fn </span>remove_bundle(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bundle: BundleId) -&gt; EntityLocation {
+        <span class="kw">let </span>entity = <span class="self">self</span>.entity;
+        <span class="kw">let </span>world = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world;
+        <span class="kw">let </span>location = <span class="self">self</span>.location;
+        <span class="comment">// SAFETY: the caller guarantees that the BundleInfo for this id has been initialized.
+        </span><span class="kw">let </span>bundle_info = world.bundles.get_unchecked(bundle);
+
+        <span class="comment">// SAFETY: `archetype_id` exists because it is referenced in `location` which is valid
+        // and components in `bundle_info` must exist due to this function's safety invariants.
         </span><span class="kw">let </span>new_archetype_id = remove_bundle_from_archetype(
-            archetypes,
-            storages,
-            components,
-            old_location.archetype_id,
+            <span class="kw-2">&amp;mut </span>world.archetypes,
+            <span class="kw-2">&amp;mut </span>world.storages,
+            <span class="kw-2">&amp;</span>world.components,
+            <span class="kw-2">&amp;</span>world.observers,
+            location.archetype_id,
             bundle_info,
-            <span class="bool-val">true</span>,
+            <span class="comment">// components from the bundle that are not present on the entity are ignored
+            </span><span class="bool-val">true</span>,
         )
         .expect(<span class="string">"intersections should always return a result"</span>);
 
-        <span class="kw">if </span>new_archetype_id == old_location.archetype_id {
-            <span class="kw">return</span>;
+        <span class="kw">if </span>new_archetype_id == location.archetype_id {
+            <span class="kw">return </span>location;
         }
 
-        <span class="kw">let </span>old_archetype = <span class="kw-2">&amp;mut </span>archetypes[old_location.archetype_id];
-        <span class="kw">for </span>component_id <span class="kw">in </span>bundle_info.components().iter().cloned() {
+        <span class="comment">// SAFETY: Archetypes and Bundles cannot be mutably aliased through DeferredWorld
+        </span><span class="kw">let </span>(old_archetype, bundle_info, <span class="kw-2">mut </span>deferred_world) = <span class="kw">unsafe </span>{
+            <span class="kw">let </span>bundle_info: <span class="kw-2">*const </span>BundleInfo = bundle_info;
+            <span class="kw">let </span>world = world.as_unsafe_world_cell();
+            (
+                <span class="kw-2">&amp;</span>world.archetypes()[location.archetype_id],
+                <span class="kw-2">&amp;*</span>bundle_info,
+                world.into_deferred(),
+            )
+        };
+
+        <span class="comment">// SAFETY: all bundle components exist in World
+        </span><span class="kw">unsafe </span>{
+            trigger_on_remove_hooks_and_observers(
+                <span class="kw-2">&amp;mut </span>deferred_world,
+                old_archetype,
+                entity,
+                bundle_info,
+            );
+        }
+
+        <span class="kw">let </span>old_archetype = <span class="kw-2">&amp;</span>world.archetypes[location.archetype_id];
+        <span class="kw">for </span>component_id <span class="kw">in </span>bundle_info.iter_components() {
             <span class="kw">if </span>old_archetype.contains(component_id) {
-                removed_components.send(component_id, entity);
+                world.removed_components.send(component_id, entity);
 
                 <span class="comment">// Make sure to drop components stored in sparse sets.
                 // Dense components are dropped later in `move_to_and_drop_missing_unchecked`.
                 </span><span class="kw">if let </span><span class="prelude-val">Some</span>(StorageType::SparseSet) = old_archetype.get_storage_type(component_id) {
-                    storages
+                    world
+                        .storages
                         .sparse_sets
                         .get_mut(component_id)
                         .unwrap()
@@ -3708,16 +4165,19 @@
 
         <span class="comment">// SAFETY: `new_archetype_id` is a subset of the components in `old_location.archetype_id`
         // because it is created by removing a bundle from these components.
-        </span><span class="self">Self</span>::move_entity_from_remove::&lt;<span class="bool-val">true</span>&gt;(
+        </span><span class="kw">let </span><span class="kw-2">mut </span>new_location = location;
+        <span class="self">Self</span>::move_entity_from_remove::&lt;<span class="bool-val">true</span>&gt;(
             entity,
-            self_location,
-            old_location.archetype_id,
-            old_location,
-            entities,
-            archetypes,
-            storages,
+            <span class="kw-2">&amp;mut </span>new_location,
+            location.archetype_id,
+            location,
+            <span class="kw-2">&amp;mut </span>world.entities,
+            <span class="kw-2">&amp;mut </span>world.archetypes,
+            <span class="kw-2">&amp;mut </span>world.storages,
             new_archetype_id,
         );
+
+        new_location
     }
 
     <span class="doccomment">/// Removes any components in the [`Bundle`] from the entity.
@@ -3725,30 +4185,12 @@
     /// See [`EntityCommands::remove`](crate::system::EntityCommands::remove) for more details.
     </span><span class="comment">// TODO: BundleRemover?
     </span><span class="kw">pub fn </span>remove&lt;T: Bundle&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
-        <span class="kw">let </span>archetypes = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.archetypes;
         <span class="kw">let </span>storages = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages;
         <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
-        <span class="kw">let </span>entities = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.entities;
-        <span class="kw">let </span>removed_components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.removed_components;
-
         <span class="kw">let </span>bundle_info = <span class="self">self</span>.world.bundles.init_info::&lt;T&gt;(components, storages);
-        <span class="kw">let </span>old_location = <span class="self">self</span>.location;
 
-        <span class="comment">// SAFETY: Components exist in `bundle_info` because `Bundles::init_info`
-        // initializes a `BundleInfo` containing all components of the bundle type `T`.
-        </span><span class="kw">unsafe </span>{
-            <span class="self">Self</span>::remove_bundle_info(
-                <span class="self">self</span>.entity,
-                <span class="kw-2">&amp;mut </span><span class="self">self</span>.location,
-                old_location,
-                bundle_info,
-                archetypes,
-                storages,
-                components,
-                entities,
-                removed_components,
-            );
-        }
+        <span class="comment">// SAFETY: the `BundleInfo` is initialized above
+        </span><span class="self">self</span>.location = <span class="kw">unsafe </span>{ <span class="self">self</span>.remove_bundle(bundle_info) };
 
         <span class="self">self
     </span>}
@@ -3760,10 +4202,10 @@
         <span class="kw">let </span>archetypes = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.archetypes;
         <span class="kw">let </span>storages = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.storages;
         <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
-        <span class="kw">let </span>entities = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.entities;
-        <span class="kw">let </span>removed_components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.removed_components;
 
-        <span class="kw">let </span>retained_bundle_info = <span class="self">self</span>.world.bundles.init_info::&lt;T&gt;(components, storages);
+        <span class="kw">let </span>retained_bundle = <span class="self">self</span>.world.bundles.init_info::&lt;T&gt;(components, storages);
+        <span class="comment">// SAFETY: `retained_bundle` exists as we just initialized it.
+        </span><span class="kw">let </span>retained_bundle_info = <span class="kw">unsafe </span>{ <span class="self">self</span>.world.bundles.get_unchecked(retained_bundle) };
         <span class="kw">let </span>old_location = <span class="self">self</span>.location;
         <span class="kw">let </span>old_archetype = <span class="kw-2">&amp;mut </span>archetypes[old_location.archetype_id];
 
@@ -3771,27 +4213,46 @@
             .components()
             .filter(|c| !retained_bundle_info.components().contains(c))
             .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
-        <span class="kw">let </span>remove_bundle_info = <span class="self">self
+        <span class="kw">let </span>remove_bundle = <span class="self">self</span>.world.bundles.init_dynamic_info(components, to_remove);
+
+        <span class="comment">// SAFETY: the `BundleInfo` for the components to remove is initialized above
+        </span><span class="self">self</span>.location = <span class="kw">unsafe </span>{ <span class="self">self</span>.remove_bundle(remove_bundle) };
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Removes a dynamic [`Component`] from the entity if it exists.
+    ///
+    /// You should prefer to use the typed API [`EntityWorldMut::remove`] where possible.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the provided [`ComponentId`] does not exist in the [`World`].
+    </span><span class="kw">pub fn </span>remove_by_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>, component_id: ComponentId) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
+
+        <span class="kw">let </span>bundle_id = <span class="self">self
             </span>.world
             .bundles
-            .init_dynamic_info(components, to_remove)
-            .<span class="number">0</span>;
+            .init_component_info(components, component_id);
 
-        <span class="comment">// SAFETY: Components exist in `remove_bundle_info` because `Bundles::init_dynamic_info`
-        // initializes a `BundleInfo` containing all components in the to_remove Bundle.
-        </span><span class="kw">unsafe </span>{
-            <span class="self">Self</span>::remove_bundle_info(
-                <span class="self">self</span>.entity,
-                <span class="kw-2">&amp;mut </span><span class="self">self</span>.location,
-                old_location,
-                remove_bundle_info,
-                archetypes,
-                storages,
-                components,
-                entities,
-                removed_components,
-            );
-        }
+        <span class="comment">// SAFETY: the `BundleInfo` for this `component_id` is initialized above
+        </span><span class="self">self</span>.location = <span class="kw">unsafe </span>{ <span class="self">self</span>.remove_bundle(bundle_id) };
+
+        <span class="self">self
+    </span>}
+
+    <span class="doccomment">/// Removes all components associated with the entity.
+    </span><span class="kw">pub fn </span>clear(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="kw">let </span>component_ids: Vec&lt;ComponentId&gt; = <span class="self">self</span>.archetype().components().collect();
+        <span class="kw">let </span>components = <span class="kw-2">&amp;mut </span><span class="self">self</span>.world.components;
+
+        <span class="kw">let </span>bundle_id = <span class="self">self
+            </span>.world
+            .bundles
+            .init_dynamic_info(components, component_ids.as_slice());
+
+        <span class="comment">// SAFETY: the `BundleInfo` for this `component_id` is initialized above
+        </span><span class="self">self</span>.location = <span class="kw">unsafe </span>{ <span class="self">self</span>.remove_bundle(bundle_id) };
 
         <span class="self">self
     </span>}
@@ -3800,9 +4261,29 @@
     ///
     /// See [`World::despawn`] for more details.
     </span><span class="kw">pub fn </span>despawn(<span class="self">self</span>) {
-        <span class="macro">debug!</span>(<span class="string">"Despawning entity {:?}"</span>, <span class="self">self</span>.entity);
         <span class="kw">let </span>world = <span class="self">self</span>.world;
-        world.flush();
+        world.flush_entities();
+        <span class="kw">let </span>archetype = <span class="kw-2">&amp;</span>world.archetypes[<span class="self">self</span>.location.archetype_id];
+
+        <span class="comment">// SAFETY: Archetype cannot be mutably aliased by DeferredWorld
+        </span><span class="kw">let </span>(archetype, <span class="kw-2">mut </span>deferred_world) = <span class="kw">unsafe </span>{
+            <span class="kw">let </span>archetype: <span class="kw-2">*const </span>Archetype = archetype;
+            <span class="kw">let </span>world = world.as_unsafe_world_cell();
+            (<span class="kw-2">&amp;*</span>archetype, world.into_deferred())
+        };
+
+        <span class="comment">// SAFETY: All components in the archetype exist in world
+        </span><span class="kw">unsafe </span>{
+            deferred_world.trigger_on_remove(archetype, <span class="self">self</span>.entity, archetype.components());
+            <span class="kw">if </span>archetype.has_remove_observer() {
+                deferred_world.trigger_observers(ON_REMOVE, <span class="self">self</span>.entity, archetype.components());
+            }
+        }
+
+        <span class="kw">for </span>component_id <span class="kw">in </span>archetype.components() {
+            world.removed_components.send(component_id, <span class="self">self</span>.entity);
+        }
+
         <span class="kw">let </span>location = world
             .entities
             .free(<span class="self">self</span>.entity)
@@ -3811,10 +4292,7 @@
         <span class="kw">let </span>moved_entity;
 
         {
-            <span class="kw">let </span>archetype = <span class="kw-2">&amp;mut </span>world.archetypes[location.archetype_id];
-            <span class="kw">for </span>component_id <span class="kw">in </span>archetype.components() {
-                world.removed_components.send(component_id, <span class="self">self</span>.entity);
-            }
+            <span class="kw">let </span>archetype = <span class="kw-2">&amp;mut </span>world.archetypes[<span class="self">self</span>.location.archetype_id];
             <span class="kw">let </span>remove_result = archetype.swap_remove(location.archetype_row);
             <span class="kw">if let </span><span class="prelude-val">Some</span>(swapped_entity) = remove_result.swapped_entity {
                 <span class="kw">let </span>swapped_location = world.entities.get(swapped_entity).unwrap();
@@ -3862,6 +4340,13 @@
             world.archetypes[moved_location.archetype_id]
                 .set_entity_table_row(moved_location.archetype_row, table_row);
         }
+        world.flush();
+    }
+
+    <span class="doccomment">/// Ensures any commands triggered by the actions of Self are applied, equivalent to [`World::flush`]
+    </span><span class="kw">pub fn </span>flush(<span class="self">self</span>) -&gt; Entity {
+        <span class="self">self</span>.world.flush();
+        <span class="self">self</span>.entity
     }
 
     <span class="doccomment">/// Gets read-only access to the world that the current entity belongs to.
@@ -3975,6 +4460,30 @@
                 _marker: PhantomData,
             })
         }
+    }
+
+    <span class="doccomment">/// Creates an [`Observer`](crate::observer::Observer) listening for events of type `E` targeting this entity.
+    /// In order to trigger the callback the entity must also match the query when the event is fired.
+    </span><span class="kw">pub fn </span>observe&lt;E: Event, B: Bundle, M&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        observer: <span class="kw">impl </span>IntoObserverSystem&lt;E, B, M&gt;,
+    ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.world
+            .spawn(Observer::new(observer).with_entity(<span class="self">self</span>.entity));
+        <span class="self">self
+    </span>}
+}
+
+<span class="doccomment">/// SAFETY: all components in the archetype must exist in world
+</span><span class="kw">unsafe fn </span>trigger_on_remove_hooks_and_observers(
+    deferred_world: <span class="kw-2">&amp;mut </span>DeferredWorld,
+    archetype: <span class="kw-2">&amp;</span>Archetype,
+    entity: Entity,
+    bundle_info: <span class="kw-2">&amp;</span>BundleInfo,
+) {
+    deferred_world.trigger_on_remove(archetype, entity, bundle_info.iter_components());
+    <span class="kw">if </span>archetype.has_remove_observer() {
+        deferred_world.trigger_observers(ON_REMOVE, entity, bundle_info.iter_components());
     }
 }
 
@@ -4419,8 +4928,9 @@
         <span class="kw">let </span>id = <span class="self">self</span>.entity.world().components().get_id(TypeId::of::&lt;T&gt;())<span class="question-mark">?</span>;
         <span class="self">self</span>.access
             .has_read(id)
-            <span class="comment">// SAFETY: We have read access so we must have the component
-            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get().debug_checked_unwrap() })
+            <span class="comment">// SAFETY: We have read access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get() })
+            .flatten()
     }
 
     <span class="doccomment">/// Gets access to the component of type `T` for the current entity,
@@ -4432,8 +4942,9 @@
         <span class="kw">let </span>id = <span class="self">self</span>.entity.world().components().get_id(TypeId::of::&lt;T&gt;())<span class="question-mark">?</span>;
         <span class="self">self</span>.access
             .has_read(id)
-            <span class="comment">// SAFETY: We have read access so we must have the component
-            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_ref().debug_checked_unwrap() })
+            <span class="comment">// SAFETY: We have read access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_ref() })
+            .flatten()
     }
 
     <span class="doccomment">/// Retrieves the change ticks for the given component. This can be useful for implementing change
@@ -4443,8 +4954,9 @@
         <span class="kw">let </span>id = <span class="self">self</span>.entity.world().components().get_id(TypeId::of::&lt;T&gt;())<span class="question-mark">?</span>;
         <span class="self">self</span>.access
             .has_read(id)
-            <span class="comment">// SAFETY: We have read access so we must have the component
-            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_change_ticks::&lt;T&gt;().debug_checked_unwrap() })
+            <span class="comment">// SAFETY: We have read access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_change_ticks::&lt;T&gt;() })
+            .flatten()
     }
 
     <span class="doccomment">/// Retrieves the change ticks for the given [`ComponentId`]. This can be useful for implementing change
@@ -4455,12 +4967,11 @@
     /// compile time.**
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>get_change_ticks_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;ComponentTicks&gt; {
-        <span class="comment">// SAFETY: We have read access so we must have the component
-        </span><span class="self">self</span>.access.has_read(component_id).then(|| <span class="kw">unsafe </span>{
-            <span class="self">self</span>.entity
-                .get_change_ticks_by_id(component_id)
-                .debug_checked_unwrap()
-        })
+        <span class="self">self</span>.access
+            .has_read(component_id)
+            <span class="comment">// SAFETY: We have read access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_change_ticks_by_id(component_id) })
+            .flatten()
     }
 
     <span class="doccomment">/// Gets the component of the given [`ComponentId`] from the entity.
@@ -4475,8 +4986,9 @@
     </span><span class="kw">pub fn </span>get_by_id(<span class="kw-2">&amp;</span><span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;Ptr&lt;<span class="lifetime">'w</span>&gt;&gt; {
         <span class="self">self</span>.access
             .has_read(component_id)
-            <span class="comment">// SAFETY: We have read access so we must have the component
-            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_by_id(component_id).debug_checked_unwrap() })
+            <span class="comment">// SAFETY: We have read access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_by_id(component_id) })
+            .flatten()
     }
 }
 
@@ -4689,8 +5201,22 @@
         <span class="kw">let </span>id = <span class="self">self</span>.entity.world().components().get_id(TypeId::of::&lt;T&gt;())<span class="question-mark">?</span>;
         <span class="self">self</span>.access
             .has_write(id)
-            <span class="comment">// SAFETY: We have write access so we must have the component
-            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_mut().debug_checked_unwrap() })
+            <span class="comment">// SAFETY: We have write access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_mut() })
+            .flatten()
+    }
+
+    <span class="doccomment">/// Consumes self and gets mutable access to the component of type `T`
+    /// with the world `'w` lifetime for the current entity.
+    /// Returns `None` if the entity does not have a component of type `T`.
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub fn </span>into_mut&lt;T: Component&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Mut&lt;<span class="lifetime">'w</span>, T&gt;&gt; {
+        <span class="kw">let </span>id = <span class="self">self</span>.entity.world().components().get_id(TypeId::of::&lt;T&gt;())<span class="question-mark">?</span>;
+        <span class="self">self</span>.access
+            .has_write(id)
+            <span class="comment">// SAFETY: We have write access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_mut() })
+            .flatten()
     }
 
     <span class="doccomment">/// Retrieves the change ticks for the given component. This can be useful for implementing change
@@ -4734,12 +5260,11 @@
     /// which is only valid while the [`FilteredEntityMut`] is alive.
     </span><span class="attr">#[inline]
     </span><span class="kw">pub fn </span>get_mut_by_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>, component_id: ComponentId) -&gt; <span class="prelude-ty">Option</span>&lt;MutUntyped&lt;<span class="lifetime">'_</span>&gt;&gt; {
-        <span class="comment">// SAFETY: We have write access so we must have the component
-        </span><span class="self">self</span>.access.has_write(component_id).then(|| <span class="kw">unsafe </span>{
-            <span class="self">self</span>.entity
-                .get_mut_by_id(component_id)
-                .debug_checked_unwrap()
-        })
+        <span class="self">self</span>.access
+            .has_write(component_id)
+            <span class="comment">// SAFETY: We have write access
+            </span>.then(|| <span class="kw">unsafe </span>{ <span class="self">self</span>.entity.get_mut_by_id(component_id) })
+            .flatten()
     }
 }
 
@@ -4816,7 +5341,7 @@
     I: Iterator&lt;Item = OwningPtr&lt;<span class="lifetime">'a</span>&gt;&gt;,
     S: Iterator&lt;Item = StorageType&gt;,
 &gt;(
-    <span class="kw-2">mut </span>bundle_inserter: BundleInserter&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>&gt;,
+    <span class="kw-2">mut </span>bundle_inserter: BundleInserter&lt;<span class="lifetime">'_</span>&gt;,
     entity: Entity,
     location: EntityLocation,
     components: I,
@@ -4855,6 +5380,7 @@
     archetypes: <span class="kw-2">&amp;mut </span>Archetypes,
     storages: <span class="kw-2">&amp;mut </span>Storages,
     components: <span class="kw-2">&amp;</span>Components,
+    observers: <span class="kw-2">&amp;</span>Observers,
     archetype_id: ArchetypeId,
     bundle_info: <span class="kw-2">&amp;</span>BundleInfo,
     intersection: bool,
@@ -4883,7 +5409,7 @@
             <span class="kw">for </span>component_id <span class="kw">in </span>bundle_info.components().iter().cloned() {
                 <span class="kw">if </span>current_archetype.contains(component_id) {
                     <span class="comment">// SAFETY: bundle components were already initialized by bundles.get_info
-                    </span><span class="kw">let </span>component_info = components.get_info_unchecked(component_id);
+                    </span><span class="kw">let </span>component_info = <span class="kw">unsafe </span>{ components.get_info_unchecked(component_id) };
                     <span class="kw">match </span>component_info.storage_type() {
                         StorageType::Table =&gt; removed_table_components.push(component_id),
                         StorageType::SparseSet =&gt; removed_sparse_set_components.push(component_id),
@@ -4915,13 +5441,17 @@
                 current_archetype.table_id()
             } <span class="kw">else </span>{
                 <span class="comment">// SAFETY: all components in next_table_components exist
-                </span>storages
-                    .tables
-                    .get_id_or_insert(<span class="kw-2">&amp;</span>next_table_components, components)
+                </span><span class="kw">unsafe </span>{
+                    storages
+                        .tables
+                        .get_id_or_insert(<span class="kw-2">&amp;</span>next_table_components, components)
+                }
             };
         }
 
         <span class="kw">let </span>new_archetype_id = archetypes.get_id_or_insert(
+            components,
+            observers,
             next_table_id,
             next_table_components,
             next_sparse_set_components,
@@ -4978,7 +5508,7 @@
     location: EntityLocation,
 ) -&gt; OwningPtr&lt;<span class="lifetime">'a</span>&gt; {
     <span class="comment">// SAFETY: caller promises component_id to be valid
-    </span><span class="kw">let </span>component_info = components.get_info_unchecked(component_id);
+    </span><span class="kw">let </span>component_info = <span class="kw">unsafe </span>{ components.get_info_unchecked(component_id) };
     removed_components.send(component_id, entity);
     <span class="kw">match </span>component_info.storage_type() {
         StorageType::Table =&gt; {
@@ -4988,9 +5518,11 @@
             // - archetypes only store valid table_rows
             // - index is in bounds as promised by caller
             // - promote is safe because the caller promises to remove the table row without dropping it immediately afterwards
-            </span>components
-                .get_data_unchecked_mut(location.table_row)
-                .promote()
+            </span><span class="kw">unsafe </span>{
+                components
+                    .get_data_unchecked_mut(location.table_row)
+                    .promote()
+            }
         }
         StorageType::SparseSet =&gt; storages
             .sparse_sets
@@ -5006,6 +5538,7 @@
     <span class="kw">use </span>bevy_ptr::OwningPtr;
     <span class="kw">use </span>std::panic::AssertUnwindSafe;
 
+    <span class="kw">use </span><span class="kw">crate</span>::world::{FilteredEntityMut, FilteredEntityRef};
     <span class="kw">use crate</span>::{<span class="self">self </span><span class="kw">as </span>bevy_ecs, component::ComponentId, prelude::<span class="kw-2">*</span>, system::assert_is_system};
 
     <span class="attr">#[test]
@@ -5384,6 +5917,22 @@
         <span class="macro">assert_eq!</span>(dynamic_components, static_components);
     }
 
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>entity_mut_remove_by_id() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        <span class="kw">let </span>test_component_id = world.init_component::&lt;TestComponent&gt;();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>entity = world.spawn(TestComponent(<span class="number">42</span>));
+        entity.remove_by_id(test_component_id);
+
+        <span class="kw">let </span>components: Vec&lt;<span class="kw">_</span>&gt; = world.query::&lt;<span class="kw-2">&amp;</span>TestComponent&gt;().iter(<span class="kw-2">&amp;</span>world).collect();
+
+        <span class="macro">assert_eq!</span>(components, <span class="macro">vec!</span>[] <span class="kw">as </span>Vec&lt;<span class="kw-2">&amp;</span>TestComponent&gt;);
+
+        <span class="comment">// remove non-existent component does not panic
+        </span>world.spawn_empty().remove_by_id(test_component_id);
+    }
+
     <span class="attr">#[derive(Component)]
     </span><span class="kw">struct </span>A;
 
@@ -5491,6 +6040,66 @@
         <span class="kw">fn </span>incompatible_system(<span class="kw">_</span>: Query&lt;EntityMut&gt;, <span class="kw">_</span>: Query&lt;<span class="kw-2">&amp;mut </span>A&gt;) {}
 
         assert_is_system(incompatible_system);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>filtered_entity_ref_normal() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        <span class="kw">let </span>a_id = world.init_component::&lt;A&gt;();
+
+        <span class="kw">let </span>e: FilteredEntityRef = world.spawn(A).into();
+
+        <span class="macro">assert!</span>(e.get::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_ref::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_change_ticks::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_by_id(a_id).is_some());
+        <span class="macro">assert!</span>(e.get_change_ticks_by_id(a_id).is_some());
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>filtered_entity_ref_missing() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        <span class="kw">let </span>a_id = world.init_component::&lt;A&gt;();
+
+        <span class="kw">let </span>e: FilteredEntityRef = world.spawn(()).into();
+
+        <span class="macro">assert!</span>(e.get::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_ref::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_change_ticks::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_by_id(a_id).is_none());
+        <span class="macro">assert!</span>(e.get_change_ticks_by_id(a_id).is_none());
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>filtered_entity_mut_normal() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        <span class="kw">let </span>a_id = world.init_component::&lt;A&gt;();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>e: FilteredEntityMut = world.spawn(A).into();
+
+        <span class="macro">assert!</span>(e.get::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_ref::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_mut::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_change_ticks::&lt;A&gt;().is_some());
+        <span class="macro">assert!</span>(e.get_by_id(a_id).is_some());
+        <span class="macro">assert!</span>(e.get_mut_by_id(a_id).is_some());
+        <span class="macro">assert!</span>(e.get_change_ticks_by_id(a_id).is_some());
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>filtered_entity_mut_missing() {
+        <span class="kw">let </span><span class="kw-2">mut </span>world = World::new();
+        <span class="kw">let </span>a_id = world.init_component::&lt;A&gt;();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>e: FilteredEntityMut = world.spawn(()).into();
+
+        <span class="macro">assert!</span>(e.get::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_ref::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_mut::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_change_ticks::&lt;A&gt;().is_none());
+        <span class="macro">assert!</span>(e.get_by_id(a_id).is_none());
+        <span class="macro">assert!</span>(e.get_mut_by_id(a_id).is_none());
+        <span class="macro">assert!</span>(e.get_change_ticks_by_id(a_id).is_none());
     }
 }
 </code></pre></div></section></main></body></html>

@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.13.0/src/path.rs`."><title>path.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.14.0/src/path.rs`."><title>path.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_asset/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -945,142 +944,13 @@
 <a href="#944" id="944">944</a>
 <a href="#945" id="945">945</a>
 <a href="#946" id="946">946</a>
-<a href="#947" id="947">947</a>
-<a href="#948" id="948">948</a>
-<a href="#949" id="949">949</a>
-<a href="#950" id="950">950</a>
-<a href="#951" id="951">951</a>
-<a href="#952" id="952">952</a>
-<a href="#953" id="953">953</a>
-<a href="#954" id="954">954</a>
-<a href="#955" id="955">955</a>
-<a href="#956" id="956">956</a>
-<a href="#957" id="957">957</a>
-<a href="#958" id="958">958</a>
-<a href="#959" id="959">959</a>
-<a href="#960" id="960">960</a>
-<a href="#961" id="961">961</a>
-<a href="#962" id="962">962</a>
-<a href="#963" id="963">963</a>
-<a href="#964" id="964">964</a>
-<a href="#965" id="965">965</a>
-<a href="#966" id="966">966</a>
-<a href="#967" id="967">967</a>
-<a href="#968" id="968">968</a>
-<a href="#969" id="969">969</a>
-<a href="#970" id="970">970</a>
-<a href="#971" id="971">971</a>
-<a href="#972" id="972">972</a>
-<a href="#973" id="973">973</a>
-<a href="#974" id="974">974</a>
-<a href="#975" id="975">975</a>
-<a href="#976" id="976">976</a>
-<a href="#977" id="977">977</a>
-<a href="#978" id="978">978</a>
-<a href="#979" id="979">979</a>
-<a href="#980" id="980">980</a>
-<a href="#981" id="981">981</a>
-<a href="#982" id="982">982</a>
-<a href="#983" id="983">983</a>
-<a href="#984" id="984">984</a>
-<a href="#985" id="985">985</a>
-<a href="#986" id="986">986</a>
-<a href="#987" id="987">987</a>
-<a href="#988" id="988">988</a>
-<a href="#989" id="989">989</a>
-<a href="#990" id="990">990</a>
-<a href="#991" id="991">991</a>
-<a href="#992" id="992">992</a>
-<a href="#993" id="993">993</a>
-<a href="#994" id="994">994</a>
-<a href="#995" id="995">995</a>
-<a href="#996" id="996">996</a>
-<a href="#997" id="997">997</a>
-<a href="#998" id="998">998</a>
-<a href="#999" id="999">999</a>
-<a href="#1000" id="1000">1000</a>
-<a href="#1001" id="1001">1001</a>
-<a href="#1002" id="1002">1002</a>
-<a href="#1003" id="1003">1003</a>
-<a href="#1004" id="1004">1004</a>
-<a href="#1005" id="1005">1005</a>
-<a href="#1006" id="1006">1006</a>
-<a href="#1007" id="1007">1007</a>
-<a href="#1008" id="1008">1008</a>
-<a href="#1009" id="1009">1009</a>
-<a href="#1010" id="1010">1010</a>
-<a href="#1011" id="1011">1011</a>
-<a href="#1012" id="1012">1012</a>
-<a href="#1013" id="1013">1013</a>
-<a href="#1014" id="1014">1014</a>
-<a href="#1015" id="1015">1015</a>
-<a href="#1016" id="1016">1016</a>
-<a href="#1017" id="1017">1017</a>
-<a href="#1018" id="1018">1018</a>
-<a href="#1019" id="1019">1019</a>
-<a href="#1020" id="1020">1020</a>
-<a href="#1021" id="1021">1021</a>
-<a href="#1022" id="1022">1022</a>
-<a href="#1023" id="1023">1023</a>
-<a href="#1024" id="1024">1024</a>
-<a href="#1025" id="1025">1025</a>
-<a href="#1026" id="1026">1026</a>
-<a href="#1027" id="1027">1027</a>
-<a href="#1028" id="1028">1028</a>
-<a href="#1029" id="1029">1029</a>
-<a href="#1030" id="1030">1030</a>
-<a href="#1031" id="1031">1031</a>
-<a href="#1032" id="1032">1032</a>
-<a href="#1033" id="1033">1033</a>
-<a href="#1034" id="1034">1034</a>
-<a href="#1035" id="1035">1035</a>
-<a href="#1036" id="1036">1036</a>
-<a href="#1037" id="1037">1037</a>
-<a href="#1038" id="1038">1038</a>
-<a href="#1039" id="1039">1039</a>
-<a href="#1040" id="1040">1040</a>
-<a href="#1041" id="1041">1041</a>
-<a href="#1042" id="1042">1042</a>
-<a href="#1043" id="1043">1043</a>
-<a href="#1044" id="1044">1044</a>
-<a href="#1045" id="1045">1045</a>
-<a href="#1046" id="1046">1046</a>
-<a href="#1047" id="1047">1047</a>
-<a href="#1048" id="1048">1048</a>
-<a href="#1049" id="1049">1049</a>
-<a href="#1050" id="1050">1050</a>
-<a href="#1051" id="1051">1051</a>
-<a href="#1052" id="1052">1052</a>
-<a href="#1053" id="1053">1053</a>
-<a href="#1054" id="1054">1054</a>
-<a href="#1055" id="1055">1055</a>
-<a href="#1056" id="1056">1056</a>
-<a href="#1057" id="1057">1057</a>
-<a href="#1058" id="1058">1058</a>
-<a href="#1059" id="1059">1059</a>
-<a href="#1060" id="1060">1060</a>
-<a href="#1061" id="1061">1061</a>
-<a href="#1062" id="1062">1062</a>
-<a href="#1063" id="1063">1063</a>
-<a href="#1064" id="1064">1064</a>
-<a href="#1065" id="1065">1065</a>
-<a href="#1066" id="1066">1066</a>
-<a href="#1067" id="1067">1067</a>
-<a href="#1068" id="1068">1068</a>
-<a href="#1069" id="1069">1069</a>
-<a href="#1070" id="1070">1070</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::io::AssetSourceId;
-<span class="kw">use </span>bevy_reflect::{
-    std_traits::ReflectDefault, utility::NonGenericTypeInfoCell, FromReflect, FromType,
-    GetTypeRegistration, Reflect, ReflectDeserialize, ReflectFromPtr, ReflectFromReflect,
-    ReflectKind, ReflectMut, ReflectOwned, ReflectRef, ReflectSerialize, TypeInfo, TypePath,
-    TypeRegistration, Typed, ValueInfo,
-};
+<span class="kw">use </span>bevy_reflect::{Reflect, ReflectDeserialize, ReflectSerialize};
 <span class="kw">use </span>bevy_utils::CowArc;
 <span class="kw">use </span>serde::{de::Visitor, Deserialize, Serialize};
 <span class="kw">use </span>std::{
     fmt::{Debug, Display},
-    hash::{Hash, Hasher},
+    hash::Hash,
     ops::Deref,
     path::{Path, PathBuf},
 };
@@ -1123,7 +993,8 @@
 /// This means that the common case of `asset_server.load("my_scene.scn")` when it creates and
 /// clones internal owned [`AssetPaths`](AssetPath).
 /// This also means that you should use [`AssetPath::parse`] in cases where `&amp;str` is the explicit type.
-</span><span class="attr">#[derive(Eq, PartialEq, Hash, Clone, Default)]
+</span><span class="attr">#[derive(Eq, PartialEq, Hash, Clone, Default, Reflect)]
+#[reflect_value(Debug, PartialEq, Hash, Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>AssetPath&lt;<span class="lifetime">'a</span>&gt; {
     source: AssetSourceId&lt;<span class="lifetime">'a</span>&gt;,
     path: CowArc&lt;<span class="lifetime">'a</span>, Path&gt;,
@@ -1158,7 +1029,7 @@
     <span class="doccomment">/// Error that occurs when the [`AssetPath::label`] section of a path string contains the [`AssetPath::source`] delimiter `://`. E.g. `source://file.test#bad://label`.
     </span><span class="attr">#[error(<span class="string">"Asset label must not contain a `://` substring"</span>)]
     </span>InvalidLabelSyntax,
-    <span class="doccomment">/// Error that occurs when a path string has an [`AssetPath::source`] delimiter `://` with no characters preceeding it. E.g. `://file.test`.
+    <span class="doccomment">/// Error that occurs when a path string has an [`AssetPath::source`] delimiter `://` with no characters preceding it. E.g. `://file.test`.
     </span><span class="attr">#[error(<span class="string">"Asset source must be at least one character. Either specify the source before the '://' or remove the `://`"</span>)]
     </span>MissingSource,
     <span class="doccomment">/// Error that occurs when a path string has an [`AssetPath::label`] delimiter `#` with no characters succeeding it. E.g. `file.test#`
@@ -1214,9 +1085,9 @@
         <span class="kw">let </span><span class="kw-2">mut </span>label_range = <span class="prelude-val">None</span>;
 
         <span class="comment">// Loop through the characters of the passed in &amp;str to accomplish the following:
-        // 1. Seach for the first instance of the `://` substring. If the `://` substring is found,
+        // 1. Search for the first instance of the `://` substring. If the `://` substring is found,
         //  store the range of indices representing everything before the `://` substring as the `source_range`.
-        // 2. Seach for the last instance of the `#` character. If the `#` character is found,
+        // 2. Search for the last instance of the `#` character. If the `#` character is found,
         //  store the range of indices representing everything after the `#` character as the `label_range`
         // 3. Set the `path_range` to be everything in between the `source_range` and `label_range`,
         //  excluding the `://` substring and `#` character.
@@ -1236,7 +1107,7 @@
                         <span class="number">2 </span>=&gt; {
                             <span class="comment">// If we haven't found our first `AssetPath::source` yet, check to make sure it is valid and then store it.
                             </span><span class="kw">if </span>source_range.is_none() {
-                                <span class="comment">// If the `AssetPath::source` containes a `#` character, it is invalid.
+                                <span class="comment">// If the `AssetPath::source` contains a `#` character, it is invalid.
                                 </span><span class="kw">if </span>label_range.is_some() {
                                     <span class="kw">return </span><span class="prelude-val">Err</span>(ParseAssetPathError::InvalidSourceSyntax);
                                 }
@@ -1452,7 +1323,7 @@
 
     <span class="doccomment">/// Resolves an embedded asset path via concatenation. The result will be an `AssetPath` which
     /// is resolved relative to this path. This is similar in operation to `resolve`, except that
-    /// the the 'file' portion of the base path (that is, any characters after the last '/')
+    /// the 'file' portion of the base path (that is, any characters after the last '/')
     /// is removed before concatenation, in accordance with the behavior specified in
     /// IETF RFC 1808 "Relative URIs".
     ///
@@ -1502,34 +1373,13 @@
                 <span class="kw">_ </span>=&gt; rpath,
             };
 
-            <span class="kw">let </span><span class="kw-2">mut </span>result_path = PathBuf::new();
-            <span class="kw">if </span>!is_absolute &amp;&amp; source.is_none() {
-                <span class="kw">for </span>elt <span class="kw">in </span>base_path.iter() {
-                    <span class="kw">if </span>elt == <span class="string">"." </span>{
-                        <span class="comment">// Skip
-                    </span>} <span class="kw">else if </span>elt == <span class="string">".." </span>{
-                        <span class="kw">if </span>!result_path.pop() {
-                            <span class="comment">// Preserve ".." if insufficient matches (per RFC 1808).
-                            </span>result_path.push(elt);
-                        }
-                    } <span class="kw">else </span>{
-                        result_path.push(elt);
-                    }
-                }
-            }
-
-            <span class="kw">for </span>elt <span class="kw">in </span>rpath.iter() {
-                <span class="kw">if </span>elt == <span class="string">"." </span>{
-                    <span class="comment">// Skip
-                </span>} <span class="kw">else if </span>elt == <span class="string">".." </span>{
-                    <span class="kw">if </span>!result_path.pop() {
-                        <span class="comment">// Preserve ".." if insufficient matches (per RFC 1808).
-                        </span>result_path.push(elt);
-                    }
-                } <span class="kw">else </span>{
-                    result_path.push(elt);
-                }
-            }
+            <span class="kw">let </span><span class="kw-2">mut </span>result_path = <span class="kw">if </span>!is_absolute &amp;&amp; source.is_none() {
+                base_path
+            } <span class="kw">else </span>{
+                PathBuf::new()
+            };
+            result_path.push(rpath);
+            result_path = normalize_path(result_path.as_path());
 
             <span class="prelude-val">Ok</span>(AssetPath {
                 source: <span class="kw">match </span>source {
@@ -1544,10 +1394,19 @@
 
     <span class="doccomment">/// Returns the full extension (including multiple '.' values).
     /// Ex: Returns `"config.ron"` for `"my_asset.config.ron"`
+    ///
+    /// Also strips out anything following a `?` to handle query parameters in URIs
     </span><span class="kw">pub fn </span>get_full_extension(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
         <span class="kw">let </span>file_name = <span class="self">self</span>.path().file_name()<span class="question-mark">?</span>.to_str()<span class="question-mark">?</span>;
         <span class="kw">let </span>index = file_name.find(<span class="string">'.'</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>extension = file_name[index + <span class="number">1</span>..].to_lowercase();
+        <span class="kw">let </span><span class="kw-2">mut </span>extension = file_name[index + <span class="number">1</span>..].to_lowercase();
+
+        <span class="comment">// Strip off any query parameters
+        </span><span class="kw">let </span>query = extension.find(<span class="string">'?'</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(offset) = query {
+            extension.truncate(offset);
+        }
+
         <span class="prelude-val">Some</span>(extension)
     }
 
@@ -1664,134 +1523,23 @@
     }
 }
 
-<span class="comment">// NOTE: We manually implement "reflect value" because deriving Reflect on `AssetPath` breaks dynamic linking
-// See https://github.com/bevyengine/bevy/issues/9747
-// NOTE: This could use `impl_reflect_value` if it supported static lifetimes.
-
-</span><span class="kw">impl </span>GetTypeRegistration <span class="kw">for </span>AssetPath&lt;<span class="lifetime">'static</span>&gt; {
-    <span class="kw">fn </span>get_type_registration() -&gt; TypeRegistration {
-        <span class="kw">let </span><span class="kw-2">mut </span>registration = TypeRegistration::of::&lt;<span class="self">Self</span>&gt;();
-        registration.insert::&lt;ReflectFromPtr&gt;(FromType::&lt;<span class="self">Self</span>&gt;::from_type());
-        registration.insert::&lt;ReflectFromReflect&gt;(FromType::&lt;<span class="self">Self</span>&gt;::from_type());
-        registration.insert::&lt;ReflectSerialize&gt;(FromType::&lt;<span class="self">Self</span>&gt;::from_type());
-        registration.insert::&lt;ReflectDeserialize&gt;(FromType::&lt;<span class="self">Self</span>&gt;::from_type());
-        registration.insert::&lt;ReflectDefault&gt;(FromType::&lt;<span class="self">Self</span>&gt;::from_type());
-        registration
-    }
-}
-
-<span class="kw">impl </span>TypePath <span class="kw">for </span>AssetPath&lt;<span class="lifetime">'static</span>&gt; {
-    <span class="kw">fn </span>type_path() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
-        <span class="string">"bevy_asset::path::AssetPath&lt;'static&gt;"
-    </span>}
-    <span class="kw">fn </span>short_type_path() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
-        <span class="string">"AssetPath&lt;'static&gt;"
-    </span>}
-    <span class="kw">fn </span>type_ident() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
-        <span class="prelude-val">Some</span>(<span class="string">"AssetPath&lt;'static&gt;"</span>)
-    }
-    <span class="kw">fn </span>crate_name() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
-        <span class="prelude-val">None
-    </span>}
-    <span class="kw">fn </span>module_path() -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
-        <span class="prelude-val">None
-    </span>}
-}
-<span class="kw">impl </span>Typed <span class="kw">for </span>AssetPath&lt;<span class="lifetime">'static</span>&gt; {
-    <span class="kw">fn </span>type_info() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>TypeInfo {
-        <span class="kw">static </span>CELL: NonGenericTypeInfoCell = NonGenericTypeInfoCell::new();
-        CELL.get_or_set(|| {
-            <span class="kw">let </span>info = ValueInfo::new::&lt;<span class="self">Self</span>&gt;();
-            TypeInfo::Value(info)
-        })
-    }
-}
-<span class="kw">impl </span>Reflect <span class="kw">for </span>AssetPath&lt;<span class="lifetime">'static</span>&gt; {
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>get_represented_type_info(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>TypeInfo&gt; {
-        <span class="prelude-val">Some</span>(&lt;<span class="self">Self </span><span class="kw">as </span>Typed&gt;::type_info())
-    }
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>into_any(<span class="self">self</span>: Box&lt;<span class="self">Self</span>&gt;) -&gt; Box&lt;<span class="kw">dyn </span>core::any::Any&gt; {
-        <span class="self">self
-    </span>}
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>as_any(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn </span>core::any::Any {
-        <span class="self">self
-    </span>}
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>as_any_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>core::any::Any {
-        <span class="self">self
-    </span>}
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>into_reflect(<span class="self">self</span>: Box&lt;<span class="self">Self</span>&gt;) -&gt; Box&lt;<span class="kw">dyn </span>Reflect&gt; {
-        <span class="self">self
-    </span>}
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>as_reflect(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect {
-        <span class="self">self
-    </span>}
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>as_reflect_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Reflect {
-        <span class="self">self
-    </span>}
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) {
-        <span class="kw">let </span>value = Reflect::as_any(value);
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = value.downcast_ref::&lt;<span class="self">Self</span>&gt;() {
-            <span class="kw-2">*</span><span class="self">self </span>= value.clone();
+<span class="doccomment">/// Normalizes the path by collapsing all occurrences of '.' and '..' dot-segments where possible
+/// as per [RFC 1808](https://datatracker.ietf.org/doc/html/rfc1808)
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>normalize_path(path: <span class="kw-2">&amp;</span>Path) -&gt; PathBuf {
+    <span class="kw">let </span><span class="kw-2">mut </span>result_path = PathBuf::new();
+    <span class="kw">for </span>elt <span class="kw">in </span>path.iter() {
+        <span class="kw">if </span>elt == <span class="string">"." </span>{
+            <span class="comment">// Skip
+        </span>} <span class="kw">else if </span>elt == <span class="string">".." </span>{
+            <span class="kw">if </span>!result_path.pop() {
+                <span class="comment">// Preserve ".." if insufficient matches (per RFC 1808).
+                </span>result_path.push(elt);
+            }
         } <span class="kw">else </span>{
-            <span class="macro">panic!</span>(<span class="string">"Value is not {}."</span>, std::any::type_name::&lt;<span class="self">Self</span>&gt;());
+            result_path.push(elt);
         }
     }
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>set(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        value: Box&lt;<span class="kw">dyn </span>bevy_reflect::Reflect&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>bevy_reflect::Reflect&gt;&gt; {
-        <span class="kw-2">*</span><span class="self">self </span>= &lt;<span class="kw">dyn </span>bevy_reflect::Reflect&gt;::take(value)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
-    }
-    <span class="kw">fn </span>reflect_kind(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ReflectKind {
-        ReflectKind::Value
-    }
-    <span class="kw">fn </span>reflect_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ReflectRef {
-        ReflectRef::Value(<span class="self">self</span>)
-    }
-    <span class="kw">fn </span>reflect_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ReflectMut {
-        ReflectMut::Value(<span class="self">self</span>)
-    }
-    <span class="kw">fn </span>reflect_owned(<span class="self">self</span>: Box&lt;<span class="self">Self</span>&gt;) -&gt; ReflectOwned {
-        ReflectOwned::Value(<span class="self">self</span>)
-    }
-    <span class="attr">#[inline]
-    </span><span class="kw">fn </span>clone_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Box&lt;<span class="kw">dyn </span>Reflect&gt; {
-        Box::new(<span class="self">self</span>.clone())
-    }
-    <span class="kw">fn </span>reflect_hash(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u64&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>hasher = bevy_reflect::utility::reflect_hasher();
-        Hash::hash(<span class="kw-2">&amp;</span>::core::any::Any::type_id(<span class="self">self</span>), <span class="kw-2">&amp;mut </span>hasher);
-        Hash::hash(<span class="self">self</span>, <span class="kw-2">&amp;mut </span>hasher);
-        <span class="prelude-val">Some</span>(Hasher::finish(<span class="kw-2">&amp;</span>hasher))
-    }
-    <span class="kw">fn </span>reflect_partial_eq(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;bool&gt; {
-        <span class="kw">let </span>value = &lt;<span class="kw">dyn </span>Reflect&gt;::as_any(value);
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(value) = &lt;<span class="kw">dyn </span>core::any::Any&gt;::downcast_ref::&lt;<span class="self">Self</span>&gt;(value) {
-            <span class="prelude-val">Some</span>(PartialEq::eq(<span class="self">self</span>, value))
-        } <span class="kw">else </span>{
-            <span class="prelude-val">Some</span>(<span class="bool-val">false</span>)
-        }
-    }
-    <span class="kw">fn </span>debug(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>core::fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; core::fmt::Result {
-        ::core::fmt::Debug::fmt(<span class="self">self</span>, f)
-    }
-}
-<span class="kw">impl </span>FromReflect <span class="kw">for </span>AssetPath&lt;<span class="lifetime">'static</span>&gt; {
-    <span class="kw">fn </span>from_reflect(reflect: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="prelude-val">Some</span>(Clone::clone(&lt;<span class="kw">dyn </span>core::any::Any&gt;::downcast_ref::&lt;
-            AssetPath&lt;<span class="lifetime">'static</span>&gt;,
-        &gt;(&lt;<span class="kw">dyn </span>Reflect&gt;::as_any(reflect))<span class="question-mark">?</span>))
-    }
+    result_path
 }
 
 <span class="attr">#[cfg(test)]
@@ -1904,7 +1652,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_resolve_implicit_relative() {
-        <span class="comment">// A path with no inital directory separator should be considered relative.
+        <span class="comment">// A path with no initial directory separator should be considered relative.
         </span><span class="kw">let </span>base = AssetPath::from(<span class="string">"alice/bob#carol"</span>);
         <span class="macro">assert_eq!</span>(
             base.resolve(<span class="string">"joe/next"</span>).unwrap(),
@@ -2137,6 +1885,9 @@
 
         <span class="kw">let </span>result = AssetPath::from(<span class="string">"http://a#Foo"</span>);
         <span class="macro">assert_eq!</span>(result.get_full_extension(), <span class="prelude-val">None</span>);
+
+        <span class="kw">let </span>result = AssetPath::from(<span class="string">"http://a.tar.bz2?foo=bar#Baz"</span>);
+        <span class="macro">assert_eq!</span>(result.get_full_extension(), <span class="prelude-val">Some</span>(<span class="string">"tar.bz2"</span>.to_string()));
     }
 }
 </code></pre></div></section></main></body></html>

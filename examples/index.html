@@ -1,4 +1,79 @@
-<!doctype html><html lang=en><meta charset=utf-8><title>Bevy Doryen</title><style>body,html{width:100%;height:100%;overflow:hidden}</style><link as=fetch crossorigin href=/bevy_doryen/examples/example_runner-5ae1ec60c083b623aa68276886ca2abecc65080681af0a945b311a68043a715d72f83442251e01d9e974f14b617f297d_bg.wasm integrity=sha384-WuHsYMCDtiOqaCdohsoqvsxlCAaBrwqUWzEaaAQ6cV1y-DRCJR4B2el08Uthfyl9 rel=preload type=application/wasm><link crossorigin href=/bevy_doryen/examples/example_runner-5ae1ec60c083b623aa68276886ca2abecc65080681af0a945b311a68043a715d72f83442251e01d9e974f14b617f297d.js integrity=sha384-gkBMWf1j1kHRAesz2uGtjxL4lEV2xNtL8Gs-aft-rnLsN3ngj-CX-FO1jNM4JakK rel=modulepreload></head><body><script>async function goFullScreen(){const a=document.getElementById("canvas");await a.requestFullscreen()}let initialWidth,initialHeight;function onFullscreenChange(){const a=document.getElementById("canvas");if(document.fullscreenElement){a.width=a.clientWidth;a.height=a.clientHeight}else{a.width=initialWidth;a.height=initialHeight}}function onLoad(){const a=document.getElementById("canvas");if(!a){setTimeout(onLoad,100);return};a.insertAdjacentHTML("afterend",`<p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Bevy Doryen</title>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+        </style>
+    
+<link rel="modulepreload" href="/bevy_doryen/examples/example_runner-be60501567af69b1.js" crossorigin=anonymous integrity="sha384-vTgSHPkzlS0KJ8rgcQ9mOXaC3diM8aCXYfB8/5vG0n2pXlojoTf5G8vJsG8j6Uxz">
+<link rel="preload" href="/bevy_doryen/examples/example_runner-be60501567af69b1_bg.wasm" crossorigin=anonymous integrity="sha384-tQS34nlaCqF92HGKvkKdKYxRKsyBn5sKKTzOLzpvG482jUXMaThoPSzlWmTTyLWZ" as="fetch" type="application/wasm"></head>
+    <body>
+        <script>
+            async function goFullScreen() {
+                const canvas = document.getElementById("canvas");
+                await canvas.requestFullscreen();
+            }
+
+            let initialWidth, initialHeight;
+
+            function onFullscreenChange() {
+                const canvas = document.getElementById("canvas");
+                if (document.fullscreenElement) {
+                    // Entered fullscreen mode
+                    // Resize canvas to screen
+                    canvas.width = canvas.clientWidth;
+                    canvas.height = canvas.clientHeight;
+                    //canvas.style.width = `${canvas.clientWidth}px`;
+                    //canvas.style.height = `${canvas.clientHeight}px`;
+                } else {
+                    // Left fullscreen mode
+                    // Restore canvas size
+                    canvas.width = initialWidth;
+                    canvas.height = initialHeight;
+                    //canvas.style.width = `${initialWidth}px`;
+                    //canvas.style.height = `${initialHeight}px`;
+                }
+            }
+
+            function onLoad() {
+                const canvas = document.getElementById("canvas");
+                if (!canvas) {
+                    setTimeout(onLoad, 100);
+                    return;
+                }
+
+                canvas.insertAdjacentHTML(
+                    "afterend",
+                    `<p>
                         <button id="goFullScreen">Go Fullscreen</button>
                     </p>
                     <p>
@@ -6,9 +81,29 @@
                         so examples involving the mouse will be misbehaving
                         when in full screen mode. I believe this to be a bug in
                         Doryen itself.
-                    </p>`);document.getElementById("goFullScreen").addEventListener("click",goFullScreen);initialWidth=a.clientWidth;initialHeight=a.clientHeight;a.addEventListener("fullscreenchange",onFullscreenChange)}setTimeout(onLoad,100)</script><script type=module>
-import init, * as bindings from '/bevy_doryen/examples/example_runner-5ae1ec60c083b623aa68276886ca2abecc65080681af0a945b311a68043a715d72f83442251e01d9e974f14b617f297d.js';
-init('/bevy_doryen/examples/example_runner-5ae1ec60c083b623aa68276886ca2abecc65080681af0a945b311a68043a715d72f83442251e01d9e974f14b617f297d_bg.wasm');
+                    </p>`
+                );
+
+                document
+                    .getElementById("goFullScreen")
+                    .addEventListener("click", goFullScreen);
+
+                initialWidth = canvas.clientWidth;
+                initialHeight = canvas.clientHeight;
+                canvas.addEventListener("fullscreenchange", onFullscreenChange);
+            }
+            setTimeout(onLoad, 100);
+        </script>
+    
+<script type="module" nonce="MuUPAcYRW0Zwx9tqM1AD8Q==">
+import init, * as bindings from '/bevy_doryen/examples/example_runner-be60501567af69b1.js';
+const wasm = await init('/bevy_doryen/examples/example_runner-be60501567af69b1_bg.wasm');
+
+
 window.wasmBindings = bindings;
 
-</script></body></html>
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script></body>
+</html>

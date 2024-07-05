@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.13.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_ecs_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs_macros-0.14.0/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_ecs_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_ecs_macros/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -519,8 +518,32 @@
 <a href="#518" id="518">518</a>
 <a href="#519" id="519">519</a>
 <a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
+<a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
+<a href="#529" id="529">529</a>
+<a href="#530" id="530">530</a>
+<a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
 </pre></div><pre class="rust"><code><span class="comment">// FIXME(3492): remove once docs are ready
 </span><span class="attr">#![allow(missing_docs)]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 </span><span class="kw">extern crate </span>proc_macro;
 
@@ -594,6 +617,7 @@
         .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
 
     <span class="kw">let </span><span class="kw-2">mut </span>field_component_ids = Vec::new();
+    <span class="kw">let </span><span class="kw-2">mut </span>field_get_component_ids = Vec::new();
     <span class="kw">let </span><span class="kw-2">mut </span>field_get_components = Vec::new();
     <span class="kw">let </span><span class="kw-2">mut </span>field_from_components = Vec::new();
     <span class="kw">for </span>(((i, field_type), field_kind), field) <span class="kw">in </span>field_type
@@ -604,24 +628,27 @@
     {
         <span class="kw">match </span>field_kind {
             BundleFieldKind::Component =&gt; {
-                field_component_ids.push(<span class="macro">quote! </span>{
+                field_component_ids.push(<span class="macro">quote!</span> {
                 &lt;#field_type <span class="kw">as </span>#ecs_path::bundle::Bundle&gt;::component_ids(components, storages, <span class="kw-2">&amp;mut *</span>ids);
+                });
+                field_get_component_ids.push(<span class="macro">quote!</span> {
+                    &lt;#field_type <span class="kw">as </span>#ecs_path::bundle::Bundle&gt;::get_component_ids(components, <span class="kw-2">&amp;mut *</span>ids);
                 });
                 <span class="kw">match </span>field {
                     <span class="prelude-val">Some</span>(field) =&gt; {
-                        field_get_components.push(<span class="macro">quote! </span>{
+                        field_get_components.push(<span class="macro">quote!</span> {
                             <span class="self">self</span>.#field.get_components(<span class="kw-2">&amp;mut *</span>func);
                         });
-                        field_from_components.push(<span class="macro">quote! </span>{
+                        field_from_components.push(<span class="macro">quote!</span> {
                             #field: &lt;#field_type <span class="kw">as </span>#ecs_path::bundle::Bundle&gt;::from_components(ctx, <span class="kw-2">&amp;mut *</span>func),
                         });
                     }
                     <span class="prelude-val">None </span>=&gt; {
                         <span class="kw">let </span>index = syn::Index::from(i);
-                        field_get_components.push(<span class="macro">quote! </span>{
+                        field_get_components.push(<span class="macro">quote!</span> {
                             <span class="self">self</span>.#index.get_components(<span class="kw-2">&amp;mut *</span>func);
                         });
-                        field_from_components.push(<span class="macro">quote! </span>{
+                        field_from_components.push(<span class="macro">quote!</span> {
                             #index: &lt;#field_type <span class="kw">as </span>#ecs_path::bundle::Bundle&gt;::from_components(ctx, <span class="kw-2">&amp;mut *</span>func),
                         });
                     }
@@ -629,7 +656,7 @@
             }
 
             BundleFieldKind::Ignore =&gt; {
-                field_from_components.push(<span class="macro">quote! </span>{
+                field_from_components.push(<span class="macro">quote!</span> {
                     #field: ::std::default::Default::default(),
                 });
             }
@@ -639,7 +666,7 @@
     <span class="kw">let </span>(impl_generics, ty_generics, where_clause) = generics.split_for_impl();
     <span class="kw">let </span>struct_name = <span class="kw-2">&amp;</span>ast.ident;
 
-    TokenStream::from(<span class="macro">quote! </span>{
+    TokenStream::from(<span class="macro">quote!</span> {
         <span class="comment">// SAFETY:
         // - ComponentId is returned in field-definition-order. [from_components] and [get_components] use field-definition-order
         // - `Bundle::get_components` is exactly once for each member. Rely's on the Component -&gt; Bundle implementation to properly pass
@@ -651,6 +678,13 @@
                 ids: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(#ecs_path::component::ComponentId)
             ){
                 #(#field_component_ids)*
+            }
+
+            <span class="kw">fn </span>get_component_ids(
+                components: <span class="kw-2">&amp;</span>#ecs_path::component::Components,
+                ids: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(<span class="prelude-ty">Option</span>&lt;#ecs_path::component::ComponentId&gt;)
+            ){
+                #(#field_get_component_ids)*
             }
 
             <span class="attr">#[allow(unused_variables, non_snake_case)]
@@ -701,7 +735,7 @@
         };
         <span class="kw">let </span>comment =
             <span class="macro">format!</span>(<span class="string">"Gets exclusive access to the {ordinal} parameter in this [`ParamSet`]."</span>);
-        param_fn_muts.push(<span class="macro">quote! </span>{
+        param_fn_muts.push(<span class="macro">quote!</span> {
             <span class="attr">#[doc = #comment]
             </span><span class="doccomment">/// No other parameters may be accessed while this one is active.
             </span><span class="kw">pub fn </span>#fn_name&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span><span class="self">self</span>) -&gt; SystemParamItem&lt;<span class="lifetime">'a</span>, <span class="lifetime">'a</span>, #param&gt; {
@@ -719,7 +753,7 @@
         <span class="kw">let </span>param = <span class="kw-2">&amp;</span>params[<span class="number">0</span>..param_count];
         <span class="kw">let </span>meta = <span class="kw-2">&amp;</span>metas[<span class="number">0</span>..param_count];
         <span class="kw">let </span>param_fn_mut = <span class="kw-2">&amp;</span>param_fn_muts[<span class="number">0</span>..param_count];
-        tokens.extend(TokenStream::from(<span class="macro">quote! </span>{
+        tokens.extend(TokenStream::from(<span class="macro">quote!</span> {
             <span class="comment">// SAFETY: All parameters are constrained to ReadOnlySystemParam, so World is only read
             </span><span class="kw">unsafe impl</span>&lt;<span class="lifetime">'w</span>, <span class="lifetime">'s</span>, #(#param,)<span class="kw-2">*</span>&gt; ReadOnlySystemParam <span class="kw">for </span>ParamSet&lt;<span class="lifetime">'w</span>, <span class="lifetime">'s</span>, (#(#param,)<span class="kw-2">*</span>)&gt;
             <span class="kw">where </span>#(#param: ReadOnlySystemParam,)*
@@ -759,8 +793,9 @@
                     (#(#param,)<span class="kw-2">*</span>)
                 }
 
-                <span class="kw">fn </span>new_archetype(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, archetype: <span class="kw-2">&amp;</span>Archetype, system_meta: <span class="kw-2">&amp;mut </span>SystemMeta) {
-                    &lt;(#(#param,)<span class="kw-2">*</span>) <span class="kw">as </span>SystemParam&gt;::new_archetype(state, archetype, system_meta);
+                <span class="kw">unsafe fn </span>new_archetype(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, archetype: <span class="kw-2">&amp;</span>Archetype, system_meta: <span class="kw-2">&amp;mut </span>SystemMeta) {
+                    <span class="comment">// SAFETY: The caller ensures that `archetype` is from the World the state was initialized from in `init_state`.
+                    </span><span class="kw">unsafe </span>{ &lt;(#(#param,)<span class="kw-2">*</span>) <span class="kw">as </span>SystemParam&gt;::new_archetype(state, archetype, system_meta); }
                 }
 
                 <span class="kw">fn </span>apply(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, system_meta: <span class="kw-2">&amp;</span>SystemMeta, world: <span class="kw-2">&amp;mut </span>World) {
@@ -822,8 +857,8 @@
             field
                 .ident
                 .as_ref()
-                .map(|f| <span class="macro">quote! </span>{ #f })
-                .unwrap_or_else(|| <span class="macro">quote! </span>{ #i }),
+                .map(|f| <span class="macro">quote!</span> { #f })
+                .unwrap_or_else(|| <span class="macro">quote!</span> { #i }),
         );
         field_types.push(<span class="kw-2">&amp;</span>field.ty);
     }
@@ -888,8 +923,8 @@
         })
         .collect();
 
-    <span class="kw">let </span><span class="kw-2">mut </span>tuple_types: Vec&lt;<span class="kw">_</span>&gt; = field_types.iter().map(|x| <span class="macro">quote! </span>{ #x }).collect();
-    <span class="kw">let </span><span class="kw-2">mut </span>tuple_patterns: Vec&lt;<span class="kw">_</span>&gt; = field_locals.iter().map(|x| <span class="macro">quote! </span>{ #x }).collect();
+    <span class="kw">let </span><span class="kw-2">mut </span>tuple_types: Vec&lt;<span class="kw">_</span>&gt; = field_types.iter().map(|x| <span class="macro">quote!</span> { #x }).collect();
+    <span class="kw">let </span><span class="kw-2">mut </span>tuple_patterns: Vec&lt;<span class="kw">_</span>&gt; = field_locals.iter().map(|x| <span class="macro">quote!</span> { #x }).collect();
 
     <span class="comment">// If the number of fields exceeds the 16-parameter limit,
     // fold the fields into tuples of tuples until we are below the limit.
@@ -919,7 +954,7 @@
     <span class="kw">let </span>state_struct_visibility = <span class="kw-2">&amp;</span>ast.vis;
     <span class="kw">let </span>state_struct_name = ensure_no_collision(<span class="macro">format_ident!</span>(<span class="string">"FetchState"</span>), token_stream);
 
-    TokenStream::from(<span class="macro">quote! </span>{
+    TokenStream::from(<span class="macro">quote!</span> {
         <span class="comment">// We define the FetchState struct in an anonymous scope to avoid polluting the user namespace.
         // The struct can still be accessed via SystemParam::State, e.g. EventReaderState can be accessed via
         // &lt;EventReader&lt;'static, 'static, T&gt; as SystemParam&gt;::State
@@ -945,12 +980,17 @@
                     }
                 }
 
-                <span class="kw">fn </span>new_archetype(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, archetype: <span class="kw-2">&amp;</span>#path::archetype::Archetype, system_meta: <span class="kw-2">&amp;mut </span>#path::system::SystemMeta) {
-                    &lt;#fields_alias::&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, #punctuated_generic_idents&gt; <span class="kw">as </span>#path::system::SystemParam&gt;::new_archetype(<span class="kw-2">&amp;mut </span>state.state, archetype, system_meta)
+                <span class="kw">unsafe fn </span>new_archetype(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, archetype: <span class="kw-2">&amp;</span>#path::archetype::Archetype, system_meta: <span class="kw-2">&amp;mut </span>#path::system::SystemMeta) {
+                    <span class="comment">// SAFETY: The caller ensures that `archetype` is from the World the state was initialized from in `init_state`.
+                    </span><span class="kw">unsafe </span>{ &lt;#fields_alias::&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, #punctuated_generic_idents&gt; <span class="kw">as </span>#path::system::SystemParam&gt;::new_archetype(<span class="kw-2">&amp;mut </span>state.state, archetype, system_meta) }
                 }
 
                 <span class="kw">fn </span>apply(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, system_meta: <span class="kw-2">&amp;</span>#path::system::SystemMeta, world: <span class="kw-2">&amp;mut </span>#path::world::World) {
                     &lt;#fields_alias::&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, #punctuated_generic_idents&gt; <span class="kw">as </span>#path::system::SystemParam&gt;::apply(<span class="kw-2">&amp;mut </span>state.state, system_meta, world);
+                }
+
+                <span class="kw">fn </span>queue(state: <span class="kw-2">&amp;mut </span><span class="self">Self</span>::State, system_meta: <span class="kw-2">&amp;</span>#path::system::SystemMeta, world: #path::world::DeferredWorld) {
+                    &lt;#fields_alias::&lt;<span class="lifetime">'_</span>, <span class="lifetime">'_</span>, #punctuated_generic_idents&gt; <span class="kw">as </span>#path::system::SystemParam&gt;::queue(<span class="kw-2">&amp;mut </span>state.state, system_meta, world);
                 }
 
                 <span class="kw">unsafe fn </span>get_param&lt;<span class="lifetime">'w</span>, <span class="lifetime">'s</span>&gt;(
@@ -1038,5 +1078,10 @@
 <span class="attr">#[proc_macro_derive(States)]
 </span><span class="kw">pub fn </span>derive_states(input: TokenStream) -&gt; TokenStream {
     states::derive_states(input)
+}
+
+<span class="attr">#[proc_macro_derive(SubStates, attributes(source))]
+</span><span class="kw">pub fn </span>derive_substates(input: TokenStream) -&gt; TokenStream {
+    states::derive_substates(input)
 }
 </code></pre></div></section></main></body></html>

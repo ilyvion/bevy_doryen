@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.13.0/src/map.rs`."><title>map.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.14.0/src/map.rs`."><title>map.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_reflect/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -600,16 +599,70 @@
 <a href="#599" id="599">599</a>
 <a href="#600" id="600">600</a>
 <a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::any::{Any, TypeId};
 <span class="kw">use </span>std::fmt::{Debug, Formatter};
-<span class="kw">use </span>std::hash::Hash;
 
 <span class="kw">use </span>bevy_reflect_derive::impl_type_path;
 <span class="kw">use </span>bevy_utils::{Entry, HashMap};
 
 <span class="kw">use crate</span>::{
-    <span class="self">self </span><span class="kw">as </span>bevy_reflect, Reflect, ReflectKind, ReflectMut, ReflectOwned, ReflectRef, TypeInfo,
-    TypePath, TypePathTable,
+    <span class="self">self </span><span class="kw">as </span>bevy_reflect, ApplyError, Reflect, ReflectKind, ReflectMut, ReflectOwned, ReflectRef,
+    TypeInfo, TypePath, TypePathTable,
 };
 
 <span class="doccomment">/// A trait used to power [map-like] operations via [reflection].
@@ -709,11 +762,8 @@
 
 <span class="kw">impl </span>MapInfo {
     <span class="doccomment">/// Create a new [`MapInfo`].
-    </span><span class="kw">pub fn </span>new&lt;
-        TMap: Map + TypePath,
-        TKey: Hash + Reflect + TypePath,
-        TValue: Reflect + TypePath,
-    &gt;() -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new&lt;TMap: Map + TypePath, TKey: Reflect + TypePath, TValue: Reflect + TypePath&gt;() -&gt; <span class="self">Self
+    </span>{
         <span class="self">Self </span>{
             type_path: TypePathTable::of::&lt;TMap&gt;(),
             type_id: TypeId::of::&lt;TMap&gt;(),
@@ -800,7 +850,16 @@
     }
 }
 
-<span class="kw">const </span>HASH_ERROR: <span class="kw-2">&amp;</span>str = <span class="string">"the given key does not support hashing"</span>;
+<span class="attr">#[macro_export]
+</span><span class="macro">macro_rules!</span> hash_error {
+    ( <span class="macro-nonterminal">$key</span>:expr ) =&gt; {{
+        <span class="kw">let </span>type_name = <span class="kw">match </span>(<span class="kw-2">*</span><span class="macro-nonterminal">$key</span>).get_represented_type_info() {
+            <span class="prelude-val">None </span>=&gt; <span class="string">"Unknown"</span>,
+            <span class="prelude-val">Some</span>(s) =&gt; s.type_path(),
+        };
+        <span class="macro">format!</span>(<span class="string">"the given key {} does not support hashing"</span>, type_name).as_str()
+    }};
+}
 
 <span class="doccomment">/// An ordered mapping between reflected values.
 </span><span class="attr">#[derive(Default)]
@@ -839,13 +898,13 @@
 <span class="kw">impl </span>Map <span class="kw">for </span>DynamicMap {
     <span class="kw">fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect&gt; {
         <span class="self">self</span>.indices
-            .get(<span class="kw-2">&amp;</span>key.reflect_hash().expect(HASH_ERROR))
+            .get(<span class="kw-2">&amp;</span>key.reflect_hash().expect(<span class="macro">hash_error!</span>(key)))
             .map(|index| <span class="kw-2">&amp;*</span><span class="self">self</span>.values.get(<span class="kw-2">*</span>index).unwrap().<span class="number">1</span>)
     }
 
     <span class="kw">fn </span>get_mut(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Reflect&gt; {
         <span class="self">self</span>.indices
-            .get(<span class="kw-2">&amp;</span>key.reflect_hash().expect(HASH_ERROR))
+            .get(<span class="kw-2">&amp;</span>key.reflect_hash().expect(<span class="macro">hash_error!</span>(key)))
             .cloned()
             .map(<span class="kw">move </span>|index| <span class="kw-2">&amp;mut *</span><span class="self">self</span>.values.get_mut(index).unwrap().<span class="number">1</span>)
     }
@@ -891,7 +950,10 @@
         key: Box&lt;<span class="kw">dyn </span>Reflect&gt;,
         <span class="kw-2">mut </span>value: Box&lt;<span class="kw">dyn </span>Reflect&gt;,
     ) -&gt; <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Reflect&gt;&gt; {
-        <span class="kw">match </span><span class="self">self</span>.indices.entry(key.reflect_hash().expect(HASH_ERROR)) {
+        <span class="kw">match </span><span class="self">self
+            </span>.indices
+            .entry(key.reflect_hash().expect(<span class="macro">hash_error!</span>(key)))
+        {
             Entry::Occupied(entry) =&gt; {
                 <span class="kw">let </span>(_old_key, old_value) = <span class="self">self</span>.values.get_mut(<span class="kw-2">*</span>entry.get()).unwrap();
                 std::mem::swap(old_value, <span class="kw-2">&amp;mut </span>value);
@@ -908,7 +970,7 @@
     <span class="kw">fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Reflect&gt;&gt; {
         <span class="kw">let </span>index = <span class="self">self
             </span>.indices
-            .remove(<span class="kw-2">&amp;</span>key.reflect_hash().expect(HASH_ERROR))<span class="question-mark">?</span>;
+            .remove(<span class="kw-2">&amp;</span>key.reflect_hash().expect(<span class="macro">hash_error!</span>(key)))<span class="question-mark">?</span>;
         <span class="kw">let </span>(_key, value) = <span class="self">self</span>.values.remove(index);
         <span class="prelude-val">Some</span>(value)
     }
@@ -949,6 +1011,10 @@
 
     <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) {
         map_apply(<span class="self">self</span>, value);
+    }
+
+    <span class="kw">fn </span>try_apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Result</span>&lt;(), ApplyError&gt; {
+        map_try_apply(<span class="self">self</span>, value)
     }
 
     <span class="kw">fn </span>set(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: Box&lt;<span class="kw">dyn </span>Reflect&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>Reflect&gt;&gt; {
@@ -1019,7 +1085,7 @@
 
     <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
         <span class="kw">let </span>value = <span class="self">self</span>.map.get_at(<span class="self">self</span>.index);
-        <span class="self">self</span>.index += <span class="number">1</span>;
+        <span class="self">self</span>.index += value.is_some() <span class="kw">as </span>usize;
         value
     }
 
@@ -1108,17 +1174,37 @@
 /// This function panics if `b` is not a reflected map.
 </span><span class="attr">#[inline]
 </span><span class="kw">pub fn </span>map_apply&lt;M: Map&gt;(a: <span class="kw-2">&amp;mut </span>M, b: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) {
+    <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = map_try_apply(a, b) {
+        <span class="macro">panic!</span>(<span class="string">"{err}"</span>);
+    }
+}
+
+<span class="doccomment">/// Tries to apply the elements of reflected map `b` to the corresponding elements of map `a`
+/// and returns a Result.
+///
+/// If a key from `b` does not exist in `a`, the value is cloned and inserted.
+///
+/// # Errors
+///
+/// This function returns an [`ApplyError::MismatchedKinds`] if `b` is not a reflected map or if
+/// applying elements to each other fails.
+</span><span class="attr">#[inline]
+</span><span class="kw">pub fn </span>map_try_apply&lt;M: Map&gt;(a: <span class="kw-2">&amp;mut </span>M, b: <span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect) -&gt; <span class="prelude-ty">Result</span>&lt;(), ApplyError&gt; {
     <span class="kw">if let </span>ReflectRef::Map(map_value) = b.reflect_ref() {
         <span class="kw">for </span>(key, b_value) <span class="kw">in </span>map_value.iter() {
             <span class="kw">if let </span><span class="prelude-val">Some</span>(a_value) = a.get_mut(key) {
-                a_value.apply(b_value);
+                a_value.try_apply(b_value)<span class="question-mark">?</span>;
             } <span class="kw">else </span>{
                 a.insert_boxed(key.clone_value(), b_value.clone_value());
             }
         }
     } <span class="kw">else </span>{
-        <span class="macro">panic!</span>(<span class="string">"Attempted to apply a non-map type to a map type."</span>);
+        <span class="kw">return </span><span class="prelude-val">Err</span>(ApplyError::MismatchedKinds {
+            from_kind: b.reflect_kind(),
+            to_kind: ReflectKind::Map,
+        });
     }
+    <span class="prelude-val">Ok</span>(())
 }
 
 <span class="attr">#[cfg(test)]
@@ -1188,7 +1274,7 @@
         <span class="macro">assert_eq!</span>(key, <span class="kw-2">&amp;</span><span class="number">1usize</span>);
         <span class="macro">assert_eq!</span>(value, <span class="kw-2">&amp;mut </span>values[<span class="number">2</span>].to_owned());
 
-        <span class="kw-2">*</span>value = values[<span class="number">0</span>].to_owned();
+        value.clone_from(<span class="kw-2">&amp;</span>values[<span class="number">0</span>].to_owned());
 
         <span class="macro">assert_eq!</span>(
             map.get(<span class="kw-2">&amp;</span><span class="number">1usize </span><span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>Reflect)
@@ -1199,6 +1285,29 @@
         );
 
         <span class="macro">assert!</span>(map.get_at(<span class="number">2</span>).is_none());
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>next_index_increment() {
+        <span class="kw">let </span>values = [<span class="string">"first"</span>, <span class="string">"last"</span>];
+        <span class="kw">let </span><span class="kw-2">mut </span>map = DynamicMap::default();
+        map.insert(<span class="number">0usize</span>, values[<span class="number">0</span>]);
+        map.insert(<span class="number">1usize</span>, values[<span class="number">1</span>]);
+
+        <span class="kw">let </span><span class="kw-2">mut </span>iter = map.iter();
+        <span class="kw">let </span>size = iter.len();
+
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="kw">let </span>prev_index = iter.index;
+            <span class="macro">assert!</span>(iter.next().is_some());
+            <span class="macro">assert_eq!</span>(prev_index, iter.index - <span class="number">1</span>);
+        }
+
+        <span class="comment">// When None we should no longer increase index
+        </span><span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="macro">assert!</span>(iter.next().is_none());
+            <span class="macro">assert_eq!</span>(size, iter.index);
+        }
     }
 }
 </code></pre></div></section></main></body></html>

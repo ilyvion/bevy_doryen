@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.13.0/src/enums/enum_trait.rs`."><title>enum_trait.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_reflect-0.14.0/src/enums/enum_trait.rs`."><title>enum_trait.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_reflect" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_reflect/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -313,10 +312,81 @@
 <a href="#312" id="312">312</a>
 <a href="#313" id="313">313</a>
 <a href="#314" id="314">314</a>
-</pre></div><pre class="rust"><code><span class="kw">use crate</span>::{DynamicEnum, Reflect, TypePath, TypePathTable, VariantInfo, VariantType};
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::attributes::{impl_custom_attribute_methods, CustomAttributes};
+<span class="kw">use crate</span>::{DynamicEnum, Reflect, TypePath, TypePathTable, VariantInfo, VariantType};
 <span class="kw">use </span>bevy_utils::HashMap;
 <span class="kw">use </span>std::any::{Any, TypeId};
 <span class="kw">use </span>std::slice::Iter;
+<span class="kw">use </span>std::sync::Arc;
 
 <span class="doccomment">/// A trait used to power [enum-like] operations via [reflection].
 ///
@@ -453,6 +523,7 @@
     variants: Box&lt;[VariantInfo]&gt;,
     variant_names: Box&lt;[<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str]&gt;,
     variant_indices: HashMap&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, usize&gt;,
+    custom_attributes: Arc&lt;CustomAttributes&gt;,
     <span class="attr">#[cfg(feature = <span class="string">"documentation"</span>)]
     </span>docs: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
 }
@@ -479,6 +550,7 @@
             variants: variants.to_vec().into_boxed_slice(),
             variant_names,
             variant_indices,
+            custom_attributes: Arc::new(CustomAttributes::default()),
             <span class="attr">#[cfg(feature = <span class="string">"documentation"</span>)]
             </span>docs: <span class="prelude-val">None</span>,
         }
@@ -488,6 +560,14 @@
     </span><span class="attr">#[cfg(feature = <span class="string">"documentation"</span>)]
     </span><span class="kw">pub fn </span>with_docs(<span class="self">self</span>, docs: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ docs, ..<span class="self">self </span>}
+    }
+
+    <span class="doccomment">/// Sets the custom attributes for this enum.
+    </span><span class="kw">pub fn </span>with_custom_attributes(<span class="self">self</span>, custom_attributes: CustomAttributes) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            custom_attributes: Arc::new(custom_attributes),
+            ..<span class="self">self
+        </span>}
     }
 
     <span class="doccomment">/// A slice containing the names of all variants in order.
@@ -566,6 +646,8 @@
     </span><span class="kw">pub fn </span>docs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
         <span class="self">self</span>.docs
     }
+
+    <span class="macro">impl_custom_attribute_methods!</span>(<span class="self">self</span>.custom_attributes, <span class="string">"enum"</span>);
 }
 
 <span class="doccomment">/// An iterator over the fields in the current enum variant.
@@ -595,7 +677,7 @@
                 <span class="prelude-val">Some</span>(VariantField::Struct(name, <span class="self">self</span>.container.field(name)<span class="question-mark">?</span>))
             }
         };
-        <span class="self">self</span>.index += <span class="number">1</span>;
+        <span class="self">self</span>.index += value.is_some() <span class="kw">as </span>usize;
         value
     }
 
@@ -622,8 +704,63 @@
     }
 
     <span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw">dyn </span>Reflect {
-        <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::Struct(.., value) | <span class="self">Self</span>::Tuple(value) =&gt; <span class="kw-2">*</span>value,
+        <span class="kw">match </span><span class="kw-2">*</span><span class="self">self </span>{
+            <span class="self">Self</span>::Struct(<span class="kw">_</span>, value) | <span class="self">Self</span>::Tuple(value) =&gt; value,
+        }
+    }
+}
+
+<span class="comment">// Tests that need access to internal fields have to go here rather than in mod.rs
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use crate as </span>bevy_reflect;
+    <span class="kw">use crate</span>::<span class="kw-2">*</span>;
+
+    <span class="attr">#[derive(Reflect, Debug, PartialEq)]
+    </span><span class="kw">enum </span>MyEnum {
+        A,
+        B(usize, i32),
+        C { foo: f32, bar: bool },
+    }
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>next_index_increment() {
+        <span class="comment">// unit enums always return none, so index should stay at 0
+        </span><span class="kw">let </span>unit_enum = MyEnum::A;
+        <span class="kw">let </span><span class="kw-2">mut </span>iter = unit_enum.iter_fields();
+        <span class="kw">let </span>size = iter.len();
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="macro">assert!</span>(iter.next().is_none());
+            <span class="macro">assert_eq!</span>(size, iter.index);
+        }
+        <span class="comment">// tuple enums we iter over each value (unnamed fields), stop after that
+        </span><span class="kw">let </span>tuple_enum = MyEnum::B(<span class="number">0</span>, <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>iter = tuple_enum.iter_fields();
+        <span class="kw">let </span>size = iter.len();
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="kw">let </span>prev_index = iter.index;
+            <span class="macro">assert!</span>(iter.next().is_some());
+            <span class="macro">assert_eq!</span>(prev_index, iter.index - <span class="number">1</span>);
+        }
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="macro">assert!</span>(iter.next().is_none());
+            <span class="macro">assert_eq!</span>(size, iter.index);
+        }
+
+        <span class="comment">// struct enums, we iterate over each field in the struct
+        </span><span class="kw">let </span>struct_enum = MyEnum::C {
+            foo: <span class="number">0.</span>,
+            bar: <span class="bool-val">false</span>,
+        };
+        <span class="kw">let </span><span class="kw-2">mut </span>iter = struct_enum.iter_fields();
+        <span class="kw">let </span>size = iter.len();
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="kw">let </span>prev_index = iter.index;
+            <span class="macro">assert!</span>(iter.next().is_some());
+            <span class="macro">assert_eq!</span>(prev_index, iter.index - <span class="number">1</span>);
+        }
+        <span class="kw">for _ in </span><span class="number">0</span>..<span class="number">2 </span>{
+            <span class="macro">assert!</span>(iter.next().is_none());
+            <span class="macro">assert_eq!</span>(size, iter.index);
         }
     }
 }

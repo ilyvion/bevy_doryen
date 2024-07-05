@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winnow-0.5.40/src/ascii/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winnow" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/winnow-0.6.13/src/ascii/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="winnow" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../winnow/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1726,6 +1725,156 @@
 <a href="#1725" id="1725">1725</a>
 <a href="#1726" id="1726">1726</a>
 <a href="#1727" id="1727">1727</a>
+<a href="#1728" id="1728">1728</a>
+<a href="#1729" id="1729">1729</a>
+<a href="#1730" id="1730">1730</a>
+<a href="#1731" id="1731">1731</a>
+<a href="#1732" id="1732">1732</a>
+<a href="#1733" id="1733">1733</a>
+<a href="#1734" id="1734">1734</a>
+<a href="#1735" id="1735">1735</a>
+<a href="#1736" id="1736">1736</a>
+<a href="#1737" id="1737">1737</a>
+<a href="#1738" id="1738">1738</a>
+<a href="#1739" id="1739">1739</a>
+<a href="#1740" id="1740">1740</a>
+<a href="#1741" id="1741">1741</a>
+<a href="#1742" id="1742">1742</a>
+<a href="#1743" id="1743">1743</a>
+<a href="#1744" id="1744">1744</a>
+<a href="#1745" id="1745">1745</a>
+<a href="#1746" id="1746">1746</a>
+<a href="#1747" id="1747">1747</a>
+<a href="#1748" id="1748">1748</a>
+<a href="#1749" id="1749">1749</a>
+<a href="#1750" id="1750">1750</a>
+<a href="#1751" id="1751">1751</a>
+<a href="#1752" id="1752">1752</a>
+<a href="#1753" id="1753">1753</a>
+<a href="#1754" id="1754">1754</a>
+<a href="#1755" id="1755">1755</a>
+<a href="#1756" id="1756">1756</a>
+<a href="#1757" id="1757">1757</a>
+<a href="#1758" id="1758">1758</a>
+<a href="#1759" id="1759">1759</a>
+<a href="#1760" id="1760">1760</a>
+<a href="#1761" id="1761">1761</a>
+<a href="#1762" id="1762">1762</a>
+<a href="#1763" id="1763">1763</a>
+<a href="#1764" id="1764">1764</a>
+<a href="#1765" id="1765">1765</a>
+<a href="#1766" id="1766">1766</a>
+<a href="#1767" id="1767">1767</a>
+<a href="#1768" id="1768">1768</a>
+<a href="#1769" id="1769">1769</a>
+<a href="#1770" id="1770">1770</a>
+<a href="#1771" id="1771">1771</a>
+<a href="#1772" id="1772">1772</a>
+<a href="#1773" id="1773">1773</a>
+<a href="#1774" id="1774">1774</a>
+<a href="#1775" id="1775">1775</a>
+<a href="#1776" id="1776">1776</a>
+<a href="#1777" id="1777">1777</a>
+<a href="#1778" id="1778">1778</a>
+<a href="#1779" id="1779">1779</a>
+<a href="#1780" id="1780">1780</a>
+<a href="#1781" id="1781">1781</a>
+<a href="#1782" id="1782">1782</a>
+<a href="#1783" id="1783">1783</a>
+<a href="#1784" id="1784">1784</a>
+<a href="#1785" id="1785">1785</a>
+<a href="#1786" id="1786">1786</a>
+<a href="#1787" id="1787">1787</a>
+<a href="#1788" id="1788">1788</a>
+<a href="#1789" id="1789">1789</a>
+<a href="#1790" id="1790">1790</a>
+<a href="#1791" id="1791">1791</a>
+<a href="#1792" id="1792">1792</a>
+<a href="#1793" id="1793">1793</a>
+<a href="#1794" id="1794">1794</a>
+<a href="#1795" id="1795">1795</a>
+<a href="#1796" id="1796">1796</a>
+<a href="#1797" id="1797">1797</a>
+<a href="#1798" id="1798">1798</a>
+<a href="#1799" id="1799">1799</a>
+<a href="#1800" id="1800">1800</a>
+<a href="#1801" id="1801">1801</a>
+<a href="#1802" id="1802">1802</a>
+<a href="#1803" id="1803">1803</a>
+<a href="#1804" id="1804">1804</a>
+<a href="#1805" id="1805">1805</a>
+<a href="#1806" id="1806">1806</a>
+<a href="#1807" id="1807">1807</a>
+<a href="#1808" id="1808">1808</a>
+<a href="#1809" id="1809">1809</a>
+<a href="#1810" id="1810">1810</a>
+<a href="#1811" id="1811">1811</a>
+<a href="#1812" id="1812">1812</a>
+<a href="#1813" id="1813">1813</a>
+<a href="#1814" id="1814">1814</a>
+<a href="#1815" id="1815">1815</a>
+<a href="#1816" id="1816">1816</a>
+<a href="#1817" id="1817">1817</a>
+<a href="#1818" id="1818">1818</a>
+<a href="#1819" id="1819">1819</a>
+<a href="#1820" id="1820">1820</a>
+<a href="#1821" id="1821">1821</a>
+<a href="#1822" id="1822">1822</a>
+<a href="#1823" id="1823">1823</a>
+<a href="#1824" id="1824">1824</a>
+<a href="#1825" id="1825">1825</a>
+<a href="#1826" id="1826">1826</a>
+<a href="#1827" id="1827">1827</a>
+<a href="#1828" id="1828">1828</a>
+<a href="#1829" id="1829">1829</a>
+<a href="#1830" id="1830">1830</a>
+<a href="#1831" id="1831">1831</a>
+<a href="#1832" id="1832">1832</a>
+<a href="#1833" id="1833">1833</a>
+<a href="#1834" id="1834">1834</a>
+<a href="#1835" id="1835">1835</a>
+<a href="#1836" id="1836">1836</a>
+<a href="#1837" id="1837">1837</a>
+<a href="#1838" id="1838">1838</a>
+<a href="#1839" id="1839">1839</a>
+<a href="#1840" id="1840">1840</a>
+<a href="#1841" id="1841">1841</a>
+<a href="#1842" id="1842">1842</a>
+<a href="#1843" id="1843">1843</a>
+<a href="#1844" id="1844">1844</a>
+<a href="#1845" id="1845">1845</a>
+<a href="#1846" id="1846">1846</a>
+<a href="#1847" id="1847">1847</a>
+<a href="#1848" id="1848">1848</a>
+<a href="#1849" id="1849">1849</a>
+<a href="#1850" id="1850">1850</a>
+<a href="#1851" id="1851">1851</a>
+<a href="#1852" id="1852">1852</a>
+<a href="#1853" id="1853">1853</a>
+<a href="#1854" id="1854">1854</a>
+<a href="#1855" id="1855">1855</a>
+<a href="#1856" id="1856">1856</a>
+<a href="#1857" id="1857">1857</a>
+<a href="#1858" id="1858">1858</a>
+<a href="#1859" id="1859">1859</a>
+<a href="#1860" id="1860">1860</a>
+<a href="#1861" id="1861">1861</a>
+<a href="#1862" id="1862">1862</a>
+<a href="#1863" id="1863">1863</a>
+<a href="#1864" id="1864">1864</a>
+<a href="#1865" id="1865">1865</a>
+<a href="#1866" id="1866">1866</a>
+<a href="#1867" id="1867">1867</a>
+<a href="#1868" id="1868">1868</a>
+<a href="#1869" id="1869">1869</a>
+<a href="#1870" id="1870">1870</a>
+<a href="#1871" id="1871">1871</a>
+<a href="#1872" id="1872">1872</a>
+<a href="#1873" id="1873">1873</a>
+<a href="#1874" id="1874">1874</a>
+<a href="#1875" id="1875">1875</a>
+<a href="#1876" id="1876">1876</a>
+<a href="#1877" id="1877">1877</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Character specific parsers and combinators
 //!
 //! Functions recognizing specific characters
@@ -1737,14 +1886,19 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::combinator::alt;
 <span class="kw">use </span><span class="kw">crate</span>::combinator::cut_err;
+<span class="kw">use </span><span class="kw">crate</span>::combinator::dispatch;
+<span class="kw">use </span><span class="kw">crate</span>::combinator::empty;
+<span class="kw">use </span><span class="kw">crate</span>::combinator::fail;
 <span class="kw">use </span><span class="kw">crate</span>::combinator::opt;
 <span class="kw">use </span><span class="kw">crate</span>::combinator::trace;
 <span class="kw">use </span><span class="kw">crate</span>::error::ParserError;
 <span class="kw">use </span><span class="kw">crate</span>::error::{ErrMode, ErrorKind, Needed};
+<span class="kw">use </span><span class="kw">crate</span>::stream::FindSlice;
 <span class="kw">use </span><span class="kw">crate</span>::stream::{AsBStr, AsChar, ParseSlice, Stream, StreamIsPartial};
 <span class="kw">use </span><span class="kw">crate</span>::stream::{Compare, CompareResult};
+<span class="kw">use </span><span class="kw">crate</span>::token::any;
 <span class="kw">use </span><span class="kw">crate</span>::token::one_of;
-<span class="kw">use </span><span class="kw">crate</span>::token::take_till;
+<span class="kw">use </span><span class="kw">crate</span>::token::take_until;
 <span class="kw">use </span><span class="kw">crate</span>::token::take_while;
 <span class="kw">use </span><span class="kw">crate</span>::PResult;
 <span class="kw">use </span><span class="kw">crate</span>::Parser;
@@ -1782,7 +1936,18 @@
 ///
 /// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn crlf&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::crlf.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -1809,11 +1974,10 @@
 /// assert_eq!(crlf::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(2))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>crlf&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>crlf&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"crlf"</span>, <span class="string">"\r\n"</span>).parse_next(input)
 }
@@ -1822,7 +1986,18 @@
 ///
 /// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn till_line_ending&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::till_line_ending.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -1848,40 +2023,26 @@
 /// # use winnow::Partial;
 /// # use winnow::ascii::till_line_ending;
 /// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("ab\r\nc")), Ok((Partial::new("\r\nc"), "ab")));
-/// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("abc")), Err(ErrMode::Incomplete(Needed::new(1))));
-/// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
+/// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("abc")), Err(ErrMode::Incomplete(Needed::Unknown)));
+/// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::Unknown)));
 /// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("a\rb\nc")), Err(ErrMode::Backtrack(InputError::new(Partial::new("\rb\nc"), ErrorKind::Tag ))));
 /// assert_eq!(till_line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("a\rbc")), Err(ErrMode::Backtrack(InputError::new(Partial::new("\rbc"), ErrorKind::Tag ))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>till_line_ending&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>till_line_ending&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; + FindSlice&lt;(char, char)&gt;,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"till_line_ending"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
-        <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() {
+    trace(<span class="string">"till_line_ending"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
+        <span class="kw">if </span>&lt;Input <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() {
             till_line_ending_::&lt;<span class="kw">_</span>, <span class="kw">_</span>, <span class="bool-val">true</span>&gt;(input)
         } <span class="kw">else </span>{
             till_line_ending_::&lt;<span class="kw">_</span>, <span class="kw">_</span>, <span class="bool-val">false</span>&gt;(input)
         }
     })
     .parse_next(input)
-}
-
-<span class="doccomment">/// Deprecated, replaced with [`till_line_ending`]
-</span><span class="attr">#[deprecated(since = <span class="string">"0.5.35"</span>, note = <span class="string">"Replaced with `till_line_ending`"</span>)]
-#[inline(always)]
-</span><span class="kw">pub fn </span>not_line_ending&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
-<span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
-{
-    till_line_ending(input)
 }
 
 <span class="kw">fn </span>till_line_ending_&lt;I, E: ParserError&lt;I&gt;, <span class="kw">const </span>PARTIAL: bool&gt;(
@@ -1891,14 +2052,20 @@
     </span>I: StreamIsPartial,
     I: Stream,
     I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    I: FindSlice&lt;(char, char)&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
 {
-    <span class="kw">let </span>res = take_till(<span class="number">0</span>.., (<span class="string">'\r'</span>, <span class="string">'\n'</span>)).parse_next(input)<span class="question-mark">?</span>;
-    <span class="kw">if </span>input.compare(<span class="string">"\r"</span>) == CompareResult::Ok {
+    <span class="kw">let </span>res = <span class="kw">match </span>take_until::&lt;<span class="kw">_</span>, <span class="kw">_</span>, ()&gt;(<span class="number">0</span>.., (<span class="string">'\r'</span>, <span class="string">'\n'</span>)).parse_next(input) {
+        <span class="prelude-val">Ok</span>(slice) =&gt; slice,
+        <span class="prelude-val">Err</span>(ErrMode::Incomplete(err)) =&gt; {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::Incomplete(err));
+        }
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; input.finish(),
+    };
+    <span class="kw">if </span><span class="macro">matches!</span>(input.compare(<span class="string">"\r"</span>), CompareResult::Ok(<span class="kw">_</span>)) {
         <span class="kw">let </span>comp = input.compare(<span class="string">"\r\n"</span>);
         <span class="kw">match </span>comp {
-            <span class="comment">//FIXME: calculate the right index
-            </span>CompareResult::Ok =&gt; {}
+            CompareResult::Ok(<span class="kw">_</span>) =&gt; {}
             CompareResult::Incomplete <span class="kw">if </span>PARTIAL &amp;&amp; input.is_partial() =&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::Unknown));
             }
@@ -1915,7 +2082,18 @@
 ///
 /// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn line_ending&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::line_ending.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -1942,11 +2120,10 @@
 /// assert_eq!(line_ending::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>line_ending&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>line_ending&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"line_ending"</span>, alt((<span class="string">"\n"</span>, <span class="string">"\r\n"</span>))).parse_next(input)
 }
@@ -1955,7 +2132,18 @@
 ///
 /// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn newline(input: &amp;mut &amp;str) -&gt; PResult&lt;char&gt;
+/// # {
+/// #     winnow::ascii::newline.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -1968,8 +2156,8 @@
 /// }
 ///
 /// assert_eq!(parser.parse_peek("\nc"), Ok(("c", '\n')));
-/// assert_eq!(parser.parse_peek("\r\nc"), Err(ErrMode::Backtrack(InputError::new("\r\nc", ErrorKind::Verify))));
-/// assert_eq!(parser.parse_peek(""), Err(ErrMode::Backtrack(InputError::new("", ErrorKind::Token))));
+/// assert_eq!(parser.parse_peek("\r\nc"), Err(ErrMode::Backtrack(InputError::new("\r\nc", ErrorKind::Tag))));
+/// assert_eq!(parser.parse_peek(""), Err(ErrMode::Backtrack(InputError::new("", ErrorKind::Tag))));
 /// ```
 ///
 /// ```
@@ -1978,7 +2166,7 @@
 /// # use winnow::Partial;
 /// # use winnow::ascii::newline;
 /// assert_eq!(newline::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("\nc")), Ok((Partial::new("c"), '\n')));
-/// assert_eq!(newline::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("\r\nc")), Err(ErrMode::Backtrack(InputError::new(Partial::new("\r\nc"), ErrorKind::Verify))));
+/// assert_eq!(newline::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("\r\nc")), Err(ErrMode::Backtrack(InputError::new(Partial::new("\r\nc"), ErrorKind::Tag))));
 /// assert_eq!(newline::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
@@ -1986,16 +2174,27 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    I: Compare&lt;char&gt;,
 {
-    trace(<span class="string">"newline"</span>, <span class="string">'\n'</span>.map(AsChar::as_char)).parse_next(input)
+    trace(<span class="string">"newline"</span>, <span class="string">'\n'</span>).parse_next(input)
 }
 
 <span class="doccomment">/// Matches a tab character `'\t'`.
 ///
 /// *Complete version*: Will return an error if there's not enough input data.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn tab(input: &amp;mut &amp;str) -&gt; PResult&lt;char&gt;
+/// # {
+/// #     winnow::ascii::tab.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2008,8 +2207,8 @@
 /// }
 ///
 /// assert_eq!(parser.parse_peek("\tc"), Ok(("c", '\t')));
-/// assert_eq!(parser.parse_peek("\r\nc"), Err(ErrMode::Backtrack(InputError::new("\r\nc", ErrorKind::Verify))));
-/// assert_eq!(parser.parse_peek(""), Err(ErrMode::Backtrack(InputError::new("", ErrorKind::Token))));
+/// assert_eq!(parser.parse_peek("\r\nc"), Err(ErrMode::Backtrack(InputError::new("\r\nc", ErrorKind::Tag))));
+/// assert_eq!(parser.parse_peek(""), Err(ErrMode::Backtrack(InputError::new("", ErrorKind::Tag))));
 /// ```
 ///
 /// ```
@@ -2018,17 +2217,16 @@
 /// # use winnow::Partial;
 /// # use winnow::ascii::tab;
 /// assert_eq!(tab::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("\tc")), Ok((Partial::new("c"), '\t')));
-/// assert_eq!(tab::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("\r\nc")), Err(ErrMode::Backtrack(InputError::new(Partial::new("\r\nc"), ErrorKind::Verify))));
+/// assert_eq!(tab::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("\r\nc")), Err(ErrMode::Backtrack(InputError::new(Partial::new("\r\nc"), ErrorKind::Tag))));
 /// assert_eq!(tab::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>tab&lt;I, Error: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;char, Error&gt;
+</span><span class="kw">pub fn </span>tab&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;char, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;char&gt;,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"tab"</span>, <span class="string">'\t'</span>.map(AsChar::as_char)).parse_next(input)
+    trace(<span class="string">"tab"</span>, <span class="string">'\t'</span>).parse_next(input)
 }
 
 <span class="doccomment">/// Recognizes zero or more lowercase and uppercase ASCII alphabetic characters: `'a'..='z'`, `'A'..='Z'`
@@ -2036,8 +2234,19 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non
 /// alphabetic character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphabetic character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn alpha0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::alpha0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2064,11 +2273,11 @@
 /// assert_eq!(alpha0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>alpha0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>alpha0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"alpha0"</span>, take_while(<span class="number">0</span>.., AsChar::is_alpha)).parse_next(input)
 }
@@ -2078,8 +2287,19 @@
 /// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found  (a non alphabetic character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphabetic character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn alpha1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::alpha1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2106,11 +2326,11 @@
 /// assert_eq!(alpha1::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>alpha1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>alpha1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"alpha1"</span>, take_while(<span class="number">1</span>.., AsChar::is_alpha)).parse_next(input)
 }
@@ -2120,8 +2340,19 @@
 /// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non digit character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn digit0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::digit0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2149,11 +2380,11 @@
 /// assert_eq!(digit0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>digit0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>digit0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"digit0"</span>, take_while(<span class="number">0</span>.., AsChar::is_dec_digit)).parse_next(input)
 }
@@ -2163,8 +2394,19 @@
 /// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non digit character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn digit1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::digit1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2208,11 +2450,11 @@
 /// assert!(parser.parse_peek("b").is_err());
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>digit1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>digit1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"digit1"</span>, take_while(<span class="number">1</span>.., AsChar::is_dec_digit)).parse_next(input)
 }
@@ -2222,8 +2464,19 @@
 ///
 /// *Complete version*: Will return the whole input if no terminating token is found (a non hexadecimal digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non hexadecimal digit character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn hex_digit0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::hex_digit0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2250,11 +2503,11 @@
 /// assert_eq!(hex_digit0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>hex_digit0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>hex_digit0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"hex_digit0"</span>, take_while(<span class="number">0</span>.., AsChar::is_hex_digit)).parse_next(input)
 }
@@ -2265,8 +2518,19 @@
 /// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non hexadecimal digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non hexadecimal digit character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn hex_digit1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::hex_digit1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2293,11 +2557,11 @@
 /// assert_eq!(hex_digit1::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>hex_digit1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>hex_digit1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"hex_digit1"</span>, take_while(<span class="number">1</span>.., AsChar::is_hex_digit)).parse_next(input)
 }
@@ -2307,8 +2571,19 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non octal
 /// digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non octal digit character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn oct_digit0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::oct_digit0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2335,11 +2610,12 @@
 /// assert_eq!(oct_digit0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>oct_digit0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>oct_digit0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial,
+    Input: Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"oct_digit0"</span>, take_while(<span class="number">0</span>.., AsChar::is_oct_digit)).parse_next(input)
 }
@@ -2349,8 +2625,19 @@
 /// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non octal digit character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non octal digit character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn oct_digit1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::oct_digit1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2377,11 +2664,11 @@
 /// assert_eq!(oct_digit1::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>oct_digit1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>oct_digit1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"oct_digit0"</span>, take_while(<span class="number">1</span>.., AsChar::is_oct_digit)).parse_next(input)
 }
@@ -2391,8 +2678,19 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non
 /// alphanumerical character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphanumerical character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn alphanumeric0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::alphanumeric0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2419,11 +2717,11 @@
 /// assert_eq!(alphanumeric0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>alphanumeric0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>alphanumeric0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"alphanumeric0"</span>, take_while(<span class="number">0</span>.., AsChar::is_alphanum)).parse_next(input)
 }
@@ -2433,8 +2731,19 @@
 /// *Complete version*: Will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non alphanumerical character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non alphanumerical character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn alphanumeric1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::alphanumeric1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2461,11 +2770,11 @@
 /// assert_eq!(alphanumeric1::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>alphanumeric1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>alphanumeric1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"alphanumeric1"</span>, take_while(<span class="number">1</span>.., AsChar::is_alphanum)).parse_next(input)
 }
@@ -2475,8 +2784,19 @@
 /// *Complete version*: Will return the whole input if no terminating token is found (a non space
 /// character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn space0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::space0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2490,22 +2810,33 @@
 /// assert_eq!(space0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>space0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>space0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"space0"</span>, take_while(<span class="number">0</span>.., AsChar::is_space)).parse_next(input)
 }
 
-<span class="doccomment">/// Recognizes zero or more spaces and tabs.
+<span class="doccomment">/// Recognizes one or more spaces and tabs.
 ///
 /// *Complete version*: Will return the whole input if no terminating token is found (a non space
 /// character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn space1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::space1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2532,11 +2863,11 @@
 /// assert_eq!(space1::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>space1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>space1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"space1"</span>, take_while(<span class="number">1</span>.., AsChar::is_space)).parse_next(input)
 }
@@ -2546,8 +2877,19 @@
 /// *Complete version*: will return the whole input if no terminating token is found (a non space
 /// character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn multispace0&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::multispace0.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2574,11 +2916,11 @@
 /// assert_eq!(multispace0::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>multispace0&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>multispace0&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"multispace0"</span>, take_while(<span class="number">0</span>.., (<span class="string">' '</span>, <span class="string">'\t'</span>, <span class="string">'\r'</span>, <span class="string">'\n'</span>))).parse_next(input)
 }
@@ -2588,8 +2930,19 @@
 /// *Complete version*: will return an error if there's not enough input data,
 /// or the whole input if no terminating token is found (a non space character).
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data,
 /// or if no terminating token is found (a non space character).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream]:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn multispace1&lt;'i&gt;(input: &amp;mut &amp;'i str) -&gt; PResult&lt;&amp;'i str&gt;
+/// # {
+/// #     winnow::ascii::multispace1.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2616,11 +2969,11 @@
 /// assert_eq!(multispace1::&lt;_, InputError&lt;_&gt;&gt;.parse_peek(Partial::new("")), Err(ErrMode::Incomplete(Needed::new(1))));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>multispace1&lt;I, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
+</span><span class="kw">pub fn </span>multispace1&lt;Input, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    Error: ParserError&lt;Input&gt;,
 {
     trace(<span class="string">"multispace1"</span>, take_while(<span class="number">1</span>.., (<span class="string">' '</span>, <span class="string">'\t'</span>, <span class="string">'\r'</span>, <span class="string">'\n'</span>))).parse_next(input)
 }
@@ -2629,159 +2982,84 @@
 ///
 /// *Complete version*: can parse until the end of input.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream] into a `u32`:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn dec_uint(input: &amp;mut &amp;str) -&gt; PResult&lt;u32&gt;
+/// # {
+/// #     winnow::ascii::dec_uint.parse_next(input)
+/// # }
+/// ```
 </span><span class="attr">#[doc(alias = <span class="string">"u8"</span>)]
 #[doc(alias = <span class="string">"u16"</span>)]
 #[doc(alias = <span class="string">"u32"</span>)]
 #[doc(alias = <span class="string">"u64"</span>)]
 #[doc(alias = <span class="string">"u128"</span>)]
-</span><span class="kw">pub fn </span>dec_uint&lt;I, O, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;O, E&gt;
+</span><span class="kw">pub fn </span>dec_uint&lt;Input, Output, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;Output, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
-    O: Uint,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Slice: AsBStr,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    Output: Uint,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"dec_uint"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
-        <span class="kw">if </span>input.eof_offset() == <span class="number">0 </span>{
-            <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
-                <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::new(<span class="number">1</span>)));
-            } <span class="kw">else </span>{
-                <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::from_error_kind(input, ErrorKind::Slice));
-            }
-        }
-
-        <span class="kw">let </span><span class="kw-2">mut </span>value = O::default();
-        <span class="kw">for </span>(offset, c) <span class="kw">in </span>input.iter_offsets() {
-            <span class="kw">match </span>c.as_char().to_digit(<span class="number">10</span>) {
-                <span class="prelude-val">Some</span>(d) =&gt; <span class="kw">match </span>value.checked_mul(<span class="number">10</span>, sealed::SealedMarker).and_then(|v| {
-                    <span class="kw">let </span>d = d <span class="kw">as </span>u8;
-                    v.checked_add(d, sealed::SealedMarker)
-                }) {
-                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::from_error_kind(input, ErrorKind::Verify)),
-                    <span class="prelude-val">Some</span>(v) =&gt; value = v,
-                },
-                <span class="prelude-val">None </span>=&gt; {
-                    <span class="kw">if </span>offset == <span class="number">0 </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::from_error_kind(input, ErrorKind::Slice));
-                    } <span class="kw">else </span>{
-                        <span class="kw">let _ </span>= input.next_slice(offset);
-                        <span class="kw">return </span><span class="prelude-val">Ok</span>(value);
-                    }
-                }
-            }
-        }
-
-        <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
-            <span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::new(<span class="number">1</span>)))
-        } <span class="kw">else </span>{
-            <span class="kw">let _ </span>= input.finish();
-            <span class="prelude-val">Ok</span>(value)
-        }
+    trace(<span class="string">"dec_uint"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
+        alt(((one_of(<span class="string">'1'</span>..=<span class="string">'9'</span>), digit0).void(), one_of(<span class="string">'0'</span>).void()))
+            .recognize()
+            .verify_map(|s: &lt;Input <span class="kw">as </span>Stream&gt;::Slice| {
+                <span class="kw">let </span>s = s.as_bstr();
+                <span class="comment">// SAFETY: Only 7-bit ASCII characters are parsed
+                </span><span class="kw">let </span>s = <span class="kw">unsafe </span>{ <span class="kw">crate</span>::lib::std::str::from_utf8_unchecked(s) };
+                Output::try_from_dec_uint(s)
+            })
+            .parse_next(input)
     })
     .parse_next(input)
 }
 
 <span class="doccomment">/// Metadata for parsing unsigned integers, see [`dec_uint`]
-</span><span class="kw">pub trait </span>Uint: Default {
+</span><span class="kw">pub trait </span>Uint: Sized {
     <span class="attr">#[doc(hidden)]
-    </span><span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;;
-    <span class="attr">#[doc(hidden)]
-    </span><span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;;
+    </span><span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;;
 }
 
 <span class="kw">impl </span>Uint <span class="kw">for </span>u8 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Uint <span class="kw">for </span>u16 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Uint <span class="kw">for </span>u32 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Uint <span class="kw">for </span>u64 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Uint <span class="kw">for </span>u128 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
-<span class="doccomment">/// Deprecated since v0.5.17
-</span><span class="kw">impl </span>Uint <span class="kw">for </span>i8 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-}
-
-<span class="doccomment">/// Deprecated since v0.5.17
-</span><span class="kw">impl </span>Uint <span class="kw">for </span>i16 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-}
-
-<span class="doccomment">/// Deprecated since v0.5.17
-</span><span class="kw">impl </span>Uint <span class="kw">for </span>i32 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-}
-
-<span class="doccomment">/// Deprecated since v0.5.17
-</span><span class="kw">impl </span>Uint <span class="kw">for </span>i64 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-}
-
-<span class="doccomment">/// Deprecated since v0.5.17
-</span><span class="kw">impl </span>Uint <span class="kw">for </span>i128 {
-    <span class="kw">fn </span>checked_mul(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_mul(by <span class="kw">as </span><span class="self">Self</span>)
-    }
-    <span class="kw">fn </span>checked_add(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_add(by <span class="kw">as </span><span class="self">Self</span>)
+<span class="kw">impl </span>Uint <span class="kw">for </span>usize {
+    <span class="kw">fn </span>try_from_dec_uint(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
@@ -2789,104 +3067,89 @@
 ///
 /// *Complete version*: can parse until the end of input.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there's not enough input data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream] into an `i32`:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn dec_int(input: &amp;mut &amp;str) -&gt; PResult&lt;i32&gt;
+/// # {
+/// #     winnow::ascii::dec_int.parse_next(input)
+/// # }
+/// ```
 </span><span class="attr">#[doc(alias = <span class="string">"i8"</span>)]
 #[doc(alias = <span class="string">"i16"</span>)]
 #[doc(alias = <span class="string">"i32"</span>)]
 #[doc(alias = <span class="string">"i64"</span>)]
 #[doc(alias = <span class="string">"i128"</span>)]
-</span><span class="kw">pub fn </span>dec_int&lt;I, O, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;O, E&gt;
+</span><span class="kw">pub fn </span>dec_int&lt;Input, Output, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;Output, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
-    O: Int,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Slice: AsBStr,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    Output: Int,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"dec_int"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
-        <span class="kw">fn </span>sign(token: <span class="kw">impl </span>AsChar) -&gt; bool {
-            <span class="kw">let </span>token = token.as_char();
-            token == <span class="string">'+' </span>|| token == <span class="string">'-'
-        </span>}
-        <span class="kw">let </span>sign = opt(<span class="kw">crate</span>::token::one_of(sign).map(AsChar::as_char))
-            .map(|c| c != <span class="prelude-val">Some</span>(<span class="string">'-'</span>))
-            .parse_next(input)<span class="question-mark">?</span>;
-
-        <span class="kw">if </span>input.eof_offset() == <span class="number">0 </span>{
-            <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
-                <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::new(<span class="number">1</span>)));
-            } <span class="kw">else </span>{
-                <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::from_error_kind(input, ErrorKind::Slice));
-            }
-        }
-
-        <span class="kw">let </span><span class="kw-2">mut </span>value = O::default();
-        <span class="kw">for </span>(offset, c) <span class="kw">in </span>input.iter_offsets() {
-            <span class="kw">match </span>c.as_char().to_digit(<span class="number">10</span>) {
-                <span class="prelude-val">Some</span>(d) =&gt; <span class="kw">match </span>value.checked_mul(<span class="number">10</span>, sealed::SealedMarker).and_then(|v| {
-                    <span class="kw">let </span>d = d <span class="kw">as </span>u8;
-                    <span class="kw">if </span>sign {
-                        v.checked_add(d, sealed::SealedMarker)
-                    } <span class="kw">else </span>{
-                        v.checked_sub(d, sealed::SealedMarker)
-                    }
-                }) {
-                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::from_error_kind(input, ErrorKind::Verify)),
-                    <span class="prelude-val">Some</span>(v) =&gt; value = v,
-                },
-                <span class="prelude-val">None </span>=&gt; {
-                    <span class="kw">if </span>offset == <span class="number">0 </span>{
-                        <span class="kw">return </span><span class="prelude-val">Err</span>(ErrMode::from_error_kind(input, ErrorKind::Slice));
-                    } <span class="kw">else </span>{
-                        <span class="kw">let _ </span>= input.next_slice(offset);
-                        <span class="kw">return </span><span class="prelude-val">Ok</span>(value);
-                    }
-                }
-            }
-        }
-
-        <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
-            <span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::new(<span class="number">1</span>)))
-        } <span class="kw">else </span>{
-            <span class="kw">let _ </span>= input.finish();
-            <span class="prelude-val">Ok</span>(value)
-        }
+    trace(<span class="string">"dec_int"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
+        <span class="kw">let </span>sign = opt(<span class="macro">dispatch!</span> {any.map(AsChar::as_char);
+            <span class="string">'+' </span>=&gt; empty.value(<span class="bool-val">true</span>),
+            <span class="string">'-' </span>=&gt; empty.value(<span class="bool-val">false</span>),
+            <span class="kw">_ </span>=&gt; fail,
+        });
+        alt(((sign, one_of(<span class="string">'1'</span>..=<span class="string">'9'</span>), digit0).void(), one_of(<span class="string">'0'</span>).void()))
+            .recognize()
+            .verify_map(|s: &lt;Input <span class="kw">as </span>Stream&gt;::Slice| {
+                <span class="kw">let </span>s = s.as_bstr();
+                <span class="comment">// SAFETY: Only 7-bit ASCII characters are parsed
+                </span><span class="kw">let </span>s = <span class="kw">unsafe </span>{ <span class="kw">crate</span>::lib::std::str::from_utf8_unchecked(s) };
+                Output::try_from_dec_int(s)
+            })
+            .parse_next(input)
     })
     .parse_next(input)
 }
 
 <span class="doccomment">/// Metadata for parsing signed integers, see [`dec_int`]
-</span><span class="kw">pub trait </span>Int: Uint {
+</span><span class="kw">pub trait </span>Int: Sized {
     <span class="attr">#[doc(hidden)]
-    </span><span class="kw">fn </span>checked_sub(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;;
+    </span><span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt;;
 }
 
 <span class="kw">impl </span>Int <span class="kw">for </span>i8 {
-    <span class="kw">fn </span>checked_sub(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_sub(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Int <span class="kw">for </span>i16 {
-    <span class="kw">fn </span>checked_sub(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_sub(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Int <span class="kw">for </span>i32 {
-    <span class="kw">fn </span>checked_sub(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_sub(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Int <span class="kw">for </span>i64 {
-    <span class="kw">fn </span>checked_sub(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_sub(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
 <span class="kw">impl </span>Int <span class="kw">for </span>i128 {
-    <span class="kw">fn </span>checked_sub(<span class="self">self</span>, by: u8, <span class="kw">_</span>: sealed::SealedMarker) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
-        <span class="self">self</span>.checked_sub(by <span class="kw">as </span><span class="self">Self</span>)
+    <span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
+    }
+}
+
+<span class="kw">impl </span>Int <span class="kw">for </span>isize {
+    <span class="kw">fn </span>try_from_dec_int(slice: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        slice.parse().ok()
     }
 }
 
@@ -2895,8 +3158,19 @@
 /// *Complete version*: Will parse until the end of input if it has fewer characters than the type
 /// supports.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if end-of-input
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if end-of-input
 /// is hit before a hard boundary (non-hex character, more characters than supported).
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream] into a `u32`:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn hex_uint(input: &amp;mut &amp;str) -&gt; PResult&lt;u32&gt;
+/// # {
+/// #     winnow::ascii::hex_uint.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -2929,22 +3203,22 @@
 /// assert_eq!(parser.parse_peek(Partial::new(&amp;b"ggg"[..])), Err(ErrMode::Backtrack(InputError::new(Partial::new(&amp;b"ggg"[..]), ErrorKind::Slice))));
 /// ```
 </span><span class="attr">#[inline]
-</span><span class="kw">pub fn </span>hex_uint&lt;I, O, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;O, E&gt;
+</span><span class="kw">pub fn </span>hex_uint&lt;Input, Output, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;Output, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    O: HexUint,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar,
-    &lt;I <span class="kw">as </span>Stream&gt;::Slice: AsBStr,
+    </span>Input: StreamIsPartial + Stream,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Slice: AsBStr,
+    Output: HexUint,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"hex_uint"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
+    trace(<span class="string">"hex_uint"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
         <span class="kw">let </span>invalid_offset = input
             .offset_for(|c| {
                 <span class="kw">let </span>c = c.as_char();
                 !<span class="string">"0123456789abcdefABCDEF"</span>.contains(c)
             })
             .unwrap_or_else(|| input.eof_offset());
-        <span class="kw">let </span>max_nibbles = O::max_nibbles(sealed::SealedMarker);
+        <span class="kw">let </span>max_nibbles = Output::max_nibbles(sealed::SealedMarker);
         <span class="kw">let </span>max_offset = input.offset_at(max_nibbles);
         <span class="kw">let </span>offset = <span class="kw">match </span>max_offset {
             <span class="prelude-val">Ok</span>(max_offset) =&gt; {
@@ -2956,7 +3230,7 @@
                 }
             }
             <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; {
-                <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported()
+                <span class="kw">if </span>&lt;Input <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported()
                     &amp;&amp; input.is_partial()
                     &amp;&amp; invalid_offset == input.eof_offset()
                 {
@@ -2973,12 +3247,12 @@
         }
         <span class="kw">let </span>parsed = input.next_slice(offset);
 
-        <span class="kw">let </span><span class="kw-2">mut </span>res = O::default();
+        <span class="kw">let </span><span class="kw-2">mut </span>res = Output::default();
         <span class="kw">for </span>c <span class="kw">in </span>parsed.as_bstr() {
             <span class="kw">let </span>nibble = <span class="kw-2">*</span>c <span class="kw">as </span>char;
             <span class="kw">let </span>nibble = nibble.to_digit(<span class="number">16</span>).unwrap_or(<span class="number">0</span>) <span class="kw">as </span>u8;
-            <span class="kw">let </span>nibble = O::from(nibble);
-            res = (res &lt;&lt; O::from(<span class="number">4</span>)) + nibble;
+            <span class="kw">let </span>nibble = Output::from(nibble);
+            res = (res &lt;&lt; Output::from(<span class="number">4</span>)) + nibble;
         }
 
         <span class="prelude-val">Ok</span>(res)
@@ -3033,7 +3307,18 @@
 ///
 /// *Complete version*: Can parse until the end of input.
 ///
-/// *Partial version*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there is not enough data.
+/// *[Partial version][crate::_topic::partial]*: Will return `Err(winnow::error::ErrMode::Incomplete(_))` if there is not enough data.
+///
+/// # Effective Signature
+///
+/// Assuming you are parsing a `&amp;str` [Stream] into an `f64`:
+/// ```rust
+/// # use winnow::prelude::*;;
+/// pub fn float(input: &amp;mut &amp;str) -&gt; PResult&lt;f64&gt;
+/// # {
+/// #     winnow::ascii::float.parse_next(input)
+/// # }
+/// ```
 ///
 /// # Example
 ///
@@ -3074,17 +3359,15 @@
 #[doc(alias = <span class="string">"f32"</span>)]
 #[doc(alias = <span class="string">"double"</span>)]
 #[allow(clippy::trait_duplication_in_bounds)] </span><span class="comment">// HACK: clippy 1.64.0 bug
-</span><span class="kw">pub fn </span>float&lt;I, O, E: ParserError&lt;I&gt;&gt;(input: <span class="kw-2">&amp;mut </span>I) -&gt; PResult&lt;O, E&gt;
+</span><span class="kw">pub fn </span>float&lt;Input, Output, Error&gt;(input: <span class="kw-2">&amp;mut </span>Input) -&gt; PResult&lt;Output, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
-    &lt;I <span class="kw">as </span>Stream&gt;::Slice: ParseSlice&lt;O&gt;,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
-    &lt;I <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
-    I: AsBStr,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;Caseless&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;&gt; + Compare&lt;char&gt; + AsBStr,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Slice: ParseSlice&lt;Output&gt;,
+    &lt;Input <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    &lt;Input <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"float"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
+    trace(<span class="string">"float"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
         <span class="kw">let </span>s = recognize_float_or_exceptions(input)<span class="question-mark">?</span>;
         s.parse_slice()
             .ok_or_else(|| ErrMode::from_error_kind(input, ErrorKind::Verify))
@@ -3093,27 +3376,31 @@
 }
 
 <span class="attr">#[allow(clippy::trait_duplication_in_bounds)] </span><span class="comment">// HACK: clippy 1.64.0 bug
-</span><span class="attr">#[allow(deprecated)]
 </span><span class="kw">fn </span>recognize_float_or_exceptions&lt;I, E: ParserError&lt;I&gt;&gt;(
     input: <span class="kw-2">&amp;mut </span>I,
 ) -&gt; PResult&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice, E&gt;
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    I: Compare&lt;Caseless&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;&gt;,
+    I: Compare&lt;char&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
     &lt;I <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
     I: AsBStr,
 {
     alt((
         recognize_float,
-        <span class="kw">crate</span>::token::tag_no_case(<span class="string">"nan"</span>),
+        <span class="kw">crate</span>::token::literal(Caseless(<span class="string">"nan"</span>)),
         (
             opt(one_of([<span class="string">'+'</span>, <span class="string">'-'</span>])),
-            <span class="kw">crate</span>::token::tag_no_case(<span class="string">"infinity"</span>),
+            <span class="kw">crate</span>::token::literal(Caseless(<span class="string">"infinity"</span>)),
         )
             .recognize(),
-        (opt(one_of([<span class="string">'+'</span>, <span class="string">'-'</span>])), <span class="kw">crate</span>::token::tag_no_case(<span class="string">"inf"</span>)).recognize(),
+        (
+            opt(one_of([<span class="string">'+'</span>, <span class="string">'-'</span>])),
+            <span class="kw">crate</span>::token::literal(Caseless(<span class="string">"inf"</span>)),
+        )
+            .recognize(),
     ))
     .parse_next(input)
 }
@@ -3123,7 +3410,7 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    I: Compare&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt;,
+    I: Compare&lt;char&gt;,
     &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
     &lt;I <span class="kw">as </span>Stream&gt;::IterOffsets: Clone,
     I: AsBStr,
@@ -3131,8 +3418,8 @@
     (
         opt(one_of([<span class="string">'+'</span>, <span class="string">'-'</span>])),
         alt((
-            (digit1, opt((<span class="string">'.'</span>, opt(digit1)))).map(|<span class="kw">_</span>| ()),
-            (<span class="string">'.'</span>, digit1).map(|<span class="kw">_</span>| ()),
+            (digit1, opt((<span class="string">'.'</span>, opt(digit1)))).void(),
+            (<span class="string">'.'</span>, digit1).void(),
         )),
         opt((one_of([<span class="string">'e'</span>, <span class="string">'E'</span>]), opt(one_of([<span class="string">'+'</span>, <span class="string">'-'</span>])), cut_err(digit1))),
     )
@@ -3140,11 +3427,9 @@
         .parse_next(input)
 }
 
-<span class="doccomment">/// Matches a byte string with escaped characters.
+<span class="doccomment">/// Recognize the input slice with escaped characters.
 ///
-/// * The first argument matches the normal characters (it must not accept the control character)
-/// * The second argument is the control character (like `\` in most languages)
-/// * The third argument matches the escaped characters
+/// See also [`escaped_transform`]
 ///
 /// # Example
 ///
@@ -3153,11 +3438,11 @@
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::InputError, error::Needed, IResult};
 /// # use winnow::ascii::digit1;
 /// # use winnow::prelude::*;
-/// use winnow::ascii::escaped;
+/// use winnow::ascii::take_escaped;
 /// use winnow::token::one_of;
 ///
 /// fn esc(s: &amp;str) -&gt; IResult&lt;&amp;str, &amp;str&gt; {
-///   escaped(digit1, '\\', one_of(['"', 'n', '\\'])).parse_peek(s)
+///   take_escaped(digit1, '\\', one_of(['"', 'n', '\\'])).parse_peek(s)
 /// }
 ///
 /// assert_eq!(esc("123;"), Ok((";", "123")));
@@ -3170,37 +3455,52 @@
 /// # use winnow::ascii::digit1;
 /// # use winnow::prelude::*;
 /// # use winnow::Partial;
-/// use winnow::ascii::escaped;
+/// use winnow::ascii::take_escaped;
 /// use winnow::token::one_of;
 ///
 /// fn esc(s: Partial&lt;&amp;str&gt;) -&gt; IResult&lt;Partial&lt;&amp;str&gt;, &amp;str&gt; {
-///   escaped(digit1, '\\', one_of(['"', 'n', '\\'])).parse_peek(s)
+///   take_escaped(digit1, '\\', one_of(['"', 'n', '\\'])).parse_peek(s)
 /// }
 ///
 /// assert_eq!(esc(Partial::new("123;")), Ok((Partial::new(";"), "123")));
 /// assert_eq!(esc(Partial::new("12\\\"34;")), Ok((Partial::new(";"), "12\\\"34")));
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>escaped&lt;<span class="lifetime">'a</span>, I: <span class="lifetime">'a</span>, Error, F, G, O1, O2&gt;(
-    <span class="kw-2">mut </span>normal: F,
+</span><span class="kw">pub fn </span>take_escaped&lt;<span class="lifetime">'i</span>, Input, Error, Normal, Escapable, NormalOutput, EscapableOutput&gt;(
+    <span class="kw-2">mut </span>normal: Normal,
     control_char: char,
-    <span class="kw-2">mut </span>escapable: G,
-) -&gt; <span class="kw">impl </span>Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
+    <span class="kw-2">mut </span>escapable: Escapable,
+) -&gt; <span class="kw">impl </span>Parser&lt;Input, &lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
-    F: Parser&lt;I, O1, Error&gt;,
-    G: Parser&lt;I, O2, Error&gt;,
-    Error: ParserError&lt;I&gt;,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;char&gt; + <span class="lifetime">'i</span>,
+    Normal: Parser&lt;Input, NormalOutput, Error&gt;,
+    Escapable: Parser&lt;Input, EscapableOutput, Error&gt;,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"escaped"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
-        <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
+    trace(<span class="string">"take_escaped"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
+        <span class="kw">if </span>&lt;Input <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
             streaming_escaped_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>escapable)
         } <span class="kw">else </span>{
             complete_escaped_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>escapable)
         }
     })
+}
+
+<span class="doccomment">/// Deprecated, replaced with [`take_escaped`]
+</span><span class="attr">#[deprecated(since = <span class="string">"0.6.4"</span>, note = <span class="string">"Replaced with `take_escaped`"</span>)]
+#[inline(always)]
+</span><span class="kw">pub fn </span>escaped&lt;<span class="lifetime">'i</span>, Input, Error, Normal, Escapable, NormalOutput, EscapableOutput&gt;(
+    normal: Normal,
+    control_char: char,
+    escapable: Escapable,
+) -&gt; <span class="kw">impl </span>Parser&lt;Input, &lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;
+<span class="kw">where
+    </span>Input: StreamIsPartial + Stream + Compare&lt;char&gt; + <span class="lifetime">'i</span>,
+    Normal: Parser&lt;Input, NormalOutput, Error&gt;,
+    Escapable: Parser&lt;Input, EscapableOutput, Error&gt;,
+    Error: ParserError&lt;Input&gt;,
+{
+    take_escaped(normal, control_char, escapable)
 }
 
 <span class="kw">fn </span>streaming_escaped_internal&lt;I, Error, F, G, O1, O2&gt;(
@@ -3212,7 +3512,7 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: AsChar + Clone,
+    I: Compare&lt;char&gt;,
     F: Parser&lt;I, O1, Error&gt;,
     G: Parser&lt;I, O2, Error&gt;,
     Error: ParserError&lt;I&gt;,
@@ -3226,7 +3526,7 @@
             <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; {
                 <span class="kw">if </span>input.eof_offset() == current_len {
                     <span class="kw">let </span>offset = input.offset_from(<span class="kw-2">&amp;</span>start);
-                    input.reset(start);
+                    input.reset(<span class="kw-2">&amp;</span>start);
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(input.next_slice(offset));
                 }
             }
@@ -3235,7 +3535,7 @@
                     <span class="kw">let _ </span>= escapable.parse_next(input)<span class="question-mark">?</span>;
                 } <span class="kw">else </span>{
                     <span class="kw">let </span>offset = input.offset_from(<span class="kw-2">&amp;</span>start);
-                    input.reset(start);
+                    input.reset(<span class="kw-2">&amp;</span>start);
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(input.next_slice(offset));
                 }
             }
@@ -3245,7 +3545,7 @@
     <span class="prelude-val">Err</span>(ErrMode::Incomplete(Needed::Unknown))
 }
 
-<span class="kw">fn </span>complete_escaped_internal&lt;<span class="lifetime">'a</span>, I: <span class="lifetime">'a</span>, Error, F, G, O1, O2&gt;(
+<span class="kw">fn </span>complete_escaped_internal&lt;<span class="lifetime">'a</span>, I, Error, F, G, O1, O2&gt;(
     input: <span class="kw-2">&amp;mut </span>I,
     normal: <span class="kw-2">&amp;mut </span>F,
     control_char: char,
@@ -3254,7 +3554,8 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: <span class="kw">crate</span>::stream::AsChar + Clone,
+    I: Compare&lt;char&gt;,
+    I: <span class="lifetime">'a</span>,
     F: Parser&lt;I, O1, Error&gt;,
     G: Parser&lt;I, O2, Error&gt;,
     Error: ParserError&lt;I&gt;,
@@ -3268,7 +3569,7 @@
             <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; {
                 <span class="kw">if </span>input.eof_offset() == current_len {
                     <span class="kw">let </span>offset = input.offset_from(<span class="kw-2">&amp;</span>start);
-                    input.reset(start);
+                    input.reset(<span class="kw-2">&amp;</span>start);
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(input.next_slice(offset));
                 }
             }
@@ -3277,32 +3578,29 @@
                     <span class="kw">let _ </span>= escapable.parse_next(input)<span class="question-mark">?</span>;
                 } <span class="kw">else </span>{
                     <span class="kw">let </span>offset = input.offset_from(<span class="kw-2">&amp;</span>start);
-                    input.reset(start);
+                    input.reset(<span class="kw-2">&amp;</span>start);
                     <span class="kw">return </span><span class="prelude-val">Ok</span>(input.next_slice(offset));
                 }
             }
         }
     }
 
-    input.reset(start);
+    input.reset(<span class="kw-2">&amp;</span>start);
     <span class="prelude-val">Ok</span>(input.finish())
 }
 
-<span class="doccomment">/// Matches a byte string with escaped characters.
-///
-/// * The first argument matches the normal characters (it must not match the control character)
-/// * The second argument is the control character (like `\` in most languages)
-/// * The third argument matches the escaped characters and transforms them
+<span class="doccomment">/// Parse escaped characters, unescaping them
 ///
 /// As an example, the chain `abc\tdef` could be `abc    def` (it also consumes the control character)
 ///
 /// # Example
 ///
 /// ```rust
+/// # #[cfg(feature = "std")] {
 /// # use winnow::prelude::*;
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::InputError, error::Needed};
 /// # use std::str::from_utf8;
-/// use winnow::token::tag;
+/// use winnow::token::literal;
 /// use winnow::ascii::escaped_transform;
 /// use winnow::ascii::alpha1;
 /// use winnow::combinator::alt;
@@ -3321,14 +3619,16 @@
 ///
 /// assert_eq!(parser.parse_peek("ab\\\"cd"), Ok(("", String::from("ab\"cd"))));
 /// assert_eq!(parser.parse_peek("ab\\ncd"), Ok(("", String::from("ab\ncd"))));
+/// # }
 /// ```
 ///
 /// ```
+/// # #[cfg(feature = "std")] {
 /// # use winnow::prelude::*;
 /// # use winnow::{error::ErrMode, error::ErrorKind, error::InputError, error::Needed};
 /// # use std::str::from_utf8;
 /// # use winnow::Partial;
-/// use winnow::token::tag;
+/// use winnow::token::literal;
 /// use winnow::ascii::escaped_transform;
 /// use winnow::ascii::alpha1;
 /// use winnow::combinator::alt;
@@ -3346,27 +3646,26 @@
 /// }
 ///
 /// assert_eq!(parser.parse_peek(Partial::new("ab\\\"cd\"")), Ok((Partial::new("\""), String::from("ab\"cd"))));
+/// # }
 /// ```
 </span><span class="attr">#[inline(always)]
-</span><span class="kw">pub fn </span>escaped_transform&lt;I, Error, F, G, Output&gt;(
-    <span class="kw-2">mut </span>normal: F,
+</span><span class="kw">pub fn </span>escaped_transform&lt;Input, Error, Normal, Escape, Output&gt;(
+    <span class="kw-2">mut </span>normal: Normal,
     control_char: char,
-    <span class="kw-2">mut </span>transform: G,
-) -&gt; <span class="kw">impl </span>Parser&lt;I, Output, Error&gt;
+    <span class="kw-2">mut </span>escape: Escape,
+) -&gt; <span class="kw">impl </span>Parser&lt;Input, Output, Error&gt;
 <span class="kw">where
-    </span>I: StreamIsPartial,
-    I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: <span class="kw">crate</span>::stream::AsChar + Clone,
-    Output: <span class="kw">crate</span>::stream::Accumulate&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice&gt;,
-    F: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
-    G: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
-    Error: ParserError&lt;I&gt;,
+    </span>Input: StreamIsPartial + Stream + Compare&lt;char&gt;,
+    Output: <span class="kw">crate</span>::stream::Accumulate&lt;&lt;Input <span class="kw">as </span>Stream&gt;::Slice&gt;,
+    Normal: Parser&lt;Input, &lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
+    Escape: Parser&lt;Input, &lt;Input <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
+    Error: ParserError&lt;Input&gt;,
 {
-    trace(<span class="string">"escaped_transform"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>I| {
-        <span class="kw">if </span>&lt;I <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
-            streaming_escaped_transform_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>transform)
+    trace(<span class="string">"escaped_transform"</span>, <span class="kw">move </span>|input: <span class="kw-2">&amp;mut </span>Input| {
+        <span class="kw">if </span>&lt;Input <span class="kw">as </span>StreamIsPartial&gt;::is_partial_supported() &amp;&amp; input.is_partial() {
+            streaming_escaped_transform_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>escape)
         } <span class="kw">else </span>{
-            complete_escaped_transform_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>transform)
+            complete_escaped_transform_internal(input, <span class="kw-2">&amp;mut </span>normal, control_char, <span class="kw-2">&amp;mut </span>escape)
         }
     })
 }
@@ -3380,7 +3679,7 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: <span class="kw">crate</span>::stream::AsChar + Clone,
+    I: Compare&lt;char&gt;,
     Output: <span class="kw">crate</span>::stream::Accumulate&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice&gt;,
     F: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
     G: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
@@ -3419,7 +3718,7 @@
 <span class="kw">where
     </span>I: StreamIsPartial,
     I: Stream,
-    &lt;I <span class="kw">as </span>Stream&gt;::Token: <span class="kw">crate</span>::stream::AsChar + Clone,
+    I: Compare&lt;char&gt;,
     Output: <span class="kw">crate</span>::stream::Accumulate&lt;&lt;I <span class="kw">as </span>Stream&gt;::Slice&gt;,
     F: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,
     G: Parser&lt;I, &lt;I <span class="kw">as </span>Stream&gt;::Slice, Error&gt;,

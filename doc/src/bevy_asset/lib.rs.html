@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.13.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_asset-0.14.0/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_asset" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_asset/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1495,8 +1494,41 @@
 <a href="#1494" id="1494">1494</a>
 <a href="#1495" id="1495">1495</a>
 <a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
 </pre></div><pre class="rust"><code><span class="comment">// FIXME(3492): remove once docs are ready
 </span><span class="attr">#![allow(missing_docs)]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![doc(
+    html_logo_url = <span class="string">"https://bevyengine.org/assets/icon.png"</span>,
+    html_favicon_url = <span class="string">"https://bevyengine.org/assets/icon.png"
+</span>)]
 
 </span><span class="kw">pub mod </span>io;
 <span class="kw">pub mod </span>meta;
@@ -1507,34 +1539,38 @@
 <span class="kw">pub mod </span>prelude {
     <span class="attr">#[doc(hidden)]
     </span><span class="kw">pub use crate</span>::{
-        Asset, AssetApp, AssetEvent, AssetId, AssetMode, AssetPlugin, AssetServer, Assets, Handle,
-        UntypedHandle,
+        Asset, AssetApp, AssetEvent, AssetId, AssetMode, AssetPlugin, AssetServer, Assets,
+        DirectAssetAccessExt, Handle, UntypedHandle,
     };
 }
 
 <span class="kw">mod </span>assets;
+<span class="kw">mod </span>direct_access_ext;
 <span class="kw">mod </span>event;
 <span class="kw">mod </span>folder;
 <span class="kw">mod </span>handle;
 <span class="kw">mod </span>id;
 <span class="kw">mod </span>loader;
+<span class="kw">mod </span>loader_builders;
 <span class="kw">mod </span>path;
 <span class="kw">mod </span>reflect;
 <span class="kw">mod </span>server;
 
 <span class="kw">pub use </span>assets::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>bevy_asset_macros::Asset;
+<span class="kw">pub use </span>direct_access_ext::DirectAssetAccessExt;
 <span class="kw">pub use </span>event::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>folder::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>futures_lite::{AsyncReadExt, AsyncWriteExt};
 <span class="kw">pub use </span>handle::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>id::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>loader::<span class="kw-2">*</span>;
+<span class="kw">pub use </span>loader_builders::{
+    DirectNestedLoader, NestedLoader, UntypedDirectNestedLoader, UntypedNestedLoader,
+};
 <span class="kw">pub use </span>path::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>reflect::<span class="kw-2">*</span>;
 <span class="kw">pub use </span>server::<span class="kw-2">*</span>;
-
-<span class="kw">pub use </span>bevy_utils::BoxedFuture;
 
 <span class="doccomment">/// Rusty Object Notation, a crate used to serialize and deserialize bevy assets.
 </span><span class="kw">pub use </span>ron;
@@ -1543,23 +1579,21 @@
     io::{embedded::EmbeddedAssetRegistry, AssetSourceBuilder, AssetSourceBuilders, AssetSourceId},
     processor::{AssetProcessor, Process},
 };
-<span class="kw">use </span>bevy_app::{App, First, MainScheduleOrder, Plugin, PostUpdate};
+<span class="kw">use </span>bevy_app::{App, Last, Plugin, PreUpdate};
 <span class="kw">use </span>bevy_ecs::{
     reflect::AppTypeRegistry,
-    schedule::{IntoSystemConfigs, IntoSystemSetConfigs, ScheduleLabel, SystemSet},
-    system::Resource,
+    schedule::{IntoSystemConfigs, IntoSystemSetConfigs, SystemSet},
     world::FromWorld,
 };
-<span class="kw">use </span>bevy_log::error;
 <span class="kw">use </span>bevy_reflect::{FromReflect, GetTypeRegistration, Reflect, TypePath};
-<span class="kw">use </span>bevy_utils::HashSet;
+<span class="kw">use </span>bevy_utils::{tracing::error, HashSet};
 <span class="kw">use </span>std::{any::TypeId, sync::Arc};
 
-<span class="attr">#[cfg(all(feature = <span class="string">"file_watcher"</span>, not(feature = <span class="string">"multi-threaded"</span>)))]
+<span class="attr">#[cfg(all(feature = <span class="string">"file_watcher"</span>, not(feature = <span class="string">"multi_threaded"</span>)))]
 </span><span class="macro">compile_error!</span>(
     <span class="string">"The \"file_watcher\" feature for hot reloading requires the \
-    \"multi-threaded\" feature to be functional.\n\
-    Consider either disabling the \"file_watcher\" feature or enabling \"multi-threaded\""
+    \"multi_threaded\" feature to be functional.\n\
+    Consider either disabling the \"file_watcher\" feature or enabling \"multi_threaded\""
 </span>);
 
 <span class="doccomment">/// Provides "asset" loading and processing functionality. An [`Asset`] is a "runtime value" that is loaded from an [`AssetSource`],
@@ -1583,6 +1617,8 @@
     </span><span class="kw">pub </span>watch_for_changes_override: <span class="prelude-ty">Option</span>&lt;bool&gt;,
     <span class="doccomment">/// The [`AssetMode`] to use for this server.
     </span><span class="kw">pub </span>mode: AssetMode,
+    <span class="doccomment">/// How/If asset meta files should be checked.
+    </span><span class="kw">pub </span>meta_check: AssetMetaCheck,
 }
 
 <span class="attr">#[derive(Debug)]
@@ -1611,8 +1647,7 @@
 
 <span class="doccomment">/// Configures how / if meta files will be checked. If an asset's meta file is not checked, the default meta for the asset
 /// will be used.
-</span><span class="comment">// TODO: To avoid breaking Bevy 0.12 users in 0.12.1, this is a Resource. In Bevy 0.13 this should be changed to a field on AssetPlugin (if it is still needed).
-</span><span class="attr">#[derive(Debug, Default, Clone, Resource)]
+</span><span class="attr">#[derive(Debug, Default, Clone)]
 </span><span class="kw">pub enum </span>AssetMetaCheck {
     <span class="doccomment">/// Always check if assets have meta files. If the meta does not exist, the default meta will be used.
     </span><span class="attr">#[default]
@@ -1630,6 +1665,7 @@
             file_path: <span class="self">Self</span>::DEFAULT_UNPROCESSED_FILE_PATH.to_string(),
             processed_file_path: <span class="self">Self</span>::DEFAULT_PROCESSED_FILE_PATH.to_string(),
             watch_for_changes_override: <span class="prelude-val">None</span>,
+            meta_check: AssetMetaCheck::default(),
         }
     }
 }
@@ -1643,11 +1679,10 @@
 
 <span class="kw">impl </span>Plugin <span class="kw">for </span>AssetPlugin {
     <span class="kw">fn </span>build(<span class="kw-2">&amp;</span><span class="self">self</span>, app: <span class="kw-2">&amp;mut </span>App) {
-        app.init_schedule(UpdateAssets).init_schedule(AssetEvents);
         <span class="kw">let </span>embedded = EmbeddedAssetRegistry::default();
         {
             <span class="kw">let </span><span class="kw-2">mut </span>sources = app
-                .world
+                .world_mut()
                 .get_resource_or_insert_with::&lt;AssetSourceBuilders&gt;(Default::default);
             sources.init_default_source(
                 <span class="kw-2">&amp;</span><span class="self">self</span>.file_path,
@@ -1663,25 +1698,20 @@
             }
             <span class="kw">match </span><span class="self">self</span>.mode {
                 AssetMode::Unprocessed =&gt; {
-                    <span class="kw">let </span><span class="kw-2">mut </span>builders = app.world.resource_mut::&lt;AssetSourceBuilders&gt;();
+                    <span class="kw">let </span><span class="kw-2">mut </span>builders = app.world_mut().resource_mut::&lt;AssetSourceBuilders&gt;();
                     <span class="kw">let </span>sources = builders.build_sources(watch, <span class="bool-val">false</span>);
-                    <span class="kw">let </span>meta_check = app
-                        .world
-                        .get_resource::&lt;AssetMetaCheck&gt;()
-                        .cloned()
-                        .unwrap_or_else(AssetMetaCheck::default);
 
                     app.insert_resource(AssetServer::new_with_meta_check(
                         sources,
                         AssetServerMode::Unprocessed,
-                        meta_check,
+                        <span class="self">self</span>.meta_check.clone(),
                         watch,
                     ));
                 }
                 AssetMode::Processed =&gt; {
                     <span class="attr">#[cfg(feature = <span class="string">"asset_processor"</span>)]
                     </span>{
-                        <span class="kw">let </span><span class="kw-2">mut </span>builders = app.world.resource_mut::&lt;AssetSourceBuilders&gt;();
+                        <span class="kw">let </span><span class="kw-2">mut </span>builders = app.world_mut().resource_mut::&lt;AssetSourceBuilders&gt;();
                         <span class="kw">let </span>processor = AssetProcessor::new(<span class="kw-2">&amp;mut </span>builders);
                         <span class="kw">let </span><span class="kw-2">mut </span>sources = builders.build_sources(<span class="bool-val">false</span>, watch);
                         sources.gate_on_processor(processor.data.clone());
@@ -1698,7 +1728,7 @@
                     }
                     <span class="attr">#[cfg(not(feature = <span class="string">"asset_processor"</span>))]
                     </span>{
-                        <span class="kw">let </span><span class="kw-2">mut </span>builders = app.world.resource_mut::&lt;AssetSourceBuilders&gt;();
+                        <span class="kw">let </span><span class="kw-2">mut </span>builders = app.world_mut().resource_mut::&lt;AssetSourceBuilders&gt;();
                         <span class="kw">let </span>sources = builders.build_sources(<span class="bool-val">false</span>, watch);
                         app.insert_resource(AssetServer::new_with_meta_check(
                             sources,
@@ -1715,20 +1745,18 @@
             .init_asset::&lt;LoadedUntypedAsset&gt;()
             .init_asset::&lt;()&gt;()
             .add_event::&lt;UntypedAssetLoadFailedEvent&gt;()
-            .configure_sets(
-                UpdateAssets,
-                TrackAssets.after(handle_internal_asset_events),
-            )
-            .add_systems(UpdateAssets, handle_internal_asset_events)
+            .configure_sets(PreUpdate, TrackAssets.after(handle_internal_asset_events))
+            .add_systems(PreUpdate, handle_internal_asset_events)
             .register_type::&lt;AssetPath&gt;();
-
-        <span class="kw">let </span><span class="kw-2">mut </span>order = app.world.resource_mut::&lt;MainScheduleOrder&gt;();
-        order.insert_after(First, UpdateAssets);
-        order.insert_after(PostUpdate, AssetEvents);
     }
 }
 
-<span class="kw">pub trait </span>Asset: VisitAssetDependencies + TypePath + Send + Sync + <span class="lifetime">'static </span>{}
+<span class="attr">#[diagnostic::on_unimplemented(
+    message = <span class="string">"`{Self}` is not an `Asset`"</span>,
+    label = <span class="string">"invalid `Asset`"</span>,
+    note = <span class="string">"consider annotating `{Self}` with `#[derive(Asset)]`"
+</span>)]
+</span><span class="kw">pub trait </span>Asset: VisitAssetDependencies + TypePath + Send + Sync + <span class="lifetime">'static </span>{}
 
 <span class="kw">pub trait </span>VisitAssetDependencies {
     <span class="kw">fn </span>visit_dependencies(<span class="kw-2">&amp;</span><span class="self">self</span>, visit: <span class="kw-2">&amp;mut </span><span class="kw">impl </span>FnMut(UntypedAssetId));
@@ -1819,12 +1847,14 @@
 
 <span class="kw">impl </span>AssetApp <span class="kw">for </span>App {
     <span class="kw">fn </span>register_asset_loader&lt;L: AssetLoader&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, loader: L) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
-        <span class="self">self</span>.world.resource::&lt;AssetServer&gt;().register_loader(loader);
+        <span class="self">self</span>.world()
+            .resource::&lt;AssetServer&gt;()
+            .register_loader(loader);
         <span class="self">self
     </span>}
 
     <span class="kw">fn </span>register_asset_processor&lt;P: Process&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, processor: P) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(asset_processor) = <span class="self">self</span>.world.get_resource::&lt;AssetProcessor&gt;() {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(asset_processor) = <span class="self">self</span>.world().get_resource::&lt;AssetProcessor&gt;() {
             asset_processor.register_processor(processor);
         }
         <span class="self">self
@@ -1836,13 +1866,13 @@
         source: AssetSourceBuilder,
     ) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="kw">let </span>id = id.into();
-        <span class="kw">if </span><span class="self">self</span>.world.get_resource::&lt;AssetServer&gt;().is_some() {
+        <span class="kw">if </span><span class="self">self</span>.world().get_resource::&lt;AssetServer&gt;().is_some() {
             <span class="macro">error!</span>(<span class="string">"{} must be registered before `AssetPlugin` (typically added as part of `DefaultPlugins`)"</span>, id);
         }
 
         {
             <span class="kw">let </span><span class="kw-2">mut </span>sources = <span class="self">self
-                </span>.world
+                </span>.world_mut()
                 .get_resource_or_insert_with(AssetSourceBuilders::default);
             sources.insert(id, source);
         }
@@ -1851,22 +1881,24 @@
     </span>}
 
     <span class="kw">fn </span>set_default_asset_processor&lt;P: Process&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, extension: <span class="kw-2">&amp;</span>str) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(asset_processor) = <span class="self">self</span>.world.get_resource::&lt;AssetProcessor&gt;() {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(asset_processor) = <span class="self">self</span>.world().get_resource::&lt;AssetProcessor&gt;() {
             asset_processor.set_default_processor::&lt;P&gt;(extension);
         }
         <span class="self">self
     </span>}
 
     <span class="kw">fn </span>init_asset_loader&lt;L: AssetLoader + FromWorld&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
-        <span class="kw">let </span>loader = L::from_world(<span class="kw-2">&amp;mut </span><span class="self">self</span>.world);
+        <span class="kw">let </span>loader = L::from_world(<span class="self">self</span>.world_mut());
         <span class="self">self</span>.register_asset_loader(loader)
     }
 
     <span class="kw">fn </span>init_asset&lt;A: Asset&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
         <span class="kw">let </span>assets = Assets::&lt;A&gt;::default();
-        <span class="self">self</span>.world.resource::&lt;AssetServer&gt;().register_asset(<span class="kw-2">&amp;</span>assets);
-        <span class="kw">if </span><span class="self">self</span>.world.contains_resource::&lt;AssetProcessor&gt;() {
-            <span class="kw">let </span>processor = <span class="self">self</span>.world.resource::&lt;AssetProcessor&gt;();
+        <span class="self">self</span>.world()
+            .resource::&lt;AssetServer&gt;()
+            .register_asset(<span class="kw-2">&amp;</span>assets);
+        <span class="kw">if </span><span class="self">self</span>.world().contains_resource::&lt;AssetProcessor&gt;() {
+            <span class="kw">let </span>processor = <span class="self">self</span>.world().resource::&lt;AssetProcessor&gt;();
             <span class="comment">// The processor should have its own handle provider separate from the Asset storage
             // to ensure the id spaces are entirely separate. Not _strictly_ necessary, but
             // desirable.
@@ -1882,19 +1914,20 @@
             .add_event::&lt;AssetEvent&lt;A&gt;&gt;()
             .add_event::&lt;AssetLoadFailedEvent&lt;A&gt;&gt;()
             .register_type::&lt;Handle&lt;A&gt;&gt;()
-            .register_type::&lt;AssetId&lt;A&gt;&gt;()
             .add_systems(
-                AssetEvents,
-                Assets::&lt;A&gt;::asset_events.run_if(Assets::&lt;A&gt;::asset_events_condition),
+                Last,
+                Assets::&lt;A&gt;::asset_events
+                    .run_if(Assets::&lt;A&gt;::asset_events_condition)
+                    .in_set(AssetEvents),
             )
-            .add_systems(UpdateAssets, Assets::&lt;A&gt;::track_assets.in_set(TrackAssets))
+            .add_systems(PreUpdate, Assets::&lt;A&gt;::track_assets.in_set(TrackAssets))
     }
 
     <span class="kw">fn </span>register_asset_reflect&lt;A&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self
     </span><span class="kw">where
         </span>A: Asset + Reflect + FromReflect + GetTypeRegistration,
     {
-        <span class="kw">let </span>type_registry = <span class="self">self</span>.world.resource::&lt;AppTypeRegistry&gt;();
+        <span class="kw">let </span>type_registry = <span class="self">self</span>.world().resource::&lt;AppTypeRegistry&gt;();
         {
             <span class="kw">let </span><span class="kw-2">mut </span>type_registry = type_registry.write();
 
@@ -1908,7 +1941,7 @@
     </span>}
 
     <span class="kw">fn </span>preregister_asset_loader&lt;L: AssetLoader&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, extensions: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>str]) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
-        <span class="self">self</span>.world
+        <span class="self">self</span>.world_mut()
             .resource_mut::&lt;AssetServer&gt;()
             .preregister_loader::&lt;L&gt;(extensions);
         <span class="self">self
@@ -1919,14 +1952,10 @@
 </span><span class="attr">#[derive(SystemSet, Hash, Debug, PartialEq, Eq, Clone)]
 </span><span class="kw">pub struct </span>TrackAssets;
 
-<span class="doccomment">/// Schedule where [`Assets`] resources are updated.
-</span><span class="attr">#[derive(Debug, Hash, PartialEq, Eq, Clone, ScheduleLabel)]
-</span><span class="kw">pub struct </span>UpdateAssets;
-
-<span class="doccomment">/// Schedule where events accumulated in [`Assets`] are applied to the [`AssetEvent`] [`Events`] resource.
+<span class="doccomment">/// A system set where events accumulated in [`Assets`] are applied to the [`AssetEvent`] [`Events`] resource.
 ///
 /// [`Events`]: bevy_ecs::event::Events
-</span><span class="attr">#[derive(Debug, Hash, PartialEq, Eq, Clone, ScheduleLabel)]
+</span><span class="attr">#[derive(Debug, Hash, PartialEq, Eq, Clone, SystemSet)]
 </span><span class="kw">pub struct </span>AssetEvents;
 
 <span class="attr">#[cfg(test)]
@@ -1954,16 +1983,13 @@
     };
     <span class="kw">use </span>bevy_log::LogPlugin;
     <span class="kw">use </span>bevy_reflect::TypePath;
-    <span class="kw">use </span>bevy_utils::{BoxedFuture, Duration, HashMap};
+    <span class="kw">use </span>bevy_utils::{Duration, HashMap};
     <span class="kw">use </span>futures_lite::AsyncReadExt;
     <span class="kw">use </span>serde::{Deserialize, Serialize};
-    <span class="kw">use </span>std::{
-        path::{Path, PathBuf},
-        sync::Arc,
-    };
+    <span class="kw">use </span>std::{path::Path, sync::Arc};
     <span class="kw">use </span>thiserror::Error;
 
-    <span class="attr">#[derive(Asset, TypePath, Debug)]
+    <span class="attr">#[derive(Asset, TypePath, Debug, Default)]
     </span><span class="kw">pub struct </span>CoolText {
         <span class="kw">pub </span>text: String,
         <span class="kw">pub </span>embedded: String,
@@ -2006,40 +2032,41 @@
 
         <span class="kw">type </span>Error = CoolTextLoaderError;
 
-        <span class="kw">fn </span>load&lt;<span class="lifetime">'a</span>&gt;(
+        <span class="kw">async fn </span>load&lt;<span class="lifetime">'a</span>&gt;(
             <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
-            reader: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Reader,
+            reader: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>Reader&lt;<span class="lifetime">'_</span>&gt;,
             _settings: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">Self</span>::Settings,
-            load_context: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>LoadContext,
-        ) -&gt; BoxedFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Asset, <span class="self">Self</span>::Error&gt;&gt; {
-            Box::pin(<span class="kw">async move </span>{
-                <span class="kw">let </span><span class="kw-2">mut </span>bytes = Vec::new();
-                reader.read_to_end(<span class="kw-2">&amp;mut </span>bytes).<span class="kw">await</span><span class="question-mark">?</span>;
-                <span class="kw">let </span><span class="kw-2">mut </span>ron: CoolTextRon = ron::de::from_bytes(<span class="kw-2">&amp;</span>bytes)<span class="question-mark">?</span>;
-                <span class="kw">let </span><span class="kw-2">mut </span>embedded = String::new();
-                <span class="kw">for </span>dep <span class="kw">in </span>ron.embedded_dependencies {
-                    <span class="kw">let </span>loaded = load_context.load_direct(<span class="kw-2">&amp;</span>dep).<span class="kw">await</span>.map_err(|<span class="kw">_</span>| {
-                        <span class="self">Self</span>::Error::CannotLoadDependency {
-                            dependency: dep.into(),
-                        }
+            load_context: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>LoadContext&lt;<span class="lifetime">'_</span>&gt;,
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::Asset, <span class="self">Self</span>::Error&gt; {
+            <span class="kw">let </span><span class="kw-2">mut </span>bytes = Vec::new();
+            reader.read_to_end(<span class="kw-2">&amp;mut </span>bytes).<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>ron: CoolTextRon = ron::de::from_bytes(<span class="kw-2">&amp;</span>bytes)<span class="question-mark">?</span>;
+            <span class="kw">let </span><span class="kw-2">mut </span>embedded = String::new();
+            <span class="kw">for </span>dep <span class="kw">in </span>ron.embedded_dependencies {
+                <span class="kw">let </span>loaded = load_context
+                    .loader()
+                    .direct()
+                    .load::&lt;CoolText&gt;(<span class="kw-2">&amp;</span>dep)
+                    .<span class="kw">await
+                    </span>.map_err(|<span class="kw">_</span>| <span class="self">Self</span>::Error::CannotLoadDependency {
+                        dependency: dep.into(),
                     })<span class="question-mark">?</span>;
-                    <span class="kw">let </span>cool = loaded.get::&lt;CoolText&gt;().unwrap();
-                    embedded.push_str(<span class="kw-2">&amp;</span>cool.text);
-                }
-                <span class="prelude-val">Ok</span>(CoolText {
-                    text: ron.text,
-                    embedded,
-                    dependencies: ron
-                        .dependencies
-                        .iter()
-                        .map(|p| load_context.load(p))
-                        .collect(),
-                    sub_texts: ron
-                        .sub_texts
-                        .drain(..)
-                        .map(|text| load_context.add_labeled_asset(text.clone(), SubText { text }))
-                        .collect(),
-                })
+                <span class="kw">let </span>cool = loaded.get();
+                embedded.push_str(<span class="kw-2">&amp;</span>cool.text);
+            }
+            <span class="prelude-val">Ok</span>(CoolText {
+                text: ron.text,
+                embedded,
+                dependencies: ron
+                    .dependencies
+                    .iter()
+                    .map(|p| load_context.load(p))
+                    .collect(),
+                sub_texts: ron
+                    .sub_texts
+                    .drain(..)
+                    .map(|text| load_context.add_labeled_asset(text.clone(), SubText { text }))
+                    .collect(),
             })
         }
 
@@ -2051,7 +2078,7 @@
     <span class="doccomment">/// A dummy [`CoolText`] asset reader that only succeeds after `failure_count` times it's read from for each asset.
     </span><span class="attr">#[derive(Default, Clone)]
     </span><span class="kw">pub struct </span>UnstableMemoryAssetReader {
-        <span class="kw">pub </span>attempt_counters: Arc&lt;std::sync::Mutex&lt;HashMap&lt;PathBuf, usize&gt;&gt;&gt;,
+        <span class="kw">pub </span>attempt_counters: Arc&lt;std::sync::Mutex&lt;HashMap&lt;Box&lt;Path&gt;, usize&gt;&gt;&gt;,
         <span class="kw">pub </span>load_delay: Duration,
         memory_reader: MemoryAssetReader,
         failure_count: usize,
@@ -2069,39 +2096,32 @@
     }
 
     <span class="kw">impl </span>AssetReader <span class="kw">for </span>UnstableMemoryAssetReader {
-        <span class="kw">fn </span>is_directory&lt;<span class="lifetime">'a</span>&gt;(
+        <span class="kw">async fn </span>is_directory&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Path) -&gt; <span class="prelude-ty">Result</span>&lt;bool, AssetReaderError&gt; {
+            <span class="self">self</span>.memory_reader.is_directory(path).<span class="kw">await
+        </span>}
+        <span class="kw">async fn </span>read_directory&lt;<span class="lifetime">'a</span>&gt;(
             <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
             path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Path,
-        ) -&gt; BoxedFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;bool, AssetReaderError&gt;&gt; {
-            <span class="self">self</span>.memory_reader.is_directory(path)
-        }
-        <span class="kw">fn </span>read_directory&lt;<span class="lifetime">'a</span>&gt;(
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;bevy_asset::io::PathStream&gt;, AssetReaderError&gt; {
+            <span class="self">self</span>.memory_reader.read_directory(path).<span class="kw">await
+        </span>}
+        <span class="kw">async fn </span>read_meta&lt;<span class="lifetime">'a</span>&gt;(
             <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
             path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Path,
-        ) -&gt; BoxedFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;Box&lt;bevy_asset::io::PathStream&gt;, AssetReaderError&gt;&gt; {
-            <span class="self">self</span>.memory_reader.read_directory(path)
-        }
-        <span class="kw">fn </span>read_meta&lt;<span class="lifetime">'a</span>&gt;(
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;bevy_asset::io::Reader&lt;<span class="lifetime">'a</span>&gt;&gt;, AssetReaderError&gt; {
+            <span class="self">self</span>.memory_reader.read_meta(path).<span class="kw">await
+        </span>}
+        <span class="kw">async fn </span>read&lt;<span class="lifetime">'a</span>&gt;(
             <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
             path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Path,
-        ) -&gt; BoxedFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;Box&lt;bevy_asset::io::Reader&lt;<span class="lifetime">'a</span>&gt;&gt;, AssetReaderError&gt;&gt; {
-            <span class="self">self</span>.memory_reader.read_meta(path)
-        }
-        <span class="kw">fn </span>read&lt;<span class="lifetime">'a</span>&gt;(
-            <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="self">self</span>,
-            path: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>Path,
-        ) -&gt; BoxedFuture&lt;
-            <span class="lifetime">'a</span>,
-            <span class="prelude-ty">Result</span>&lt;Box&lt;bevy_asset::io::Reader&lt;<span class="lifetime">'a</span>&gt;&gt;, bevy_asset::io::AssetReaderError&gt;,
-        &gt; {
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;bevy_asset::io::Reader&lt;<span class="lifetime">'a</span>&gt;&gt;, bevy_asset::io::AssetReaderError&gt; {
             <span class="kw">let </span>attempt_number = {
-                <span class="kw">let </span>key = PathBuf::from(path);
                 <span class="kw">let </span><span class="kw-2">mut </span>attempt_counters = <span class="self">self</span>.attempt_counters.lock().unwrap();
-                <span class="kw">if let </span><span class="prelude-val">Some</span>(existing) = attempt_counters.get_mut(<span class="kw-2">&amp;</span>key) {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(existing) = attempt_counters.get_mut(path) {
                     <span class="kw-2">*</span>existing += <span class="number">1</span>;
                     <span class="kw-2">*</span>existing
                 } <span class="kw">else </span>{
-                    attempt_counters.insert(key, <span class="number">1</span>);
+                    attempt_counters.insert(path.into(), <span class="number">1</span>);
                     <span class="number">1
                 </span>}
             };
@@ -2115,14 +2135,15 @@
                     ),
                 );
                 <span class="kw">let </span>wait = <span class="self">self</span>.load_delay;
-                <span class="kw">return </span>Box::pin(<span class="kw">async move </span>{
+                <span class="kw">return async move </span>{
                     std::thread::sleep(wait);
                     <span class="prelude-val">Err</span>(AssetReaderError::Io(io_error.into()))
-                });
+                }
+                .<span class="kw">await</span>;
             }
 
-            <span class="self">self</span>.memory_reader.read(path)
-        }
+            <span class="self">self</span>.memory_reader.read(path).<span class="kw">await
+        </span>}
     }
 
     <span class="kw">fn </span>test_app(dir: Dir) -&gt; (App, GateOpener) {
@@ -2143,7 +2164,7 @@
     <span class="kw">pub fn </span>run_app_until(app: <span class="kw-2">&amp;mut </span>App, <span class="kw-2">mut </span>predicate: <span class="kw">impl </span>FnMut(<span class="kw-2">&amp;mut </span>World) -&gt; <span class="prelude-ty">Option</span>&lt;()&gt;) {
         <span class="kw">for _ in </span><span class="number">0</span>..LARGE_ITERATION_COUNT {
             app.update();
-            <span class="kw">if </span>predicate(<span class="kw-2">&amp;mut </span>app.world).is_some() {
+            <span class="kw">if </span>predicate(app.world_mut()).is_some() {
                 <span class="kw">return</span>;
             }
         }
@@ -2170,8 +2191,8 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>load_dependencies() {
         <span class="comment">// The particular usage of GatedReader in this test will cause deadlocking if running single-threaded
-        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi-threaded"</span>))]
-        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi-threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi-threaded"</span>);
+        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi_threaded"</span>))]
+        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi_threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi_threaded"</span>);
 
         <span class="kw">let </span>dir = Dir::default();
 
@@ -2233,13 +2254,13 @@
             .init_resource::&lt;StoredEvents&gt;()
             .register_asset_loader(CoolTextLoader)
             .add_systems(Update, store_asset_events);
-        <span class="kw">let </span>asset_server = app.world.resource::&lt;AssetServer&gt;().clone();
+        <span class="kw">let </span>asset_server = app.world().resource::&lt;AssetServer&gt;().clone();
         <span class="kw">let </span>handle: Handle&lt;CoolText&gt; = asset_server.load(a_path);
         <span class="kw">let </span>a_id = handle.id();
-        <span class="kw">let </span>entity = app.world.spawn(handle).id();
+        <span class="kw">let </span>entity = app.world_mut().spawn(handle).id();
         app.update();
         {
-            <span class="kw">let </span>a_text = get::&lt;CoolText&gt;(<span class="kw-2">&amp;</span>app.world, a_id);
+            <span class="kw">let </span>a_text = get::&lt;CoolText&gt;(app.world(), a_id);
             <span class="kw">let </span>(a_load, a_deps, a_rec_deps) = asset_server.get_load_states(a_id).unwrap();
             <span class="macro">assert!</span>(a_text.is_none(), <span class="string">"a's asset should not exist yet"</span>);
             <span class="macro">assert_eq!</span>(a_load, LoadState::Loading, <span class="string">"a should still be loading"</span>);
@@ -2421,27 +2442,27 @@
         });
 
         {
-            <span class="kw">let </span><span class="kw-2">mut </span>texts = app.world.resource_mut::&lt;Assets&lt;CoolText&gt;&gt;();
+            <span class="kw">let </span><span class="kw-2">mut </span>texts = app.world_mut().resource_mut::&lt;Assets&lt;CoolText&gt;&gt;();
             <span class="kw">let </span>a = texts.get_mut(a_id).unwrap();
             a.text = <span class="string">"Changed"</span>.to_string();
         }
 
-        app.world.despawn(entity);
+        app.world_mut().despawn(entity);
         app.update();
         <span class="macro">assert_eq!</span>(
-            app.world.resource::&lt;Assets&lt;CoolText&gt;&gt;().len(),
+            app.world().resource::&lt;Assets&lt;CoolText&gt;&gt;().len(),
             <span class="number">0</span>,
             <span class="string">"CoolText asset entities should be despawned when no more handles exist"
         </span>);
         app.update();
         <span class="comment">// this requires a second update because the parent asset was freed in the previous app.update()
         </span><span class="macro">assert_eq!</span>(
-            app.world.resource::&lt;Assets&lt;SubText&gt;&gt;().len(),
+            app.world().resource::&lt;Assets&lt;SubText&gt;&gt;().len(),
             <span class="number">0</span>,
             <span class="string">"SubText asset entities should be despawned when no more handles exist"
         </span>);
-        <span class="kw">let </span>events = app.world.remove_resource::&lt;StoredEvents&gt;().unwrap();
-        <span class="kw">let </span>id_results = app.world.remove_resource::&lt;IdResults&gt;().unwrap();
+        <span class="kw">let </span>events = app.world_mut().remove_resource::&lt;StoredEvents&gt;().unwrap();
+        <span class="kw">let </span>id_results = app.world_mut().remove_resource::&lt;IdResults&gt;().unwrap();
         <span class="kw">let </span>expected_events = <span class="macro">vec!</span>[
             AssetEvent::Added { id: a_id },
             AssetEvent::LoadedWithDependencies {
@@ -2491,8 +2512,8 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>failure_load_states() {
         <span class="comment">// The particular usage of GatedReader in this test will cause deadlocking if running single-threaded
-        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi-threaded"</span>))]
-        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi-threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi-threaded"</span>);
+        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi_threaded"</span>))]
+        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi_threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi_threaded"</span>);
 
         <span class="kw">let </span>dir = Dir::default();
 
@@ -2545,7 +2566,7 @@
         <span class="kw">let </span>(<span class="kw-2">mut </span>app, gate_opener) = test_app(dir);
         app.init_asset::&lt;CoolText&gt;()
             .register_asset_loader(CoolTextLoader);
-        <span class="kw">let </span>asset_server = app.world.resource::&lt;AssetServer&gt;().clone();
+        <span class="kw">let </span>asset_server = app.world().resource::&lt;AssetServer&gt;().clone();
         <span class="kw">let </span>handle: Handle&lt;CoolText&gt; = asset_server.load(a_path);
         <span class="kw">let </span>a_id = handle.id();
         {
@@ -2561,7 +2582,7 @@
             </span>);
         }
 
-        app.world.spawn(handle);
+        app.world_mut().spawn(handle);
         gate_opener.open(a_path);
         gate_opener.open(b_path);
         gate_opener.open(c_path);
@@ -2582,13 +2603,13 @@
             <span class="kw">let </span>d_id = c_text.dependencies[<span class="number">0</span>].id();
             <span class="kw">let </span>d_text = get::&lt;CoolText&gt;(world, d_id);
             <span class="kw">let </span>(d_load, d_deps, d_rec_deps) = asset_server.get_load_states(d_id).unwrap();
-            <span class="kw">if </span>d_load != LoadState::Failed {
+            <span class="kw">if </span>!<span class="macro">matches!</span>(d_load, LoadState::Failed(<span class="kw">_</span>)) {
                 <span class="comment">// wait until d has exited the loading state
                 </span><span class="kw">return </span><span class="prelude-val">None</span>;
             }
 
             <span class="macro">assert!</span>(d_text.is_none());
-            <span class="macro">assert_eq!</span>(d_load, LoadState::Failed);
+            <span class="macro">assert!</span>(<span class="macro">matches!</span>(d_load, LoadState::Failed(<span class="kw">_</span>)));
             <span class="macro">assert_eq!</span>(d_deps, DependencyLoadState::Failed);
             <span class="macro">assert_eq!</span>(d_rec_deps, RecursiveDependencyLoadState::Failed);
 
@@ -2611,24 +2632,58 @@
         });
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>manual_asset_management() {
-        <span class="comment">// The particular usage of GatedReader in this test will cause deadlocking if running single-threaded
-        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi-threaded"</span>))]
-        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi-threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi-threaded"</span>);
-
-        <span class="kw">let </span>dir = Dir::default();
-
-        <span class="kw">let </span>dep_path = <span class="string">"dep.cool.ron"</span>;
-        <span class="kw">let </span>dep_ron = <span class="string">r#"
+    <span class="kw">const </span>SIMPLE_TEXT: <span class="kw-2">&amp;</span>str = <span class="string">r#"
 (
     text: "dep",
     dependencies: [],
     embedded_dependencies: [],
     sub_texts: [],
 )"#</span>;
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>keep_gotten_strong_handles() {
+        <span class="kw">let </span>dir = Dir::default();
+        dir.insert_asset_text(Path::new(<span class="string">"dep.cool.ron"</span>), SIMPLE_TEXT);
 
-        dir.insert_asset_text(Path::new(dep_path), dep_ron);
+        <span class="kw">let </span>(<span class="kw-2">mut </span>app, <span class="kw">_</span>) = test_app(dir);
+        app.init_asset::&lt;CoolText&gt;()
+            .init_asset::&lt;SubText&gt;()
+            .init_resource::&lt;StoredEvents&gt;()
+            .register_asset_loader(CoolTextLoader)
+            .add_systems(Update, store_asset_events);
+
+        <span class="kw">let </span>id = {
+            <span class="kw">let </span>handle = {
+                <span class="kw">let </span><span class="kw-2">mut </span>texts = app.world_mut().resource_mut::&lt;Assets&lt;CoolText&gt;&gt;();
+                <span class="kw">let </span>handle = texts.add(CoolText::default());
+                texts.get_strong_handle(handle.id()).unwrap()
+            };
+
+            app.update();
+
+            {
+                <span class="kw">let </span>text = app.world().resource::&lt;Assets&lt;CoolText&gt;&gt;().get(<span class="kw-2">&amp;</span>handle);
+                <span class="macro">assert!</span>(text.is_some());
+            }
+            handle.id()
+        };
+        <span class="comment">// handle is dropped
+        </span>app.update();
+        <span class="macro">assert!</span>(
+            app.world().resource::&lt;Assets&lt;CoolText&gt;&gt;().get(id).is_none(),
+            <span class="string">"asset has no handles, so it should have been dropped last update"
+        </span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>manual_asset_management() {
+        <span class="comment">// The particular usage of GatedReader in this test will cause deadlocking if running single-threaded
+        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi_threaded"</span>))]
+        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi_threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi_threaded"</span>);
+
+        <span class="kw">let </span>dir = Dir::default();
+        <span class="kw">let </span>dep_path = <span class="string">"dep.cool.ron"</span>;
+
+        dir.insert_asset_text(Path::new(dep_path), SIMPLE_TEXT);
 
         <span class="kw">let </span>(<span class="kw-2">mut </span>app, gate_opener) = test_app(dir);
         app.init_asset::&lt;CoolText&gt;()
@@ -2642,7 +2697,7 @@
 
         <span class="kw">let </span>id = {
             <span class="kw">let </span>handle = {
-                <span class="kw">let </span><span class="kw-2">mut </span>texts = app.world.resource_mut::&lt;Assets&lt;CoolText&gt;&gt;();
+                <span class="kw">let </span><span class="kw-2">mut </span>texts = app.world_mut().resource_mut::&lt;Assets&lt;CoolText&gt;&gt;();
                 texts.add(CoolText {
                     text: hello.clone(),
                     embedded: empty.clone(),
@@ -2655,7 +2710,7 @@
 
             {
                 <span class="kw">let </span>text = app
-                    .world
+                    .world()
                     .resource::&lt;Assets&lt;CoolText&gt;&gt;()
                     .get(<span class="kw-2">&amp;</span>handle)
                     .unwrap();
@@ -2666,12 +2721,12 @@
         <span class="comment">// handle is dropped
         </span>app.update();
         <span class="macro">assert!</span>(
-            app.world.resource::&lt;Assets&lt;CoolText&gt;&gt;().get(id).is_none(),
+            app.world().resource::&lt;Assets&lt;CoolText&gt;&gt;().get(id).is_none(),
             <span class="string">"asset has no handles, so it should have been dropped last update"
         </span>);
         <span class="comment">// remove event is emitted
         </span>app.update();
-        <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world.resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
+        <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world_mut().resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
         <span class="kw">let </span>expected_events = <span class="macro">vec!</span>[
             AssetEvent::Added { id },
             AssetEvent::Unused { id },
@@ -2679,7 +2734,7 @@
         ];
         <span class="macro">assert_eq!</span>(events, expected_events);
 
-        <span class="kw">let </span>dep_handle = app.world.resource::&lt;AssetServer&gt;().load(dep_path);
+        <span class="kw">let </span>dep_handle = app.world().resource::&lt;AssetServer&gt;().load(dep_path);
         <span class="kw">let </span>a = CoolText {
             text: <span class="string">"a"</span>.to_string(),
             embedded: empty,
@@ -2687,19 +2742,19 @@
             </span>dependencies: <span class="macro">vec!</span>[dep_handle.clone()],
             sub_texts: Vec::new(),
         };
-        <span class="kw">let </span>a_handle = app.world.resource::&lt;AssetServer&gt;().load_asset(a);
+        <span class="kw">let </span>a_handle = app.world().resource::&lt;AssetServer&gt;().load_asset(a);
         app.update();
         <span class="comment">// TODO: ideally it doesn't take two updates for the added event to emit
         </span>app.update();
 
-        <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world.resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
+        <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world_mut().resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
         <span class="kw">let </span>expected_events = <span class="macro">vec!</span>[AssetEvent::Added { id: a_handle.id() }];
         <span class="macro">assert_eq!</span>(events, expected_events);
 
         gate_opener.open(dep_path);
         <span class="kw">loop </span>{
             app.update();
-            <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world.resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
+            <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world_mut().resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
             <span class="kw">if </span>events.is_empty() {
                 <span class="kw">continue</span>;
             }
@@ -2713,7 +2768,7 @@
             <span class="kw">break</span>;
         }
         app.update();
-        <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world.resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
+        <span class="kw">let </span>events = std::mem::take(<span class="kw-2">&amp;mut </span>app.world_mut().resource_mut::&lt;StoredEvents&gt;().<span class="number">0</span>);
         <span class="kw">let </span>expected_events = <span class="macro">vec!</span>[AssetEvent::Added {
             id: dep_handle.id(),
         }];
@@ -2723,8 +2778,8 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>load_folder() {
         <span class="comment">// The particular usage of GatedReader in this test will cause deadlocking if running single-threaded
-        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi-threaded"</span>))]
-        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi-threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi-threaded"</span>);
+        </span><span class="attr">#[cfg(not(feature = <span class="string">"multi_threaded"</span>))]
+        </span><span class="macro">panic!</span>(<span class="string">"This test requires the \"multi_threaded\" feature, otherwise it will deadlock.\ncargo test --package bevy_asset --features multi_threaded"</span>);
 
         <span class="kw">let </span>dir = Dir::default();
 
@@ -2764,7 +2819,7 @@
         app.init_asset::&lt;CoolText&gt;()
             .init_asset::&lt;SubText&gt;()
             .register_asset_loader(CoolTextLoader);
-        <span class="kw">let </span>asset_server = app.world.resource::&lt;AssetServer&gt;().clone();
+        <span class="kw">let </span>asset_server = app.world().resource::&lt;AssetServer&gt;().clone();
         <span class="kw">let </span>handle: Handle&lt;LoadedFolder&gt; = asset_server.load_folder(<span class="string">"text"</span>);
         gate_opener.open(a_path);
         gate_opener.open(b_path);
@@ -2861,7 +2916,7 @@
             <span class="comment">// Check what just failed
             </span><span class="kw">for </span>error <span class="kw">in </span>errors.read() {
                 <span class="kw">let </span>(load_state, <span class="kw">_</span>, <span class="kw">_</span>) = server.get_load_states(error.id).unwrap();
-                <span class="macro">assert_eq!</span>(load_state, LoadState::Failed);
+                <span class="macro">assert!</span>(<span class="macro">matches!</span>(load_state, LoadState::Failed(<span class="kw">_</span>)));
                 <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>error.path.source(), AssetSourceId::Name(<span class="string">"unstable"</span>.into()));
                 <span class="kw">match </span><span class="kw-2">&amp;</span>error.error {
                     AssetLoadError::AssetReaderError(read_error) =&gt; <span class="kw">match </span>read_error {
@@ -2919,12 +2974,12 @@
             (asset_event_handler, asset_load_error_event_handler).chain(),
         );
 
-        <span class="kw">let </span>asset_server = app.world.resource::&lt;AssetServer&gt;().clone();
+        <span class="kw">let </span>asset_server = app.world().resource::&lt;AssetServer&gt;().clone();
         <span class="kw">let </span>a_path = <span class="macro">format!</span>(<span class="string">"unstable://{a_path}"</span>);
         <span class="kw">let </span>a_handle: Handle&lt;CoolText&gt; = asset_server.load(a_path);
         <span class="kw">let </span>a_id = a_handle.id();
 
-        app.world.spawn(a_handle);
+        app.world_mut().spawn(a_handle);
 
         run_app_until(<span class="kw-2">&amp;mut </span>app, |world| {
             <span class="kw">let </span>tracker = world.resource::&lt;ErrorTracker&gt;();
@@ -2957,7 +3012,7 @@
         });
 
         <span class="comment">// running schedule does not error on ambiguity between the 2 uses_assets systems
-        </span>app.world.run_schedule(Update);
+        </span>app.world_mut().run_schedule(Update);
     }
 
     <span class="comment">// validate the Asset derive macro for various asset types

@@ -1,0 +1,1 @@
+searchState.loadedDescShard("bevy_asset_macros", 0, "")

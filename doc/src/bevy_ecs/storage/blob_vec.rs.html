@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/storage/blob_vec.rs`."><title>blob_vec.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/storage/blob_vec.rs`."><title>blob_vec.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -706,6 +705,24 @@
 <a href="#705" id="705">705</a>
 <a href="#706" id="706">706</a>
 <a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{
     alloc::{handle_alloc_error, Layout},
     cell::UnsafeCell,
@@ -873,7 +890,7 @@
             // - the layout of the ptr was `array_layout(self.item_layout, self.capacity)`
             // - `item_layout.size() &gt; 0` and `new_capacity &gt; 0`, so the layout size is non-zero
             // - "new_size, when rounded up to the nearest multiple of layout.align(), must not overflow (i.e., the rounded value must be less than usize::MAX)",
-            // since the item size is always a multiple of its align, the rounding cannot happen
+            // since the item size is always a multiple of its alignment, the rounding cannot happen
             // here and the overflow is handled in `array_layout`
             </span><span class="kw">unsafe </span>{
                 std::alloc::realloc(
@@ -916,7 +933,7 @@
 
         <span class="comment">// Pointer to the value in the vector that will get replaced.
         // SAFETY: The caller ensures that `index` fits in this vector.
-        </span><span class="kw">let </span>destination = NonNull::from(<span class="self">self</span>.get_unchecked_mut(index));
+        </span><span class="kw">let </span>destination = NonNull::from(<span class="kw">unsafe </span>{ <span class="self">self</span>.get_unchecked_mut(index) });
         <span class="kw">let </span>source = value.as_ptr();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(drop) = <span class="self">self</span>.drop {
@@ -934,7 +951,7 @@
             //   that the element will not get observed or double dropped later.
             // - If a panic occurs, `self.len` will remain `0`, which ensures a double-drop
             //   does not occur. Instead, all elements will be forgotten.
-            </span><span class="kw">let </span>old_value = OwningPtr::new(destination);
+            </span><span class="kw">let </span>old_value = <span class="kw">unsafe </span>{ OwningPtr::new(destination) };
 
             <span class="comment">// This closure will run in case `drop()` panics,
             // which ensures that `value` does not get forgotten.
@@ -957,7 +974,13 @@
         //   so it must still be initialized and it is safe to transfer ownership into the vector.
         // - `source` and `destination` were obtained from different memory locations,
         //   both of which we have exclusive access to, so they are guaranteed not to overlap.
-        </span>std::ptr::copy_nonoverlapping::&lt;u8&gt;(source, destination.as_ptr(), <span class="self">self</span>.item_layout.size());
+        </span><span class="kw">unsafe </span>{
+            std::ptr::copy_nonoverlapping::&lt;u8&gt;(
+                source,
+                destination.as_ptr(),
+                <span class="self">self</span>.item_layout.size(),
+            );
+        }
     }
 
     <span class="doccomment">/// Appends an element to the back of the vector.
@@ -1012,7 +1035,11 @@
         // - `new_len` is less than the old len, so it must fit in this vector's allocation.
         // - `size` is a multiple of the erased type's alignment,
         //   so adding a multiple of `size` will preserve alignment.
-        </span><span class="self">self</span>.get_ptr_mut().byte_add(new_len * size).promote()
+        // - The removed element lives as long as this vector's mutable reference.
+        </span><span class="kw">let </span>p = <span class="kw">unsafe </span>{ <span class="self">self</span>.get_ptr_mut().byte_add(new_len * size) };
+        <span class="comment">// SAFETY: The removed element is unreachable by this vector so it's safe to promote the
+        // `PtrMut` to an `OwningPtr`.
+        </span><span class="kw">unsafe </span>{ p.promote() }
     }
 
     <span class="doccomment">/// Removes the value at `index` and copies the value stored into `ptr`.
@@ -1065,8 +1092,9 @@
         // - The caller ensures that `index` fits in this vector,
         //   so this operation will not overflow the original allocation.
         // - `size` is a multiple of the erased type's alignment,
-        //  so adding a multiple of `size` will preserve alignment.
-        </span><span class="self">self</span>.get_ptr().byte_add(index * size)
+        //   so adding a multiple of `size` will preserve alignment.
+        // - The element at `index` outlives this vector's reference.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.get_ptr().byte_add(index * size) }
     }
 
     <span class="doccomment">/// Returns a mutable reference to the element at `index`, without doing bounds checking.
@@ -1081,8 +1109,9 @@
         // - The caller ensures that `index` fits in this vector,
         //   so this operation will not overflow the original allocation.
         // - `size` is a multiple of the erased type's alignment,
-        //  so adding a multiple of `size` will preserve alignment.
-        </span><span class="self">self</span>.get_ptr_mut().byte_add(index * size)
+        //   so adding a multiple of `size` will preserve alignment.
+        // - The element at `index` outlives this vector's mutable reference.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.get_ptr_mut().byte_add(index * size) }
     }
 
     <span class="doccomment">/// Gets a [`Ptr`] to the start of the vec
@@ -1105,7 +1134,7 @@
     /// The type `T` must be the type of the items in this [`BlobVec`].
     </span><span class="kw">pub unsafe fn </span>get_slice&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[UnsafeCell&lt;T&gt;] {
         <span class="comment">// SAFETY: the inner data will remain valid for as long as 'self.
-        </span>std::slice::from_raw_parts(<span class="self">self</span>.data.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>UnsafeCell&lt;T&gt;, <span class="self">self</span>.len)
+        </span><span class="kw">unsafe </span>{ std::slice::from_raw_parts(<span class="self">self</span>.data.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>UnsafeCell&lt;T&gt;, <span class="self">self</span>.len) }
     }
 
     <span class="doccomment">/// Clears the vector, removing (and dropping) all values.
@@ -1123,6 +1152,7 @@
                 // * 0 &lt;= `i` &lt; `len`, so `i * size` must be in bounds for the allocation.
                 // * `size` is a multiple of the erased type's alignment,
                 //   so adding a multiple of `size` will preserve alignment.
+                // * The item lives until it's dropped.
                 // * The item is left unreachable so it can be safely promoted to an `OwningPtr`.
                 // NOTE: `self.get_unchecked_mut(i)` cannot be used here, since the `debug_assert`
                 // would panic due to `self.len` being set to 0.
@@ -1210,9 +1240,11 @@
     <span class="kw">use </span><span class="kw">super</span>::BlobVec;
     <span class="kw">use </span>std::{alloc::Layout, cell::RefCell, mem, rc::Rc};
 
-    <span class="comment">// SAFETY: The pointer points to a valid value of type `T` and it is safe to drop this value.
-    </span><span class="kw">unsafe fn </span>drop_ptr&lt;T&gt;(x: OwningPtr&lt;<span class="lifetime">'_</span>&gt;) {
-        x.drop_as::&lt;T&gt;();
+    <span class="kw">unsafe fn </span>drop_ptr&lt;T&gt;(x: OwningPtr&lt;<span class="lifetime">'_</span>&gt;) {
+        <span class="comment">// SAFETY: The pointer points to a valid value of type `T` and it is safe to drop this value.
+        </span><span class="kw">unsafe </span>{
+            x.drop_as::&lt;T&gt;();
+        }
     }
 
     <span class="doccomment">/// # Safety
@@ -1406,7 +1438,10 @@
         <span class="kw">let </span><span class="kw-2">mut </span>q = world.query::&lt;<span class="kw-2">&amp;</span>Zst&gt;();
         <span class="kw">for </span>zst <span class="kw">in </span>q.iter(<span class="kw-2">&amp;</span>world) {
             <span class="comment">// Ensure that the references returned are properly aligned.
-            </span><span class="macro">assert_eq!</span>(zst <span class="kw">as </span><span class="kw-2">*const </span>Zst <span class="kw">as </span>usize % mem::align_of::&lt;Zst&gt;(), <span class="number">0</span>);
+            </span><span class="macro">assert_eq!</span>(
+                std::ptr::from_ref::&lt;Zst&gt;(zst) <span class="kw">as </span>usize % mem::align_of::&lt;Zst&gt;(),
+                <span class="number">0
+            </span>);
             count += <span class="number">1</span>;
         }
 

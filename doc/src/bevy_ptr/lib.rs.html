@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ptr-0.13.0/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_ptr" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ptr-0.14.0/src/lib.rs`."><title>lib.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_ptr" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../bevy_ptr/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -499,8 +498,139 @@
 <a href="#498" id="498">498</a>
 <a href="#499" id="499">499</a>
 <a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
+<a href="#504" id="504">504</a>
+<a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
+<a href="#511" id="511">511</a>
+<a href="#512" id="512">512</a>
+<a href="#513" id="513">513</a>
+<a href="#514" id="514">514</a>
+<a href="#515" id="515">515</a>
+<a href="#516" id="516">516</a>
+<a href="#517" id="517">517</a>
+<a href="#518" id="518">518</a>
+<a href="#519" id="519">519</a>
+<a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
+<a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
+<a href="#529" id="529">529</a>
+<a href="#530" id="530">530</a>
+<a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a>
+<a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
+<a href="#554" id="554">554</a>
+<a href="#555" id="555">555</a>
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+<a href="#565" id="565">565</a>
+<a href="#566" id="566">566</a>
+<a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+<a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
+<a href="#594" id="594">594</a>
+<a href="#595" id="595">595</a>
+<a href="#596" id="596">596</a>
+<a href="#597" id="597">597</a>
+<a href="#598" id="598">598</a>
+<a href="#599" id="599">599</a>
+<a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
 </pre></div><pre class="rust"><code><span class="attr">#![doc = <span class="macro">include_str!</span>(<span class="string">"../README.md"</span>)]
 #![no_std]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![allow(unsafe_code)]
+#![doc(
+    html_logo_url = <span class="string">"https://bevyengine.org/assets/icon.png"</span>,
+    html_favicon_url = <span class="string">"https://bevyengine.org/assets/icon.png"
+</span>)]
 
 </span><span class="kw">use </span>core::fmt::{<span class="self">self</span>, Formatter, Pointer};
 <span class="kw">use </span>core::{
@@ -527,6 +657,119 @@
     <span class="kw">impl </span>Sealed <span class="kw">for </span><span class="kw">super</span>::Unaligned {}
 }
 
+<span class="doccomment">/// A newtype around [`NonNull`] that only allows conversion to read-only borrows or pointers.
+///
+/// This type can be thought of as the `*const T` to [`NonNull&lt;T&gt;`]'s `*mut T`.
+</span><span class="attr">#[repr(transparent)]
+</span><span class="kw">pub struct </span>ConstNonNull&lt;T: <span class="question-mark">?</span>Sized&gt;(NonNull&lt;T&gt;);
+
+<span class="kw">impl</span>&lt;T: <span class="question-mark">?</span>Sized&gt; ConstNonNull&lt;T&gt; {
+    <span class="doccomment">/// Creates a new `ConstNonNull` if `ptr` is non-null.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use bevy_ptr::ConstNonNull;
+    ///
+    /// let x = 0u32;
+    /// let ptr = ConstNonNull::&lt;u32&gt;::new(&amp;x as *const _).expect("ptr is null!");
+    ///
+    /// if let Some(ptr) = ConstNonNull::&lt;u32&gt;::new(std::ptr::null()) {
+    ///     unreachable!();
+    /// }
+    /// ```
+    </span><span class="kw">pub fn </span>new(ptr: <span class="kw-2">*const </span>T) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
+        NonNull::new(ptr.cast_mut()).map(<span class="self">Self</span>)
+    }
+
+    <span class="doccomment">/// Creates a new `ConstNonNull`.
+    ///
+    /// # Safety
+    ///
+    /// `ptr` must be non-null.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use bevy_ptr::ConstNonNull;
+    ///
+    /// let x = 0u32;
+    /// let ptr = unsafe { ConstNonNull::new_unchecked(&amp;x as *const _) };
+    /// ```
+    ///
+    /// *Incorrect* usage of this function:
+    ///
+    /// ```rust,no_run
+    /// use bevy_ptr::ConstNonNull;
+    ///
+    /// // NEVER DO THAT!!! This is undefined behavior. ⚠️
+    /// let ptr = unsafe { ConstNonNull::&lt;u32&gt;::new_unchecked(std::ptr::null()) };
+    /// ```
+    </span><span class="kw">pub const unsafe fn </span>new_unchecked(ptr: <span class="kw-2">*const </span>T) -&gt; <span class="self">Self </span>{
+        <span class="comment">// SAFETY: This function's safety invariants are identical to `NonNull::new_unchecked`
+        // The caller must satisfy all of them.
+        </span><span class="kw">unsafe </span>{ <span class="self">Self</span>(NonNull::new_unchecked(ptr.cast_mut())) }
+    }
+
+    <span class="doccomment">/// Returns a shared reference to the value.
+    ///
+    /// # Safety
+    ///
+    /// When calling this method, you have to ensure that all of the following is true:
+    ///
+    /// * The pointer must be properly aligned.
+    ///
+    /// * It must be "dereferenceable" in the sense defined in [the module documentation].
+    ///
+    /// * The pointer must point to an initialized instance of `T`.
+    ///
+    /// * You must enforce Rust's aliasing rules, since the returned lifetime `'a` is
+    ///   arbitrarily chosen and does not necessarily reflect the actual lifetime of the data.
+    ///   In particular, while this reference exists, the memory the pointer points to must
+    ///   not get mutated (except inside `UnsafeCell`).
+    ///
+    /// This applies even if the result of this method is unused!
+    /// (The part about being initialized is not yet fully decided, but until
+    /// it is, the only safe approach is to ensure that they are indeed initialized.)
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use bevy_ptr::ConstNonNull;
+    ///
+    /// let mut x = 0u32;
+    /// let ptr = ConstNonNull::new(&amp;mut x as *mut _).expect("ptr is null!");
+    ///
+    /// let ref_x = unsafe { ptr.as_ref() };
+    /// println!("{ref_x}");
+    /// ```
+    ///
+    /// [the module documentation]: core::ptr#safety
+    </span><span class="attr">#[inline]
+    </span><span class="kw">pub unsafe fn </span>as_ref&lt;<span class="lifetime">'a</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'a </span>T {
+        <span class="comment">// SAFETY: This function's safety invariants are identical to `NonNull::as_ref`
+        // The caller must satisfy all of them.
+        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.<span class="number">0</span>.as_ref() }
+    }
+}
+
+<span class="kw">impl</span>&lt;T: <span class="question-mark">?</span>Sized&gt; From&lt;NonNull&lt;T&gt;&gt; <span class="kw">for </span>ConstNonNull&lt;T&gt; {
+    <span class="kw">fn </span>from(value: NonNull&lt;T&gt;) -&gt; ConstNonNull&lt;T&gt; {
+        ConstNonNull(value)
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: <span class="question-mark">?</span>Sized&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span>T&gt; <span class="kw">for </span>ConstNonNull&lt;T&gt; {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span>T) -&gt; ConstNonNull&lt;T&gt; {
+        ConstNonNull(NonNull::from(value))
+    }
+}
+
+<span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, T: <span class="question-mark">?</span>Sized&gt; From&lt;<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T&gt; <span class="kw">for </span>ConstNonNull&lt;T&gt; {
+    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>T) -&gt; ConstNonNull&lt;T&gt; {
+        ConstNonNull(NonNull::from(value))
+    }
+}
 <span class="doccomment">/// Type-erased borrow of some unknown type chosen when constructing this type.
 ///
 /// This type tries to act "borrow-like" which means that:
@@ -537,7 +780,7 @@
 ///
 /// It may be helpful to think of this type as similar to `&amp;'a dyn Any` but without
 /// the metadata and able to point to data that does not correspond to a Rust type.
-</span><span class="attr">#[derive(Copy, Clone)]
+</span><span class="attr">#[derive(Copy, Clone, Debug)]
 #[repr(transparent)]
 </span><span class="kw">pub struct </span>Ptr&lt;<span class="lifetime">'a</span>, A: IsAligned = Aligned&gt;(NonNull&lt;u8&gt;, PhantomData&lt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span>u8, A)&gt;);
 
@@ -552,7 +795,8 @@
 ///
 /// It may be helpful to think of this type as similar to `&amp;'a mut dyn Any` but without
 /// the metadata and able to point to data that does not correspond to a Rust type.
-</span><span class="attr">#[repr(transparent)]
+</span><span class="attr">#[derive(Debug)]
+#[repr(transparent)]
 </span><span class="kw">pub struct </span>PtrMut&lt;<span class="lifetime">'a</span>, A: IsAligned = Aligned&gt;(NonNull&lt;u8&gt;, PhantomData&lt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>u8, A)&gt;);
 
 <span class="doccomment">/// Type-erased Box-like pointer to some unknown type chosen when constructing this type.
@@ -570,10 +814,11 @@
 ///
 /// It may be helpful to think of this type as similar to `&amp;'a mut ManuallyDrop&lt;dyn Any&gt;` but
 /// without the metadata and able to point to data that does not correspond to a Rust type.
-</span><span class="attr">#[repr(transparent)]
+</span><span class="attr">#[derive(Debug)]
+#[repr(transparent)]
 </span><span class="kw">pub struct </span>OwningPtr&lt;<span class="lifetime">'a</span>, A: IsAligned = Aligned&gt;(NonNull&lt;u8&gt;, PhantomData&lt;(<span class="kw-2">&amp;</span><span class="lifetime">'a </span><span class="kw-2">mut </span>u8, A)&gt;);
 
-<span class="macro">macro_rules! </span>impl_ptr {
+<span class="macro">macro_rules!</span> impl_ptr {
     (<span class="macro-nonterminal">$ptr</span>:ident) =&gt; {
         <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; <span class="macro-nonterminal">$ptr</span>&lt;<span class="lifetime">'a</span>, Aligned&gt; {
             <span class="doccomment">/// Removes the alignment requirement of this pointer
@@ -599,6 +844,7 @@
             /// - The offset cannot make the existing ptr null, or take it out of bounds for its allocation.
             /// - If the `A` type parameter is [`Aligned`] then the offset must not make the resulting pointer
             ///   be unaligned for the pointee type.
+            /// - The value pointed by the resulting pointer must outlive the lifetime of this pointer.
             ///
             /// [ptr_offset]: https://doc.rust-lang.org/std/primitive.pointer.html#method.offset
             </span><span class="attr">#[inline]
@@ -620,6 +866,7 @@
             /// - The offset cannot make the existing ptr null, or take it out of bounds for its allocation.
             /// - If the `A` type parameter is [`Aligned`] then the offset must not make the resulting pointer
             ///   be unaligned for the pointee type.
+            /// - The value pointed by the resulting pointer must outlive the lifetime of this pointer.
             ///
             /// [ptr_add]: https://doc.rust-lang.org/std/primitive.pointer.html#method.add
             </span><span class="attr">#[inline]
@@ -781,6 +1028,7 @@
         </span>f(<span class="kw">unsafe </span>{ PtrMut::from(<span class="kw-2">&amp;mut *</span>temp).promote() })
     }
 }
+
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>, A: IsAligned&gt; OwningPtr&lt;<span class="lifetime">'a</span>, A&gt; {
     <span class="doccomment">/// Creates a new instance from a raw pointer.
     ///
@@ -847,6 +1095,7 @@
         </span><span class="kw">unsafe </span>{ PtrMut::new(<span class="self">self</span>.<span class="number">0</span>) }
     }
 }
+
 <span class="kw">impl</span>&lt;<span class="lifetime">'a</span>&gt; OwningPtr&lt;<span class="lifetime">'a</span>, Unaligned&gt; {
     <span class="doccomment">/// Consumes the [`OwningPtr`] to obtain ownership of the underlying data of type `T`.
     ///

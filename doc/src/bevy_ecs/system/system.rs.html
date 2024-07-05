@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.13.0/src/system/system.rs`."><title>system.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/bevy_ecs-0.14.0/src/system/system.rs`."><title>system.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="bevy_ecs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="icon" href="https://bevyengine.org/assets/icon.png"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../bevy_ecs/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -358,12 +357,26 @@
 <a href="#357" id="357">357</a>
 <a href="#358" id="358">358</a>
 <a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>bevy_utils::tracing::warn;
 <span class="kw">use </span>core::fmt::Debug;
 
 <span class="kw">use </span><span class="kw">crate</span>::component::Tick;
 <span class="kw">use </span><span class="kw">crate</span>::schedule::InternedSystemSet;
 <span class="kw">use </span><span class="kw">crate</span>::world::unsafe_world_cell::UnsafeWorldCell;
+<span class="kw">use </span><span class="kw">crate</span>::world::DeferredWorld;
 <span class="kw">use crate</span>::{archetype::ArchetypeComponentId, component::ComponentId, query::Access, world::World};
 
 <span class="kw">use </span>std::any::TypeId;
@@ -382,6 +395,7 @@
 /// Systems are executed in parallel, in opportunistic order; data access is managed automatically.
 /// It's possible to specify explicit execution order between specific systems,
 /// see [`IntoSystemConfigs`](crate::schedule::IntoSystemConfigs).
+</span><span class="attr">#[diagnostic::on_unimplemented(message = <span class="string">"`{Self}` is not a system"</span>, label = <span class="string">"invalid system"</span>)]
 </span><span class="kw">pub trait </span>System: Send + Sync + <span class="lifetime">'static </span>{
     <span class="doccomment">/// The system's input. See [`In`](crate::system::In) for
     /// [`FunctionSystem`](crate::system::FunctionSystem)s.
@@ -412,6 +426,9 @@
     /// can be called in parallel with other systems and may break Rust's aliasing rules
     /// if used incorrectly, making it unsafe to call.
     ///
+    /// Unlike [`System::run`], this will not apply deferred parameters, which must be independently
+    /// applied by calling [`System::apply_deferred`] at later point in time.
+    ///
     /// # Safety
     ///
     /// - The caller must ensure that `world` has permission to access any world data
@@ -426,20 +443,28 @@
     ///
     /// For [read-only](ReadOnlySystem) systems, see [`run_readonly`], which can be called using `&amp;World`.
     ///
+    /// Unlike [`System::run_unsafe`], this will apply deferred parameters *immediately*.
+    ///
     /// [`run_readonly`]: ReadOnlySystem::run_readonly
     </span><span class="kw">fn </span>run(<span class="kw-2">&amp;mut </span><span class="self">self</span>, input: <span class="self">Self</span>::In, world: <span class="kw-2">&amp;mut </span>World) -&gt; <span class="self">Self</span>::Out {
-        <span class="kw">let </span>world = world.as_unsafe_world_cell();
-        <span class="self">self</span>.update_archetype_component_access(world);
+        <span class="kw">let </span>world_cell = world.as_unsafe_world_cell();
+        <span class="self">self</span>.update_archetype_component_access(world_cell);
         <span class="comment">// SAFETY:
         // - We have exclusive access to the entire world.
         // - `update_archetype_component_access` has been called.
-        </span><span class="kw">unsafe </span>{ <span class="self">self</span>.run_unsafe(input, world) }
+        </span><span class="kw">let </span>ret = <span class="kw">unsafe </span>{ <span class="self">self</span>.run_unsafe(input, world_cell) };
+        <span class="self">self</span>.apply_deferred(world);
+        ret
     }
 
     <span class="doccomment">/// Applies any [`Deferred`](crate::system::Deferred) system parameters (or other system buffers) of this system to the world.
     ///
     /// This is where [`Commands`](crate::system::Commands) get applied.
     </span><span class="kw">fn </span>apply_deferred(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: <span class="kw-2">&amp;mut </span>World);
+
+    <span class="doccomment">/// Enqueues any [`Deferred`](crate::system::Deferred) system parameters (or other system buffers)
+    /// of this system into the world's command buffer.
+    </span><span class="kw">fn </span>queue_deferred(<span class="kw-2">&amp;mut </span><span class="self">self</span>, world: DeferredWorld);
 
     <span class="doccomment">/// Initialize the system.
     </span><span class="kw">fn </span>initialize(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _world: <span class="kw-2">&amp;mut </span>World);
@@ -458,6 +483,8 @@
     </span><span class="kw">fn </span>check_change_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, change_tick: Tick);
 
     <span class="doccomment">/// Returns the system's default [system sets](crate::schedule::SystemSet).
+    ///
+    /// Each system will create a default system set that contains the system.
     </span><span class="kw">fn </span>default_system_sets(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;InternedSystemSet&gt; {
         Vec::new()
     }
@@ -529,7 +556,7 @@
 <span class="doccomment">/// Trait used to run a system immediately on a [`World`].
 ///
 /// # Warning
-/// This function is not an efficient method of running systems and its meant to be used as a utility
+/// This function is not an efficient method of running systems and it's meant to be used as a utility
 /// for testing and/or diagnostics.
 ///
 /// Systems called through [`run_system_once`](RunSystemOnce::run_system_once) do not hold onto any state,
@@ -643,9 +670,7 @@
     ) -&gt; Out {
         <span class="kw">let </span><span class="kw-2">mut </span>system: T::System = IntoSystem::into_system(system);
         system.initialize(<span class="self">self</span>);
-        <span class="kw">let </span>out = system.run(input, <span class="self">self</span>);
-        system.apply_deferred(<span class="self">self</span>);
-        out
+        system.run(input, <span class="self">self</span>)
     }
 }
 
