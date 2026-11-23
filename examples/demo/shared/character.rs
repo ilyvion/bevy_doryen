@@ -24,6 +24,7 @@ impl Plugin for CharacterPlugin {
 pub struct Character {
     /// console character for this entity
     pub ch: u16,
+    #[allow(dead_code)]
     pub name: String,
     pub color: Color,
     pub light: bool,

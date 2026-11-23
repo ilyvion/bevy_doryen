@@ -1,0 +1,75 @@
+name: "Publish new release"
+
+on:
+    pull_request:
+        branches:
+            - main
+        types:
+            - closed
+
+jobs:
+    release:
+        name: Publish new release
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        # only merged pull requests that begin with 'release/' or 'hotfix/' must trigger this job
+        if: github.event.pull_request.merged == true &&
+            (startsWith(github.event.pull_request.head.ref, 'release/') || startsWith(github.event.pull_request.head.ref, 'hotfix/'))
+        env:
+            MERGE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+            # expat-sys's bundled CMakeLists.txt declares a minimum CMake version that CMake 4 rejects.
+            CMAKE_POLICY_VERSION_MINIMUM: "3.5"
+
+        steps:
+            - name: Extract version from branch name
+              env:
+                  BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
+              run: |
+                  VERSION="${BRANCH_NAME#release/}"
+                  VERSION="${VERSION#hotfix/}"
+                  echo "RELEASE_VERSION=$VERSION" >> "$GITHUB_ENV"
+
+            - uses: actions/checkout@v7
+              with:
+                  ref: ${{ env.MERGE_SHA }}
+
+            - name: Install Linux dependencies
+              run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
+
+            - name: Verify release state
+              run: |
+                  manifest_version=$(cargo metadata --no-deps --format-version 1 |
+                      jq -r '.packages[] | select(.name == "bevy_doryen") | .version')
+                  if [ "$manifest_version" != "$RELEASE_VERSION" ]; then
+                      echo "::error::Cargo.toml version is '$manifest_version', but the branch says '$RELEASE_VERSION'."
+                      exit 1
+                  fi
+                  if [ -n "$(git ls-remote --tags origin "refs/tags/v$RELEASE_VERSION")" ]; then
+                      echo "::error::Tag v$RELEASE_VERSION already exists."
+                      exit 1
+                  fi
+
+            - name: Extract release notes
+              run: |
+                  {
+                      .github/scripts/release_notes.sh "$RELEASE_VERSION"
+                      echo
+                      echo "https://crates.io/crates/bevy_doryen/$RELEASE_VERSION"
+                  } > "$RUNNER_TEMP/release_notes.md"
+                  cat "$RUNNER_TEMP/release_notes.md"
+
+            - name: Publish
+              run: cargo publish --package bevy_doryen --all-features
+              env:
+                  CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+            - name: Release
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  gh release create "v$RELEASE_VERSION" \
+                      --repo "${{ github.repository }}" \
+                      --target "$MERGE_SHA" \
+                      --title "$RELEASE_VERSION" \
+                      --notes-file "$RUNNER_TEMP/release_notes.md"

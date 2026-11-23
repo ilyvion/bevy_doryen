@@ -76,7 +76,7 @@
 // Deny (don't do this)
 #![deny(clippy::cast_lossless)]
 #![deny(clippy::default_trait_access)]
-#![deny(clippy::empty_enum)]
+#![deny(clippy::empty_enums)]
 #![deny(clippy::enum_glob_use)]
 #![deny(clippy::expl_impl_clone_on_copy)]
 #![deny(clippy::explicit_into_iter_loop)]

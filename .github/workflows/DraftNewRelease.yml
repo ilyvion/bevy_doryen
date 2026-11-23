@@ -1,0 +1,85 @@
+name: "Draft new release"
+
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: "The version you want to release, without a 'v' prefix."
+                required: true
+
+jobs:
+    draft-new-release:
+        name: "Draft a new release for ${{ github.event.inputs.version }}"
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+        env:
+            VERSION: ${{ github.event.inputs.version }}
+            # expat-sys's bundled CMakeLists.txt declares a minimum CMake version that CMake 4 rejects.
+            CMAKE_POLICY_VERSION_MINIMUM: "3.5"
+        steps:
+            - uses: actions/checkout@v7
+
+            - name: Install Linux dependencies
+              run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
+
+            - name: Create release branch
+              run: git checkout -b "release/$VERSION"
+
+            - name: Update changelog
+              run: .github/scripts/prepare_changelog.sh "$VERSION"
+
+            - name: Update README
+              run: .github/scripts/update_readme.sh "$VERSION"
+
+            - name: Install cargo-bump
+              uses: taiki-e/install-action@v2
+              with:
+                  tool: cargo-bump
+
+            - name: Bump version in Cargo.toml
+              run: cargo bump "$VERSION"
+
+            - name: Bump bevy_doryen requirement in example_runner/Cargo.toml
+              run: |
+                  sed -i -E "s/^(bevy_doryen = \{ version = \")[^\"]*(\")/\1$VERSION\2/" example_runner/Cargo.toml
+                  grep -qF "bevy_doryen = { version = \"$VERSION\"" example_runner/Cargo.toml ||
+                      { echo "::error::Could not update the bevy_doryen requirement in example_runner/Cargo.toml."; exit 1; }
+
+            - name: Check we haven't violated semver
+              uses: obi1kenobi/cargo-semver-checks-action@v2
+              with:
+                  package: bevy_doryen
+                  verbose: true
+
+            - name: Commit changelog, README and manifest files
+              id: make-commit
+              run: |
+                  git config user.name "GitHub Actions"
+                  git config user.email noreply@github.com
+                  git add CHANGELOG.md README.md Cargo.toml example_runner/Cargo.toml
+                  git commit --message "chore: prepare release $VERSION"
+
+                  echo "commit=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+            - name: Push new branch
+              run: git push origin "release/$VERSION"
+
+            - name: Create pull request
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  COMMIT: ${{ steps.make-commit.outputs.commit }}
+                  RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+              run: |
+                  gh pr create \
+                      --base main \
+                      --head "release/$VERSION" \
+                      --title "Release version $VERSION" \
+                      --reviewer "$GITHUB_ACTOR" \
+                      --body "Hi @$GITHUB_ACTOR!
+
+                  This PR was created in response to a manual trigger of the release workflow here: $RUN_URL.
+                  I've updated the changelog and README and bumped the version in the manifests in this commit: $COMMIT.
+
+                  Merging this PR will publish the crate to crates.io and create a GitHub release."

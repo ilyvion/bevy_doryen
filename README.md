@@ -5,10 +5,10 @@ A [Bevy](https://bevyengine.org/) plugin that integrates the
 
 [![Crates.io](https://img.shields.io/crates/v/bevy_doryen)](https://crates.io/crates/bevy_doryen)
 [![Docs.io](https://docs.rs/bevy_doryen/badge.svg)](https://docs.rs/bevy_doryen)
-[![Docs master](https://img.shields.io/static/v1?label=docs&message=master&color=5479ab)](https://ilyvion.github.io/bevy_doryen/doc)
-[![GitHub](https://github.com/ilyvion/bevy_doryen/actions/workflows/rust.yml/badge.svg)](https://github.com/ilyvion/bevy_doryen)
+[![Docs main](https://img.shields.io/static/v1?label=docs&message=main&color=5479ab)](https://ilyvion.github.io/bevy_doryen/doc)
+[![Build Status](https://github.com/ilyvion/bevy_doryen/actions/workflows/CI.yml/badge.svg)](https://github.com/ilyvion/bevy_doryen/actions/workflows/CI.yml)
 [![Following released Bevy versions](https://img.shields.io/badge/Bevy%20tracking-released%20version-lightblue)](https://bevyengine.org/learn/quick-start/plugin-development/#main-branch-tracking)
-[![codecov](https://codecov.io/github/ilyvion/bevy_doryen/branch/master/graph/badge.svg?token=08P69DV34A)](https://codecov.io/github/ilyvion/bevy_doryen)
+[![codecov](https://codecov.io/github/ilyvion/bevy_doryen/branch/main/graph/badge.svg?token=08P69DV34A)](https://codecov.io/github/ilyvion/bevy_doryen)
 
 ## Usage
 
@@ -59,7 +59,7 @@ App::new()
     .run();
 ```
 
-See the [examples](https://github.com/ilyvion/bevy_doryen/tree/master/examples)
+See the [examples](https://github.com/ilyvion/bevy_doryen/tree/main/examples)
 for more usage scenarios, as well as live demos.
 
 ## Bevy Version Support
@@ -79,8 +79,8 @@ I intend to track the latest release version of Bevy. PRs supporting this are we
 
 All code in this repository is dual-licensed under either:
 
--   Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
--   MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+- MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option. This means you can select the license you prefer.
 

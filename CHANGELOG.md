@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed 🔧
+
+-   Releases are drafted with the "Draft new release" workflow, which opens a release PR that updates the changelog, README and version; merging it publishes the crate and creates the GitHub release
+-   CI denies warnings, runs clippy on all targets, and is split into check, test, style, coverage and documentation jobs
+
 ## [0.6.0]
 
 ### Changed 🔧

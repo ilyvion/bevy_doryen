@@ -1,5 +1,3 @@
-use serde::{Deserialize, Serialize};
-
 mod examples {
     #[path = "../../../examples/alpha.rs"]
     pub mod alpha;
@@ -29,7 +27,8 @@ mod examples {
     pub mod unicode;
 }
 
-#[derive(Debug, Deserialize, PartialEq, Serialize)]
+#[cfg(target_arch = "wasm32")]
+#[derive(Debug, serde::Deserialize, PartialEq, serde::Serialize)]
 struct Query {
     example: String,
 }

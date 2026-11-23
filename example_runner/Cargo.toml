@@ -25,6 +25,11 @@ serde = { version = "1", features = ["derive"] }
 serde_qs = "0.13"
 unicode-segmentation = "1.10"
 
+# Selects a browser randomness source for transitive dependencies that need one on wasm32.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom_03 = { package = "getrandom", version = "0.3", features = ["wasm_js"] }
+uuid = { version = "1", features = ["js"] }
+
 [profile.release]
 opt-level = "z"
 lto = "thin"
