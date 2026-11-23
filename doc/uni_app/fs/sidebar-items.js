@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["File","FileSystem"],"type":["IoError","IoErrorKind"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["REQ_CONFINE_POINTER_SINCE","REQ_DESTROY_SINCE","REQ_LOCK_POINTER_SINCE"],"enum":["Error","Event","Lifetime","Request"],"static":["zwp_pointer_constraints_v1_interface","zwp_pointer_constraints_v1_requests"],"struct":["ZwpPointerConstraintsV1"]};

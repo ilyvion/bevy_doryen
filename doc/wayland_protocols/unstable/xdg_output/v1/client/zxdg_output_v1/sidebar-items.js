@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["EVT_DESCRIPTION_SINCE","EVT_DONE_SINCE","EVT_LOGICAL_POSITION_SINCE","EVT_LOGICAL_SIZE_SINCE","EVT_NAME_SINCE","REQ_DESTROY_SINCE"],"enum":["Event","Request"],"static":["zxdg_output_v1_events","zxdg_output_v1_interface","zxdg_output_v1_requests"],"struct":["ZxdgOutputV1"]};

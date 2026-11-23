@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Format"],"struct":["AutoMemPool","DoubleMemPool","MemPool","ShmHandler"],"trait":["ShmHandling"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["REQ_DESTROY_SINCE","REQ_GET_RELEASE_SINCE","REQ_SET_ACQUIRE_FENCE_SINCE"],"enum":["Error","Event","Request"],"static":["zwp_linux_surface_synchronization_v1_interface","zwp_linux_surface_synchronization_v1_requests"],"struct":["ZwpLinuxSurfaceSynchronizationV1"]};

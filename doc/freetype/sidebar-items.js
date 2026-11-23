@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"externcrate":["freetype_sys"],"mod":["bitmap","bitmap_glyph","error","face","glyph","glyph_slot","library","outline","render_mode","stroker","tt_os2","tt_postscript"],"type":["BBox","GlyphMetrics","Matrix","Vector"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["zxdg_output_manager_v1","zxdg_output_v1"]};

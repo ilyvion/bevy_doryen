@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["zwlr_layer_shell_v1","zwlr_layer_surface_v1"]};

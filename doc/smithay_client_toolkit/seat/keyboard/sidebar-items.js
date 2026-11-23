@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Error","Event","KeyState","RepeatKind"],"fn":["map_keyboard","map_keyboard_repeat"],"mod":["keysyms"],"struct":["ModifiersState","RMLVO","RepeatSource"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["DPMSExtensionName","DPMSMajorVersion","DPMSMinorVersion","DPMSModeOff","DPMSModeOn","DPMSModeStandby","DPMSModeSuspend"],"struct":["Xext"]};

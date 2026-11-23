@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Value"],"struct":["Data","Dir","DirStream","MemoryAssetReader"]};

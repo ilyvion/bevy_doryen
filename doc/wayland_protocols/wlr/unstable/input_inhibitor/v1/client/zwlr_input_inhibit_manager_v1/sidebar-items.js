@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["REQ_GET_INHIBITOR_SINCE"],"enum":["Error","Event","Request"],"static":["zwlr_input_inhibit_manager_v1_interface","zwlr_input_inhibit_manager_v1_requests"],"struct":["ZwlrInputInhibitManagerV1"]};

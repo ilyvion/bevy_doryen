@@ -1,1 +1,0 @@
-searchState.loadedDescShard("bevy_derive", 0, "Generates an impl of the <code>AppLabel</code> trait.\nImplements <code>Deref</code> for structs. This is especially useful …\nImplements <code>DerefMut</code> for structs. This is especially useful …\nGenerates a dynamic plugin entry point function for the …")

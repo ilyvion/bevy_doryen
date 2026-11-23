@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["print"],"struct":["WebGLBuffer","WebGLFrameBuffer","WebGLProgram","WebGLRenderingContext","WebGLShader","WebGLTexture","WebGLUniformLocation","WebGLVertexArray"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["RemovedComponentEntity","RemovedComponentEvents","RemovedComponentReader","RemovedComponents"],"type":["RemovedIter","RemovedIterWithId"]};

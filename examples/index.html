@@ -33,9 +33,7 @@
                 overflow: hidden;
             }
         </style>
-    
-<link rel="modulepreload" href="/bevy_doryen/examples/example_runner-cf50be3b94e25407.js" crossorigin=anonymous integrity="sha384-QC9O7thcVlTW5DAwqo2fx0l1ehJ4v1+8V6ijUIri2etgcXZe193mTqRRxlRR/mXy">
-<link rel="preload" href="/bevy_doryen/examples/example_runner-cf50be3b94e25407_bg.wasm" crossorigin=anonymous integrity="sha384-La1zqdjO9ZBhT+arxBwXy6xp9JmehnJw7i+Ch1LnQd6gj2jARka1p8d1vjfIPybt" as="fetch" type="application/wasm"></head>
+    <link rel="modulepreload" href="/bevy_doryen/examples/example_runner-7912190df2f46741.js" crossorigin="anonymous" integrity="sha384-ApKIYjbwTo1qjEXluVW5GdZ5Pl8apGYhgngS7NG1TsXcqnytQlMCrZnjj2pJilQn"><link rel="preload" href="/bevy_doryen/examples/example_runner-e54c12c222685907_bg.wasm" crossorigin="anonymous" integrity="sha384-lGKQTnKhNoTgEP9B1PPaKzyYKO5RiOdJZjd+l+kt89i/tFF7+YDJoaEWLCdXQZ+4" as="fetch" type="application/wasm"></head>
     <body>
         <script>
             async function goFullScreen() {
@@ -95,9 +93,10 @@
             setTimeout(onLoad, 100);
         </script>
     
-<script type="module" nonce="hMVFNo5sEFlCwjdTD+Mc5g==">
-import init, * as bindings from '/bevy_doryen/examples/example_runner-cf50be3b94e25407.js';
-const wasm = await init('/bevy_doryen/examples/example_runner-cf50be3b94e25407_bg.wasm');
+<script type="module">
+import init, * as bindings from '/bevy_doryen/examples/example_runner-7912190df2f46741.js';
+
+const wasm = await init({ module_or_path: '/bevy_doryen/examples/example_runner-e54c12c222685907_bg.wasm' });
 
 
 window.wasmBindings = bindings;

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"derive":["Event"],"enum":["ShouldUpdateEvents"],"fn":["event_update_condition","event_update_system","signal_event_update_system"],"struct":["EventId","EventIterator","EventIteratorWithId","EventReader","EventRegistry","EventWriter","Events","ManualEventReader","SendBatchIds"],"trait":["Event"]};

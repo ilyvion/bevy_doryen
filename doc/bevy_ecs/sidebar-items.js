@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"macro":["define_label"],"mod":["archetype","batching","bundle","change_detection","component","entity","event","identifier","intern","label","observer","prelude","query","reflect","removal_detection","schedule","storage","system","world"]};

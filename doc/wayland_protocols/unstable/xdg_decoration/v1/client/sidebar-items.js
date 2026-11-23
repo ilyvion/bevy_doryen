@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["zxdg_decoration_manager_v1","zxdg_toplevel_decoration_v1"]};

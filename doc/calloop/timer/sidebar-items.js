@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["TimeoutAction"],"struct":["TimeoutFuture","Timer"]};

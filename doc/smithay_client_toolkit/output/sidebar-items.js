@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Subpixel","Transform"],"fn":["add_output_listener","with_output_info"],"struct":["Mode","OutputHandler","OutputInfo","OutputListener","OutputStatusListener","XdgOutputHandler"],"trait":["OutputHandling"]};

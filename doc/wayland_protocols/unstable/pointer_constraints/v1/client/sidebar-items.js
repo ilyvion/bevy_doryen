@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["zwp_confined_pointer_v1","zwp_locked_pointer_v1","zwp_pointer_constraints_v1"]};

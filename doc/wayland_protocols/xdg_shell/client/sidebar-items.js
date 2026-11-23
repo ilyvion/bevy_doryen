@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["xdg_popup","xdg_positioner","xdg_surface","xdg_toplevel","xdg_wm_base"]};

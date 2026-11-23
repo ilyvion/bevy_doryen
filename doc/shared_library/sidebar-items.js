@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["LoadingError"],"macro":["shared_library"],"mod":["dynamic_library"]};

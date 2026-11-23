@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["zwp_xwayland_keyboard_grab_manager_v1","zwp_xwayland_keyboard_grab_v1"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["clone_seat_data","with_seat_data"],"mod":["keyboard","pointer"],"struct":["SeatData","SeatHandler","SeatListener"],"trait":["SeatHandling"]};

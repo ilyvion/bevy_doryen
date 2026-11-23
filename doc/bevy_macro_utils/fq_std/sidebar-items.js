@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"struct":["FQAny","FQBox","FQClone","FQDefault","FQOption","FQResult","FQSend","FQSync"]};

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["EVT_DATA_OFFER_SINCE","EVT_SELECTION_SINCE","REQ_DESTROY_SINCE","REQ_SET_SELECTION_SINCE"],"enum":["Event","Request"],"static":["gtk_primary_selection_device_events","gtk_primary_selection_device_interface","gtk_primary_selection_device_requests"],"struct":["GtkPrimarySelectionDevice"]};
